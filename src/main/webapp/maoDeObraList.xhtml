@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<ui:define name="body">
+
+		<h:form id="maoDeObraForm" prependId="false">
+		<!--  <p:commandButton value="Cadastrar Mão de Obra" icon="ui-icon-plus"  action="/maoDeObraEdit.xhtml" ajax="false" /> -->
+		<title>Lista de Mão de Obra</title>
+		<center><h2>Lista de Mão de Obra</h2></center>
+		<p:spacer height="10" />
+			<p:commandButton value="Cadastrar Mão de Obra" icon="ui-icon-plus" type="button" onclick="PF('dialogNew').show();" />	
+			<center>
+			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
+			<p:spacer width="100" height="30" />
+				<p:dataTable var="mao" value="#{maoDeObraBean.allMaosDeObra}">
+				<p:ajax event="rowSelect" update=":maoDeObraUpdateDialogForm" /> 
+					<p:column headerText="Mão de Obra">
+						<h:outputText value="#{mao.descricao}" />							
+					</p:column>
+					<p:column headerText="Valor Unitário Dia : ">
+						<h:outputText value="#{mao.valordia}" />							
+					</p:column>
+					<p:column headerText="Valor Unitário Hora : ">
+						<h:outputText value="#{mao.valorhora}" />
+					</p:column>
+					<p:column headerText="Ações" style="width:200px">											
+						<p:commandButton value="Editar" update=":maoDeObraUpdateDialogForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
+								<f:setPropertyActionListener target="#{maoDeObraBean.maoDeObra}" value="#{mao}" />
+						</p:commandButton>	
+						<p:commandButton value="Excluir" action="#{maoDeObraBean.deleteMaoDeObra()}" icon="ui-icon-trash" update=":maoDeObraForm:resultado" style="margin-right:10px">
+							<f:setPropertyActionListener target="#{maoDeObraBean.maoDeObra}" value="#{mao}" />
+						</p:commandButton>						
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+			</center>
+					
+			<p:dialog header="Cadastrar Mão de Obra" widgetVar="dialogNew" modal="true" height="200">
+			    <h:panelGrid columns="2">
+				<h:outputText value="Mão de Obra : " />				
+				<h:inputText value="#{maoDeObraBean.maoDeObra.descricao}" required="false" label="MaoDeObra"> 
+					<f:validateLength minimum="4" />
+				</h:inputText>
+				<h:outputText value="Valor Unitário Dia : " />
+				<pe:inputNumber decimalPlaces="2" symbol="R$ "  value="#{maoDeObraBean.maoDeObra.valordia}"/>				
+				<h:outputText value="Valor Unitário Hora : " />
+				<pe:inputNumber decimalPlaces="2" symbol="R$ "  value="#{maoDeObraBean.maoDeObra.valorhora}" />	
+				<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":maoDeObraForm" actionListener="#{maoDeObraBean.createMaoDeObra}" onclick="PF('dialogNew').hide();" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{maoDeObraBean.resetMaoDeObra()}" type="button"  onclick="PF('dialogNew').hide();"/>
+			</h:panelGrid>
+			</p:dialog>
+
+		</h:form>
+		
+		<ui:include src="/dialogs/maoDeObraUpdateDialog.xhtml" />
+		
+	</ui:define>
+</ui:composition>

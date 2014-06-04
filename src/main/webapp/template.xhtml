@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-delta" />
+
+
+<h:head>
+	<h3>SysAid Java versão 0.1</h3>
+	<!-- Theme Switcher 
+		<h:panelGrid columns="3" cellpadding="10">
+		<h3>SysAid Java versão 0.1</h3>
+        <h:outputText value="Default Switcher:" /> 
+        <p:themeSwitcher style="width:165px" id="defaultSwitcher">
+            <f:selectItem itemLabel="Choose Theme" itemValue="" />
+            <f:selectItems value="#{themeSwitcherBean.themes}" />
+        </p:themeSwitcher>
+        </h:panelGrid>
+		 -->
+	<p:menubar>
+		<p:submenu label="Cadastros">
+			<p:menuitem value="Unidade de Medida" url="/unidadeMedidaList.xhtml" />
+			<p:menuitem value="Material" url="/materialList.xhtml" />
+			<p:menuitem value="Mão de Obra" url="/maoDeObraList.xhtml" />
+			<p:menuitem value="Tipo de Material" url="/tipoMaterialList.xhtml" />
+			<p:menuitem value="Aplicação" url="/aplicacaoList.xhtml" />
+		</p:submenu>
+
+		<p:submenu label="Movimentação">
+			<p:menuitem value="Nota Fiscal" url="#" />
+			<p:menuitem value="Ordem de Compra" url="#" />
+			<p:menuitem value="Inventário" url="#" />
+		</p:submenu>
+
+		<p:submenu label="Relatórios">
+			<p:menuitem value="Estoque" url="#" />
+			<p:menuitem value="Ordem de Compra" url="#" />
+			<p:menuitem value="Nota Fiscal" url="#" />
+			<p:menuitem value="Sugestão de Compra" url="#" />
+			<p:menuitem value="Inventário" url="#" />
+		</p:submenu>
+	</p:menubar>
+
+	<ui:insert name="head" />
+	
+	  <p:messages id="msgs"  autoUpdate="true"/>
+</h:head>
+<h:body>
+	<ui:insert name="body" />
+</h:body>
+</html>

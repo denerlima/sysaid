@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog header="Editar Tipo de Material" id="tipoMaterialDialogId"
+		widgetVar="dialogEdit" modal="true" dynamic="true" height="100">
+		<h:form id="tipoMaterialUpdateDialogForm" prependId="false">
+			<h:panelGrid columns="2"  rendered="#{not empty tipoMaterialBean.tipoMaterial}">
+				<h:outputText value="Tipo de Material : " />
+				<h:inputText value="#{tipoMaterialBean.tipoMaterial.descricao}" required="true" label="Tipo de Material" />
+				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.updateTipoMaterial()}"
+					onclick="PF('dialogEdit').hide();" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{tipoMaterialBean.resetTipoMaterial()}" type="button" onclick="PF('dialogEdit').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

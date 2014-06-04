@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="template.xhtml">
+	<ui:define name="body">
+
+		<h:form id="aplicacaoForm" prependId="false">
+		<!--  <p:commandButton value="Cadastrar Aplicação" icon="ui-icon-plus"  action="/aplicacaoEdit.xhtml" ajax="false" /> -->
+		<title>Lista de Aplicação</title>
+		<center><h2>Lista de Aplicação</h2></center>
+		<p:spacer height="10" />
+			<p:commandButton value="Cadastrar Aplicação" icon="ui-icon-plus" type="button" onclick="PF('dialogNew').show();" />	
+			<center>
+			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
+			<p:spacer width="100" height="30" />
+				<p:dataTable var="app" value="#{aplicacaoBean.allAplicacoes}">
+				<p:ajax event="rowSelect" update=":aplicacaoUpdateDialogForm" /> 
+					<p:column headerText="Aplicação">
+						<h:outputText value="#{app.descricao}" />							
+					</p:column>
+					<p:column headerText="Ações" style="width:200px">											
+						<p:commandButton value="Editar" update=":aplicacaoUpdateDialogForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
+								<f:setPropertyActionListener target="#{aplicacaoBean.aplicacao}" value="#{app}" />
+						</p:commandButton>	
+						<p:commandButton value="Excluir" action="#{aplicacaoBean.deleteAplicacao()}" icon="ui-icon-trash" update=":aplicacaoForm:resultado" style="margin-right:10px">
+							<f:setPropertyActionListener target="#{aplicacaoBean.aplicacao}" value="#{app}" />
+						</p:commandButton>						
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+			</center>
+					
+			<p:dialog header="Cadastrar Aplicação" widgetVar="dialogNew" modal="true" height="100">
+			    <h:panelGrid columns="2">
+				<h:outputText value="Aplicacao : " />
+				<h:inputText value="#{aplicacaoBean.aplicacao.descricao}" required="false" label="Aplicacao"> 
+					<f:validateLength minimum="4" />
+				</h:inputText>
+				<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":aplicacaoForm" actionListener="#{aplicacaoBean.createAplicacao}" onclick="PF('dialogNew').hide();" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{aplicacaoBean.resetAplicacao()}" onclick="PF('dialogNew').hide();"/>
+			</h:panelGrid>
+			</p:dialog>
+
+		</h:form>
+		
+		<ui:include src="/dialogs/aplicacaoUpdateDialog.xhtml" />
+		
+	</ui:define>
+</ui:composition>
