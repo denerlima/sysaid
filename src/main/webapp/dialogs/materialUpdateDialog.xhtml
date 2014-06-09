@@ -33,9 +33,9 @@
 				<h:outputText value="Estoque Informado : " />
 				<pe:inputNumber decimalPlaces="2" value="#{materialBean.material.estoqueInformado}"/>
 				<h:outputText value="Estoque Calculado : " />
-				<pe:inputNumber decimalPlaces="2" value="#{materialBean.material.estoqueCalculado}" />				
+				<pe:inputNumber decimalPlaces="2" value="#{materialBean.material.estoqueCalculado}" />	
 				
-				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":materialForm" actionListener="#{materialBean.updateMaterial()}"
+				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":materialForm :materialForm:resultado" actionListener="#{materialBean.updateMaterial}"
 					onclick="PF('dialogEdit').hide();" />
 				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{materialBean.resetMaterial()}" type="button" onclick="PF('dialogEdit').hide();" />
 			</h:panelGrid>

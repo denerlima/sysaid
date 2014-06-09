@@ -28,7 +28,7 @@ public class Aplicacao extends GenericModelo implements Serializable{
 	private int id;	
 	private String descricao;
 	
-	@OneToMany(mappedBy="unidadeMedida")
+	@OneToMany(mappedBy="aplicacao")
 	private List<Material> aplicacao;
 
 	public int getId() {

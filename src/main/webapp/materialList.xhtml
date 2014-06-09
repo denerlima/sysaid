@@ -41,7 +41,7 @@
 						<h:outputText value="#{mat.aplicacao.descricao}" />	
 					</p:column>					
 					<p:column headerText="Ações" style="width:200px">											
-						<p:commandButton value="Editar" update=":materialUpdateDialogForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
+						<p:commandButton value="Editar" update=":materialUpdateDialogForm :materialForm" immediate="true" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
 								<f:setPropertyActionListener target="#{materialBean.material}" value="#{mat}" />
 						</p:commandButton>	
 						<p:commandButton value="Excluir" action="#{materialBean.deleteMaterial()}" icon="ui-icon-trash" update=":materialForm:resultado" style="margin-right:10px">
@@ -51,41 +51,8 @@
 				</p:dataTable>
 			</p:outputPanel>
 			</center>
-					
-			<p:dialog header="Cadastrar Material" widgetVar="dialogNew" modal="true" height="400">
-			    <h:panelGrid columns="2">
-			    <h:outputText value="Material : " />
-				<h:inputText value="#{materialBean.material.material}" required="false" label="Material" />
-				<h:outputText value="Descrição : " />
-				<p:inputTextarea  rows="5" cols="40" value="#{materialBean.material.descricao}" required="false" label="Material"> 
-					<f:validateLength minimum="4" />
-				</p:inputTextarea>
-				<h:outputText value="Tipo Material : " />
-				<h:selectOneMenu id="cbTipoMaterial" immediate="true" value="#{materialBean.selectedTipoMaterial.id}" >
-					<f:selectItem itemValue="" itemLabel="Selecione" />
-					<f:selectItems value="#{materialBean.selectItensTipoMaterial}" var="tipo" itemLabel="#{tipo.descricao}"   itemValue="#{tipo}" />				
-				</h:selectOneMenu>
-				<h:outputText value="Aplicação : " />
-				<h:selectOneMenu id="cbAplicacao" immediate="true" value="#{materialBean.selectedAplicacao.id}" >
-					<f:selectItem itemValue="" itemLabel="Selecione" />
-					<f:selectItems value="#{materialBean.selectItensAplicacoes}" var="app" itemLabel="#{app.descricao}"   itemValue="#{app}" />					
-				<!-- 	<p:ajax event="change" process="@this" update=":materialForm" />    -->
-				</h:selectOneMenu>							
-				<h:outputText value="Unidade de Medida de Entrada : " />
-				<h:selectOneMenu id="cbEntrada" immediate="true" value="#{materialBean.selectedUnidadeMedida.id}" >
-					<f:selectItem itemValue="" itemLabel="Selecione" />
-					<f:selectItems value="#{materialBean.selectItensUnidadeMedida}" var="um" itemLabel="#{um.unEntrada}"   itemValue="#{um}" />				
-				</h:selectOneMenu>								
-				<h:outputText value="Estoque Informado : " />
-				<pe:inputNumber decimalPlaces="2" value="#{materialBean.material.estoqueInformado}"/>
-				<h:outputText value="Estoque Calculado : " />
-				<pe:inputNumber decimalPlaces="2" value="#{materialBean.material.estoqueCalculado}" />
-								
-				<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":materialForm" actionListener="#{materialBean.createMaterial}" onclick="PF('dialogNew').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{materialBean.resetMaterial()}" type="button"  onclick="PF('dialogNew').hide();"/>
-			</h:panelGrid>
-			</p:dialog>
-
+			
+			<ui:include src="/dialogs/materialSaveDialog.xhtml" />
 		</h:form>
 		
 		<ui:include src="/dialogs/materialUpdateDialog.xhtml" />

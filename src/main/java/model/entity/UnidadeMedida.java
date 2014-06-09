@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -27,13 +29,17 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "unidadeMedidaSequence")
 	@Column
 	private int id;	
-	private String unEntrada;
 	private String unSaida;
+	private String unEntrada;
 	@Column(length = 20, precision = 20, scale= 3 , nullable = false)
 	private BigDecimal fatorConversao;
 	
 	@OneToMany(mappedBy="unidadeMedida")
 	private List<Material> listaMaterial;
+	
+//	@ManyToOne
+//	@JoinColumn(name="id_unidadeentrada", referencedColumnName="id")
+//	private UnidadeEntrada unidadeEntrada;
 	
 	public int getId() {
 		return id;
@@ -41,20 +47,27 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUnEntrada() {
-		return this.unEntrada;
-	}
 
-	public void setUnEntrada(String unEntrada) {
-		this.unEntrada = unEntrada;
-	}   
 	public String getUnSaida() {
 		return this.unSaida;
 	}
+	
+//	public UnidadeEntrada getUnidadeEntrada() {
+//		return unidadeEntrada;
+//	}
+//	public void setUnidadeEntrada(UnidadeEntrada unidadeEntrada) {
+//		this.unidadeEntrada = unidadeEntrada;
+//	}
 
 	public void setUnSaida(String unSaida) {
 		this.unSaida = unSaida;
 	}   
+	public String getUnEntrada() {
+		return unEntrada;
+	}
+	public void setUnEntrada(String unEntrada) {
+		this.unEntrada = unEntrada;
+	}
 	public BigDecimal getFatorConversao() {	
 		if (fatorConversao != null) {
 			return this.fatorConversao.setScale(3,BigDecimal.ROUND_DOWN) ;
