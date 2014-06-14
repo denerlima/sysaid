@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:body>
-	<p:dialog header="Editar Mão de Obra" id="maoDeObraDialogId"
+	<p:dialog header="Editar Mão de Obra" id="maoDeObraDialogId" closable="false"
 		widgetVar="dialogEdit" modal="true" dynamic="true" height="200">
 		<h:form id="maoDeObraUpdateDialogForm" prependId="false">
 			<h:panelGrid columns="2"  rendered="#{not empty maoDeObraBean.maoDeObra}">
@@ -16,9 +16,8 @@
 				<pe:inputNumber decimalPlaces="2" symbol="R$ "  value="#{maoDeObraBean.maoDeObra.valordia}"/>
 				<h:outputText value="Valor Unitário Hora : " />
 				<pe:inputNumber decimalPlaces="2" symbol="R$ "  value="#{maoDeObraBean.maoDeObra.valorhora}" />			
-				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":maoDeObraForm" actionListener="#{maoDeObraBean.updateMaoDeObra()}"
-					onclick="PF('dialogEdit').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{maoDeObraBean.resetMaoDeObra()}" type="button" onclick="PF('dialogEdit').hide();" />
+				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":maoDeObraForm" actionListener="#{maoDeObraBean.updateMaoDeObra()}" onclick="PF('dialogEdit').hide();" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":maoDeObraForm" actionListener="#{maoDeObraBean.resetMaoDeObra()}"  onclick="PF('dialogEdit').hide();" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

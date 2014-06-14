@@ -5,14 +5,13 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
-	<p:dialog header="Editar Aplicação" id="aplicacaoDialogId" widgetVar="dialogEdit" modal="true" dynamic="true" height="100">
+	<p:dialog header="Editar Aplicação" id="aplicacaoDialogId" widgetVar="dialogEdit" closable="false" modal="true" dynamic="true" height="100">
 		<h:form id="aplicacaoUpdateDialogForm" prependId="false">
 			<h:panelGrid columns="2"  rendered="#{not empty aplicacaoBean.aplicacao}">
 				<h:outputText value="Aplicacao : " />
-				<h:inputText value="#{aplicacaoBean.aplicacao.descricao}" required="true" label="Aplicacao" />
-				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":aplicacaoForm" actionListener="#{aplicacaoBean.updateAplicacao()}"
-					onclick="PF('dialogEdit').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{aplicacaoBean.resetAplicacao()}" type="button" onclick="PF('dialogEdit').hide();" />
+				<h:inputText value="#{aplicacaoBean.aplicacao.descricao}" required="true" label="Aplicacao" />				
+				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":aplicacaoForm" actionListener="#{aplicacaoBean.updateAplicacao()}" onclick="PF('dialogEdit').hide();" />				
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel"  update=":aplicacaoForm"  actionListener="#{aplicacaoBean.resetAplicacao()}"  onclick="PF('dialogEdit').hide();" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

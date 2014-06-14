@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
-	<p:dialog header="Editar Tipo de Material" id="tipoMaterialDialogId"
+	<p:dialog header="Editar Tipo de Material" id="tipoMaterialDialogId" closable="false"
 		widgetVar="dialogEdit" modal="true" dynamic="true" height="100">
 		<h:form id="tipoMaterialUpdateDialogForm" prependId="false">
 			<h:panelGrid columns="2"  rendered="#{not empty tipoMaterialBean.tipoMaterial}">
@@ -13,7 +13,7 @@
 				<h:inputText value="#{tipoMaterialBean.tipoMaterial.descricao}" required="true" label="Tipo de Material" />
 				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.updateTipoMaterial()}"
 					onclick="PF('dialogEdit').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{tipoMaterialBean.resetTipoMaterial()}" type="button" onclick="PF('dialogEdit').hide();" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.resetTipoMaterial()}" onclick="PF('dialogEdit').hide();" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

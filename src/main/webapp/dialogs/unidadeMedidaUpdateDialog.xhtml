@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:body>
-	<p:dialog header="Editar Unidade de Medida" id="unidadeMedidaDialogId"
+	<p:dialog header="Editar Unidade de Medida" id="unidadeMedidaDialogId" closable="false"
 		widgetVar="dialogEdit" modal="true" dynamic="true" height="200">
 		<h:form id="unidadeMedidaUpdateDialogForm" prependId="false">
 			<h:panelGrid columns="2"  rendered="#{not empty unidadeMedidaBean.unidadeMedida}">
@@ -17,7 +17,7 @@
 				<h:outputText value="Fator de Conversão" />	
 				<pe:inputNumber  decimalSeparator="," thousandSeparator="."  decimalPlaces="3"  value="#{unidadeMedidaBean.unidadeMedida.fatorConversao}" required="false" />
 				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.updateUnidadeMedida()}" onclick="PF('dialogEdit').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{unidadeMedidaBean.resetUnidadeMedida()}" type="button" onclick="PF('dialogEdit').hide();" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.resetUnidadeMedida()}" onclick="PF('dialogEdit').hide();" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

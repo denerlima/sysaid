@@ -40,7 +40,7 @@
 					<h:outputText  value="#{um.fatorConversao}" />
 				</p:column>
 				<p:column style="width:200px">											
-					<p:commandButton value="Editar" update=":unidadeMedidaUpdateDialogForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
+					<p:commandButton value="Editar" update=":unidadeMedidaUpdateDialogForm :unidadeMedidaForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
 							<f:setPropertyActionListener target="#{unidadeMedidaBean.unidadeMedida}" value="#{um}" />
 					</p:commandButton>	
 					<p:commandButton value="Excluir" action="#{unidadeMedidaBean.deleteUnidadeMedida()}" icon="ui-icon-trash" update=":unidadeMedidaForm:resultado" style="margin-right:10px">
@@ -51,7 +51,7 @@
 			</p:outputPanel>
 			</center>
 					
-			<p:dialog header="Cadastrar Unidade de Medida" widgetVar="dialogNew" modal="true" height="200">			    
+			<p:dialog header="Cadastrar Unidade de Medida" widgetVar="dialogNew" modal="true"  closable="false" height="200">			    
 			    <h:panelGrid columns="2">
 				<h:outputText value="Unidade de Entrada : " />
 				<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unEntrada}" required="false" label="Unidade de Medida da Entrada do Material"/> 
@@ -60,7 +60,7 @@
 				<h:outputText value="Fator de Conversão" />	
 				<pe:inputNumber  decimalSeparator="," thousandSeparator="."  decimalPlaces="3"  value="#{unidadeMedidaBean.unidadeMedida.fatorConversao}" required="false" label="Fator de Conversão do Material"/>
 				<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.createUnidadeMedida}" onclick="PF('dialogNew').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.resetUnidadeMedida()}" type="button"  onclick="PF('dialogNew').hide();"/>
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.resetUnidadeMedida()}" onclick="PF('dialogNew').hide();"/>
 				</h:panelGrid>				
 			</p:dialog>
 
