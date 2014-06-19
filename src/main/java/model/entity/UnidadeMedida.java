@@ -30,16 +30,16 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 	@Column
 	private int id;	
 	private String unSaida;
-	private String unEntrada;
+	
 	@Column(length = 20, precision = 20, scale= 3 , nullable = false)
 	private BigDecimal fatorConversao;
 	
 	@OneToMany(mappedBy="unidadeMedida")
 	private List<Material> listaMaterial;
 	
-//	@ManyToOne
-//	@JoinColumn(name="id_unidadeentrada", referencedColumnName="id")
-//	private UnidadeEntrada unidadeEntrada;
+	@ManyToOne
+	@JoinColumn(name="id_unidadeentrada", referencedColumnName="id")
+	private UnidadeEntrada unidadeEntrada;
 	
 	public int getId() {
 		return id;
@@ -52,22 +52,17 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 		return this.unSaida;
 	}
 	
-//	public UnidadeEntrada getUnidadeEntrada() {
-//		return unidadeEntrada;
-//	}
-//	public void setUnidadeEntrada(UnidadeEntrada unidadeEntrada) {
-//		this.unidadeEntrada = unidadeEntrada;
-//	}
+	public UnidadeEntrada getUnidadeEntrada() {
+		return unidadeEntrada;
+	}
+	public void setUnidadeEntrada(UnidadeEntrada unidadeEntrada) {
+		this.unidadeEntrada = unidadeEntrada;
+	}
 
 	public void setUnSaida(String unSaida) {
 		this.unSaida = unSaida;
 	}   
-	public String getUnEntrada() {
-		return unEntrada;
-	}
-	public void setUnEntrada(String unEntrada) {
-		this.unEntrada = unEntrada;
-	}
+
 	public BigDecimal getFatorConversao() {	
 		if (fatorConversao != null) {
 			return this.fatorConversao.setScale(3,BigDecimal.ROUND_DOWN) ;

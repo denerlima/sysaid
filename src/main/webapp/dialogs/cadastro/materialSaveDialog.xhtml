@@ -28,7 +28,7 @@
 		<h:outputText value="Unidade de Medida de Entrada : " />
 		<h:selectOneMenu id="cbEntrada" immediate="true" value="#{materialBean.selectedUnidadeMedida.id}" >
 			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{materialBean.selectItensUnidadeMedida}" var="um" itemLabel="#{um.unEntrada}"   itemValue="#{um}" />				
+			<f:selectItems value="#{materialBean.selectItensUnidadeMedida}" var="um" itemLabel="#{um.unidadeEntrada}"   itemValue="#{um}" />				
 		</h:selectOneMenu>								
 		<h:outputText value="Estoque Informado : " />
 		<pe:inputNumber decimalPlaces="2" value="#{materialBean.material.estoqueInformado}"/>

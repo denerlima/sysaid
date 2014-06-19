@@ -12,6 +12,7 @@ import model.entity.Aplicacao;
 import model.entity.Material;
 import model.entity.TipoMaterial;
 import model.entity.UnidadeMedida;
+
 import model.facade.AplicacaoFacade;
 import model.facade.MaterialFacade;
 import model.facade.TipoMaterialFacade;
@@ -142,7 +143,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		List<SelectItem> lista = new ArrayList<SelectItem>();
 		UnidadeMedidaFacade unidadeMedidaFacade = new UnidadeMedidaFacade();
 		for(UnidadeMedida unidadeMedida : unidadeMedidaFacade.listAll()){
-			lista.add(new SelectItem(unidadeMedida.getId(), unidadeMedida.getUnEntrada()));
+			lista.add(new SelectItem(unidadeMedida.getId(), unidadeMedida.getUnidadeEntrada().getDescricao() + " - " + unidadeMedida.getUnSaida() ));
 		}
 		return lista;
 	}

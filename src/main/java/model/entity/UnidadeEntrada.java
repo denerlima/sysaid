@@ -1,4 +1,4 @@
-/*package model.entity;
+package model.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -29,8 +29,8 @@ public class UnidadeEntrada extends GenericModelo implements Serializable{
 	private String descricao;
 	
 	@OneToMany(mappedBy="unidadeEntrada")
-	private List<UnidadeMedida> listaUnidadeMedida;
-
+	private List<UnidadeEntrada> unidadeEntrada;
+	
 	public int getId() {
 		return id;
 	}
@@ -46,7 +46,15 @@ public class UnidadeEntrada extends GenericModelo implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-		
+	
+	public List<UnidadeEntrada> getUnidadeEntrada() {
+		return unidadeEntrada;
+	}
+
+	public void setUnidadeEntrada(List<UnidadeEntrada> unidadeEntrada) {
+		this.unidadeEntrada = unidadeEntrada;
+	}
+
 	@Override
 	public int hashCode() {
 		return id;
@@ -67,4 +75,3 @@ public class UnidadeEntrada extends GenericModelo implements Serializable{
 		return descricao;
 	}
 }
-*/

@@ -13,7 +13,9 @@
 		<title>Lista de Unidade de Medida</title>
 		<center><h2>Lista de Unidade de Medida</h2></center>
 		<p:spacer height="10" />
-			<p:commandButton value="Cadastrar Unidade de Medida" icon="ui-icon-plus" type="button" onclick="PF('dialogNew').show();" />	
+			<p:commandButton value="Cadastrar Unidade de Medida" icon="ui-icon-plus" type="button" onclick="PF('dialogNew').show();" />
+			<p:commandButton value="Cadastrar Unidade de Entrada" icon="ui-icon-plus" type="button" onclick="PF('dialogNewEntrada').show();" />
+					
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
@@ -31,7 +33,7 @@
 		           	 </p:row>
 				</p:columnGroup>
 				<p:column >
-					<h:outputText value="#{um.unEntrada}" />							
+					<h:outputText value="#{um.unidadeEntrada.descricao}" />							
 				</p:column>
 				<p:column>
 					<h:outputText value="#{um.unSaida}" />							
@@ -53,8 +55,11 @@
 					
 			<p:dialog header="Cadastrar Unidade de Medida" widgetVar="dialogNew" modal="true"  closable="false" height="200">			    
 			    <h:panelGrid columns="2">
-				<h:outputText value="Unidade de Entrada : " />
-				<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unEntrada}" required="false" label="Unidade de Medida da Entrada do Material"/> 
+			    <h:outputText value="Unidade de Entrada : " />
+				<h:selectOneMenu id="cbEntrada" immediate="true" value="#{unidadeMedidaBean.selectedUnidadeEntrada.id}" >
+					<f:selectItem itemValue="" itemLabel="Selecione" />
+					<f:selectItems value="#{unidadeMedidaBean.selectItensUnidadeEntrada}" var="um" itemLabel="#{um.unidadeEntrada}"   itemValue="#{um}" />				
+				</h:selectOneMenu>
 				<h:outputText value="Unidade de Saída : " />
 				<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unSaida}" required="false" label="Unidade de Medida da Saida do Material"/>				
 				<h:outputText value="Fator de Conversão" />	
@@ -66,6 +71,7 @@
 
 		</h:form>
 		
+		<ui:include src="/dialogs/cadastro/unidadeEntradaSaveDialog.xhtml" />
 		<ui:include src="/dialogs/unidadeMedidaUpdateDialog.xhtml" />
 
 	</ui:define>
