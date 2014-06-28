@@ -17,7 +17,7 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="app" value="#{aplicacaoBean.allAplicacoes}">
+				<p:dataTable var="app" value="#{aplicacaoBean.allAplicacoes}" emptyMessage="Não Existe itens nesta lista.">
 				<p:ajax event="rowSelect" update=":aplicacaoUpdateDialogForm" /> 
 					<p:column headerText="Aplicação">
 						<h:outputText value="#{app.descricao}" />							
@@ -26,7 +26,7 @@
 						<p:commandButton value="Editar" update=":aplicacaoUpdateDialogForm :aplicacaoForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
 								<f:setPropertyActionListener target="#{aplicacaoBean.aplicacao}" value="#{app}" />
 						</p:commandButton>	
-						<p:commandButton value="Excluir" action="#{aplicacaoBean.deleteAplicacao()}" icon="ui-icon-trash" update=":aplicacaoForm:resultado" style="margin-right:10px">
+						<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();"  style="margin-right:10px">
 							<f:setPropertyActionListener target="#{aplicacaoBean.aplicacao}" value="#{app}" />
 						</p:commandButton>						
 					</p:column>
@@ -45,6 +45,14 @@
 				</p:focus>
 				<p:commandButton value="Cancelar" icon="ui-icon-cancel"  update=":aplicacaoForm"  actionListener="#{aplicacaoBean.resetAplicacao()}" onclick="PF('dialogNew').hide();"/>
 			</h:panelGrid>
+			</p:dialog>
+			
+			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
+			  <center>		
+				<p:commandButton value="Sim" icon="ui-icon-check"  update=":aplicacaoForm:resultado" actionListener="#{aplicacaoBean.deleteAplicacao()}" onclick="PF('dialogTrash').hide();" />
+				<p:spacer height="30" />
+				<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
+			</center>
 			</p:dialog>
 
 		</h:form>

@@ -17,7 +17,7 @@
 				<h:outputText value="Valor Unitário Hora : " />
 				<pe:inputNumber decimalPlaces="2" symbol="R$ "  value="#{maoDeObraBean.maoDeObra.valorhora}" />			
 				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":maoDeObraForm" actionListener="#{maoDeObraBean.updateMaoDeObra()}" onclick="PF('dialogEdit').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":maoDeObraForm" actionListener="#{maoDeObraBean.resetMaoDeObra()}"  onclick="PF('dialogEdit').hide();" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('dialogEdit').hide();" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

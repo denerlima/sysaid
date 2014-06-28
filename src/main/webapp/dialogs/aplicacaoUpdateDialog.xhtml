@@ -11,7 +11,7 @@
 				<h:outputText value="Aplicacao : " />
 				<h:inputText value="#{aplicacaoBean.aplicacao.descricao}" required="true" label="Aplicacao" />				
 				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":aplicacaoForm" actionListener="#{aplicacaoBean.updateAplicacao()}" onclick="PF('dialogEdit').hide();" />				
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel"  update=":aplicacaoForm"  actionListener="#{aplicacaoBean.resetAplicacao()}"  onclick="PF('dialogEdit').hide();" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel"  onclick="PF('dialogEdit').hide();" />
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

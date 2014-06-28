@@ -18,7 +18,7 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="mao" value="#{maoDeObraBean.allMaosDeObra}">
+				<p:dataTable var="mao" value="#{maoDeObraBean.allMaosDeObra}" emptyMessage="Não Existe itens nesta lista.">
 				<p:ajax event="rowSelect" update=":maoDeObraUpdateDialogForm" /> 
 					<p:column headerText="Mão de Obra">
 						<h:outputText value="#{mao.descricao}" />							
@@ -33,7 +33,7 @@
 						<p:commandButton value="Editar" update=":maoDeObraUpdateDialogForm :maoDeObraForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
 								<f:setPropertyActionListener target="#{maoDeObraBean.maoDeObra}" value="#{mao}" />
 						</p:commandButton>	
-						<p:commandButton value="Excluir" action="#{maoDeObraBean.deleteMaoDeObra()}" icon="ui-icon-trash" update=":maoDeObraForm:resultado" style="margin-right:10px">
+						<p:commandButton value="Excluir" icon="ui-icon-trash" onclick="PF('dialogTrash').show();" style="margin-right:10px">
 							<f:setPropertyActionListener target="#{maoDeObraBean.maoDeObra}" value="#{mao}" />
 						</p:commandButton>						
 					</p:column>
@@ -54,6 +54,14 @@
 				<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":maoDeObraForm" actionListener="#{maoDeObraBean.createMaoDeObra}" onclick="PF('dialogNew').hide();" />
 				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":maoDeObraForm" actionListener="#{maoDeObraBean.resetMaoDeObra()}" onclick="PF('dialogNew').hide();"/>
 			</h:panelGrid>
+			</p:dialog>
+			
+			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
+			  <center>		
+				<p:commandButton value="Sim" icon="ui-icon-check"  update=":maoDeObraForm:resultado" actionListener="#{maoDeObraBean.deleteMaoDeObra()}" onclick="PF('dialogTrash').hide();" />
+				<p:spacer height="30" />
+				<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
+			</center>
 			</p:dialog>
 
 		</h:form>

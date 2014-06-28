@@ -37,7 +37,8 @@
 				
 				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":materialForm :materialForm:resultado" actionListener="#{materialBean.updateMaterial}"
 					onclick="PF('dialogEdit').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{materialBean.resetMaterial()}" type="button" onclick="PF('dialogEdit').hide();" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('dialogEdit').hide();" />
+				
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>

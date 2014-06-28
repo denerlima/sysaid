@@ -17,7 +17,7 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="app" value="#{tipoMaterialBean.alltiposMaterial}" emptyMessage="Nenhum registro encontrado!">
+				<p:dataTable var="app" value="#{tipoMaterialBean.alltiposMaterial}" emptyMessage="Não Existe itens nesta lista.">
 				<p:ajax event="rowSelect" update=":tipoMaterialUpdateDialogForm" /> 
 					<p:column headerText="Tipo de Material">
 						<h:outputText value="#{app.descricao}" />							
@@ -26,7 +26,7 @@
 						<p:commandButton value="Editar" update=":tipoMaterialUpdateDialogForm :tipoMaterialForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
 								<f:setPropertyActionListener target="#{tipoMaterialBean.tipoMaterial}" value="#{app}" />
 						</p:commandButton>	
-						<p:commandButton value="Excluir" action="#{tipoMaterialBean.deleteTipoMaterial()}" icon="ui-icon-trash" update=":tipoMaterialForm:resultado" style="margin-right:10px">
+						<p:commandButton value="Excluir" onclick="PF('dialogTrash').show();" icon="ui-icon-trash" style="margin-right:10px">
 							<f:setPropertyActionListener target="#{tipoMaterialBean.tipoMaterial}" value="#{app}" />
 						</p:commandButton>						
 					</p:column>
@@ -43,6 +43,14 @@
 				<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.createTipoMaterial}" onclick="PF('dialogNew').hide();" />
 				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.resetTipoMaterial()}" onclick="PF('dialogNew').hide();"/>
 			</h:panelGrid>
+			</p:dialog>
+			
+			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
+			  <center>		
+				<p:commandButton value="Sim" icon="ui-icon-check"  update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.deleteTipoMaterial()}" onclick="PF('dialogTrash').hide();" />
+				<p:spacer height="30" />
+				<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
+			</center>
 			</p:dialog>
 
 		</h:form>
