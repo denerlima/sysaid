@@ -50,6 +50,12 @@ public class Material extends GenericModelo implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="id_aplicacao", referencedColumnName="id")
 	private Aplicacao aplicacao;
+	@ManyToOne
+	@JoinColumn(name="id_grupo", referencedColumnName="id")
+	private Grupo grupo;
+	@ManyToOne
+	@JoinColumn(name="id_marca", referencedColumnName="id")
+	private Marca marca;
 	
 
 	public int getId() {
@@ -120,8 +126,24 @@ public class Material extends GenericModelo implements Serializable{
 
 	public void setAplicacao(Aplicacao aplicacao) {
 		this.aplicacao = aplicacao;
+	}	
+		
+	public Grupo getGrupo() {
+		return grupo;
 	}
-	
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+
+	public Marca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
+	}
+
 	public int getAtivo() {
 		return ativo;
 	}

@@ -9,11 +9,14 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import model.entity.Aplicacao;
+import model.entity.Grupo;
+import model.entity.Marca;
 import model.entity.Material;
 import model.entity.TipoMaterial;
 import model.entity.UnidadeMedida;
-
 import model.facade.AplicacaoFacade;
+import model.facade.GrupoFacade;
+import model.facade.MarcaFacade;
 import model.facade.MaterialFacade;
 import model.facade.TipoMaterialFacade;
 import model.facade.UnidadeMedidaFacade;
@@ -27,12 +30,18 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	private List<Material> materiais;
 	private MaterialFacade materialFacade;
 	private List<Aplicacao> listaAplicacoes;
+	private List<Marca> listaMarcas;
+	private List<Grupo> listaGrupos;
 	private Aplicacao selectedAplicacao;
+	private Marca selectedMarca;
+	private Grupo selectedGrupo;
 	private TipoMaterial selectedTipoMaterial;
 	private UnidadeMedida selectedUnidadeMedida;
 	
 	public MaterialBean(){
 		selectedAplicacao = new Aplicacao();
+		selectedMarca = new Marca();
+		selectedGrupo = new Grupo();
 		selectedTipoMaterial = new TipoMaterial();
 		selectedUnidadeMedida = new UnidadeMedida();
 	}
@@ -60,11 +69,27 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			listaAplicacoes = new ArrayList<Aplicacao>();
 		}
 		return listaAplicacoes;
-	}	
+	}
+	
+	public List<Marca> getListaMarcas() {
+		if (listaMarcas == null) {
+			listaMarcas = new ArrayList<Marca>();
+		}
+		return listaMarcas;
+	}
+	
+	public List<Grupo> getListaGrupos() {
+		if (listaGrupos == null) {
+			listaGrupos = new ArrayList<Grupo>();
+		}
+		return listaGrupos;
+	}
 
 	public void createMaterial() {
 		try {			
 			material.setAplicacao(selectedAplicacao);
+			material.setMarca(selectedMarca);
+			material.setGrupo(selectedGrupo);
 			material.setTipoMaterial(selectedTipoMaterial);
 			material.setUnidadeMedida(selectedUnidadeMedida);
 			getMaterialFacade().createMaterial(material);
@@ -82,6 +107,8 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	public void updateMaterial() {
 		try {
 			material.setAplicacao(selectedAplicacao);
+			material.setMarca(selectedMarca);
+			material.setGrupo(selectedGrupo);
 			material.setTipoMaterial(selectedTipoMaterial);
 			material.setUnidadeMedida(selectedUnidadeMedida);
 			getMaterialFacade().updateMaterial(material);
@@ -130,6 +157,24 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		return lista;
 	}
 	
+	public List<SelectItem> getSelectItensMarcas(){
+		List<SelectItem> lista = new ArrayList<SelectItem>();
+		MarcaFacade marcaFacade = new MarcaFacade();
+		for(Marca marca : marcaFacade.listAll()){
+			lista.add(new SelectItem(marca.getId(), marca.getDescricao()));
+		}
+		return lista;
+	}
+	
+	public List<SelectItem> getSelectItensGrupos(){
+		List<SelectItem> lista = new ArrayList<SelectItem>();
+		GrupoFacade grupoFacade = new GrupoFacade();
+		for(Grupo grupo : grupoFacade.listAll()){
+			lista.add(new SelectItem(grupo.getId(), grupo.getDescricao()  + " - " + grupo.getGrupopai()));
+		}
+		return lista;
+	}
+	
 	public List<SelectItem> getSelectItensTipoMaterial(){
 		List<SelectItem> lista = new ArrayList<SelectItem>();
 		TipoMaterialFacade tipoMaterialFacade = new TipoMaterialFacade();
@@ -154,8 +199,24 @@ public class MaterialBean extends AbstractBean implements Serializable {
 
 	public void setSelectedAplicacao(Aplicacao selectedAplicacao) {
 		this.selectedAplicacao = selectedAplicacao;
-	}	
-	
+	}
+		
+	public Marca getSelectedMarca() {
+		return selectedMarca;
+	}
+
+	public void setSelectedMarca(Marca selectedMarca) {
+		this.selectedMarca = selectedMarca;
+	}
+
+	public Grupo getSelectedGrupo() {
+		return selectedGrupo;
+	}
+
+	public void setSelectedGrupo(Grupo selectedGrupo) {
+		this.selectedGrupo = selectedGrupo;
+	}
+
 	public TipoMaterial getSelectedTipoMaterial() {
 		return selectedTipoMaterial;
 	}

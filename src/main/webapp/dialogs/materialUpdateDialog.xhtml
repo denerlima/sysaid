@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:body>
-	<p:dialog header="Editar Material" id="materialDialogId" widgetVar="dialogEdit" modal="true" dynamic="true" closable="false" height="400">
+	<p:dialog header="Editar Material" id="materialDialogId" widgetVar="dialogEdit" modal="true" dynamic="true" closable="false" height="500">
 		<h:form id="materialUpdateDialogForm" prependId="false">
 			<h:panelGrid columns="2"  rendered="#{not empty materialBean.material}">
 				<h:outputText value="Material : " />
@@ -23,8 +23,18 @@
 				<h:outputText value="Aplicação : " />
 				<h:selectOneMenu id="cbAplicacaoUpdate" immediate="true" value="#{materialBean.selectedAplicacao.id}" >
 					<f:selectItem itemValue="" itemLabel="Selecione" />
-					<f:selectItems value="#{materialBean.selectItensAplicacoes}" var="app" itemLabel="#{app.descricao}"   itemValue="#{app}" />				
-				</h:selectOneMenu>							
+					<f:selectItems value="#{materialBean.selectItensAplicacoes}" var="app" itemLabel="#{app.descricao}"   itemValue="#{app}" />	
+				</h:selectOneMenu>
+				<h:outputText value="Marca : " />
+				<h:selectOneMenu id="cbMarcaUpdate" immediate="true" value="#{materialBean.selectedMarca.id}" >
+					<f:selectItem itemValue="" itemLabel="Selecione" />
+					<f:selectItems value="#{materialBean.selectItensMarcas}" var="marca" itemLabel="#{marca.descricao}"   itemValue="#{marca}" />			
+				</h:selectOneMenu>				
+				<h:outputText value="Grupo : " />
+				<h:selectOneMenu id="cbGrupoUpdate" immediate="true" value="#{materialBean.selectedGrupo.id}" >
+					<f:selectItem itemValue="" itemLabel="Selecione" />
+					<f:selectItems value="#{materialBean.selectItensGrupos}" var="grupo" itemLabel="#{grupo.descricao}"   itemValue="#{grupo}" />		
+				</h:selectOneMenu>	
 				<h:outputText value="Unidade de Medida de Entrada : " />
 				<h:selectOneMenu id="cbEntradaUpdate" immediate="true" value="#{materialBean.selectedUnidadeMedida.id}" >
 					<f:selectItem itemValue="" itemLabel="Selecione" />

@@ -19,11 +19,6 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 	private AplicacaoFacade aplicacaoFacade;
 
 	
-/*	@PostConstruct  
-    public void construct() {  
-        setAplicacao(new Aplicacao());    
-	} */ 
-	
 	public AplicacaoFacade getAplicacaoFacade() {
 		if (aplicacaoFacade == null) {
 			aplicacaoFacade = new AplicacaoFacade();
