@@ -15,9 +15,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
 @SequenceGenerator(name = "unidadeMedidaSequence", sequenceName = "UNIDADEMEDIDA_ID_SEQ", allocationSize = 1)
 @Table(name = "UNIDADEMEDIDA")
+@Where(clause = "ativo = '1'")  
+@SQLDelete(sql = "UPDATE sysaid_java.UNIDADEMEDIDA SET ativo  = 0 WHERE id = ?")
+
 public class UnidadeMedida extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -30,6 +36,7 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 	@Column
 	private int id;	
 	private String unSaida;
+	private int ativo = 1;
 	
 	@Column(length = 20, precision = 20, scale= 3 , nullable = false)
 	private BigDecimal fatorConversao;
@@ -61,7 +68,15 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 
 	public void setUnSaida(String unSaida) {
 		this.unSaida = unSaida;
-	}   
+	}
+	
+	public int getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(int ativo) {
+		this.ativo = ativo;
+	}
 
 	public BigDecimal getFatorConversao() {	
 		if (fatorConversao != null) {

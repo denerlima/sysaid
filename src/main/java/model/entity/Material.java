@@ -13,9 +13,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
 @SequenceGenerator(name = "materialSequence", sequenceName = "MATERIAL_ID_SEQ", allocationSize = 1)
 @Table(name = "MATERIAL")
+@Where(clause = "ativo = '1'")  
+@SQLDelete(sql = "UPDATE sysaid_java.MATERIAL SET ativo  = 0 WHERE id = ?")
+
 public class Material extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -29,6 +35,8 @@ public class Material extends GenericModelo implements Serializable{
 	private int id;		
 	private String material;
 	private String descricao;
+	private int ativo = 1;
+	
 	@ManyToOne
 	@JoinColumn(name="id_unidadeMedida", referencedColumnName="id")
 	private UnidadeMedida unidadeMedida;
@@ -112,6 +120,14 @@ public class Material extends GenericModelo implements Serializable{
 
 	public void setAplicacao(Aplicacao aplicacao) {
 		this.aplicacao = aplicacao;
+	}
+	
+	public int getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(int ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override

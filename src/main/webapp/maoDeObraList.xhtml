@@ -18,7 +18,7 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="mao" value="#{maoDeObraBean.allMaosDeObra}" emptyMessage="Não Existe itens nesta lista.">
+				<p:dataTable var="mao" value="#{maoDeObraBean.allMaosDeObra}" emptyMessage="Não existe itens nesta lista.">
 				<p:ajax event="rowSelect" update=":maoDeObraUpdateDialogForm" /> 
 					<p:column headerText="Mão de Obra">
 						<h:outputText value="#{mao.descricao}" />							

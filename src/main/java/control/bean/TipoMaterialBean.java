@@ -6,6 +6,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.log4j.Logger;
+
 import model.entity.TipoMaterial;
 import model.facade.TipoMaterialFacade;
 
@@ -44,6 +46,7 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 			getTipoMaterialFacade().createTipoMaterial(tipoMaterial);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
+			//Logger.getLogger(getClass()).info("usuario salvo no banco com sucesso");
 			loadTiposMaterial();
 			resetTipoMaterial();
 		} catch (Exception e) {

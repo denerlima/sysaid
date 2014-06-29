@@ -17,7 +17,7 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:80%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="mat" value="#{materialBean.allMateriais}" emptyMessage="Não Existe itens nesta lista.">
+				<p:dataTable var="mat" value="#{materialBean.allMateriais}" emptyMessage="Não existe itens nesta lista.">
 				<p:ajax event="rowSelect" update=":materialUpdateDialogForm" />				
 					<p:column headerText="Material">
 						<h:outputText value="#{mat.material}" />							

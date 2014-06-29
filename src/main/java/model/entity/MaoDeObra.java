@@ -11,9 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 @Entity
 @SequenceGenerator(name = "maoDeObraSequence", sequenceName = "MAODEOBRA_ID_SEQ", allocationSize = 1)
 @Table(name = "MAODEOBRA")
+@Where(clause = "ativo = '1'")  
+@SQLDelete(sql = "UPDATE sysaid_java.MAODEOBRA SET ativo  = 0 WHERE id = ?")
+
 public class MaoDeObra extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -26,6 +32,8 @@ public class MaoDeObra extends GenericModelo implements Serializable{
 	@Column
 	private int id;		
 	private String descricao;
+	private int ativo = 1;
+	
 	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
 	private BigDecimal valordia;
 	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
@@ -69,23 +77,13 @@ public class MaoDeObra extends GenericModelo implements Serializable{
 		this.valorhora = valorhora;
 	}
 
-/*
-	public BigDecimal getValordia() {
-		return valordia;
+	public int getAtivo() {
+		return ativo;
 	}
 
-	public void setValordia(BigDecimal valordia) {
-		this.valordia = valordia;
+	public void setAtivo(int ativo) {
+		this.ativo = ativo;
 	}
-	
-	public BigDecimal getValorhora() {
-		return valorhora;
-	}
-
-	public void setValorhora(BigDecimal valorhora) {
-		this.valorhora = valorhora;
-	}
-	*/
 
 	@Override
 	public int hashCode() {
