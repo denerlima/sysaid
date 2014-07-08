@@ -38,7 +38,7 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 	private String unSaida;
 	private int ativo = 1;
 	
-	@Column(length = 20, precision = 20, scale= 3 , nullable = false)
+	@Column(length = 20, precision = 20, scale= 3 , nullable = true)
 	private BigDecimal fatorConversao;
 	
 	@OneToMany(mappedBy="unidadeMedida")

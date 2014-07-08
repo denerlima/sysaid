@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
@@ -24,6 +25,9 @@ import model.facade.UnidadeMedidaFacade;
 @ViewScoped
 @ManagedBean
 public class MaterialBean extends AbstractBean implements Serializable {
+	@ManagedProperty(value = InventarioBean.INJECTION_NAME)
+    private InventarioBean inventarioBean;
+	
 	private static final long serialVersionUID = 1L;
 
 	private Material material;	
@@ -37,6 +41,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	private Grupo selectedGrupo;
 	private TipoMaterial selectedTipoMaterial;
 	private UnidadeMedida selectedUnidadeMedida;
+
 	
 	public MaterialBean(){
 		selectedAplicacao = new Aplicacao();
@@ -123,6 +128,59 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		}
 	}
 	
+	
+	public List<Material> complete(String name) {
+		List<Material> queryResult = new ArrayList<Material>();
+
+		if (materiais == null) {
+			materialFacade = new MaterialFacade();
+			materiais = materialFacade.listAllMateriais();
+		}
+
+		//allDogs.removeAll(personWithDogs.getDogs());
+
+		for (Material mat : materiais) {
+			if (mat.getMaterial().toLowerCase().contains(name.toLowerCase())) {
+				queryResult.add(mat);
+			}
+		}
+
+		return queryResult;
+	}
+	
+	
+	
+	public Material pesquisarMaterial() {
+		try {			
+			material = getMaterialFacade().findMaterialbyNomeMaterial(material.getMaterial());
+			closeDialog();
+			//displayInfoMessageToUser("Alterado com  Sucesso");
+			//loadMateriais();
+			//resetMaterial();			
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
+			e.printStackTrace();
+		}
+		return material;
+	}
+	
+	public List<Material> pesquisarListaMateriais() {
+		try {			
+			materiais = getMaterialFacade().findMateriaisByFilter(material);
+			inventarioBean.getInventario().setMateriais(getAllMateriais());
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Ops, não foi possivel achar nennhum material. ERRO");
+			e.printStackTrace();
+		}
+		return materiais;
+	}
+	
+	
+	
+	
+		
 	public void deleteMaterial() {
 		try {
 			getMaterialFacade().deleteMaterial(material);
@@ -236,5 +294,9 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	public void resetMaterial() {
 		material = new Material();
 	}
+	
+    public void setInventarioBean(InventarioBean inventarioBean) {
+        this.inventarioBean = inventarioBean;
+    } 
 
 }

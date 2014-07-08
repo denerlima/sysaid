@@ -23,6 +23,7 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	private List<UnidadeMedida> unidadesMedida;
 	private UnidadeMedidaFacade unidadeMedidaFacade;
 	private UnidadeEntrada selectedUnidadeEntrada;
+	private Boolean isSalvaUnidadeEntrada ;
 
 	
 	public UnidadeMedidaBean(){
@@ -114,6 +115,24 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 		unidadesMedida = getUnidadeMedidaFacade().listAll();
 	}
 	
+	 public void onUnidadeChange() {
+		Integer  idObj = selectedUnidadeEntrada.getId();
+	        if(idObj != null)
+	        	isSalvaUnidadeEntrada = true;
+	        else
+	        	isSalvaUnidadeEntrada = false;
+	    }
+	 
+	 
+	
+	public Boolean getIsSalvaUnidadeEntrada() {
+		return isSalvaUnidadeEntrada;
+	}
+
+	public void setIsSalvaUnidadeEntrada(Boolean isSalvaUnidadeEntrada) {
+		this.isSalvaUnidadeEntrada = isSalvaUnidadeEntrada;
+	}
+
 	public UnidadeEntrada getSelectedUnidadeEntrada() {
 		return selectedUnidadeEntrada;
 	}

@@ -31,7 +31,22 @@ public class MaterialFacade implements Serializable{
 		materialDAO.closeTransaction();
 		return material;
 	}
-
+	
+	public Material findMaterialbyNomeMaterial(String nomeMaterial) {
+		materialDAO.beginTransaction();
+		Material material = materialDAO.findMaterialByMaterial(nomeMaterial);
+        materialDAO.closeTransaction();
+		return material;
+    }
+	
+	public List<Material> findMateriaisByFilter(Material material) {
+		materialDAO.beginTransaction();
+		//List<Material> result = materialDAO.findMateriaisByFilter(material);
+		List<Material> result = materialDAO.findAll();
+		materialDAO.closeTransaction();
+		return result;
+	}
+	
 	public List<Material> listAllMateriais() {
 		materialDAO.beginTransaction();
 		List<Material> result = materialDAO.findAll();

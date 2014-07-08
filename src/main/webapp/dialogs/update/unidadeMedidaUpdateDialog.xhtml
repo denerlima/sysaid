@@ -11,9 +11,9 @@
 		<h:form id="unidadeMedidaUpdateDialogForm" prependId="false">
 			<h:panelGrid columns="2"  rendered="#{not empty unidadeMedidaBean.unidadeMedida}">
 				<h:outputText value="Unidade de Entrada : " />
-				<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada.descricao}" required="false" label="Unidade de Medida da Entrada do Material"/> 
+				<h:outputText value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada.descricao}" readonly="true" required="false" label="Unidade de Medida da Entrada do Material"/> 
 				<h:outputText value="Unidade de Saída : " />
-				<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unSaida}" required="false" label="Unidade de Medida da Saida do Material"/>				
+				<h:outputText value="#{unidadeMedidaBean.unidadeMedida.unSaida}" readonly="true" required="false" label="Unidade de Medida da Saida do Material"/>				
 				<h:outputText value="Fator de Conversão" />	
 				<pe:inputNumber  decimalSeparator="," thousandSeparator="."  decimalPlaces="3"  value="#{unidadeMedidaBean.unidadeMedida.fatorConversao}" required="false" />
 				<p:commandButton value="Salvar" icon="ui-icon-plus" update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.updateUnidadeMedida()}" onclick="PF('dialogEdit').hide();" />

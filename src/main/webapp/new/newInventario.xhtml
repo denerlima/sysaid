@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template.xhtml">
+	<ui:define name="body">
+	
+	<h:form id="newInventarioForm" prependId="false">
+		<title>Cadastro de Inventário</title>
+		<center><h2>Cadastro de Inventário</h2></center>
+		<p:spacer height="10" />					
+	    <p:tabView>
+	        <p:tab title="Dados Gerais">
+	            <h:panelGrid columns="2" cellpadding="10">
+	            	<h:outputText value="Nº de Inventário : " />
+					<h:outputText value="#{inventarioBean.inventario.id}"  label="Numero de Inventário" />
+					<h:outputText value="Data de Inventário : " />
+					<p:calendar pattern="dd/MM/yy" locale="pt_BR" value="#{inventarioBean.inventario.dataInventario}" size="10" navigator="true" />					
+					<h:outputText value="Atendente : " />
+					<h:inputText value="#{inventarioBean.inventario.atendente}" required="false" label="Nome do Atendente" />
+					<h:outputText value="Justificativa : " />
+					<h:inputText value="#{inventarioBean.inventario.justificativa}" label="Justificativa para realização do Inventário" />
+				</h:panelGrid>
+	        </p:tab>
+	        <p:tab title="Material">
+	        <br />
+	        <h:panelGrid columns="3" cellpadding="10">
+				<p:autoComplete forceSelection="true" minQueryLength="3" maxResults="10" value="#{materialBean.material}" label="Material" required="true" var="invMat"
+					itemLabel="#{invMat.material}" itemValue="#{invMat}" completeMethod="#{materialBean.complete}" dropdown="true" />
+				<br/>				        
+		        <p:commandLink value="Adicionar Material" icon="ui-icon-plus" actionListener="#{inventarioBean.newMaterial}" update=":newInventarioForm" >
+		        	<p:collector unique="true" value="#{invMat}" addTo="#{inventarioBean.inventario.materiais}"/>
+		        </p:commandLink>
+	        </h:panelGrid>
+	        				
+				<h2>Materiais do Inventario</h2>
+				<p:dataTable id="tabelaMaterial" var="mat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existe itens nesta lista.">
+				<!-- <p:ajax event="rowSelect" update=":newInventarioForm" />  -->
+					<p:column headerText="Material">
+						<h:outputText value="#{mat.material}" />							
+					</p:column>
+					<p:column headerText="Unidade de Medida Entrada">
+						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
+					</p:column>
+					<p:column headerText="Quantidade">
+						<h:inputText value="#{mat.estoqueInformado}" />							
+					</p:column>
+				</p:dataTable>
+																
+	        </p:tab>
+     	</p:tabView>		
+	</h:form>
+
+	</ui:define>
+</ui:composition>

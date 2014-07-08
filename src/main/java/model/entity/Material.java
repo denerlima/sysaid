@@ -2,6 +2,7 @@ package model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,21 +10,27 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+
 @Entity
 @SequenceGenerator(name = "materialSequence", sequenceName = "MATERIAL_ID_SEQ", allocationSize = 1)
+@NamedQuery(name = "Material.findMaterialByNomeMaterial", query = "select m from Material m where m.material LIKE :material")
 @Table(name = "MATERIAL")
 @Where(clause = "ativo = '1'")  
 @SQLDelete(sql = "UPDATE sysaid_java.MATERIAL SET ativo  = 0 WHERE id = ?")
 
 public class Material extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIND_BY_NOME_MATERIAL = "Material.findMaterialByNomeMaterial";
 	
 	public Material() {
 		super();
@@ -57,6 +64,11 @@ public class Material extends GenericModelo implements Serializable{
 	@JoinColumn(name="id_marca", referencedColumnName="id")
 	private Marca marca;
 	
+	@ManyToMany(mappedBy="materiais")
+	private List<OrdemDeCompra> ordensDeCompra;
+	
+	@ManyToMany(mappedBy="materiais")
+	private List<Inventario> inventarios;
 
 	public int getId() {
 		return id;
@@ -143,6 +155,22 @@ public class Material extends GenericModelo implements Serializable{
 	public void setMarca(Marca marca) {
 		this.marca = marca;
 	}
+	
+	public List<OrdemDeCompra> getOrdensDeCompra() {
+		return ordensDeCompra;
+	}
+
+	public void setOrdensDeCompra(List<OrdemDeCompra> ordensDeCompra) {
+		this.ordensDeCompra = ordensDeCompra;
+	}
+	
+	public List<Inventario> getInventarios() {
+		return inventarios;
+	}
+
+	public void setInventarios(List<Inventario> inventarios) {
+		this.inventarios = inventarios;
+	}
 
 	public int getAtivo() {
 		return ativo;
@@ -165,6 +193,11 @@ public class Material extends GenericModelo implements Serializable{
 		}
 
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return material;
 	}
 	
 }
