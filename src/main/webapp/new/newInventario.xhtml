@@ -5,14 +5,15 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" template="/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 	<ui:define name="body">
 	
 	<h:form id="newInventarioForm" prependId="false">
 		<title>Cadastro de Inventário</title>
 		<center><h2>Cadastro de Inventário</h2></center>
 		<p:spacer height="10" />					
-	    <p:tabView>
+	    <p:tabView  id="tabView">
 	        <p:tab title="Dados Gerais">
 	            <h:panelGrid columns="2" cellpadding="10">
 	            	<h:outputText value="Nº de Inventário : " />
@@ -25,15 +26,16 @@
 					<h:inputText value="#{inventarioBean.inventario.justificativa}" label="Justificativa para realização do Inventário" />
 				</h:panelGrid>
 	        </p:tab>
-	        <p:tab title="Material">
+	        <p:tab title="Material" >
 	        <br />
 	        <h:panelGrid columns="3" cellpadding="10">
-				<p:autoComplete forceSelection="true" minQueryLength="3" maxResults="10" value="#{materialBean.material}" label="Material" required="true" var="invMat"
-					itemLabel="#{invMat.material}" itemValue="#{invMat}" completeMethod="#{materialBean.complete}" dropdown="true" />
+				<p:autoComplete forceSelection="true" minQueryLength="3" maxResults="10" value="#{inventarioBean.material}" label="Material" required="true" var="invMat"
+					itemLabel="#{invMat.material}" itemValue="#{invMat}" completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 				<br/>				        
-		        <p:commandLink value="Adicionar Material" icon="ui-icon-plus" actionListener="#{inventarioBean.newMaterial}" update=":newInventarioForm" >
+		        <p:commandButton value="Adicionar Material" icon="ui-icon-plus" actionListener="#{inventarioBean.newMaterial}" update=":newInventarioForm" >
 		        	<p:collector unique="true" value="#{invMat}" addTo="#{inventarioBean.inventario.materiais}"/>
-		        </p:commandLink>
+		        	<p:resetInput target=":newInventarioForm" />
+		        </p:commandButton>
 	        </h:panelGrid>
 	        				
 				<h2>Materiais do Inventario</h2>
@@ -45,9 +47,14 @@
 					<p:column headerText="Unidade de Medida Entrada">
 						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column headerText="Quantidade">
-						<h:inputText value="#{mat.estoqueInformado}" />							
+					<p:column headerText="Estoque Atual">
+						<h:outputText value="#{mat.estoqueInformado}" />							
 					</p:column>
+					 <p:column headerText="Remover">
+		                <p:commandLink value="Remove" update=":newInventarioForm" process=":newInventarioForm:tabView:tabelaMaterial">
+		                    <p:collector  value="#{invMat}" removeFrom="#{inventarioBean.inventario.materiais}" unique="true"/>
+		                </p:commandLink>
+           			 </p:column>
 				</p:dataTable>
 																
 	        </p:tab>

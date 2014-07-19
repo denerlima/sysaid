@@ -20,9 +20,9 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @SequenceGenerator(name = "unidadeMedidaSequence", sequenceName = "UNIDADEMEDIDA_ID_SEQ", allocationSize = 1)
-@Table(name = "UNIDADEMEDIDA")
+@Table(name = "MF_UNIDADEMEDIDA")
 @Where(clause = "ativo = '1'")  
-@SQLDelete(sql = "UPDATE sysaid_java.UNIDADEMEDIDA SET ativo  = 0 WHERE id = ?")
+@SQLDelete(sql = "UPDATE sysaid_java.MF_UNIDADEMEDIDA SET ativo  = 0 WHERE id = ?")
 
 public class UnidadeMedida extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;

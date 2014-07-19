@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:body>
-	<p:dialog header="Editar Unidade de Entrada" id="unidadeEntradaDialogId" closable="false"
+	<p:dialog header="Cadastrar Unidade de Entrada" id="unidadeEntradaDialogId" closable="false"
 		widgetVar="dialogNewEntrada" modal="true" dynamic="false" height="200">
 		<h:form id="unidadeEntradaSaveDialogForm" prependId="false">
 			<h:panelGrid columns="2">
@@ -18,13 +18,13 @@
 				</h:selectOneMenu>
 					<h:outputText value="Unidade de Entrada : "  rendered="#{!unidadeMedidaBean.isSalvaUnidadeEntrada}" />
 					<h:inputText value="#{unidadeEntradaBean.unidadeEntrada.descricao}" required="false" rendered="#{!unidadeMedidaBean.isSalvaUnidadeEntrada}" />
-					<p:commandButton value="Salvar" icon="ui-icon-plus" update=":unidadeMedidaForm" actionListener="#{unidadeEntradaBean.createUnidadeEntrada()}" onclick="PF('dialogNewEntrada').hide();" rendered="#{!unidadeMedidaBean.isSalvaUnidadeEntrada}"/>
-					<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":unidadeMedidaForm" actionListener="#{unidadeEntradaBean.resetUnidadeEntrada()}" onclick="PF('dialogNewEntrada').hide();" rendered="#{!unidadeMedidaBean.isSalvaUnidadeEntrada}"/>			
+					<p:commandButton value="Salvar" icon="ui-icon-plus" update=":unidadeEntradaSaveDialogForm" actionListener="#{unidadeEntradaBean.createUnidadeEntrada()}" onclick="PF('dialogNewEntrada').hide();" rendered="#{!unidadeMedidaBean.isSalvaUnidadeEntrada}"/>
+					<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":unidadeEntradaSaveDialogForm" actionListener="#{unidadeEntradaBean.resetUnidadeEntrada()}" onclick="PF('dialogNewEntrada').hide();" rendered="#{!unidadeMedidaBean.isSalvaUnidadeEntrada}"/>			
 							
 					<h:outputText value="Unidade de Saída : " rendered="#{unidadeMedidaBean.isSalvaUnidadeEntrada}"/>
 					<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unSaida}"  rendered="#{unidadeMedidaBean.isSalvaUnidadeEntrada}" required="false" label="Unidade de Medida da Saida do Material" />
-					<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.createUnidadeMedida}" onclick="PF('dialogNewEntrada').hide();" rendered="#{unidadeMedidaBean.isSalvaUnidadeEntrada}"/>
-					<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.resetUnidadeMedida()}"  action="/list/unidadeMedidaList.xhtml" onclick="PF('dialogNewEntrada').hide();" rendered="#{unidadeMedidaBean.isSalvaUnidadeEntrada}"/>												
+					<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":unidadeEntradaSaveDialogForm :unidadeMedidaForm" actionListener="#{unidadeMedidaBean.createUnidadeMedida}" onclick="PF('dialogNewEntrada').hide();" rendered="#{unidadeMedidaBean.isSalvaUnidadeEntrada}"/>
+					<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":unidadeEntradaSaveDialogForm" actionListener="#{unidadeMedidaBean.resetUnidadeMedida()}"  action="/list/unidadeMedidaList.xhtml" onclick="PF('dialogNewEntrada').hide();" rendered="#{unidadeMedidaBean.isSalvaUnidadeEntrada}"/>												
 			</h:panelGrid>			
 		</h:form>
 	</p:dialog>

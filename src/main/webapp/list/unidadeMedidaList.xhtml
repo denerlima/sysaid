@@ -51,29 +51,13 @@
 			</p:dataTable>
 			</p:outputPanel>
 			</center>
-					
-			<p:dialog header="Cadastrar Unidade de Medida" widgetVar="dialogNew" modal="true"  closable="false" height="200">			    
-			    <h:panelGrid columns="2">
-			    <h:outputText value="Unidade de Entrada : " />
-				<h:selectOneMenu id="cbEntrada" immediate="true" value="#{unidadeMedidaBean.selectedUnidadeEntrada.id}" >
-					<f:selectItem itemValue="" itemLabel="Selecione" />
-					<f:selectItems value="#{unidadeMedidaBean.selectItensUnidadeEntrada}" var="um" itemLabel="#{um.unidadeEntrada}"   itemValue="#{um}" />				
-				</h:selectOneMenu>
-				<h:outputText value="Unidade de Saída : " />
-				<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unSaida}" required="false" label="Unidade de Medida da Saida do Material"/>				
-				<h:outputText value="Fator de Conversão" />	
-				<pe:inputNumber  decimalSeparator="," thousandSeparator="."  decimalPlaces="3"  value="#{unidadeMedidaBean.unidadeMedida.fatorConversao}" required="false" label="Fator de Conversão do Material"/>
-				<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.createUnidadeMedida}" onclick="PF('dialogNew').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":unidadeMedidaForm"  actionListener="#{unidadeMedidaBean.resetUnidadeMedida()}" onclick="PF('dialogNew').hide();"/>
-				</h:panelGrid>				
-			</p:dialog>
 			
 			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
 			  <center>		
 				<p:commandButton value="Sim" icon="ui-icon-check"  update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.deleteUnidadeMedida()}" onclick="PF('dialogTrash').hide();" />
 				<p:spacer height="30" />
 				<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
-			</center>
+			  </center>
 			</p:dialog>
 
 		</h:form>

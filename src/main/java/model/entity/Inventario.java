@@ -1,6 +1,7 @@
 package model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,15 +19,16 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @SequenceGenerator(name = "inventarioSequence", sequenceName = "INVENTARIO_ID_SEQ", allocationSize = 1)
-@Table(name = "INVENTARIO")
+@Table(name = "MF_INVENTARIO")
 @Where(clause = "ativo = '1'")  
-@SQLDelete(sql = "UPDATE sysaid_java.INVENTARIO SET ativo  = 0 WHERE id = ?")
+@SQLDelete(sql = "UPDATE sysaid_java.MF_INVENTARIO SET ativo  = 0 WHERE id = ?")
 
 public class Inventario extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	public Inventario() {
 		super();
+		this.materiais = new ArrayList<Material>();
 	}
 	
 	@Id

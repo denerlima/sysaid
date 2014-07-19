@@ -21,7 +21,7 @@ public class UnidadeMedidaFacade implements Serializable{
 	public void updateUnidadeMedida(UnidadeMedida unidadeMedida) {
 		unidadeMedidaDAO.beginTransaction();
 		UnidadeMedida persistedUnidadeMedida = unidadeMedidaDAO.find(unidadeMedida.getId());
-		persistedUnidadeMedida.setUnidadeEntrada(unidadeMedida.getUnidadeEntrada());
+		//persistedUnidadeMedida.setUnidadeEntrada(unidadeMedida.getUnidadeEntrada());
 		persistedUnidadeMedida.setUnSaida(unidadeMedida.getUnSaida());
 		persistedUnidadeMedida.setFatorConversao(unidadeMedida.getFatorConversao().setScale(3,BigDecimal.ROUND_DOWN));
 		unidadeMedidaDAO.update(persistedUnidadeMedida);

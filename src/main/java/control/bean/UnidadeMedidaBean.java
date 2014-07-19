@@ -143,6 +143,7 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 
 	public void resetUnidadeMedida() {
 		unidadeMedida = new UnidadeMedida();
+		selectedUnidadeEntrada = new UnidadeEntrada();
 	}
 
 }

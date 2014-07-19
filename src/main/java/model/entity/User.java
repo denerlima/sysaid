@@ -6,7 +6,7 @@ import java.io.Serializable;
 import javax.persistence.*;
  
 @Entity
-@Table(name = "USERS")
+@Table(name = "MF_USERS")
 @NamedQuery(name = "User.findUserByEmail", query = "select u from User u where u.email = :email")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -17,9 +17,9 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @SequenceGenerator(name = "aplicacaoSequence", sequenceName = "APLICACAO_ID_SEQ", allocationSize = 1)
-@Table(name = "APLICACAO")
+@Table(name = "MF_APLICACAO")
 @Where(clause = "ativo = '1'")  
-@SQLDelete(sql = "UPDATE sysaid_java.APLICACAO SET ativo  = 0 WHERE id = ?")
+@SQLDelete(sql = "UPDATE sysaid_java.MF_APLICACAO SET ativo  = 0 WHERE id = ?")
 
 public class Aplicacao extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;

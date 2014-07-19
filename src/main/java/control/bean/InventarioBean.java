@@ -1,6 +1,7 @@
 package control.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -9,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 import model.entity.Inventario;
 import model.entity.Material;
 import model.facade.InventarioFacade;
+import model.facade.MaterialFacade;
 
 @ViewScoped
 @ManagedBean
@@ -19,7 +21,8 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	private Inventario inventario;	
 	private List<Inventario> inventarios;
 	private InventarioFacade inventarioFacade;
-	private Material material;	
+	private Material material;
+	private List<Material> materiais;
 
 	
 	public InventarioFacade getInventarioFacade() {
@@ -54,6 +57,25 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+	}
+	
+	public List<Material> completeMaterial(String name) {
+		List<Material> queryResult = new ArrayList<Material>();
+
+		if (materiais == null) {
+			MaterialFacade materialFacade = new MaterialFacade();
+			materiais = materialFacade.listAllMateriais();
+		}
+
+		//allDogs.removeAll(personWithDogs.getDogs());
+
+		for (Material mat : materiais) {
+			if (mat.getMaterial().toLowerCase().contains(name.toLowerCase())) {
+				queryResult.add(mat);
+			}
+		}
+
+		return queryResult;
 	}
 	
 	public void updateInventario() {
@@ -102,6 +124,10 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	}
 	
 	public void newMaterial() {
+		if (inventario.getMateriais() == null) {
+			inventario.setMateriais(new ArrayList<Material>());
+		}		
+		inventario.getMateriais().add(material);
 		this.material = new Material();
 	}
 
@@ -112,6 +138,16 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
+
+	public List<Material> getMateriais() {
+		return materiais;
+	}
+
+	public void setMateriais(List<Material> materiais) {
+		this.materiais = materiais;
+	}
+	
+	
 	
 	
 	
