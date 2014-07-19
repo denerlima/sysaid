@@ -26,11 +26,14 @@
 					<h:inputText value="#{inventarioBean.inventario.justificativa}" label="Justificativa para realização do Inventário" />
 				</h:panelGrid>
 	        </p:tab>
+	        
 	        <p:tab title="Material" >
 	        <br />
 	        <h:panelGrid columns="3" cellpadding="10">
-				<p:autoComplete forceSelection="true" minQueryLength="3" maxResults="10" value="#{inventarioBean.material}" label="Material" required="true" var="invMat"
-					itemLabel="#{invMat.material}" itemValue="#{invMat}" completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
+				<p:autoComplete forceSelection="true" minQueryLength="3" maxResults="10" 
+					value="#{inventarioBean.material}" label="Material" required="true" 
+					var="invMat" itemLabel="#{invMat.material}" itemValue="#{invMat}" 
+					completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 				<br/>				        
 		        <p:commandButton value="Adicionar Material" icon="ui-icon-plus" actionListener="#{inventarioBean.newMaterial}" update=":newInventarioForm" >
 		        	<p:collector unique="true" value="#{invMat}" addTo="#{inventarioBean.inventario.materiais}"/>

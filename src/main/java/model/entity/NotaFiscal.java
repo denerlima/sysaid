@@ -18,21 +18,21 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@SequenceGenerator(name = "ordemDeCompraSequence", sequenceName = "ORDEMDECOMPRA_ID_SEQ", allocationSize = 1)
-@Table(name = "MF_ORDEMDECOMPRA")
+@SequenceGenerator(name = "notaFiscalSequence", sequenceName = "NOTAFISCAL_ID_SEQ", allocationSize = 1)
+@Table(name = "MF_NOTAFISCAL")
 @Where(clause = "ativo = '1'")  
-@SQLDelete(sql = "UPDATE sysaid_java.MF_ORDEMDECOMPRA SET ativo  = 0 WHERE id = ?")
+@SQLDelete(sql = "UPDATE sysaid_java.MF_NOTAFISCAL SET ativo  = 0 WHERE id = ?")
 
-public class OrdemDeCompra extends GenericModelo implements Serializable{
+public class NotaFiscal extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	public OrdemDeCompra() {
+	public NotaFiscal() {
 		super();
-		this.materiais = new ArrayList<Material>();
+		this.notas = new ArrayList<Material>();
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ordemDeCompraSequence")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notaFiscalSequence")
 	@Column
 	private int id;	
 	private int ativo = 1;
@@ -42,10 +42,8 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	private String autorizador;
 	private String contratado;
 	
-	
-	//@JoinColumn(name="id_material", referencedColumnName="id")
 	@ManyToMany
-	private List<Material> materiais;
+	private List<Material> notas;
 	
 
 	public int getId() {
@@ -97,11 +95,11 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	}
 
 	public List<Material> getMateriais() {
-		return materiais;
+		return notas;
 	}
 
-	public void setMateriais(List<Material> materiais) {
-		this.materiais = materiais;
+	public void setMateriais(List<Material> notas) {
+		this.notas = notas;
 	}
 	
 	public int getAtivo() {
@@ -119,9 +117,9 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof OrdemDeCompra) {
-			OrdemDeCompra ordemDeCompra = (OrdemDeCompra) obj;
-			return ordemDeCompra.getId() == id;
+		if (obj instanceof NotaFiscal) {
+			NotaFiscal notaFiscal = (NotaFiscal) obj;
+			return notaFiscal.getId() == id;
 		}
 
 		return false;

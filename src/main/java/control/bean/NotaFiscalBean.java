@@ -8,49 +8,49 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import model.entity.Material;
-import model.entity.OrdemDeCompra;
+import model.entity.NotaFiscal;
 import model.facade.MaterialFacade;
-import model.facade.OrdemDeCompraFacade;
+import model.facade.NotaFiscalFacade;
 
 @ViewScoped
 @ManagedBean
-public class OrdemDeCompraBean extends AbstractBean implements Serializable {
+public class NotaFiscalBean extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private OrdemDeCompra ordemDeCompra;	
-	private List<OrdemDeCompra> ordensDeCompra;
-	private OrdemDeCompraFacade ordemDeCompraFacade;
+	private NotaFiscal notaFiscal;	
+	private List<NotaFiscal> notasFiscais;
+	private NotaFiscalFacade notaFiscalFacade;
 	private Material material;
 	private List<Material> materiais;
 
 	
-	public OrdemDeCompraFacade getOrdemDeCompraFacade() {
-		if (ordemDeCompraFacade == null) {
-			ordemDeCompraFacade = new OrdemDeCompraFacade();
+	public NotaFiscalFacade getNotaFiscalFacade() {
+		if (notaFiscalFacade == null) {
+			notaFiscalFacade = new NotaFiscalFacade();
 		}
 
-		return ordemDeCompraFacade;
+		return notaFiscalFacade;
 	}
 
-	public OrdemDeCompra getOrdemDeCompra() {
-		if (ordemDeCompra == null) {
-			ordemDeCompra = new OrdemDeCompra();
+	public NotaFiscal getNotaFiscal() {
+		if (notaFiscal == null) {
+			notaFiscal = new NotaFiscal();
 		}
 
-		return ordemDeCompra;
+		return notaFiscal;
 	}
 
-	public void setOrdemDeCompra(OrdemDeCompra ordemDeCompra) {
-		this.ordemDeCompra = ordemDeCompra;
+	public void setNotaFiscal(NotaFiscal notaFiscal) {
+		this.notaFiscal = notaFiscal;
 	}
 
-	public void createOrdemDeCompra() {
+	public void createNotaFiscal() {
 		try {
-			getOrdemDeCompraFacade().createOrdemDeCompra(ordemDeCompra);
+			getNotaFiscalFacade().create(notaFiscal);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadOrdensDeCompra();
-			resetOrdemDeCompra();
+			resetNotaFiscal();
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
@@ -58,13 +58,13 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		}
 	}
 	
-	public void updateOrdemDeCompra() {
+	public void updateNotaFiscal() {
 		try {
-			getOrdemDeCompraFacade().updateOrdemDeCompra(ordemDeCompra);
+			getNotaFiscalFacade().update(notaFiscal);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadOrdensDeCompra();
-			resetOrdemDeCompra();
+			resetNotaFiscal();
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
@@ -72,13 +72,13 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		}
 	}
 	
-	public void deleteOrdemDeCompra() {
+	public void deleteNotaFiscal() {
 		try {
-			getOrdemDeCompraFacade().deleteOrdemDeCompra(ordemDeCompra);
+			getNotaFiscalFacade().delete(notaFiscal);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensDeCompra();
-			resetOrdemDeCompra();
+			resetNotaFiscal();
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
@@ -86,12 +86,12 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		}
 	}
 
-	public List<OrdemDeCompra> getAllOrdensDeCompra() {
-		if (ordensDeCompra == null) {
+	public List<NotaFiscal> getAllOrdensDeCompra() {
+		if (notasFiscais == null) {
 			loadOrdensDeCompra();
 		}
 
-		return ordensDeCompra;
+		return notasFiscais;
 	}
 	
 	public List<Material> completeMaterial(String name) {
@@ -113,18 +113,18 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	
 
 	private void loadOrdensDeCompra() {
-		ordensDeCompra = getOrdemDeCompraFacade().listAll();
+		notasFiscais = getNotaFiscalFacade().listAll();
 	}
 
-	public void resetOrdemDeCompra() {
-		ordemDeCompra = new OrdemDeCompra();
+	public void resetNotaFiscal() {
+		notaFiscal = new NotaFiscal();
 	}
 	
 	public void newMaterial() {
-		if (ordemDeCompra.getMateriais() == null) {
-			ordemDeCompra.setMateriais(new ArrayList<Material>());
+		if (notaFiscal.getMateriais() == null) {
+			notaFiscal.setMateriais(new ArrayList<Material>());
 		}		
-		ordemDeCompra.getMateriais().add(material);
+		notaFiscal.getMateriais().add(material);
 		this.material = new Material();
 	}
 
@@ -142,7 +142,6 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 
 	public void setMateriais(List<Material> materiais) {
 		this.materiais = materiais;
-	}
-		
+	}		
 
 }

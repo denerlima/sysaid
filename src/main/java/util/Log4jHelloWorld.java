@@ -11,6 +11,6 @@ public class Log4jHelloWorld {
     {
         //Configure logger
         BasicConfigurator.configure();
-        logger.debug("aHello World!");
+        logger.debug("Hello World!");
     }
 }
