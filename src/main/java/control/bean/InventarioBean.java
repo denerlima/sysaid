@@ -41,7 +41,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			inventario = new Inventario();
 			inventario.setMateriais(new ArrayList<Material>());
 		} else {
-			inventario = inventarioFacade.findInventario(id);
+			inventario = getInventarioFacade().findInventario(id);
 		}
 	}
 	
