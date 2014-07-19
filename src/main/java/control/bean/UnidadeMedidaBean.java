@@ -58,6 +58,10 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 		}
 	}
 	
+	public void edit(Integer id) {
+		System.out.println(id);
+	}
+	
 	public void updateUnidadeMedida() {
 		try {
 			getUnidadeMedidaFacade().update(unidadeMedida);
@@ -116,4 +120,8 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 		unidadeMedida = new UnidadeMedida();
 	}
 
+	public boolean isManaged() {
+		return unidadeMedida != null && unidadeMedida.getId() != null;
+	}
+	
 }

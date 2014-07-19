@@ -6,10 +6,16 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-<link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-delta" />
-
-
 <h:head>
+
+	<link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-delta" />
+	
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/style.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/bootstrap.css" />
+	
+</h:head>
+<h:body>
+
 	<h3>SysAid Java versão 0.2</h3>
 	<!-- Theme Switcher 
 		<h:panelGrid columns="3" cellpadding="10">
@@ -50,8 +56,8 @@
 	<ui:insert name="head" />
 	
 	  <p:messages id="msgs"  autoUpdate="true"/>
-</h:head>
-<h:body>
+
+
 	<ui:insert name="body" />
 </h:body>
 </html>

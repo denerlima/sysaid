@@ -7,34 +7,54 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<p:dialog header="Cadastrar Unidade" id="unidadeMedidaDialogId2" closable="true"
-		widgetVar="unidadeMedidaDialog" modal="true" dynamic="false" width="500" height="200">
+		widgetVar="unidadeMedidaDialog" modal="true" dynamic="false" width="550" height="200">
 		<h:form id="unidadeMedidaDialogForm">
 			
-			<div>		
-				Unidade Entrada
-				<br />
-				<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" >
-					<f:selectItem itemValue="" itemLabel="Selecione" />
-					<f:selectItems value="#{unidadeMedidaBean.unidadesEntradas}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
-				</h:selectOneMenu>
+			<div class="row">
+				<div class="col-md-4">
+					Unidade Entrada
+				</div>
+				<div class="col-md-8">
+					<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" >
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{unidadeMedidaBean.unidadesEntradas}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
+					</h:selectOneMenu>
+					
+					<p:commandButton action="#{unidadeEntradaBean.newUnidadeEntrada}" value="Nova Unidade" oncomplete="PF('unidadeDialog').show();" update=":unidadeDialogForm" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+					Unidade de Saída
+				</div>
+				<div class="col-md-8">
+					<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unSaida}" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+					Fator conversão
+				</div>
+				<div class="col-md-8">
+					<h:inputText value="#{unidadeMedidaBean.unidadeMedida.fatorConversao}" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12 buttons">
+			
+					<p:commandButton action="#{unidadeMedidaBean.createUnidadeMedida}" value="Salvar" rendered="#{not unidadeMedidaBean.managed}"
+						update=":unidadeMedidaDialogForm :unidadeMedidaForm:unidadesTable" />
+						
+					<p:commandButton action="#{unidadeMedidaBean.updateUnidadeMedida}" value="Alterar" rendered="#{unidadeMedidaBean.managed}"
+						update=":unidadeMedidaDialogForm :unidadeMedidaForm:unidadesTable" />
+						
+					<p:commandButton value="Cancelar" type="button" onclick="PF('unidadeMedidaDialog').hide();" />
 				
-				<p:commandLink action="#{unidadeEntradaBean.newUnidadeEntrada}" value="Nova Unidade" oncomplete="PF('unidadeDialog').show();" update=":unidadeDialogForm" />
-			</div>
-			
-			<div>
-				Unidade de Saída
-				<br />
-				<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unSaida}" />
-			</div>
-			
-			<div>
-				Fator conversão
-				<br />
-				<h:inputText value="#{unidadeMedidaBean.unidadeMedida.fatorConversao}" />
-			</div>
-			
-			<p:commandButton action="#{unidadeMedidaBean.createUnidadeMedida}" value="Salvar"
-				update=":unidadeMedidaDialogForm" />
+				</div>	
+			</div>			
 			
 		</h:form>
 	</p:dialog>

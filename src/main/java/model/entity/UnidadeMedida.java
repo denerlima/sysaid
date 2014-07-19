@@ -53,10 +53,11 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 	@JoinColumn(name="id_unidadeentrada", referencedColumnName="id")
 	private UnidadeEntrada unidadeEntrada;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

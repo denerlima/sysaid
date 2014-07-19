@@ -6,20 +6,27 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<p:dialog header="Cadastrar Unidade" id="unidadeDialogId" closable="false"
-		widgetVar="unidadeDialog" modal="true" dynamic="false" height="200">
+	<p:dialog header="Cadastrar Unidade" id="unidadeDialogId" closable="true"
+		widgetVar="unidadeDialog" modal="true" dynamic="false" height="200" width="300">
 		<h:form id="unidadeDialogForm">
 			
-			<div>
-				Unidade
-				<br />
-				<h:inputText value="#{unidadeEntradaBean.unidadeEntrada.descricao}" />
+			<div class="row">
+				<div class="col-md-3">
+					Unidade
+				</div>
+				<div class="col-md-9">
+					<h:inputText value="#{unidadeEntradaBean.unidadeEntrada.descricao}" />
+				</div>
 			</div>
 					
-			<p:commandButton action="#{unidadeEntradaBean.createUnidadeEntrada}" value="Salvar"
-				oncomplete="PF('unidadeDialog').hide();"
-				update=":unidadeMedidaDialogForm:entrada" />
-						
+			<div class="buttons">		
+				<p:commandButton action="#{unidadeEntradaBean.createUnidadeEntrada}" value="Salvar"
+					oncomplete="PF('unidadeDialog').hide();"
+					update=":unidadeMedidaDialogForm:entrada" />
+					
+				<p:commandButton value="Cancelar" type="button" onclick="PF('unidadeDialog').hide();" />
+
+			</div>
 		</h:form>
 	</p:dialog>
 
