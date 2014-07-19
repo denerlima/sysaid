@@ -1,4 +1,8 @@
 
+.ui-datatable {
+	padding-bottom: 2px;
+}
+
 .buttons {
 	text-align: center;
 	margin-top: 20px;

@@ -15,6 +15,7 @@ import model.facade.MaterialFacade;
 @ViewScoped
 @ManagedBean
 public class InventarioBean extends AbstractBean implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 	public static final String INJECTION_NAME = "#{inventarioBean}";
 
@@ -24,6 +25,11 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	private Material material;
 	private List<Material> materiais;
 
+	public String novoInventario() {
+		inventario = new Inventario();
+		inventario.setMateriais(new ArrayList<Material>());
+		return "/new/newInventario.xhtml?faces-redirect=true";
+	}
 	
 	public InventarioFacade getInventarioFacade() {
 		if (inventarioFacade == null) {
@@ -37,7 +43,6 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		if (inventario == null) {
 			inventario = new Inventario();
 		}
-
 		return inventario;
 	}
 
@@ -123,12 +128,16 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		inventario = new Inventario();
 	}
 	
-	public void newMaterial() {
+	public void addMaterial() {
 		if (inventario.getMateriais() == null) {
 			inventario.setMateriais(new ArrayList<Material>());
 		}		
 		inventario.getMateriais().add(material);
 		this.material = new Material();
+	}
+	
+	public void removerMaterial(Material material) {
+		inventario.getMateriais().remove(material);
 	}
 
 	public Material getMaterial() {
@@ -147,9 +156,4 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		this.materiais = materiais;
 	}
 	
-	
-	
-	
-	
-
 }

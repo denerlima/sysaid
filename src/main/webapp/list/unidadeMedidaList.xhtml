@@ -16,39 +16,39 @@
 			<p:commandButton value="Cadastrar Unidade de Entrada e Saida" icon="ui-icon-plus" type="button" onclick="PF('unidadeMedidaDialog').show();" />
 					
 			<center>
-			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
-			<p:spacer width="100" height="30" />
-			<p:dataTable id="unidadesTable" var="um" value="#{unidadeMedidaBean.allUnidadesMedida}" emptyMessage="Não existe itens nesta lista.">
-				<p:ajax event="rowSelect" update=":unidadeMedidaUpdateDialogForm" /> 
-				<p:columnGroup type="header">
-					 <p:row>                
-		                <p:column colspan="2" headerText="Unidade de Medida" />
-		                <p:column rowspan="2" headerText="Fator de conversão" />
-		                <p:column rowspan="2" headerText="Ações" />
-		           	 </p:row>		           	 	
-		           	 <p:row>
-		           	 	<p:column headerText="Entrada" />
-		           	 	<p:column headerText="Saída" />		           	 
-		           	 </p:row>
-				</p:columnGroup>
-				<p:column >
-					<h:outputText value="#{um.unidadeEntrada.descricao}" />							
-				</p:column>
-				<p:column>
-					<h:outputText value="#{um.unSaida}" />							
-				</p:column>
-				<p:column >
-					<h:outputText  value="#{um.fatorConversao}" />
-				</p:column>
-				<p:column style="width:200px">											
-					<p:commandButton value="Editar" update=":unidadeMedidaDialogForm" icon="ui-icon-pencil" oncomplete="PF('unidadeMedidaDialog').show();"  style="margin-right:10px" >
+			<p:outputPanel id="resultado" layout="block" style="width:80%; overflow:auto">
+				<br />
+				<p:dataTable id="unidadesTable" var="um" value="#{unidadeMedidaBean.allUnidadesMedida}" emptyMessage="Não existe itens nesta lista.">
+					<p:ajax event="rowSelect" update=":unidadeMedidaUpdateDialogForm" /> 
+					<p:columnGroup type="header">
+						 <p:row>                
+			                <p:column colspan="2" headerText="Unidade de Medida" />
+			                <p:column rowspan="2" headerText="Fator de conversão" />
+			                <p:column rowspan="2" headerText="Ações" />
+			           	 </p:row>		           	 	
+			           	 <p:row>
+			           	 	<p:column headerText="Entrada" />
+			           	 	<p:column headerText="Saída" />		           	 
+			           	 </p:row>
+					</p:columnGroup>
+					<p:column >
+						<h:outputText value="#{um.unidadeEntrada.descricao}" />							
+					</p:column>
+					<p:column>
+						<h:outputText value="#{um.unSaida}" />							
+					</p:column>
+					<p:column >
+						<h:outputText  value="#{um.fatorConversao}" />
+					</p:column>
+					<p:column style="width:200px">											
+						<p:commandButton value="Editar" update=":unidadeMedidaDialogForm" icon="ui-icon-pencil" oncomplete="PF('unidadeMedidaDialog').show();"  style="margin-right:10px" >
+								<f:setPropertyActionListener target="#{unidadeMedidaBean.unidadeMedida}" value="#{um}" />
+						</p:commandButton>	
+						<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();" style="margin-right:10px">
 							<f:setPropertyActionListener target="#{unidadeMedidaBean.unidadeMedida}" value="#{um}" />
-					</p:commandButton>	
-					<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();" style="margin-right:10px">
-						<f:setPropertyActionListener target="#{unidadeMedidaBean.unidadeMedida}" value="#{um}" />
-					</p:commandButton>						
-				</p:column>
-			</p:dataTable>
+						</p:commandButton>						
+					</p:column>
+				</p:dataTable>
 			</p:outputPanel>
 			</center>
 			
