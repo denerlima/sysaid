@@ -82,6 +82,10 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 		}
 	}
 
+	public void newUnidadeEntrada() {
+		unidadeEntrada = new UnidadeEntrada();
+	}
+	
 	public List<UnidadeEntrada> getAllUnidadesMedida() {
 		if (unidadesMedida == null) {
 			loadUnidadesMedida();

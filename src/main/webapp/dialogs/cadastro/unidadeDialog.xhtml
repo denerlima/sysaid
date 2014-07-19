@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog header="Cadastrar Unidade" id="unidadeDialogId" closable="false"
+		widgetVar="unidadeDialog" modal="true" dynamic="false" height="200">
+		<h:form id="unidadeDialogForm">
+			
+			<div>
+				Unidade
+				<br />
+				<h:inputText value="#{unidadeEntradaBean.unidadeEntrada.descricao}" />
+			</div>
+					
+			<p:commandButton action="#{unidadeEntradaBean.createUnidadeEntrada}" value="Salvar"
+				oncomplete="PF('unidadeDialog').hide();"
+				update=":unidadeMedidaDialogForm:entrada" />
+						
+		</h:form>
+	</p:dialog>
+
+</f:view>

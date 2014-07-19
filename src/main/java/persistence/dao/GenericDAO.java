@@ -12,7 +12,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
-abstract class GenericDAO<T> implements Serializable {
+public abstract class GenericDAO<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("sysaid");
@@ -64,6 +64,10 @@ abstract class GenericDAO<T> implements Serializable {
 		T entityToBeRemoved = em.getReference(classe, id);
 		 
         em.remove(entityToBeRemoved);
+	}
+	
+	public void delete(T entityClass) {
+        em.remove(entityClass);
 	}
 
 	public T update(T entity) {
@@ -118,4 +122,9 @@ abstract class GenericDAO<T> implements Serializable {
 			query.setParameter(entry.getKey(), entry.getValue());
 		}
 	}
+
+	public EntityManager getEntityManager() {
+		return em;
+	}
+	
 }
