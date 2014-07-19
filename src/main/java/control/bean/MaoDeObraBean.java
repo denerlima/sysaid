@@ -41,7 +41,7 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 
 	public void createMaoDeObra() {
 		try {
-			getMaoDeObraFacade().createMaoDeObra(maoDeObra);
+			getMaoDeObraFacade().create(maoDeObra);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadMaosDeObra();
@@ -55,7 +55,7 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 	
 	public void updateMaoDeObra() {
 		try {
-			getMaoDeObraFacade().updateMaoDeObra(maoDeObra);
+			getMaoDeObraFacade().update(maoDeObra);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadMaosDeObra();
@@ -69,7 +69,7 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 	
 	public void deleteMaoDeObra() {
 		try {
-			getMaoDeObraFacade().deleteMaoDeObra(maoDeObra);
+			getMaoDeObraFacade().delete(maoDeObra);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadMaosDeObra();

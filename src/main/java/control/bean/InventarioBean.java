@@ -41,13 +41,13 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			inventario = new Inventario();
 			inventario.setMateriais(new ArrayList<Material>());
 		} else {
-			inventario = getInventarioFacade().findInventario(id);
+			inventario = getInventarioFacade().find(id);
 		}
 	}
 	
 	public void createInventario() {
 		try {
-			getInventarioFacade().createInventario(inventario);
+			getInventarioFacade().create(inventario);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadInventarios();
@@ -64,7 +64,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 		if (materiais == null) {
 			MaterialFacade materialFacade = new MaterialFacade();
-			materiais = materialFacade.listAllMateriais();
+			materiais = materialFacade.listAll();
 		}
 
 		//allDogs.removeAll(personWithDogs.getDogs());
@@ -80,7 +80,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public void updateInventario() {
 		try {
-			getInventarioFacade().updateInventario(inventario);
+			getInventarioFacade().update(inventario);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadInventarios();
@@ -94,7 +94,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public void deleteInventario() {
 		try {
-			getInventarioFacade().deleteInventario(inventario);
+			getInventarioFacade().delete(inventario);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadInventarios();

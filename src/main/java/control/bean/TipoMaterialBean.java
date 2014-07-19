@@ -43,7 +43,7 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 
 	public void createTipoMaterial() {
 		try {
-			getTipoMaterialFacade().createTipoMaterial(tipoMaterial);
+			getTipoMaterialFacade().create(tipoMaterial);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			//Logger.getLogger(getClass()).info("usuario salvo no banco com sucesso");
@@ -58,7 +58,7 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 	
 	public void updateTipoMaterial() {
 		try {
-			getTipoMaterialFacade().updateTipoMaterial(tipoMaterial);
+			getTipoMaterialFacade().update(tipoMaterial);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadTiposMaterial();
@@ -72,7 +72,7 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 	
 	public void deleteTipoMaterial() {
 		try {
-			getTipoMaterialFacade().deleteTipoMaterial(tipoMaterial);
+			getTipoMaterialFacade().delete(tipoMaterial);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadTiposMaterial();

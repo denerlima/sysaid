@@ -97,7 +97,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			material.setGrupo(selectedGrupo);
 			material.setTipoMaterial(selectedTipoMaterial);
 			material.setUnidadeMedida(selectedUnidadeMedida);
-			getMaterialFacade().createMaterial(material);
+			getMaterialFacade().create(material);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadMateriais();
@@ -116,7 +116,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			material.setGrupo(selectedGrupo);
 			material.setTipoMaterial(selectedTipoMaterial);
 			material.setUnidadeMedida(selectedUnidadeMedida);
-			getMaterialFacade().updateMaterial(material);
+			getMaterialFacade().update(material);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadMateriais();
@@ -134,7 +134,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 
 		if (materiais == null) {
 			materialFacade = new MaterialFacade();
-			materiais = materialFacade.listAllMateriais();
+			materiais = materialFacade.listAll();
 		}
 
 		//allDogs.removeAll(personWithDogs.getDogs());
@@ -183,7 +183,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		
 	public void deleteMaterial() {
 		try {
-			getMaterialFacade().deleteMaterial(material);
+			getMaterialFacade().delete(material);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadMateriais();
@@ -203,7 +203,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	}
 
 	private void loadMateriais() {
-		materiais = getMaterialFacade().listAllMateriais();
+		materiais = getMaterialFacade().listAll();
 	}
 	
 	public List<SelectItem> getSelectItensAplicacoes(){

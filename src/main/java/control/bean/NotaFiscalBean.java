@@ -99,7 +99,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 
 		if (materiais == null) {
 			MaterialFacade materialFacade = new MaterialFacade();
-			materiais = materialFacade.listAllMateriais();
+			materiais = materialFacade.listAll();
 		}
 
 		for (Material mat : materiais) {

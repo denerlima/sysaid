@@ -42,7 +42,7 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 
 	public void createUnidadeEntrada() {
 		try {
-			getUnidadeEntradaFacade().createUnidadeEntrada(unidadeEntrada);
+			getUnidadeEntradaFacade().create(unidadeEntrada);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadUnidadesMedida();
@@ -56,7 +56,7 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 	
 	public void updateUnidadeEntrada() {
 		try {
-			getUnidadeEntradaFacade().updateUnidadeEntrada(unidadeEntrada);
+			getUnidadeEntradaFacade().update(unidadeEntrada);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadUnidadesMedida();
@@ -70,7 +70,7 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 	
 	public void deleteUnidadeEntrada() {
 		try {
-			getUnidadeEntradaFacade().deleteUnidadeEntrada(unidadeEntrada);
+			getUnidadeEntradaFacade().delete(unidadeEntrada);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadUnidadesMedida();

@@ -24,7 +24,7 @@ public class MaterialConverter implements Converter {
 			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Type the name of a Dog and select it (or use the dropdow)", "Type the name of a Dog and select it (or use the dropdow)"));
 		}
 
-		return materialFacade.findMaterial(materialId) ;
+		return materialFacade.find(materialId) ;
 	}
 
 	@Override

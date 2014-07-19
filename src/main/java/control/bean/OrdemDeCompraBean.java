@@ -46,7 +46,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 
 	public void createOrdemDeCompra() {
 		try {
-			getOrdemDeCompraFacade().createOrdemDeCompra(ordemDeCompra);
+			getOrdemDeCompraFacade().create(ordemDeCompra);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadOrdensDeCompra();
@@ -60,7 +60,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	
 	public void updateOrdemDeCompra() {
 		try {
-			getOrdemDeCompraFacade().updateOrdemDeCompra(ordemDeCompra);
+			getOrdemDeCompraFacade().update(ordemDeCompra);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadOrdensDeCompra();
@@ -74,7 +74,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	
 	public void deleteOrdemDeCompra() {
 		try {
-			getOrdemDeCompraFacade().deleteOrdemDeCompra(ordemDeCompra);
+			getOrdemDeCompraFacade().delete(ordemDeCompra);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensDeCompra();
@@ -99,7 +99,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 
 		if (materiais == null) {
 			MaterialFacade materialFacade = new MaterialFacade();
-			materiais = materialFacade.listAllMateriais();
+			materiais = materialFacade.listAll();
 		}
 
 		for (Material mat : materiais) {

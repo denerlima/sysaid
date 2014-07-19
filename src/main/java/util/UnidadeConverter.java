@@ -22,7 +22,7 @@ public class UnidadeConverter implements Converter {
 		} catch (NumberFormatException exception) {
 			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Type the name of a Dog and select it (or use the dropdow)", "Type the name of a Dog and select it (or use the dropdow)"));
 		}
-		return facade.findUnidadeEntrada(id) ;
+		return facade.find(id) ;
 	}
 
 	@Override

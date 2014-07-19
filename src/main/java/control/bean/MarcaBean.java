@@ -41,7 +41,7 @@ public class MarcaBean extends AbstractBean implements Serializable {
 
 	public void createMarca() {
 		try {
-			getMarcaFacade().createMarca(marca);
+			getMarcaFacade().create(marca);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadMarcas();
@@ -55,7 +55,7 @@ public class MarcaBean extends AbstractBean implements Serializable {
 	
 	public void updateMarca() {
 		try {
-			getMarcaFacade().updateMarca(marca);
+			getMarcaFacade().update(marca);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadMarcas();
@@ -69,7 +69,7 @@ public class MarcaBean extends AbstractBean implements Serializable {
 	
 	public void deleteMarca() {
 		try {
-			getMarcaFacade().deleteMarca(marca);
+			getMarcaFacade().delete(marca);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadMarcas();

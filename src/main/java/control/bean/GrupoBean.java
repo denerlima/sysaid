@@ -41,7 +41,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 
 	public void createGrupo() {
 		try {
-			getGrupoFacade().createGrupo(grupo);
+			getGrupoFacade().create(grupo);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadGrupos();
@@ -55,7 +55,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 	
 	public void updateGrupo() {
 		try {
-			getGrupoFacade().updateGrupo(grupo);
+			getGrupoFacade().update(grupo);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadGrupos();
@@ -69,7 +69,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 	
 	public void deleteGrupo() {
 		try {
-			getGrupoFacade().deleteGrupo(grupo);
+			getGrupoFacade().delete(grupo);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadGrupos();

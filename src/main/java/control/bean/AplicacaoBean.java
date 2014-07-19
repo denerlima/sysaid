@@ -41,7 +41,7 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 
 	public void createAplicacao() {
 		try {
-			getAplicacaoFacade().createAplicacao(aplicacao);
+			getAplicacaoFacade().create(aplicacao);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadAplicacoes();
@@ -55,7 +55,7 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 	
 	public void updateAplicacao() {
 		try {
-			getAplicacaoFacade().updateAplicacao(aplicacao);
+			getAplicacaoFacade().update(aplicacao);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadAplicacoes();
@@ -69,7 +69,7 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 	
 	public void deleteAplicacao() {
 		try {
-			getAplicacaoFacade().deleteAplicacao(aplicacao);
+			getAplicacaoFacade().delete(aplicacao);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadAplicacoes();
