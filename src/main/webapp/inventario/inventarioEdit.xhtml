@@ -33,7 +33,7 @@
 		        <p:outputPanel id="addMaterialPanel">
 		        	
 					<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
-						value="#{inventarioBean.material}" label="Material" required="true" 
+						value="#{inventarioBean.material}" label="Material" 
 						var="invMat" itemLabel="#{invMat.material}" itemValue="#{invMat}" 
 						completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 				
@@ -60,7 +60,10 @@
 					</p:column>
 				</p:dataTable>
 	        </p:tab>
-     	</p:tabView>		
+     	</p:tabView>
+     	
+     	<p:commandButton action="#{inventarioBean.createInventario}" value="Salvar" />
+     			
 	</h:form>
 
 	</ui:define>

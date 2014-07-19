@@ -19,7 +19,6 @@
 			<p:outputPanel id="resultado" layout="block" style="width:80%; overflow:auto">
 				<br />
 				<p:dataTable id="unidadesTable" var="um" value="#{unidadeMedidaBean.allUnidadesMedida}" emptyMessage="Não existe itens nesta lista.">
-					<p:ajax event="rowSelect" update=":unidadeMedidaUpdateDialogForm" /> 
 					<p:columnGroup type="header">
 						 <p:row>                
 			                <p:column colspan="2" headerText="Unidade de Medida" />
@@ -62,10 +61,8 @@
 
 		</h:form>
 		
-		<ui:include src="/dialogs/update/unidadeMedidaUpdateDialog.xhtml" />
-		
-		<ui:include src="/dialogs/cadastro/unidadeMedidaDialog.xhtml" />
-		<ui:include src="/dialogs/cadastro/unidadeDialog.xhtml" />
+		<ui:include src="/unidadeMedida/unidadeMedidaDialog.xhtml" />
+		<ui:include src="/unidadeMedida/unidadeDialog.xhtml" />
 
 	</ui:define>
 </ui:composition>

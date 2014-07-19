@@ -10,8 +10,8 @@
 
 	<link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-delta" />
 	
-	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/style.css" />
-	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/bootstrap.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
 	
 </h:head>
 <h:body>
@@ -29,19 +29,19 @@
 		 -->
 	<p:menubar>
 		<p:submenu label="Cadastros">
-			<p:menuitem value="Unidade de Medida" url="/list/unidadeMedidaList.xhtml" />
-			<p:menuitem value="Material" url="/list/materialList.xhtml" />
-			<p:menuitem value="Mão de Obra" url="/list/maoDeObraList.xhtml" />
-			<p:menuitem value="Tipo de Material" url="/list/tipoMaterialList.xhtml" />
-			<p:menuitem value="Aplicação" url="/list/aplicacaoList.xhtml" />
-			<p:menuitem value="Marca" url="/list/marcaList.xhtml" />
-			<p:menuitem value="Grupo" url="/list/grupoList.xhtml" />
+			<p:menuitem value="Unidade de Medida" url="/unidadeMedida/unidadeMedidaList.xhtml" />
+			<p:menuitem value="Material" url="/material/materialList.xhtml" />
+			<p:menuitem value="Mão de Obra" url="/maoDeObra/maoDeObraList.xhtml" />
+			<p:menuitem value="Tipo de Material" url="/tipoMaterial/tipoMaterialList.xhtml" />
+			<p:menuitem value="Aplicação" url="/aplicacao/aplicacaoList.xhtml" />
+			<p:menuitem value="Marca" url="/marca/marcaList.xhtml" />
+			<p:menuitem value="Grupo" url="/grupo/grupoList.xhtml" />
 		</p:submenu>
 
 		<p:submenu label="Movimentação">
 			<p:menuitem value="Nota Fiscal" url="#" />
-			<p:menuitem value="Ordem de Compra" url="/list/ordemDeCompraList.xhtml" />
-			<p:menuitem value="Inventário" url="/list/inventarioList.xhtml" />
+			<p:menuitem value="Ordem de Compra" url="/ordemDeCompra/ordemDeCompraList.xhtml" />
+			<p:menuitem value="Inventário" url="/inventario/inventarioList.xhtml" />
 		</p:submenu>
 
 		<p:submenu label="Relatórios">
@@ -55,9 +55,9 @@
 
 	<ui:insert name="head" />
 	
-	  <p:messages id="msgs"  autoUpdate="true"/>
-
+	<p:messages id="msgs"  autoUpdate="true"/>
 
 	<ui:insert name="body" />
+	
 </h:body>
 </html>

@@ -25,31 +25,12 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	private Material material;
 	private List<Material> materiais;
 
-	public String novoInventario() {
+	public String novo() {
 		inventario = new Inventario();
 		inventario.setMateriais(new ArrayList<Material>());
-		return "/new/newInventario.xhtml?faces-redirect=true";
+		return "/inventario/inventarioEdit.xhtml?faces-redirect=true";
 	}
 	
-	public InventarioFacade getInventarioFacade() {
-		if (inventarioFacade == null) {
-			inventarioFacade = new InventarioFacade();
-		}
-
-		return inventarioFacade;
-	}
-
-	public Inventario getInventario() {
-		if (inventario == null) {
-			inventario = new Inventario();
-		}
-		return inventario;
-	}
-
-	public void setInventario(Inventario inventario) {
-		this.inventario = inventario;
-	}
-
 	public void createInventario() {
 		try {
 			getInventarioFacade().createInventario(inventario);
@@ -81,6 +62,11 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		}
 
 		return queryResult;
+	}
+	
+	public String edit(Integer id) {
+		inventario = inventarioFacade.findInventario(id);
+		return "/inventario/inventarioEdit.xhtml?faces-redirect=true";
 	}
 	
 	public void updateInventario() {
@@ -140,6 +126,25 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		inventario.getMateriais().remove(material);
 	}
 
+	public InventarioFacade getInventarioFacade() {
+		if (inventarioFacade == null) {
+			inventarioFacade = new InventarioFacade();
+		}
+
+		return inventarioFacade;
+	}
+
+	public Inventario getInventario() {
+		if (inventario == null) {
+			inventario = new Inventario();
+		}
+		return inventario;
+	}
+
+	public void setInventario(Inventario inventario) {
+		this.inventario = inventario;
+	}
+	
 	public Material getMaterial() {
 		return material;
 	}
