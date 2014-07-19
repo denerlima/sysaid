@@ -34,7 +34,7 @@ public class Inventario extends GenericModelo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventarioSequence")
 	@Column
-	private int id;	
+	private Integer id;	
 	private int ativo = 1;
 	private Long numeroInventario;
 	private Date dataInventario;
@@ -46,11 +46,11 @@ public class Inventario extends GenericModelo implements Serializable{
 	private List<Material> materiais;
 	
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 			

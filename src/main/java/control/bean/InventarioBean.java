@@ -26,9 +26,23 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	private List<Material> materiais;
 
 	public String novo() {
-		inventario = new Inventario();
-		inventario.setMateriais(new ArrayList<Material>());
 		return "/inventario/inventarioEdit.xhtml?faces-redirect=true";
+	}
+	
+	public String edit(Integer id) {
+		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&id="+id;
+	}
+	
+	public void initLoad(Integer id) {
+		if(inventario != null) {
+			return;
+		}
+		if(id == null || id == 0) {
+			inventario = new Inventario();
+			inventario.setMateriais(new ArrayList<Material>());
+		} else {
+			inventario = inventarioFacade.findInventario(id);
+		}
 	}
 	
 	public void createInventario() {
@@ -62,11 +76,6 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		}
 
 		return queryResult;
-	}
-	
-	public String edit(Integer id) {
-		inventario = inventarioFacade.findInventario(id);
-		return "/inventario/inventarioEdit.xhtml?faces-redirect=true";
 	}
 	
 	public void updateInventario() {
@@ -159,6 +168,10 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	public void setMateriais(List<Material> materiais) {
 		this.materiais = materiais;
+	}
+	
+	public boolean isManaged() {
+		return inventario != null && inventario.getId() != null;
 	}
 	
 }

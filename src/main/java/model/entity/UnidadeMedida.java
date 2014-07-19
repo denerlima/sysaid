@@ -39,7 +39,7 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "unidadeMedidaSequence")
 	@Column
-	private int id;	
+	private Integer id;	
 	private String unSaida;
 	private int ativo = 1;
 	

@@ -7,6 +7,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<f:metadata>
+		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
+		<f:event type="preRenderView" listener="#{inventarioBean.initLoad(_id)}"/>
+	</f:metadata>
+	
 	<ui:define name="body">
 	
 	<h:form id="newInventarioForm">
@@ -62,7 +68,9 @@
 	        </p:tab>
      	</p:tabView>
      	
-     	<p:commandButton action="#{inventarioBean.createInventario}" value="Salvar" />
+     	<p:commandButton action="#{inventarioBean.createInventario}" value="Salvar" rendered="#{not inventarioBean.managed}" />
+     	
+     	<p:commandButton action="#{inventarioBean.createInventario}" value="Alterar" rendered="#{inventarioBean.managed}" />
      			
 	</h:form>
 
