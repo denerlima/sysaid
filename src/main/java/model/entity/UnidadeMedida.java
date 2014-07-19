@@ -31,6 +31,11 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 		super();
 	}
 	
+	public UnidadeMedida(UnidadeEntrada unidade) {
+		super();
+		setUnidadeEntrada(unidade);
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "unidadeMedidaSequence")
 	@Column

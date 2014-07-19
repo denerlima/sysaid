@@ -22,14 +22,8 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	private UnidadeMedida unidadeMedida;	
 	private List<UnidadeMedida> unidadesMedida;
 	private UnidadeMedidaFacade unidadeMedidaFacade;
-	private UnidadeEntrada selectedUnidadeEntrada;
-	private Boolean isSalvaUnidadeEntrada ;
+	
 
-	
-	public UnidadeMedidaBean(){
-		selectedUnidadeEntrada = new UnidadeEntrada();
-	}
-	
 	public UnidadeMedidaFacade getUnidadeMedidaFacade() {
 		if (unidadeMedidaFacade == null) {
 			unidadeMedidaFacade = new UnidadeMedidaFacade();
@@ -52,12 +46,11 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 
 	public void createUnidadeMedida() {
 		try {
-			unidadeMedida.setUnidadeEntrada(selectedUnidadeEntrada);
-			getUnidadeMedidaFacade().createUnidadeMedida(unidadeMedida);
+			getUnidadeMedidaFacade().create(unidadeMedida);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadUnidadesMedida();
-			resetUnidadeMedida();
+			unidadeMedida = new UnidadeMedida(unidadeMedida.getUnidadeEntrada());
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
@@ -67,8 +60,7 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	
 	public void updateUnidadeMedida() {
 		try {
-			unidadeMedida.setUnidadeEntrada(selectedUnidadeEntrada);
-			getUnidadeMedidaFacade().updateUnidadeMedida(unidadeMedida);
+			getUnidadeMedidaFacade().update(unidadeMedida);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadUnidadesMedida();
@@ -82,7 +74,7 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	
 	public void deleteUnidadeMedida() {
 		try {
-			getUnidadeMedidaFacade().deleteUnidadeMedida(unidadeMedida);
+			getUnidadeMedidaFacade().delete(unidadeMedida);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadUnidadesMedida();
@@ -111,39 +103,17 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 		return lista;
 	}	
 
+	public List<UnidadeEntrada> getUnidadesEntradas(){
+		UnidadeEntradaFacade unidadeEntradaFacade = new UnidadeEntradaFacade();
+		return unidadeEntradaFacade.listAll();
+	}
+	
 	private void loadUnidadesMedida() {
 		unidadesMedida = getUnidadeMedidaFacade().listAll();
 	}
 	
-	 public void onUnidadeChange() {
-		Integer  idObj = selectedUnidadeEntrada.getId();
-	        if(idObj != null)
-	        	isSalvaUnidadeEntrada = true;
-	        else
-	        	isSalvaUnidadeEntrada = false;
-	    }
-	 
-	 
-	
-	public Boolean getIsSalvaUnidadeEntrada() {
-		return isSalvaUnidadeEntrada;
-	}
-
-	public void setIsSalvaUnidadeEntrada(Boolean isSalvaUnidadeEntrada) {
-		this.isSalvaUnidadeEntrada = isSalvaUnidadeEntrada;
-	}
-
-	public UnidadeEntrada getSelectedUnidadeEntrada() {
-		return selectedUnidadeEntrada;
-	}
-
-	public void setSelectedUnidadeEntrada(UnidadeEntrada selectedUnidadeEntrada) {
-		this.selectedUnidadeEntrada = selectedUnidadeEntrada;
-	}
-
 	public void resetUnidadeMedida() {
 		unidadeMedida = new UnidadeMedida();
-		selectedUnidadeEntrada = new UnidadeEntrada();
 	}
 
 }
