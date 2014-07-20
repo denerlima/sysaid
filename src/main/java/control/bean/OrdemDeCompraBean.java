@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 
 import model.entity.Material;
 import model.entity.OrdemDeCompra;
+import model.entity.OrdemDeCompraMaterial;
 import model.facade.MaterialFacade;
 import model.facade.OrdemDeCompraFacade;
 
@@ -23,6 +24,25 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	private Material material;
 	private List<Material> materiais;
 
+	public String novo() {
+		return "/ordemDeCompra/ordemDeCompraEdit.xhtml?faces-redirect=true";
+	}
+	
+	public String edit(Integer id) {
+		return "/ordemDeCompra/ordemDeCompraEdit.xhtml?faces-redirect=true&id="+id;
+	}
+	
+	public void initLoad(Integer id) {
+		if(ordemDeCompra != null) {
+			return;
+		}
+		if(id == null || id == 0) {
+			ordemDeCompra = new OrdemDeCompra();
+			ordemDeCompra.setMateriais(new ArrayList<OrdemDeCompraMaterial>());
+		} else {
+			ordemDeCompra = getOrdemDeCompraFacade().find(id);
+		}
+	}
 	
 	public OrdemDeCompraFacade getOrdemDeCompraFacade() {
 		if (ordemDeCompraFacade == null) {
@@ -120,12 +140,19 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		ordemDeCompra = new OrdemDeCompra();
 	}
 	
-	public void newMaterial() {
+	public void addMaterial() {
 		if (ordemDeCompra.getMateriais() == null) {
-			ordemDeCompra.setMateriais(new ArrayList<Material>());
-		}		
-		ordemDeCompra.getMateriais().add(material);
+			ordemDeCompra.setMateriais(new ArrayList<OrdemDeCompraMaterial>());
+		}
+		OrdemDeCompraMaterial invMat = new OrdemDeCompraMaterial();
+		invMat.setOrdemDeCompra(ordemDeCompra);
+		invMat.setMaterial(material);
+		ordemDeCompra.getMateriais().add(invMat);
 		this.material = new Material();
+	}
+	
+	public void removerMaterial(Material material) {
+		ordemDeCompra.getMateriais().remove(material);
 	}
 
 	public Material getMaterial() {
@@ -144,5 +171,8 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		this.materiais = materiais;
 	}
 		
-
+	public boolean isManaged() {
+		return ordemDeCompra != null && ordemDeCompra.getId() != null;
+	}
+	
 }

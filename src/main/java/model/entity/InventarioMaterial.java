@@ -1,5 +1,6 @@
 package model.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -20,7 +21,9 @@ import org.hibernate.annotations.Where;
 @Table(name = "MF_INVENTARIO_MF_MATERIAL")
 @Where(clause = "ativo = '1'")  
 @SQLDelete(sql = "UPDATE sysaid_java.MF_INVENTARIO_MF_MATERIAL SET ativo  = 0 WHERE id = ?")
-public class InventarioMaterial {
+public class InventarioMaterial implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventarioMaterialSequence")

@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -22,19 +24,19 @@ import org.hibernate.annotations.Where;
 @Table(name = "MF_ORDEMDECOMPRA")
 @Where(clause = "ativo = '1'")  
 @SQLDelete(sql = "UPDATE sysaid_java.MF_ORDEMDECOMPRA SET ativo  = 0 WHERE id = ?")
-
 public class OrdemDeCompra extends GenericModelo implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
 	public OrdemDeCompra() {
 		super();
-		this.materiais = new ArrayList<Material>();
+		this.materiais = new ArrayList<OrdemDeCompraMaterial>();
 	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ordemDeCompraSequence")
 	@Column
-	private int id;	
+	private Integer id;	
 	private int ativo = 1;
 	private Long numeroOC;
 	private Date dataEmissao;
@@ -42,17 +44,15 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	private String autorizador;
 	private String contratado;
 	
-	
-	//@JoinColumn(name="id_material", referencedColumnName="id")
-	@ManyToMany
-	private List<Material> materiais;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordemDeCompra", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<OrdemDeCompraMaterial> materiais;
 	
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 			
@@ -96,11 +96,11 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 		this.contratado = contratado;
 	}
 
-	public List<Material> getMateriais() {
+	public List<OrdemDeCompraMaterial> getMateriais() {
 		return materiais;
 	}
 
-	public void setMateriais(List<Material> materiais) {
+	public void setMateriais(List<OrdemDeCompraMaterial> materiais) {
 		this.materiais = materiais;
 	}
 	

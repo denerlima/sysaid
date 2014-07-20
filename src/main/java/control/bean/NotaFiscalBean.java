@@ -135,9 +135,9 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	
 	public void newMaterial() {
 		if (notaFiscal.getMateriais() == null) {
-			notaFiscal.setMateriais(new ArrayList<Material>());
+			//notaFiscal.setMateriais(new ArrayList<Material>());
 		}		
-		notaFiscal.getMateriais().add(material);
+		//notaFiscal.getMateriais().add(material);
 		this.material = new Material();
 	}
 
