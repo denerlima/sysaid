@@ -21,16 +21,43 @@
 		<p:spacer height="10" />					
 	    <p:tabView  id="tabView">
 	        <p:tab title="Dados Gerais">
-	            <h:panelGrid columns="2" cellpadding="10">
-	            	<h:outputText value="Nº de Inventário : " />
-					<h:outputText value="#{inventarioBean.inventario.id}"  label="Numero de Inventário" />
-					<h:outputText value="Data de Inventário : " />
-					<p:calendar pattern="dd/MM/yy" locale="pt_BR" value="#{inventarioBean.inventario.dataInventario}" size="10" navigator="true" />					
-					<h:outputText value="Atendente : " />
-					<h:inputText value="#{inventarioBean.inventario.atendente}" required="false" label="Nome do Atendente" />
-					<h:outputText value="Justificativa : " />
-					<h:inputText value="#{inventarioBean.inventario.justificativa}" label="Justificativa para realização do Inventário" />
-				</h:panelGrid>
+	        	
+	        	<div class="row">
+					<div class="col-md-2">
+						<h:outputText value="Nº de Inventário : " />
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{inventarioBean.inventario.id}"  label="Numero de Inventário" />	
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-2">
+						<h:outputText value="Data de Inventário : " />
+					</div>
+					<div class="col-md-10">
+						<p:calendar pattern="dd/MM/yy" locale="pt_BR" value="#{inventarioBean.inventario.dataInventario}" size="10" navigator="true" />	
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-2">
+						<h:outputText value="Atendente : " />
+					</div>
+					<div class="col-md-10">
+						<h:inputText value="#{inventarioBean.inventario.atendente}" required="false" label="Nome do Atendente" />	
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-2">
+						<h:outputText value="Justificativa : " />
+					</div>
+					<div class="col-md-10">
+						<h:inputTextarea value="#{inventarioBean.inventario.justificativa}" rows="3" cols="70" label="Justificativa para realização do Inventário" />	
+					</div>
+				</div>
+	        
 	        </p:tab>
 	        
 	        <p:tab title="Material" >
@@ -50,15 +77,18 @@
 		 		</p:outputPanel>
 	        				
 				<h2>Materiais do Inventario</h2>
-				<p:dataTable id="tabelaMaterial" var="mat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existe itens nesta lista.">
+				<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existe itens nesta lista.">
 					<p:column headerText="Material">
-						<h:outputText value="#{mat.material}" />							
+						<h:outputText value="#{invMat.material.material}" />							
 					</p:column>
 					<p:column headerText="Unidade de Medida Entrada">
-						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
+						<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
 					<p:column headerText="Estoque Atual">
-						<h:outputText value="#{mat.estoqueInformado}" />							
+						<h:outputText value="#{invMat.quantidadeEstoque}" />							
+					</p:column>
+					<p:column headerText="Estoque Inventariado">
+						<h:inputText value="#{invMat.quantidadeInventariada}" />							
 					</p:column>
 					<p:column headerText="Remover">
 		                <p:commandLink value="Remove" action="#{inventarioBean.removerMaterial(mat)}"
@@ -70,7 +100,9 @@
      	
      	<p:commandButton action="#{inventarioBean.createInventario}" value="Salvar" rendered="#{not inventarioBean.managed}" />
      	
-     	<p:commandButton action="#{inventarioBean.createInventario}" value="Alterar" rendered="#{inventarioBean.managed}" />
+     	<p:commandButton action="#{inventarioBean.updateInventario}" value="Alterar" rendered="#{inventarioBean.managed}" />
+     
+     	<p:commandButton action="inventarioList.xhtml?faces-redirect=true" value="Cancelar" ajax="false" />
      			
 	</h:form>
 

@@ -168,7 +168,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	public List<Material> pesquisarListaMateriais() {
 		try {			
 			materiais = getMaterialFacade().findMateriaisByFilter(material);
-			inventarioBean.getInventario().setMateriais(getAllMateriais());
+			//inventarioBean.getInventario().setMateriais(getAllMateriais());
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel achar nennhum material. ERRO");

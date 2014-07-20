@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import model.entity.Inventario;
+import model.entity.InventarioMaterial;
 import model.entity.Material;
 import model.facade.InventarioFacade;
 import model.facade.MaterialFacade;
@@ -39,13 +40,13 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		}
 		if(id == null || id == 0) {
 			inventario = new Inventario();
-			inventario.setMateriais(new ArrayList<Material>());
+			inventario.setMateriais(new ArrayList<InventarioMaterial>());
 		} else {
 			inventario = getInventarioFacade().find(id);
 		}
 	}
 	
-	public void createInventario() {
+	public String createInventario() {
 		try {
 			getInventarioFacade().create(inventario);
 			closeDialog();
@@ -57,6 +58,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+		return "/inventario/inventarioList.xhtml?faces-redirect=true";
 	}
 	
 	public List<Material> completeMaterial(String name) {
@@ -78,7 +80,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		return queryResult;
 	}
 	
-	public void updateInventario() {
+	public String updateInventario() {
 		try {
 			getInventarioFacade().update(inventario);
 			closeDialog();
@@ -90,6 +92,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		return "/inventario/inventarioList.xhtml?faces-redirect=true";
 	}
 	
 	public void deleteInventario() {
@@ -125,9 +128,13 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public void addMaterial() {
 		if (inventario.getMateriais() == null) {
-			inventario.setMateriais(new ArrayList<Material>());
-		}		
-		inventario.getMateriais().add(material);
+			inventario.setMateriais(new ArrayList<InventarioMaterial>());
+		}
+		InventarioMaterial invMat = new InventarioMaterial();
+		invMat.setInventario(inventario);
+		invMat.setMaterial(material);
+		invMat.setQuantidadeEstoque(material.getEstoqueInformado());
+		inventario.getMateriais().add(invMat);
 		this.material = new Material();
 	}
 	

@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,7 +29,7 @@ public class Inventario extends GenericModelo implements Serializable{
 	
 	public Inventario() {
 		super();
-		this.materiais = new ArrayList<Material>();
+		this.materiais = new ArrayList<InventarioMaterial>();
 	}
 	
 	@Id
@@ -42,8 +43,8 @@ public class Inventario extends GenericModelo implements Serializable{
 	private String justificativa;
 	
 	
-	@ManyToMany
-	private List<Material> materiais;
+	@OneToMany(mappedBy="inventario", cascade=CascadeType.ALL)
+	private List<InventarioMaterial> materiais;
 	
 
 	public Integer getId() {
@@ -86,11 +87,11 @@ public class Inventario extends GenericModelo implements Serializable{
 		this.justificativa = justificativa;
 	}
 
-	public List<Material> getMateriais() {
+	public List<InventarioMaterial> getMateriais() {
 		return materiais;
 	}
 
-	public void setMateriais(List<Material> materiais) {
+	public void setMateriais(List<InventarioMaterial> materiais) {
 		this.materiais = materiais;
 	}
 	

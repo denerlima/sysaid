@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -66,10 +67,10 @@ public class Material extends GenericModelo implements Serializable{
 	
 	@ManyToMany(mappedBy="materiais")
 	private List<OrdemDeCompra> ordensDeCompra;
-	
-	@ManyToMany(mappedBy="materiais")
-	private List<Inventario> inventarios;
 
+	@OneToMany(mappedBy="material")
+	private List<InventarioMaterial> inventarios;
+	
 	public int getId() {
 		return id;
 	}
@@ -164,11 +165,11 @@ public class Material extends GenericModelo implements Serializable{
 		this.ordensDeCompra = ordensDeCompra;
 	}
 	
-	public List<Inventario> getInventarios() {
+	public List<InventarioMaterial> getInventarios() {
 		return inventarios;
 	}
 
-	public void setInventarios(List<Inventario> inventarios) {
+	public void setInventarios(List<InventarioMaterial> inventarios) {
 		this.inventarios = inventarios;
 	}
 

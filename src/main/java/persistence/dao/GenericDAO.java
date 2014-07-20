@@ -21,21 +21,19 @@ public abstract class GenericDAO<T> implements Serializable {
 	private Class<T> entityClass;
 
 	public void beginTransaction() {
-		em = emf.createEntityManager();
-
-		em.getTransaction().begin();
+		getEntityManager().getTransaction().begin();
 	}
 
 	public void commit() {
-		em.getTransaction().commit();
+		getEntityManager().getTransaction().commit();
 	}
 
 	public void rollback() {
-		em.getTransaction().rollback();
+		getEntityManager().getTransaction().rollback();
 	}
 
 	public void closeTransaction() {
-		em.close();
+		getEntityManager().close();
 	}
 
 	public void commitAndCloseTransaction() {
@@ -44,12 +42,11 @@ public abstract class GenericDAO<T> implements Serializable {
 	}
 
 	public void flush() {
-		em.flush();
+		getEntityManager().flush();
 	}
 
-	public void joinTransaction() {
-		em = emf.createEntityManager();
-		em.joinTransaction();
+	public void joinTransaction(EntityManager newEm) {
+		em = newEm;
 	}
 
 	public GenericDAO(Class<T> entityClass) {
@@ -57,38 +54,42 @@ public abstract class GenericDAO<T> implements Serializable {
 	}
 
 	public void save(T entity) {
-		em.persist(entity);
+		getEntityManager().persist(entity);
 	}
 
 	public void delete(Object id, Class<T> classe) {
-		T entityToBeRemoved = em.getReference(classe, id);
+		T entityToBeRemoved = getEntityManager().getReference(classe, id);
 		 
-        em.remove(entityToBeRemoved);
+        getEntityManager().remove(entityToBeRemoved);
 	}
 	
 	public void delete(T entityClass) {
-        em.remove(entityClass);
+        getEntityManager().remove(entityClass);
 	}
 
 	public T update(T entity) {
-		return em.merge(entity);
+		return getEntityManager().merge(entity);
 	}
 
+	public void refresh(T entity) {
+		getEntityManager().refresh(entity);
+	}
+	
 	public T find(int entityID) {
-		return em.find(entityClass, entityID);
+		return getEntityManager().find(entityClass, entityID);
 	}
 
 	public T findReferenceOnly(int entityID) {
-		return em.getReference(entityClass, entityID);
+		return getEntityManager().getReference(entityClass, entityID);
 	}
 
 	// Using the unchecked because JPA does not have a
-	// em.getCriteriaBuilder().createQuery()<T> method
+	// getEntityManager().getCriteriaBuilder().createQuery()<T> method
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<T> findAll() {
-		CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+		CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
 		cq.select(cq.from(entityClass));
-		return em.createQuery(cq).getResultList();
+		return getEntityManager().createQuery(cq).getResultList();
 	}
 
 	// Using the unchecked because JPA does not have a
@@ -98,7 +99,7 @@ public abstract class GenericDAO<T> implements Serializable {
 		T result = null;
 
 		try {
-			Query query = em.createNamedQuery(namedQuery);
+			Query query = getEntityManager().createNamedQuery(namedQuery);
 
 			// Method that will populate parameters if they are passed not null and empty
 			if (parameters != null && !parameters.isEmpty()) {
@@ -124,6 +125,13 @@ public abstract class GenericDAO<T> implements Serializable {
 	}
 
 	public EntityManager getEntityManager() {
+		if(em == null) {
+			em = emf.createEntityManager();
+		} else {
+			if(!em.isOpen()) {
+				em = emf.createEntityManager();
+			}
+		}
 		return em;
 	}
 	
