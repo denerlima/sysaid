@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template.xhtml">
+	<ui:define name="body">
+
+		<h:form id="notaFiscalForm" prependId="false">		
+		<title>Lista de Nota Fiscal</title>
+		<center><h2>Lista de Nota Fiscal</h2></center>
+		<p:spacer height="10" />
+			<p:commandButton value="Nova Nota Fiscal" icon="ui-icon-plus" action="notaFiscalEdit.xhtml" ajax="false" />	
+			<center>
+			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
+			<p:spacer width="100" height="30" />
+				<p:dataTable var="nf" value="#{notaFiscalBean.allNotasFiscais}" emptyMessage="Não existe itens nesta lista.">
+				<p:ajax event="rowSelect" /> <!-- update=":notaFiscalUpdateDialogForm" /> --> 
+					<p:column headerText="Nº da Nota Fiscal">
+						<h:outputText value="#{nf.numeroOC}" />							
+					</p:column>
+					<p:column headerText="Data da autorização">
+						<h:outputText value="#{nf.dataAutorizacao}" />							
+					</p:column>
+					<p:column headerText="Data da emissão">
+						<h:outputText value="#{nf.dataEmissao}" />							
+					</p:column>
+					<p:column headerText="Autorizador">
+						<h:outputText value="#{nf.autorizador}" />							
+					</p:column>
+					<p:column headerText="Contratado">
+						<h:outputText value="#{nf.contratado}" />							
+					</p:column>				
+										
+					<p:column headerText="Ações" style="width:200px">											
+						<p:commandButton value="Editar" update=":notaFiscalForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
+								<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
+						</p:commandButton>	
+						<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();"  style="margin-right:10px">
+							<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
+						</p:commandButton>
+						<p:commandButton value="Cancelar"  icon="ui-icon-cancel" style="margin-right:10px">
+							<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
+						</p:commandButton>												
+					</p:column>
+					
+				</p:dataTable>
+			</p:outputPanel>
+			</center>
+						
+		</h:form>
+				
+	</ui:define>
+</ui:composition>

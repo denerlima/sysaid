@@ -20,7 +20,7 @@
 						<f:selectItems value="#{unidadeMedidaBean.unidadesEntradas}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
 					</h:selectOneMenu>
 					
-					<p:commandButton action="#{unidadeEntradaBean.newUnidadeEntrada}" value="Nova Unidade" oncomplete="PF('unidadeDialog').show();" update=":unidadeDialogForm" />
+					<p:commandButton action="#{unidadeEntradaBean.newUnidadeEntrada}" value="Nova Unidade" oncomplete="PF('unidadeDialog').show();" update=":unidadeDialogForm"  style="margin-left: 8px" />
 				</div>
 			</div>
 			

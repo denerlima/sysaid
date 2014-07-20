@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -34,13 +36,18 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "notaFiscalSequence")
 	@Column
-	private int id;	
+	private Integer id;	
 	private int ativo = 1;
-	private Long numeroOC;
+	private Long nrNotaFiscal;
 	private Date dataEmissao;
-	private Date dataAutorizacao;
-	private String autorizador;
-	private String contratado;
+	private Date dataEntrega;	
+	private Long acrescimos;
+	private Long totalProdutos;
+	private Long totalGeralNota;
+	
+	@ManyToOne
+	@JoinColumn(name="id_fornecedor", referencedColumnName="id")
+	private Fornecedor fornecedor;
 	
 	@ManyToMany
 	private List<Material> notas;
@@ -54,14 +61,6 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 		this.id = id;
 	}
 			
-	public Long getNumeroOC() {
-		return numeroOC;
-	}
-
-	public void setNumeroOC(Long numeroOC) {
-		this.numeroOC = numeroOC;
-	}
-
 	public Date getDataEmissao() {
 		return dataEmissao;
 	}
@@ -69,29 +68,61 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	public void setDataEmissao(Date dataEmissao) {
 		this.dataEmissao = dataEmissao;
 	}
-
-	public Date getDataAutorizacao() {
-		return dataAutorizacao;
+	
+	public Long getNrNotaFiscal() {
+		return nrNotaFiscal;
 	}
 
-	public void setDataAutorizacao(Date dataAutorizacao) {
-		this.dataAutorizacao = dataAutorizacao;
+	public void setNrNotaFiscal(Long nrNotaFiscal) {
+		this.nrNotaFiscal = nrNotaFiscal;
 	}
 
-	public String getAutorizador() {
-		return autorizador;
+	public Date getDataEntrega() {
+		return dataEntrega;
 	}
 
-	public void setAutorizador(String autorizador) {
-		this.autorizador = autorizador;
+	public void setDataEntrega(Date dataEntrega) {
+		this.dataEntrega = dataEntrega;
 	}
 
-	public String getContratado() {
-		return contratado;
+	public Fornecedor getFornecedor() {
+		return fornecedor;
 	}
 
-	public void setContratado(String contratado) {
-		this.contratado = contratado;
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+	public Long getAcrescimos() {
+		return acrescimos;
+	}
+
+	public void setAcrescimos(Long acrescimos) {
+		this.acrescimos = acrescimos;
+	}
+
+	public Long getTotalProdutos() {
+		return totalProdutos;
+	}
+
+	public void setTotalProdutos(Long totalProdutos) {
+		this.totalProdutos = totalProdutos;
+	}
+
+	public Long getTotalGeralNota() {
+		return totalGeralNota;
+	}
+
+	public void setTotalGeralNota(Long totalGeralNota) {
+		this.totalGeralNota = totalGeralNota;
+	}
+
+	public List<Material> getNotas() {
+		return notas;
+	}
+
+	public void setNotas(List<Material> notas) {
+		this.notas = notas;
 	}
 
 	public List<Material> getMateriais() {

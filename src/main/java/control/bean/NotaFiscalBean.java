@@ -49,7 +49,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			getNotaFiscalFacade().create(notaFiscal);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
-			loadOrdensDeCompra();
+			loadNotasFiscais();
 			resetNotaFiscal();
 		} catch (Exception e) {
 			keepDialogOpen();
@@ -63,7 +63,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			getNotaFiscalFacade().update(notaFiscal);
 			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
-			loadOrdensDeCompra();
+			loadNotasFiscais();
 			resetNotaFiscal();
 		} catch (Exception e) {
 			keepDialogOpen();
@@ -77,7 +77,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			getNotaFiscalFacade().delete(notaFiscal);
 			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
-			loadOrdensDeCompra();
+			loadNotasFiscais();
 			resetNotaFiscal();
 		} catch (Exception e) {
 			keepDialogOpen();
@@ -86,9 +86,9 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		}
 	}
 
-	public List<NotaFiscal> getAllOrdensDeCompra() {
+	public List<NotaFiscal> getAllNotasFiscais() {
 		if (notasFiscais == null) {
-			loadOrdensDeCompra();
+			loadNotasFiscais();
 		}
 
 		return notasFiscais;
@@ -112,7 +112,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	
 	
 
-	private void loadOrdensDeCompra() {
+	private void loadNotasFiscais() {
 		notasFiscais = getNotaFiscalFacade().listAll();
 	}
 
