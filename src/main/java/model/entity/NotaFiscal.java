@@ -1,6 +1,7 @@
 package model.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,9 +43,11 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	private Date dataEmissao;
 	private Date dataEntrega;	
 	private Long acrescimos;
-	private Long totalProdutos;
-	private Long totalGeralNota;
-	
+	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
+	private BigDecimal totalProdutos;
+	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
+	private BigDecimal totalGeralNota;
+		
 	@ManyToOne
 	@JoinColumn(name="id_fornecedor", referencedColumnName="id")
 	private Fornecedor fornecedor;
@@ -101,19 +104,19 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 		this.acrescimos = acrescimos;
 	}
 
-	public Long getTotalProdutos() {
+	public BigDecimal getTotalProdutos() {
 		return totalProdutos;
 	}
 
-	public void setTotalProdutos(Long totalProdutos) {
+	public void setTotalProdutos(BigDecimal totalProdutos) {
 		this.totalProdutos = totalProdutos;
 	}
 
-	public Long getTotalGeralNota() {
+	public BigDecimal getTotalGeralNota() {
 		return totalGeralNota;
 	}
 
-	public void setTotalGeralNota(Long totalGeralNota) {
+	public void setTotalGeralNota(BigDecimal totalGeralNota) {
 		this.totalGeralNota = totalGeralNota;
 	}
 

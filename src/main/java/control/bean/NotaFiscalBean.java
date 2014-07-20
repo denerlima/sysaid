@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 
+import model.entity.Fornecedor;
 import model.entity.Material;
 import model.entity.NotaFiscal;
+import model.facade.FornecedorFacade;
 import model.facade.MaterialFacade;
 import model.facade.NotaFiscalFacade;
 
@@ -109,6 +112,16 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		}
 		return queryResult;
 	}
+	
+	public List<SelectItem> getSelectItensFornecedores(){
+		List<SelectItem> lista = new ArrayList<SelectItem>();		
+		FornecedorFacade fornecedorFacade = new FornecedorFacade();
+		for(Fornecedor forn : fornecedorFacade.listAll()){
+			lista.add(new SelectItem(forn.getId(), forn.getNome()));
+		}
+		return lista;
+	}
+	
 	
 	
 
