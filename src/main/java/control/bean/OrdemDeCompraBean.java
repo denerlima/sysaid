@@ -64,7 +64,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		this.ordemDeCompra = ordemDeCompra;
 	}
 
-	public void createOrdemDeCompra() {
+	public String createOrdemDeCompra() {
 		try {
 			getOrdemDeCompraFacade().create(ordemDeCompra);
 			closeDialog();
@@ -76,9 +76,10 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+		return "/ordemDeCompra/ordemDeCompraList.xhtml?faces-redirect=true";
 	}
 	
-	public void updateOrdemDeCompra() {
+	public String updateOrdemDeCompra() {
 		try {
 			getOrdemDeCompraFacade().update(ordemDeCompra);
 			closeDialog();
@@ -90,6 +91,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		return "/ordemDeCompra/ordemDeCompraList.xhtml?faces-redirect=true";
 	}
 	
 	public void deleteOrdemDeCompra() {

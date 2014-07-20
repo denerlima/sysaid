@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -65,8 +64,8 @@ public class Material extends GenericModelo implements Serializable{
 	@JoinColumn(name="id_marca", referencedColumnName="id")
 	private Marca marca;
 	
-	@ManyToMany(mappedBy="materiais")
-	private List<OrdemDeCompra> ordensDeCompra;
+	@OneToMany(mappedBy="material")
+	private List<OrdemDeCompraMaterial> ordensDeCompra;
 
 	@OneToMany(mappedBy="material")
 	private List<InventarioMaterial> inventarios;
@@ -157,14 +156,14 @@ public class Material extends GenericModelo implements Serializable{
 		this.marca = marca;
 	}
 	
-	public List<OrdemDeCompra> getOrdensDeCompra() {
+	public List<OrdemDeCompraMaterial> getOrdensDeCompra() {
 		return ordensDeCompra;
 	}
 
-	public void setOrdensDeCompra(List<OrdemDeCompra> ordensDeCompra) {
+	public void setOrdensDeCompra(List<OrdemDeCompraMaterial> ordensDeCompra) {
 		this.ordensDeCompra = ordensDeCompra;
 	}
-	
+
 	public List<InventarioMaterial> getInventarios() {
 		return inventarios;
 	}
