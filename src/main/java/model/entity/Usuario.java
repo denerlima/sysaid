@@ -1,10 +1,12 @@
 package model.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +26,8 @@ public class Usuario extends GenericModelo implements Serializable {
 	@Column(name = "LAST_NAME")
 	private String sobrenome;
 
+	@OneToMany(mappedBy="atendente")
+	private List<Inventario> inventarios;
 	
 	public int getId() {
 		return id;
@@ -51,6 +55,14 @@ public class Usuario extends GenericModelo implements Serializable {
 
 	public String getNomeCompleto() {
 		return (nome + " " + sobrenome);
+	}
+	
+	public List<Inventario> getInventarios() {
+		return inventarios;
+	}
+
+	public void setInventarios(List<Inventario> inventarios) {
+		this.inventarios = inventarios;
 	}
 
 	@Override

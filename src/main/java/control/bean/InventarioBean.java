@@ -6,12 +6,15 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 
 import model.entity.Inventario;
 import model.entity.InventarioMaterial;
 import model.entity.Material;
+import model.entity.Usuario;
 import model.facade.InventarioFacade;
 import model.facade.MaterialFacade;
+import model.facade.UsuarioFacade;
 
 @ViewScoped
 @ManagedBean
@@ -156,6 +159,16 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		}
 		return inventario;
 	}
+	
+	public List<SelectItem> getSelectItensAtendentes(){
+		List<SelectItem> lista = new ArrayList<SelectItem>();		
+		UsuarioFacade usuarioFacade = new UsuarioFacade();
+		for(Usuario user : usuarioFacade.listAll()){
+			lista.add(new SelectItem(user.getId(), user.getNomeCompleto()));
+		}
+		return lista;
+	}
+	
 
 	public void setInventario(Inventario inventario) {
 		this.inventario = inventario;

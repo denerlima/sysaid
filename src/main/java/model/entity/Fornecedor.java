@@ -25,7 +25,7 @@ public class Fornecedor extends GenericModelo implements Serializable {
 	private String nome;
 
 	@OneToMany(mappedBy="fornecedor")
-	private List<NotaFiscal> notaFiscal;
+	private List<NotaFiscal> notasFiscais;
 	
 	public int getId() {
 		return id;
@@ -43,12 +43,12 @@ public class Fornecedor extends GenericModelo implements Serializable {
 		this.nome = nome;
 	}
 	
-	public List<NotaFiscal> getNotaFiscal() {
-		return notaFiscal;
+	public List<NotaFiscal> getNotasFiscais() {
+		return notasFiscais;
 	}
 
-	public void setNotaFiscal(List<NotaFiscal> notaFiscal) {
-		this.notaFiscal = notaFiscal;
+	public void setNotasFiscais(List<NotaFiscal> notasFiscais) {
+		this.notasFiscais = notasFiscais;
 	}
 
 	@Override

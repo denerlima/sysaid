@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -39,12 +41,15 @@ public class Inventario extends GenericModelo implements Serializable{
 	private int ativo = 1;
 	private Long numeroInventario;
 	private Date dataInventario;
-	private String atendente;
 	private String justificativa;
 	
 	
 	@OneToMany(mappedBy="inventario", cascade=CascadeType.ALL)
 	private List<InventarioMaterial> materiais;
+	
+	@ManyToOne
+	@JoinColumn(name="id_atendente", referencedColumnName="id")
+	private Usuario atendente;
 	
 
 	public Integer getId() {
@@ -71,11 +76,11 @@ public class Inventario extends GenericModelo implements Serializable{
 		this.dataInventario = dataInventario;
 	}
 
-	public String getAtendente() {
+	public Usuario getAtendente() {
 		return atendente;
 	}
 
-	public void setAtendente(String atendente) {
+	public void setAtendente(Usuario atendente) {
 		this.atendente = atendente;
 	}
 

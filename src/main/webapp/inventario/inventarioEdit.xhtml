@@ -45,7 +45,10 @@
 						<h:outputText value="Atendente : " />
 					</div>
 					<div class="col-md-10">
-						<h:inputText value="#{inventarioBean.inventario.atendente}" required="false" label="Nome do Atendente" />	
+						<h:selectOneMenu id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente.id}" >
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{inventarioBean.selectItensAtendentes}" var="user" itemLabel="#{user.nomeCompleto}"   itemValue="#{user}" />			
+						</h:selectOneMenu>	
 					</div>
 				</div>
 				
