@@ -42,12 +42,12 @@
 				
 				<div class="row">
 					<div class="col-md-2">
-						<h:outputText value="Atendente : " />
+						<h:outputText value="Atendente:" />
 					</div>
 					<div class="col-md-10">
-						<h:selectOneMenu id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente.id}" >
+						<h:selectOneMenu id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}" >
 							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{inventarioBean.selectItensAtendentes}" var="user" itemLabel="#{user.nomeCompleto}"   itemValue="#{user}" />			
+							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
 						</h:selectOneMenu>	
 					</div>
 				</div>
