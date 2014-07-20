@@ -7,7 +7,7 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<p:dialog header="Cadastrar Unidade" id="unidadeMedidaDialogId2" closable="true"
-		widgetVar="unidadeMedidaDialog" modal="true" dynamic="false" width="550" height="200">
+		widgetVar="unidadeMedidaDialog" modal="true" dynamic="false" width="550" height="auto">
 		<h:form id="unidadeMedidaDialogForm">
 			
 			<div class="row">
@@ -15,12 +15,12 @@
 					Unidade Entrada
 				</div>
 				<div class="col-md-8">
-					<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" >
+					<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" required="true" label="Unidade Entrada">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{unidadeMedidaBean.unidadesEntradas}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
 					</h:selectOneMenu>
-					
 					<p:commandButton action="#{unidadeEntradaBean.newUnidadeEntrada}" value="Nova Unidade" oncomplete="PF('unidadeDialog').show();" update=":unidadeDialogForm"  style="margin-left: 8px" />
+					<h:message for="entrada" styleClass="msg-error" />
 				</div>
 			</div>
 			
@@ -29,7 +29,8 @@
 					Unidade de Saída
 				</div>
 				<div class="col-md-8">
-					<h:inputText value="#{unidadeMedidaBean.unidadeMedida.unSaida}" />
+					<h:inputText id="unSaida" value="#{unidadeMedidaBean.unidadeMedida.unSaida}" required="true" label="Unidade de Saída" />
+					<h:message for="unSaida" styleClass="msg-error" />
 				</div>
 			</div>
 			
@@ -38,7 +39,8 @@
 					Fator conversão
 				</div>
 				<div class="col-md-8">
-					<h:inputText value="#{unidadeMedidaBean.unidadeMedida.fatorConversao}" />
+					<h:inputText id="fatorConversao" value="#{unidadeMedidaBean.unidadeMedida.fatorConversao}" required="true" label="Fator de Conversão" />
+					<h:message for="fatorConversao" styleClass="msg-error" />
 				</div>
 			</div>
 			

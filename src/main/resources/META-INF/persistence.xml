@@ -5,7 +5,7 @@
 	 	<non-jta-data-source>java:/comp/env/jdbc/sysaid</non-jta-data-source>		
         <properties>
         	<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
-        	<property name="hibernate.default_schema" value="sysaid_java"/>
+        	<property name="hibernate.default_schema" value="sysaid"/>
         	<!--<property name="hibernate.hbm2ddl.auto" value="create"/>-->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>

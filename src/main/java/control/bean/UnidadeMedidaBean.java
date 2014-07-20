@@ -23,6 +23,9 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	private List<UnidadeMedida> unidadesMedida;
 	private UnidadeMedidaFacade unidadeMedidaFacade;
 	
+	public void novo() {
+		resetUnidadeMedida();
+	}
 
 	public UnidadeMedidaFacade getUnidadeMedidaFacade() {
 		if (unidadeMedidaFacade == null) {

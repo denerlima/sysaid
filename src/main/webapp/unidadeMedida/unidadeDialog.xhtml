@@ -15,19 +15,28 @@
 					Unidade
 				</div>
 				<div class="col-md-9">
-					<h:inputText value="#{unidadeEntradaBean.unidadeEntrada.descricao}" />
+					<h:inputText id="descricao" value="#{unidadeEntradaBean.unidadeEntrada.descricao}" required="true" label="Unidade" />
+					<h:message for="descricao" styleClass="msg-error" />
 				</div>
 			</div>
 					
 			<div class="buttons">		
 				<p:commandButton action="#{unidadeEntradaBean.createUnidadeEntrada}" value="Salvar"
-					oncomplete="PF('unidadeDialog').hide();"
-					update=":unidadeMedidaDialogForm:entrada" />
+					update=":unidadeDialogForm :unidadeMedidaDialogForm:entrada"
+					oncomplete="oncompleteUnidade(xhr, status, args)" />
 					
 				<p:commandButton value="Cancelar" type="button" onclick="PF('unidadeDialog').hide();" />
 
 			</div>
 		</h:form>
 	</p:dialog>
+	
+	<script type="text/javascript">
+	   function oncompleteUnidade(xhr, status, args) {
+	      if (args.success) {
+	    	  PF('unidadeDialog').hide();
+	      }
+	   }
+	</script>
 
 </f:view>
