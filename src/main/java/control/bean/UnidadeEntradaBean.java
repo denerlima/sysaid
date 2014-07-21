@@ -3,30 +3,29 @@ package control.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-
-import org.primefaces.context.RequestContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.UnidadeEntrada;
 import model.facade.UnidadeEntradaFacade;
 
+import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
 
+@Named
 @ViewScoped
-@ManagedBean
 public class UnidadeEntradaBean extends AbstractBean implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	private UnidadeEntrada unidadeEntrada;	
 	private List<UnidadeEntrada> unidadesMedida;
+	
+	@Inject
 	private UnidadeEntradaFacade unidadeEntradaFacade;
 
 	
 	public UnidadeEntradaFacade getUnidadeEntradaFacade() {
-		if (unidadeEntradaFacade == null) {
-			unidadeEntradaFacade = new UnidadeEntradaFacade();
-		}
-
 		return unidadeEntradaFacade;
 	}
 
@@ -34,7 +33,6 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 		if (unidadeEntrada == null) {
 			unidadeEntrada = new UnidadeEntrada();
 		}
-
 		return unidadeEntrada;
 	}
 

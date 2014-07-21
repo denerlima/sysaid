@@ -15,30 +15,29 @@
 			<f:validateLength minimum="4" />
 		</p:inputTextarea>
 		<h:outputText value="Tipo Material : " />
-		<h:selectOneMenu id="cbTipoMaterial" immediate="true" value="#{materialBean.selectedTipoMaterial.id}" >
+		<h:selectOneMenu id="cbTipoMaterial" value="#{materialBean.material.tipoMaterial}" converter="objectConverter">
 			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{materialBean.selectItensTipoMaterial}" var="tipo" itemLabel="#{tipo.descricao}"   itemValue="#{tipo}" />				
+			<f:selectItems value="#{tipoMaterialBean.alltiposMaterial}" var="tipo" itemLabel="#{tipo.descricao}"   itemValue="#{tipo}" />				
 		</h:selectOneMenu>
 		<h:outputText value="Aplicação : " />
-		<h:selectOneMenu id="cbAplicacao" immediate="true" value="#{materialBean.selectedAplicacao.id}" >
+		<h:selectOneMenu id="cbAplicacao" value="#{materialBean.material.aplicacao}" converter="objectConverter">
 			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{materialBean.selectItensAplicacoes}" var="app" itemLabel="#{app.descricao}"   itemValue="#{app}" />					
-		<!-- 	<p:ajax event="change" process="@this" update=":materialForm" />    -->
+			<f:selectItems value="#{aplicacaoBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
 		</h:selectOneMenu>		
 		<h:outputText value="Marca : " />
-		<h:selectOneMenu id="cbMarca" immediate="true" value="#{materialBean.selectedMarca.id}" >
+		<h:selectOneMenu id="cbMarca" value="#{materialBean.material.marca}" converter="objectConverter">
 			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{materialBean.selectItensMarcas}" var="marca" itemLabel="#{marca.descricao}"   itemValue="#{marca}" />			
+			<f:selectItems value="#{marcaBean.allMarcas}" var="marca" itemLabel="#{marca.descricao}" itemValue="#{marca}" />			
 		</h:selectOneMenu>		
-		<h:outputText value="Grupo : " />
-		<h:selectOneMenu id="cbGrupo" immediate="true" value="#{materialBean.selectedGrupo.id}" >
+		<h:outputText value="Grupo:" />
+		<h:selectOneMenu id="cbGrupo" value="#{materialBean.material.grupo}" converter="objectConverter">
 			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{materialBean.selectItensGrupos}" var="grupo" itemLabel="#{grupo.descricao - grupo.grupopai}"   itemValue="#{grupo}" />		
+			<f:selectItems value="#{grupoBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricao} - #{grupo.grupopai}" itemValue="#{grupo}" />		
 		</h:selectOneMenu>
-		<h:outputText value="Unidade de Medida de Entrada : " />
-		<h:selectOneMenu id="cbEntrada" immediate="true" value="#{materialBean.selectedUnidadeMedida.id}" >
+		<h:outputText value="Unidade de Medida de Entrada:" />
+		<h:selectOneMenu id="cbEntrada" value="#{materialBean.material.unidadeMedida}" converter="objectConverter">
 			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{materialBean.selectItensUnidadeMedida}" var="um" itemLabel="#{um.unidadeEntrada}"   itemValue="#{um}" />				
+			<f:selectItems value="#{unidadeMedidaBean.allUnidadesMedida}" var="um" itemLabel="#{um.unidadeEntrada}" itemValue="#{um}" />				
 		</h:selectOneMenu>								
 		<h:outputText value="Estoque Informado : " />
 		<pe:inputNumber decimalPlaces="2" value="#{materialBean.material.estoqueInformado}"/>

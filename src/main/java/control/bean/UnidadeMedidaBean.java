@@ -4,23 +4,27 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.UnidadeEntrada;
 import model.entity.UnidadeMedida;
 import model.facade.UnidadeEntradaFacade;
 import model.facade.UnidadeMedidaFacade;
 
+import org.omnifaces.cdi.ViewScoped;
 
+@Named
 @ViewScoped
-@ManagedBean
 public class UnidadeMedidaBean extends AbstractBean implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	private UnidadeMedida unidadeMedida;	
 	private List<UnidadeMedida> unidadesMedida;
+	
+	@Inject
 	private UnidadeMedidaFacade unidadeMedidaFacade;
 	
 	public void novo() {
@@ -28,10 +32,6 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	}
 
 	public UnidadeMedidaFacade getUnidadeMedidaFacade() {
-		if (unidadeMedidaFacade == null) {
-			unidadeMedidaFacade = new UnidadeMedidaFacade();
-		}
-
 		return unidadeMedidaFacade;
 	}
 

@@ -3,27 +3,28 @@ package control.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.MaoDeObra;
 import model.facade.MaoDeObraFacade;
 
+import org.omnifaces.cdi.ViewScoped;
+
+@Named
 @ViewScoped
-@ManagedBean
 public class MaoDeObraBean extends AbstractBean implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	private MaoDeObra maoDeObra;	
 	private List<MaoDeObra> maosDeObra;
+	
+	@Inject
 	private MaoDeObraFacade maoDeObraFacade;
 
 	
 	public MaoDeObraFacade getMaoDeObraFacade() {
-		if (maoDeObraFacade == null) {
-			maoDeObraFacade = new MaoDeObraFacade();
-		}
-
 		return maoDeObraFacade;
 	}
 
@@ -31,7 +32,6 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 		if (maoDeObra == null) {
 			maoDeObra = new MaoDeObra();
 		}
-
 		return maoDeObra;
 	}
 

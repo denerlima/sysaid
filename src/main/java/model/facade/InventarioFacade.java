@@ -2,32 +2,40 @@ package model.facade;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import model.entity.Inventario;
 import model.entity.InventarioMaterial;
 import persistence.dao.GenericDAO;
 import persistence.dao.InventarioDAO;
 import persistence.dao.MaterialDAO;
 
-public class InventarioFacade extends GenericFacade<Inventario> implements Serializable{
+@Named
+public class InventarioFacade extends GenericFacade<Inventario> implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 	
-	private InventarioDAO inventarioDAO = new InventarioDAO();
-	private MaterialDAO materialDAO = new MaterialDAO();
+	@Inject
+	private InventarioDAO inventarioDAO;
+	
+	@Inject
+	private MaterialDAO materialDAO;
 
 	public void create(Inventario entity) {
 		getDAO().beginTransaction();
-		materialDAO.joinTransaction(inventarioDAO.getEntityManager());
+		//materialDAO.joinTransaction(inventarioDAO.getEntityManager());
 		definirQuantidades(entity);
 		getDAO().save(entity);
-		getDAO().commitAndCloseTransaction();
+		getDAO().commit();
 	}
 	
 	public void update(Inventario entity) {
 		getDAO().beginTransaction();
-		materialDAO.joinTransaction(inventarioDAO.getEntityManager());
+		//materialDAO.joinTransaction(inventarioDAO.getEntityManager());
 		definirQuantidades(entity);
 		getDAO().update(entity);
-		getDAO().commitAndCloseTransaction();
+		getDAO().commit();
 	}
 	
 	private void definirQuantidades(Inventario inventario) {

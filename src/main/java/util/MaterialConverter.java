@@ -7,15 +7,17 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import model.facade.MaterialFacade;
 import model.entity.Material;
-
+import model.facade.MaterialFacade;
+  
 @FacesConverter(forClass = model.entity.Material.class)
 public class MaterialConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
-		MaterialFacade materialFacade = new MaterialFacade();
+		
+		MaterialFacade materialFacade = (MaterialFacade) Component.getInstance(MaterialFacade.class);
+		
 		int materialId;
 
 		try {

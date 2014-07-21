@@ -13,9 +13,10 @@ import model.facade.UnidadeEntradaFacade;
 @FacesConverter(forClass = model.entity.UnidadeEntrada.class)
 public class UnidadeConverter implements Converter {
 
+	
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
-		UnidadeEntradaFacade facade = new UnidadeEntradaFacade();
+		UnidadeEntradaFacade facade = (UnidadeEntradaFacade) Component.getInstance(UnidadeEntradaFacade.class);
 		int id;
 		try {
 			id = Integer.parseInt(arg2);

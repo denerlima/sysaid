@@ -3,27 +3,27 @@ package control.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.Marca;
 import model.facade.MarcaFacade;
 
+import org.omnifaces.cdi.ViewScoped;
+
+@Named
 @ViewScoped
-@ManagedBean
 public class MarcaBean extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Marca marca;	
 	private List<Marca> marcas;
+	
+	@Inject
 	private MarcaFacade marcaFacade;
 
 	
 	public MarcaFacade getMarcaFacade() {
-		if (marcaFacade == null) {
-			marcaFacade = new MarcaFacade();
-		}
-
 		return marcaFacade;
 	}
 
@@ -31,7 +31,6 @@ public class MarcaBean extends AbstractBean implements Serializable {
 		if (marca == null) {
 			marca = new Marca();
 		}
-
 		return marca;
 	}
 

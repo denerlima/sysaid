@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.Inventario;
 import model.entity.InventarioMaterial;
@@ -15,19 +16,34 @@ import model.facade.InventarioFacade;
 import model.facade.MaterialFacade;
 import model.facade.UsuarioFacade;
 
+import org.omnifaces.cdi.ViewScoped;
+
+@Named
 @ViewScoped
-@ManagedBean
 public class InventarioBean extends AbstractBean implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
-	public static final String INJECTION_NAME = "#{inventarioBean}";
+	private static final long serialVersionUID = 5226648353758700812L;
 
 	private Inventario inventario;	
 	private List<Inventario> inventarios;
+	
+	@Inject
 	private InventarioFacade inventarioFacade;
+	
+	@Inject
+	private UsuarioFacade usuarioFacade;
+	
+	@Inject
+	private MaterialFacade materialFacade;
+	
 	private Material material;
 	private List<Material> materiais;
 
+	@PostConstruct 
+	public void init() { 
+		System.out.println("Bean Instanciado!"); 
+	}
+	
 	public String novo() {
 		return "/inventario/inventarioEdit.xhtml?faces-redirect=true";
 	}
@@ -67,7 +83,6 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		List<Material> queryResult = new ArrayList<Material>();
 
 		if (materiais == null) {
-			MaterialFacade materialFacade = new MaterialFacade();
 			materiais = materialFacade.listAll();
 		}
 
@@ -145,10 +160,6 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	}
 
 	public InventarioFacade getInventarioFacade() {
-		if (inventarioFacade == null) {
-			inventarioFacade = new InventarioFacade();
-		}
-
 		return inventarioFacade;
 	}
 
@@ -160,7 +171,6 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	}
 	
 	public List<Usuario> getAtendentes(){
-		UsuarioFacade usuarioFacade = new UsuarioFacade();
 		return usuarioFacade.listAll();
 	}
 	

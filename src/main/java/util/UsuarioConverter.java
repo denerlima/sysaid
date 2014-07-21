@@ -12,10 +12,10 @@ import model.facade.UsuarioFacade;
 
 @FacesConverter(forClass = model.entity.Usuario.class)
 public class UsuarioConverter implements Converter {
-
+	
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
-		UsuarioFacade facade = new UsuarioFacade();
+		UsuarioFacade facade = (UsuarioFacade) Component.getInstance(UsuarioFacade.class);
 		int id;
 		try {
 			id = Integer.parseInt(arg2);

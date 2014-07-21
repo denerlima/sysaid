@@ -3,29 +3,28 @@ package control.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-
-import org.apache.log4j.Logger;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.TipoMaterial;
 import model.facade.TipoMaterialFacade;
 
+import org.omnifaces.cdi.ViewScoped;
+
+@Named
 @ViewScoped
-@ManagedBean
 public class TipoMaterialBean extends AbstractBean implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	private TipoMaterial tipoMaterial;	
 	private List<TipoMaterial> tiposMaterial;
+	
+	@Inject
 	private TipoMaterialFacade tipoMaterialFacade;
 
 	
 	public TipoMaterialFacade getTipoMaterialFacade() {
-		if (tipoMaterialFacade == null) {
-			tipoMaterialFacade = new TipoMaterialFacade();
-		}
-
 		return tipoMaterialFacade;
 	}
 

@@ -3,27 +3,27 @@ package control.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.Grupo;
 import model.facade.GrupoFacade;
 
+import org.omnifaces.cdi.ViewScoped;
+
+@Named
 @ViewScoped
-@ManagedBean
 public class GrupoBean extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Grupo grupo;	
 	private List<Grupo> grupos;
+	
+	@Inject
 	private GrupoFacade grupoFacade;
 
 	
 	public GrupoFacade getGrupoFacade() {
-		if (grupoFacade == null) {
-			grupoFacade = new GrupoFacade();
-		}
-
 		return grupoFacade;
 	}
 

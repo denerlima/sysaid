@@ -5,17 +5,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 
 public abstract class GenericDAO<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("sysaid");
+	//private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("sysaid");
+	
+	@Inject
 	private EntityManager em;
 
 	private Class<T> entityClass;
@@ -32,22 +33,13 @@ public abstract class GenericDAO<T> implements Serializable {
 		getEntityManager().getTransaction().rollback();
 	}
 
-	public void closeTransaction() {
-		getEntityManager().close();
-	}
-
-	public void commitAndCloseTransaction() {
-		commit();
-		closeTransaction();
-	}
-
 	public void flush() {
 		getEntityManager().flush();
 	}
 
-	public void joinTransaction(EntityManager newEm) {
-		em = newEm;
-	}
+	//public void joinTransaction(EntityManager newEm) {
+	//	em = newEm;
+	//}
 
 	public GenericDAO(Class<T> entityClass) {
 		this.entityClass = entityClass;
@@ -125,6 +117,7 @@ public abstract class GenericDAO<T> implements Serializable {
 	}
 
 	public EntityManager getEntityManager() {
+		/*
 		if(em == null) {
 			em = emf.createEntityManager();
 		} else {
@@ -132,6 +125,7 @@ public abstract class GenericDAO<T> implements Serializable {
 				em = emf.createEntityManager();
 			}
 		}
+		*/
 		return em;
 	}
 	

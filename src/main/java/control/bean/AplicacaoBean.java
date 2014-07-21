@@ -3,27 +3,27 @@ package control.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.Aplicacao;
 import model.facade.AplicacaoFacade;
 
+import org.omnifaces.cdi.ViewScoped;
+
+@Named
 @ViewScoped
-@ManagedBean
 public class AplicacaoBean extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Aplicacao aplicacao;	
 	private List<Aplicacao> aplicacoes;
+	
+	@Inject
 	private AplicacaoFacade aplicacaoFacade;
 
 	
 	public AplicacaoFacade getAplicacaoFacade() {
-		if (aplicacaoFacade == null) {
-			aplicacaoFacade = new AplicacaoFacade();
-		}
-
 		return aplicacaoFacade;
 	}
 

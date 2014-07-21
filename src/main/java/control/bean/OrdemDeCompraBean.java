@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.Material;
 import model.entity.OrdemDeCompra;
@@ -13,13 +13,17 @@ import model.entity.OrdemDeCompraMaterial;
 import model.facade.MaterialFacade;
 import model.facade.OrdemDeCompraFacade;
 
+import org.omnifaces.cdi.ViewScoped;
+
+@Named
 @ViewScoped
-@ManagedBean
 public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private OrdemDeCompra ordemDeCompra;	
 	private List<OrdemDeCompra> ordensDeCompra;
+	
+	@Inject
 	private OrdemDeCompraFacade ordemDeCompraFacade;
 	private Material material;
 	private List<Material> materiais;
@@ -45,10 +49,6 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	}
 	
 	public OrdemDeCompraFacade getOrdemDeCompraFacade() {
-		if (ordemDeCompraFacade == null) {
-			ordemDeCompraFacade = new OrdemDeCompraFacade();
-		}
-
 		return ordemDeCompraFacade;
 	}
 
@@ -56,7 +56,6 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		if (ordemDeCompra == null) {
 			ordemDeCompra = new OrdemDeCompra();
 		}
-
 		return ordemDeCompra;
 	}
 

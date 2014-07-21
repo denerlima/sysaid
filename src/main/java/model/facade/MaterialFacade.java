@@ -3,28 +3,33 @@ package model.facade;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import model.entity.Material;
 import persistence.dao.GenericDAO;
 import persistence.dao.MaterialDAO;
 
+@Named
 public class MaterialFacade extends GenericFacade<Material> implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
-	private MaterialDAO materialDAO = new MaterialDAO();
-
+	@Inject
+	private MaterialDAO materialDAO;
 
 	public Material findMaterialbyNomeMaterial(String nomeMaterial) {
-		materialDAO.beginTransaction();
+		//materialDAO.beginTransaction();
 		Material material = materialDAO.findMaterialByMaterial(nomeMaterial);
-        materialDAO.closeTransaction();
+        //materialDAO.closeTransaction();
 		return material;
     }
 	
 	public List<Material> findMateriaisByFilter(Material material) {
-		materialDAO.beginTransaction();
+		//materialDAO.beginTransaction();
 		//List<Material> result = materialDAO.findMateriaisByFilter(material);
 		List<Material> result = materialDAO.findAll();
-		materialDAO.closeTransaction();
+		//materialDAO.closeTransaction();
 		return result;
 	}
 	

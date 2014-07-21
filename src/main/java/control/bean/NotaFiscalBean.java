@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import model.entity.Fornecedor;
 import model.entity.Material;
@@ -15,23 +15,23 @@ import model.facade.FornecedorFacade;
 import model.facade.MaterialFacade;
 import model.facade.NotaFiscalFacade;
 
+import org.omnifaces.cdi.ViewScoped;
+
+@Named
 @ViewScoped
-@ManagedBean
 public class NotaFiscalBean extends AbstractBean implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	private NotaFiscal notaFiscal;	
 	private List<NotaFiscal> notasFiscais;
+	
+	@Inject
 	private NotaFiscalFacade notaFiscalFacade;
 	private Material material;
 	private List<Material> materiais;
 
-	
 	public NotaFiscalFacade getNotaFiscalFacade() {
-		if (notaFiscalFacade == null) {
-			notaFiscalFacade = new NotaFiscalFacade();
-		}
-
 		return notaFiscalFacade;
 	}
 
