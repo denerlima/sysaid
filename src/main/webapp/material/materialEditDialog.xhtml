@@ -1,52 +1,157 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<f:view xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
-	<h:body>
-		<p:dialog header="Cadastrar Material" widgetVar="dialogNew" modal="true"  closable="false" height="400">
-	    <h:panelGrid columns="2">
-	    <h:outputText value="Material : " />
-		<h:inputText value="#{materialBean.material.material}" required="false" label="Material" />
-		<h:outputText value="Descrição : " />
-		<p:inputTextarea  rows="5" cols="40" value="#{materialBean.material.descricao}" required="false" label="Material"> 
-			<f:validateLength minimum="4" />
-		</p:inputTextarea>
-		<h:outputText value="Tipo Material : " />
-		<h:selectOneMenu id="cbTipoMaterial" value="#{materialBean.material.tipoMaterial}" converter="objectConverter">
-			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{tipoMaterialBean.alltiposMaterial}" var="tipo" itemLabel="#{tipo.descricao}"   itemValue="#{tipo}" />				
-		</h:selectOneMenu>
-		<h:outputText value="Aplicação : " />
-		<h:selectOneMenu id="cbAplicacao" value="#{materialBean.material.aplicacao}" converter="objectConverter">
-			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{aplicacaoBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
-		</h:selectOneMenu>		
-		<h:outputText value="Marca : " />
-		<h:selectOneMenu id="cbMarca" value="#{materialBean.material.marca}" converter="objectConverter">
-			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{marcaBean.allMarcas}" var="marca" itemLabel="#{marca.descricao}" itemValue="#{marca}" />			
-		</h:selectOneMenu>		
-		<h:outputText value="Grupo:" />
-		<h:selectOneMenu id="cbGrupo" value="#{materialBean.material.grupo}" converter="objectConverter">
-			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{grupoBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricao} - #{grupo.grupopai}" itemValue="#{grupo}" />		
-		</h:selectOneMenu>
-		<h:outputText value="Unidade de Medida de Entrada:" />
-		<h:selectOneMenu id="cbEntrada" value="#{materialBean.material.unidadeMedida}" converter="objectConverter">
-			<f:selectItem itemValue="" itemLabel="Selecione" />
-			<f:selectItems value="#{unidadeMedidaBean.allUnidadesMedida}" var="um" itemLabel="#{um.unidadeEntrada}" itemValue="#{um}" />				
-		</h:selectOneMenu>								
-		<h:outputText value="Estoque Informado : " />
-		<pe:inputNumber decimalPlaces="2" value="#{materialBean.material.estoqueInformado}"/>
-		<h:outputText value="Estoque Calculado : " />
-		<pe:inputNumber decimalPlaces="2" value="#{materialBean.material.estoqueCalculado}" />
-						
-		<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":materialForm" actionListener="#{materialBean.createMaterial}" onclick="PF('dialogNew').hide();" />
-		<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":materialForm" actionListener="#{materialBean.resetMaterial()}" type="button"  onclick="PF('dialogNew').hide();"/>
-	</h:panelGrid>
+	
+	<p:dialog header="Cadastro Material" id="materialDialogId" 
+		widgetVar="materialDialog" modal="true" closable="true" width="600" height="auto">
+		
+		<h:form id="materialDialogForm">
+		    
+			<div class="row">
+				<div class="col-md-4">
+					Material:		
+				</div>
+				<div class="col-md-8">
+					<h:inputText id="material" value="#{materialBean.material.material}" required="true" label="Material" />
+					<h:message for="material" styleClass="msg-error" />	
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-md-4">
+					Descrição:		
+				</div>
+				<div class="col-md-8">
+					<p:inputTextarea id="descricao" rows="5" cols="40" value="#{materialBean.material.descricao}" required="true" label="Descrição"> 
+						<f:validateLength minimum="4" />
+					</p:inputTextarea>
+					<h:message for="descricao" styleClass="msg-error" />
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-md-4">
+					Tipo Material:
+				</div>
+				<div class="col-md-8">
+					<h:selectOneMenu id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="true" label="Tipo Material">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />				
+					</h:selectOneMenu>
+					<h:message for="tipoMaterial" styleClass="msg-error" />
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-md-4">
+					Aplicação:
+				</div>
+				<div class="col-md-8">
+					<h:selectOneMenu id="aplicacao" value="#{materialBean.material.aplicacao}" required="true" label="Aplicação">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{materialBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
+					</h:selectOneMenu>
+					<h:message for="aplicacao" styleClass="msg-error" />
+				</div>
+			</div>
+			
+
+			<div class="row">
+				<div class="col-md-4">
+					Marca:
+				</div>
+				<div class="col-md-8">
+					<h:selectOneMenu id="marca" value="#{materialBean.material.marca}" required="true" label="Marca">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{materialBean.allMarcas}" var="marca" itemLabel="#{marca.descricao}" itemValue="#{marca}" />			
+					</h:selectOneMenu>
+					<h:message for="marca" styleClass="msg-error" />
+				</div>
+			</div>
+			
+
+			<div class="row">
+				<div class="col-md-4">
+					Grupo:		
+				</div>
+				<div class="col-md-8">
+					<h:selectOneMenu id="grupo" value="#{materialBean.material.grupo}" required="true" label="Grupo">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{materialBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricao} - #{grupo.grupopai}" itemValue="#{grupo}" />		
+					</h:selectOneMenu>
+					<h:message for="grupo" styleClass="msg-error" />
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-md-4">
+					Unidade de Medida de Entrada:		
+				</div>
+				<div class="col-md-8">
+					<h:selectOneMenu id="entrada" value="#{materialBean.material.unidadeMedida}" required="true" label="Unidade Medida de Entrada">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{materialBean.allUnidadesMedidas}" var="um" itemLabel="#{um.unidadeEntrada}" itemValue="#{um}" />				
+					</h:selectOneMenu>
+					<h:message for="entrada" styleClass="msg-error" />
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-md-4">
+					Estoque Informado
+				</div>
+				<div class="col-md-8">
+					<pe:inputNumber id="estoqueInformado" decimalPlaces="2" value="#{materialBean.material.estoqueInformado}" required="true" label="Estoque Informado" />
+					<h:message for="estoqueInformado" styleClass="msg-error" />	
+				</div>
+			</div>
+			
+			
+			<div class="row">
+				<div class="col-md-4">
+					Estoque Calculado
+				</div>
+				<div class="col-md-8">
+					<h:outputText value="#{materialBean.material.estoqueCalculado}" />
+				</div>
+			</div>
+			
+			
+			<div class="buttons">
+								
+				<p:commandButton action="#{materialBean.createMaterial}" value="Salvar"
+					update=":materialDialogForm :materialForm"
+					oncomplete="oncompleteMaterial(xhr, status, args)"
+					rendered="#{not materialBean.managed}" />
+					
+				<p:commandButton action="#{materialBean.updateMaterial}" value="Alterar"
+					update=":materialDialogForm :materialForm"
+					oncomplete="oncompleteMaterial(xhr, status, args)"
+					rendered="#{materialBean.managed}" />		
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('materialDialog').hide();" />
+			
+			</div>
+			
+		</h:form>
+			
 	</p:dialog>
-	</h:body>
-</html>
+	
+	<script type="text/javascript">
+	   function oncompleteMaterial(xhr, status, args) {
+	      if (args.success) {
+	    	  PF('materialDialog').hide();
+	      }
+	   }
+	</script>
+	
+</f:view>

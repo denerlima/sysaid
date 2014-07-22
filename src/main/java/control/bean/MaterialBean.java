@@ -1,16 +1,31 @@
 package control.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.Aplicacao;
+import model.entity.Grupo;
+import model.entity.Marca;
 import model.entity.Material;
+import model.entity.TipoMaterial;
+import model.entity.UnidadeMedida;
+import model.facade.AplicacaoFacade;
+import model.facade.GrupoFacade;
+import model.facade.MarcaFacade;
 import model.facade.MaterialFacade;
+import model.facade.TipoMaterialFacade;
+import model.facade.UnidadeMedidaFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
+
+import util.Component;
+import util.HibernateUtil;
 
 @Named
 @ViewScoped
@@ -23,6 +38,12 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	
 	@Inject
 	private MaterialFacade materialFacade;
+
+	private List<Aplicacao> aplicacoes;
+	private List<Marca> marcas;
+	private List<Grupo> grupos;
+	private List<TipoMaterial> tiposMateriais;
+	private List<UnidadeMedida> unidadesMedidas;
 	
 	public MaterialFacade getMaterialFacade() {
 		return materialFacade;
@@ -39,6 +60,11 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		this.material = material;
 	}	
 
+	public void novo() {
+		resetMaterial();
+		material.setEstoqueCalculado(new BigDecimal(0));
+	}
+	
 	public void createMaterial() {
 		try {			
 			getMaterialFacade().create(material);
@@ -51,6 +77,11 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
+	}
+	
+	public void edit(Integer id) {
+		material = materialFacade.find(id);
 	}
 	
 	public void updateMaterial() {
@@ -65,6 +96,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	
@@ -128,6 +160,46 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		}
 	}
 
+	public List<Aplicacao> getAllAplicacoes(){
+		if(aplicacoes == null) {
+			AplicacaoFacade aplicacaoFacade = (AplicacaoFacade) Component.getInstance(AplicacaoFacade.class);
+			aplicacoes = HibernateUtil.unproxy(aplicacaoFacade.listAll());
+		}
+		return aplicacoes;
+	}
+	
+	public List<Marca> getAllMarcas(){
+		if(marcas == null) {
+			MarcaFacade marcaFacade = (MarcaFacade) Component.getInstance(MarcaFacade.class);
+			marcas = HibernateUtil.unproxy(marcaFacade.listAll());
+		}
+		return marcas;
+	}
+	
+	public List<Grupo> getAllGrupos(){
+		if(grupos == null) {
+			GrupoFacade grupoFacade = (GrupoFacade) Component.getInstance(GrupoFacade.class);
+			grupos = HibernateUtil.unproxy(grupoFacade.listAll());
+		}
+		return grupos;
+	}
+	
+	public List<TipoMaterial> getAllTiposMateriais(){
+		if(tiposMateriais == null) {
+			TipoMaterialFacade tipoMaterialFacade = (TipoMaterialFacade) Component.getInstance(TipoMaterialFacade.class);
+			tiposMateriais = HibernateUtil.unproxy(tipoMaterialFacade.listAll());
+		} 
+		return tiposMateriais;
+	}
+	
+	public List<UnidadeMedida> getAllUnidadesMedidas(){
+		if(unidadesMedidas == null) {
+			UnidadeMedidaFacade unidadeFacade = (UnidadeMedidaFacade) Component.getInstance(UnidadeMedidaFacade.class);
+			unidadesMedidas = HibernateUtil.unproxy(unidadeFacade.listAll());
+		}
+		return unidadesMedidas;
+	}
+	
 	public List<Material> getAllMateriais() {
 		if (materiais == null) {
 			loadMateriais();
@@ -141,6 +213,10 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	
 	public void resetMaterial() {
 		material = new Material();
+	}
+	
+	public boolean isManaged() {
+		return material != null && material.getId() != null;
 	}
 	
 }
