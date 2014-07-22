@@ -57,6 +57,10 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
+	public void edit(Integer id) {
+		tipoMaterial = tipoMaterialFacade.find(id);
+	}
+	
 	public void updateTipoMaterial() {
 		try {
 			getTipoMaterialFacade().update(tipoMaterial);

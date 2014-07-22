@@ -9,23 +9,28 @@
 	<ui:define name="body">
 
 		<h:form id="tipoMaterialForm" prependId="false">
-		<!--  <p:commandButton value="Cadastrar Tipo de Material" icon="ui-icon-plus"  action="/tipoMaterialEdit.xhtml" ajax="false" /> -->
 		<title>Lista de Tipo de Material</title>
 		<center><h2>Lista de Tipo de Material</h2></center>
 		<p:spacer height="10" />
-			<p:commandButton value="Cadastrar Tipo de Material" icon="ui-icon-plus" type="button" onclick="PF('dialogNew').show();" />	
+			<p:commandButton value="Cadastrar Tipo de Material" icon="ui-icon-plus" 
+				action="#{tipoMaterialBean.resetTipoMaterial}"
+				update=":tipoMaterialDialogForm"
+				oncomplete="PF('tipoMaterialDialog').show();" />
+					
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="app" value="#{tipoMaterialBean.alltiposMaterial}" emptyMessage="Não existem itens nesta lista.">
-				<p:ajax event="rowSelect" update=":tipoMaterialUpdateDialogForm" /> 
+				<p:dataTable var="app" value="#{tipoMaterialBean.alltiposMaterial}" emptyMessage="Não existem itens nesta lista."> 
 					<p:column headerText="Tipo de Material">
 						<h:outputText value="#{app.descricao}" />							
 					</p:column>
 					<p:column headerText="Ações" style="width:200px">											
-						<p:commandButton value="Editar" update=":tipoMaterialUpdateDialogForm :tipoMaterialForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
-								<f:setPropertyActionListener target="#{tipoMaterialBean.tipoMaterial}" value="#{app}" />
-						</p:commandButton>	
+						<p:commandButton value="Editar" icon="ui-icon-pencil" 
+							action="#{tipoMaterialBean.edit(app.id)}"
+							update=":tipoMaterialDialogForm"
+							oncomplete="PF('tipoMaterialDialog').show();" 
+							style="margin-right:10px" />
+								
 						<p:commandButton value="Excluir" onclick="PF('dialogTrash').show();" icon="ui-icon-trash" style="margin-right:10px">
 							<f:setPropertyActionListener target="#{tipoMaterialBean.tipoMaterial}" value="#{app}" />
 						</p:commandButton>						
@@ -34,28 +39,18 @@
 			</p:outputPanel>
 			</center>
 					
-			<p:dialog header="Cadastrar Tipo de Material"  closable="false" widgetVar="dialogNew" modal="true" height="100">
-			    <h:panelGrid columns="2">
-				<h:outputText value="Tipo de Material : " />
-				<h:inputText value="#{tipoMaterialBean.tipoMaterial.descricao}" required="false" label="TipoMaterial"> 
-					<f:validateLength minimum="4" />
-				</h:inputText>
-				<p:commandButton value="Salvar" icon="ui-icon-plus"  update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.createTipoMaterial}" onclick="PF('dialogNew').hide();" />
-				<p:commandButton value="Cancelar" icon="ui-icon-cancel" update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.resetTipoMaterial()}" onclick="PF('dialogNew').hide();"/>
-			</h:panelGrid>
-			</p:dialog>
 			
-			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
-			  <center>		
-				<p:commandButton value="Sim" icon="ui-icon-check"  update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.deleteTipoMaterial()}" onclick="PF('dialogTrash').hide();" />
-				<p:spacer height="30" />
-				<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
-			</center>
+			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
+			  	<center>		
+					<p:commandButton value="Sim" icon="ui-icon-check"  update=":tipoMaterialForm" actionListener="#{tipoMaterialBean.deleteTipoMaterial()}" onclick="PF('dialogTrash').hide();" />
+					<p:spacer height="10" />
+					<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
+				</center>
 			</p:dialog>
 
 		</h:form>
 		
-		<ui:include src="/dialogs/update/tipoMaterialUpdateDialog.xhtml" />
+		<ui:include src="/tipoMaterial/tipoMaterialEditDialog.xhtml" />
 		
 	</ui:define>
 </ui:composition>

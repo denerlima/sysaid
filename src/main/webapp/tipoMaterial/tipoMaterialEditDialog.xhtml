@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<p:dialog header="Cadastro de Tipo Material" id="tipoMaterialDialogId" 
+		widgetVar="tipoMaterialDialog" closable="false" modal="true" width="500" height="auto">
+		
+		<h:form id="tipoMaterialDialogForm">
+		
+			<div class="row">
+				<div class="col-md-4">
+					Tipo Material
+				</div>
+				<div class="col-md-8">
+					<h:inputText id="descricao" value="#{tipoMaterialBean.tipoMaterial.descricao}" required="true" label="Tipo Material"> 
+						<f:validateLength minimum="4" />
+					</h:inputText>
+					<h:message for="descricao" styleClass="msg-error" />
+				</div>
+			</div>
+		
+			<div class="buttons">
+								
+				<p:commandButton action="#{tipoMaterialBean.createTipoMaterial}" value="Salvar"
+					update=":tipoMaterialDialogForm :tipoMaterialForm"
+					oncomplete="oncompleteTipoMaterial(xhr, status, args)"
+					rendered="#{not tipoMaterialBean.managed}" />
+					
+				<p:commandButton action="#{tipoMaterialBean.updateTipoMaterial}" value="Alterar"
+					update=":tipoMaterialDialogForm :tipoMaterialForm"
+					oncomplete="oncompleteTipoMaterial(xhr, status, args)"
+					rendered="#{tipoMaterialBean.managed}" />		
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('tipoMaterialDialog').hide();" />
+			
+			</div>
+			
+		</h:form>
+	</p:dialog>
+	
+	<script type="text/javascript">
+	   function oncompleteTipoMaterial(xhr, status, args) {
+	      if (args.success) {
+	    	  PF('tipoMaterialDialog').hide();
+	      }
+	   }
+	</script>
+	
+</f:view>
