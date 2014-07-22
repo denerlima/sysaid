@@ -55,6 +55,10 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
+	public void edit(Integer id) {
+		aplicacao = aplicacaoFacade.find(id);
+	}
+	
 	public void updateAplicacao() {
 		try {
 			getAplicacaoFacade().update(aplicacao);

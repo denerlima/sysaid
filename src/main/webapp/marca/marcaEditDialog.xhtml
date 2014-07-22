@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<p:dialog header="Cadastro de Marca" id="marcaDialogId" 
+		widgetVar="marcaDialog" closable="false" modal="true" width="500" height="auto">
+		
+		<h:form id="marcaDialogForm">
+		
+			<div class="row">
+				<div class="col-md-4">
+					Marca
+				</div>
+				<div class="col-md-8">
+					<h:inputText id="descricao" value="#{marcaBean.marca.descricao}" required="true" label="Marca"> 
+						<f:validateLength minimum="4" />
+					</h:inputText>
+					<h:message for="descricao" styleClass="msg-error" />
+				</div>
+			</div>
+		
+			<div class="buttons">
+								
+				<p:commandButton action="#{marcaBean.createMarca}" value="Salvar"
+					update=":marcaDialogForm :marcaForm"
+					oncomplete="oncompleteMarca(xhr, status, args)"
+					rendered="#{not marcaBean.managed}" />
+					
+				<p:commandButton action="#{marcaBean.updateMarca}" value="Alterar"
+					update=":marcaDialogForm :marcaForm"
+					oncomplete="oncompleteMarca(xhr, status, args)"
+					rendered="#{marcaBean.managed}" />		
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('marcaDialog').hide();" />
+			
+			</div>
+			
+		</h:form>
+	</p:dialog>
+	
+	<script type="text/javascript">
+	   function oncompleteMarca(xhr, status, args) {
+	      if (args.success) {
+	    	  PF('marcaDialog').hide();
+	      }
+	   }
+	</script>
+	
+</f:view>

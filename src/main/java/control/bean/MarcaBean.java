@@ -54,6 +54,10 @@ public class MarcaBean extends AbstractBean implements Serializable {
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
+	public void edit(Integer id) {
+		marca = marcaFacade.find(id);
+	}
+	
 	public void updateMarca() {
 		try {
 			getMarcaFacade().update(marca);

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<p:dialog header="Cadastro de Aplicacao" id="aplicacaoDialogId" 
+		widgetVar="aplicacaoDialog" closable="false" modal="true" width="400" height="auto">
+		
+		<h:form id="aplicacaoDialogForm">
+		
+			<div class="row">
+				<div class="col-md-3">
+					Aplicação
+				</div>
+				<div class="col-md-9">
+					<h:inputText id="descricao" value="#{aplicacaoBean.aplicacao.descricao}" required="true" label="Aplicação"> 
+						<f:validateLength minimum="4" />
+					</h:inputText>
+					<h:message for="descricao" styleClass="msg-error" />
+				</div>
+			</div>
+		
+			<div class="buttons">
+								
+				<p:commandButton action="#{aplicacaoBean.createAplicacao}" value="Salvar"
+					update=":aplicacaoDialogForm :aplicacaoForm"
+					oncomplete="oncompleteAplicacao(xhr, status, args)"
+					rendered="#{not aplicacaoBean.managed}" />
+					
+				<p:commandButton action="#{aplicacaoBean.updateAplicacao}" value="Alterar"
+					update=":aplicacaoDialogForm :aplicacaoForm"
+					oncomplete="oncompleteAplicacao(xhr, status, args)"
+					rendered="#{aplicacaoBean.managed}" />		
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('aplicacaoDialog').hide();" />
+			
+			</div>
+			
+		</h:form>
+	</p:dialog>
+	
+	<script type="text/javascript">
+	   function oncompleteAplicacao(xhr, status, args) {
+	      if (args.success) {
+	    	  PF('aplicacaoDialog').hide();
+	      }
+	   }
+	</script>
+	
+</f:view>
