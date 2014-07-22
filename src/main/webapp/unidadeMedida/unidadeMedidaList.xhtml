@@ -15,9 +15,9 @@
 		<p:spacer height="10" />			
 			
 			<p:commandButton value="Cadastrar Unidade de Entrada e Saida" icon="ui-icon-plus" 
-				action="#{unidadeMedidaBean.novo}" 
-				oncomplete="PF('unidadeMedidaDialog').show();"
-				update=":unidadeMedidaDialogForm" />
+				action="#{unidadeMedidaBean.novo}"
+				update=":unidadeMedidaDialogForm" 
+				oncomplete="PF('unidadeMedidaDialog').show();" />
 					
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:80%; overflow:auto">
