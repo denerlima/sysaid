@@ -10,6 +10,7 @@ import model.entity.Aplicacao;
 import model.facade.AplicacaoFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -51,6 +52,7 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void updateAplicacao() {
@@ -65,6 +67,7 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void deleteAplicacao() {
@@ -85,7 +88,6 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 		if (aplicacoes == null) {
 			loadAplicacoes();
 		}
-
 		return aplicacoes;
 	}
 
@@ -95,6 +97,10 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 
 	public void resetAplicacao() {
 		aplicacao = new Aplicacao();
+	}
+	
+	public boolean isManaged() {
+		return aplicacao != null && aplicacao.getId() != null;
 	}
 
 }

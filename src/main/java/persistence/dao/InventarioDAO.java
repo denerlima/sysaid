@@ -14,7 +14,8 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 	}
 
 	public void delete(Inventario inventario) {
-		super.delete(inventario.getId(), Inventario.class);
+		inventario.setAtivo(0);
+		super.update(inventario);
 	}
 
 }

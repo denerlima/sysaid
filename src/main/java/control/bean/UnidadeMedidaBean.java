@@ -14,6 +14,7 @@ import model.facade.UnidadeEntradaFacade;
 import model.facade.UnidadeMedidaFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -81,6 +82,7 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void deleteUnidadeMedida() {

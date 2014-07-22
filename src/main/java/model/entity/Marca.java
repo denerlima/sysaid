@@ -12,15 +12,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
 @SequenceGenerator(name = "marcaSequence", sequenceName = "MARCA_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_MARCA")
-@Where(clause = "ativo = '1'")  
-@SQLDelete(sql = "UPDATE sysaid_java.MF_MARCA SET ativo  = 0 WHERE id = ?")
-
+@Where(clause = "ativo = '1'")
 public class Marca extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -31,18 +28,18 @@ public class Marca extends GenericModelo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "marcaSequence")
 	@Column
-	private int id;	
+	private Integer id;	
 	private String descricao;
 	private int ativo = 1;
 	
 	@OneToMany(mappedBy="marca")
 	private List<Material> marca;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -72,21 +69,32 @@ public class Marca extends GenericModelo implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return id;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Marca) {
-			Marca marca = (Marca) obj;
-			return marca.getId() == id;
-		}
-
-		return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Marca other = (Marca) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return descricao;
 	}
+	
 }

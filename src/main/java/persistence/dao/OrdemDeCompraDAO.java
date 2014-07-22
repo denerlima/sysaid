@@ -1,7 +1,10 @@
 package persistence.dao;
 
+import javax.inject.Named;
+
 import model.entity.OrdemDeCompra;
 
+@Named
 public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
 
 	private static final long serialVersionUID = 1L;
@@ -11,7 +14,8 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
 	}
 
 	public void delete(OrdemDeCompra ordemDeCompra) {
-		super.delete(ordemDeCompra.getId(), OrdemDeCompra.class);
+		ordemDeCompra.setAtivo(0);
+		super.update(ordemDeCompra);
 	}
 
 }

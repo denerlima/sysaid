@@ -7,15 +7,15 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<p:dialog header="Cadastrar Mão de Obra" id="maoDeObraDialogId" 
-		widgetVar="maoDeObraDialog" closable="true" modal="true" width="400" height="auto">
+		widgetVar="maoDeObraDialog" closable="true" modal="true" width="600" height="auto">
 		
 		<h:form id="maoDeObraDialogForm">
 		
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-4">
 					Mão de Obra:
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-8">
 					<h:inputText id="descricao" value="#{maoDeObraBean.maoDeObra.descricao}" required="true" label="Mão de Obra"> 
 						<f:validateLength minimum="4" />
 					</h:inputText>
@@ -24,21 +24,21 @@
 			</div>
 			
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<h:outputText value="Valor Unitário Dia:" />
 				</div>
-				<div class="col-md-9">
-					<pe:inputNumber id="valorDia" decimalPlaces="2" symbol="R$ "  value="#{maoDeObraBean.maoDeObra.valordia}" required="true" />
+				<div class="col-md-8">
+					<pe:inputNumber id="valorDia" decimalPlaces="2" symbol="R$ "  value="#{maoDeObraBean.maoDeObra.valordia}" required="true" label="Valor Dia" />
 					<h:message for="valorDia" styleClass="msg-error" />
 				</div>		
 			</div>
 			
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<h:outputText value="Valor Unitário Hora:" />
 				</div>
-				<div class="col-md-9">
-					<pe:inputNumber id="valorHora" decimalPlaces="2" symbol="R$ " value="#{maoDeObraBean.maoDeObra.valorhora}" required="true" />
+				<div class="col-md-8">
+					<pe:inputNumber id="valorHora" decimalPlaces="2" symbol="R$ " value="#{maoDeObraBean.maoDeObra.valorhora}" required="true" label="Valor Hora"/>
 					<h:message for="valorHora" styleClass="msg-error" />
 				</div>		
 			</div>		
@@ -47,7 +47,13 @@
 								
 				<p:commandButton action="#{maoDeObraBean.createMaoDeObra}" value="Salvar"
 					update=":maoDeObraDialogForm :maoDeObraForm"
-					oncomplete="oncompleteMaoDeObra(xhr, status, args)" />
+					oncomplete="oncompleteMaoDeObra(xhr, status, args)"
+					rendered="#{not maoDeObraBean.managed}" />
+					
+				<p:commandButton action="#{maoDeObraBean.updateMaoDeObra}" value="Alterar"
+					update=":maoDeObraDialogForm :maoDeObraForm"
+					oncomplete="oncompleteMaoDeObra(xhr, status, args)"
+					rendered="#{maoDeObraBean.managed}" />		
 				
 				<p:commandButton value="Cancelar" type="button" onclick="PF('maoDeObraDialog').hide();" />
 			

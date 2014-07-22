@@ -51,7 +51,8 @@
 						update=":unidadeMedidaDialogForm :unidadeMedidaForm:unidadesTable" />
 						
 					<p:commandButton action="#{unidadeMedidaBean.updateUnidadeMedida}" value="Alterar" rendered="#{unidadeMedidaBean.managed}"
-						update=":unidadeMedidaDialogForm :unidadeMedidaForm:unidadesTable" />
+						update=":unidadeMedidaDialogForm :unidadeMedidaForm:unidadesTable"
+						oncomplete="oncompleteUnidadeMedida(xhr, status, args)" />
 						
 					<p:commandButton value="Cancelar" type="button" onclick="PF('unidadeMedidaDialog').hide();" />
 				
@@ -60,5 +61,13 @@
 			
 		</h:form>
 	</p:dialog>
+	
+	<script type="text/javascript">
+	   function oncompleteUnidadeMedida(xhr, status, args) {
+	      if (args.success) {
+	    	  PF('unidadeMedidaDialog').hide();
+	      }
+	   }
+	</script>
 
 </f:view>

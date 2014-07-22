@@ -1,7 +1,10 @@
 package persistence.dao;
 
+import javax.inject.Named;
+
 import model.entity.NotaFiscal;
 
+@Named
 public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 
 	private static final long serialVersionUID = 1L;
@@ -11,7 +14,8 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 	}
 
 	public void delete(NotaFiscal notaFiscal) {
-		super.delete(notaFiscal.getId(), NotaFiscal.class);
+		notaFiscal.setAtivo(0);
+		super.update(notaFiscal);
 	}
 
 }

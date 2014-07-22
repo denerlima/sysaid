@@ -3,8 +3,11 @@ package persistence.dao;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Named;
+
 import model.entity.Material;
 
+@Named
 public class MaterialDAO extends GenericDAO<Material> {
 
 	private static final long serialVersionUID = 1L;
@@ -37,7 +40,8 @@ public class MaterialDAO extends GenericDAO<Material> {
 //    }
 
 	public void delete(Material material) {
-		super.delete(material.getId(), Material.class);
+		material.setAtivo(0);
+		super.update(material);
 	}
 
 }

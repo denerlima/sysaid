@@ -12,15 +12,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
 @SequenceGenerator(name = "tipoMaterialSequence", sequenceName = "TIPOMATERIAL_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_TIPOMATERIAL")
-@Where(clause = "ativo = '1'")  
-@SQLDelete(sql = "UPDATE sysaid_java.MF_TIPOMATERIAL SET ativo  = 0 WHERE id = ?")
-
+@Where(clause = "ativo = '1'") 
 public class TipoMaterial extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	public TipoMaterial() {
@@ -30,18 +27,18 @@ public class TipoMaterial extends GenericModelo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tipoMaterialSequence")
 	@Column
-	private int id;	
+	private Integer id;	
 	private String descricao;
 	private int ativo = 1;
 	
 	@OneToMany(mappedBy="tipoMaterial")
 	private List<Material> listaMaterial;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -63,21 +60,32 @@ public class TipoMaterial extends GenericModelo implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return id;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof TipoMaterial) {
-			TipoMaterial tipoMaterial = (TipoMaterial) obj;
-			return tipoMaterial.getId() == id;
-		}
-
-		return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TipoMaterial other = (TipoMaterial) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return descricao;
 	}
+	
 }

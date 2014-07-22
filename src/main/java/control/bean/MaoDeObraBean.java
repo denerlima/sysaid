@@ -59,6 +59,10 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
+	public void edit(Integer id) {
+		maoDeObra = maoDeObraFacade.find(id);
+	}
+	
 	public void updateMaoDeObra() {
 		try {
 			getMaoDeObraFacade().update(maoDeObra);
@@ -102,6 +106,10 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 
 	public void resetMaoDeObra() {
 		maoDeObra = new MaoDeObra();
+	}
+	
+	public boolean isManaged() {
+		return maoDeObra.getId() != null;
 	}
 
 }

@@ -103,5 +103,9 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 	public void resetUnidadeEntrada() {
 		unidadeEntrada = new UnidadeEntrada();
 	}
+	
+	public boolean isManaged() {
+		return unidadeEntrada != null && unidadeEntrada.getId() != null;
+	}
 
 }

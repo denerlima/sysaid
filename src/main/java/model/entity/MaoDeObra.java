@@ -11,15 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
 @SequenceGenerator(name = "maoDeObraSequence", sequenceName = "MAODEOBRA_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_MAODEOBRA")
-@Where(clause = "ativo = '1'")  
-@SQLDelete(sql = "UPDATE sysaid_java.MF_MAODEOBRA SET ativo  = 0 WHERE id = ?")
-
+@Where(clause = "ativo = '1'") 
 public class MaoDeObra extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -30,7 +27,7 @@ public class MaoDeObra extends GenericModelo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "maoDeObraSequence")
 	@Column
-	private int id;		
+	private Integer id;		
 	private String descricao;
 	private int ativo = 1;
 	
@@ -39,11 +36,11 @@ public class MaoDeObra extends GenericModelo implements Serializable{
 	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
 	private BigDecimal valorhora;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -104,4 +101,5 @@ public class MaoDeObra extends GenericModelo implements Serializable{
 	public String toString() {
 		return descricao;
 	}
+	
 }

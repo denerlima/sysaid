@@ -20,7 +20,6 @@ import org.hibernate.annotations.Where;
 @SequenceGenerator(name = "inventarioMaterialSequence", sequenceName = "INVENTARIO_MATERIAL_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_INVENTARIO_MF_MATERIAL")
 @Where(clause = "ativo = '1'")  
-@SQLDelete(sql = "UPDATE sysaid_java.MF_INVENTARIO_MF_MATERIAL SET ativo  = 0 WHERE id = ?")
 public class InventarioMaterial implements Serializable {
 
 	private static final long serialVersionUID = 1L;

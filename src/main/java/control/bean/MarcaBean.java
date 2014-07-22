@@ -10,6 +10,7 @@ import model.entity.Marca;
 import model.facade.MarcaFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -50,6 +51,7 @@ public class MarcaBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void updateMarca() {
@@ -64,6 +66,7 @@ public class MarcaBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void deleteMarca() {
@@ -96,4 +99,8 @@ public class MarcaBean extends AbstractBean implements Serializable {
 		marca = new Marca();
 	}
 
+	public boolean isManaged() {
+		return marca != null && marca.getId() != null;
+	}
+	
 }

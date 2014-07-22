@@ -10,6 +10,7 @@ import model.entity.Grupo;
 import model.facade.GrupoFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -51,6 +52,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void updateGrupo() {
@@ -65,6 +67,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void deleteGrupo() {
@@ -97,4 +100,8 @@ public class GrupoBean extends AbstractBean implements Serializable {
 		grupo = new Grupo();
 	}
 
+	public boolean isManaged() {
+		return grupo != null && grupo.getId() != null;
+	}
+	
 }

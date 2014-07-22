@@ -10,6 +10,7 @@ import model.entity.TipoMaterial;
 import model.facade.TipoMaterialFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -53,6 +54,7 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void updateTipoMaterial() {
@@ -67,6 +69,7 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void deleteTipoMaterial() {
@@ -99,4 +102,8 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 		tipoMaterial = new TipoMaterial();
 	}
 
+	public boolean isManaged() {
+		return tipoMaterial != null && tipoMaterial.getId() != null;
+	}
+	
 }

@@ -17,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 
@@ -26,8 +25,6 @@ import org.hibernate.annotations.Where;
 @NamedQuery(name = "Material.findMaterialByNomeMaterial", query = "select m from Material m where m.material LIKE :material")
 @Table(name = "MF_MATERIAL")
 @Where(clause = "ativo = '1'")  
-@SQLDelete(sql = "UPDATE sysaid_java.MF_MATERIAL SET ativo  = 0 WHERE id = ?")
-
 public class Material extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

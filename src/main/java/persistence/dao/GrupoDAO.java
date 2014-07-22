@@ -1,7 +1,10 @@
 package persistence.dao;
 
+import javax.inject.Named;
+
 import model.entity.Grupo;
 
+@Named
 public class GrupoDAO extends GenericDAO<Grupo> {
 
 	private static final long serialVersionUID = 1L;
@@ -11,7 +14,8 @@ public class GrupoDAO extends GenericDAO<Grupo> {
 	}
 
 	public void delete(Grupo grupo) {
-		super.delete(grupo.getId(), Grupo.class);
+		grupo.setAtivo(0);
+		super.update(grupo);
 	}
 
 }
