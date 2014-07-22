@@ -126,6 +126,7 @@ public abstract class GenericDAO<T> implements Serializable {
 			}
 		}
 		*/
+		System.out.println(em.toString());
 		return em;
 	}
 	

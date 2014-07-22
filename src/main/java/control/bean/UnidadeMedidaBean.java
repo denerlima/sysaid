@@ -27,6 +27,10 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	@Inject
 	private UnidadeMedidaFacade unidadeMedidaFacade;
 	
+	@Inject
+	private UnidadeEntradaFacade unidadeEntradaFacade;
+	
+	
 	public void novo() {
 		resetUnidadeMedida();
 	}
@@ -111,7 +115,6 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	}	
 
 	public List<UnidadeEntrada> getUnidadesEntradas(){
-		UnidadeEntradaFacade unidadeEntradaFacade = new UnidadeEntradaFacade();
 		return unidadeEntradaFacade.listAll();
 	}
 	
