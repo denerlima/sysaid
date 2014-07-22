@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,31 +45,42 @@ public class Material extends GenericModelo implements Serializable{
 	private String descricao;
 	private int ativo = 1;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_unidadeMedida", referencedColumnName="id")
 	private UnidadeMedida unidadeMedida;
+	
 	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
 	private BigDecimal estoqueInformado;
+	
 	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
 	private BigDecimal estoqueCalculado;
-	@ManyToOne
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_tipomaterial", referencedColumnName="id")
 	private TipoMaterial tipoMaterial;
-	@ManyToOne
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_aplicacao", referencedColumnName="id")
 	private Aplicacao aplicacao;
-	@ManyToOne
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_grupo", referencedColumnName="id")
 	private Grupo grupo;
-	@ManyToOne
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_marca", referencedColumnName="id")
 	private Marca marca;
 	
-	@OneToMany(mappedBy="material")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="material")
 	private List<OrdemDeCompraMaterial> ordensDeCompra;
 
-	@OneToMany(mappedBy="material")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="material")
 	private List<InventarioMaterial> inventarios;
+	
+	
+	/*
+	 * Getters and Setters
+	 */
 	
 	public int getId() {
 		return id;

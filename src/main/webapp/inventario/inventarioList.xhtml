@@ -17,7 +17,7 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="inv" value="#{inventarioBean.allInventarios}" emptyMessage="Não existe itens nesta lista.">
+				<p:dataTable var="inv" value="#{inventarioBean.allInventarios}" emptyMessage="Não existem itens nesta lista.">
 					<p:column headerText="Nº de Inventário">
 						<h:outputText value="#{inv.id}" />							
 					</p:column>

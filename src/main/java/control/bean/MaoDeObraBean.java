@@ -10,6 +10,7 @@ import model.entity.MaoDeObra;
 import model.facade.MaoDeObraFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -39,6 +40,10 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 		this.maoDeObra = maoDeObra;
 	}
 
+	public void nova() {
+		resetMaoDeObra();
+	}
+	
 	public void createMaoDeObra() {
 		try {
 			getMaoDeObraFacade().create(maoDeObra);
@@ -51,6 +56,7 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void updateMaoDeObra() {
@@ -65,6 +71,7 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void deleteMaoDeObra() {

@@ -1,4 +1,4 @@
-package util;
+package faces.converter;
 
 import java.util.ArrayList;
 import java.util.Collection;

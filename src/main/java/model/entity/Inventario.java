@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,10 +45,10 @@ public class Inventario extends GenericModelo implements Serializable{
 	private String justificativa;
 	
 	
-	@OneToMany(mappedBy="inventario", cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="inventario", cascade=CascadeType.ALL)
 	private List<InventarioMaterial> materiais;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_atendente", referencedColumnName="id")
 	private Usuario atendente;
 	

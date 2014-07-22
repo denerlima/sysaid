@@ -16,7 +16,7 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="app" value="#{grupoBean.allGrupos}" emptyMessage="Não existe itens nesta lista.">
+				<p:dataTable var="app" value="#{grupoBean.allGrupos}" emptyMessage="Não existem itens nesta lista.">
 				<p:ajax event="rowSelect" update=":grupoUpdateDialogForm" /> 
 					<p:column headerText="Grupo">
 						<h:outputText value="#{app.descricao}" />							

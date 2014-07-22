@@ -1,4 +1,4 @@
-package util;
+package faces.converter;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -7,15 +7,17 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
-import model.entity.Usuario;
-import model.facade.UsuarioFacade;
+import util.Component;
+import model.entity.UnidadeEntrada;
+import model.facade.UnidadeEntradaFacade;
 
-@FacesConverter(forClass = model.entity.Usuario.class)
-public class UsuarioConverter implements Converter {
+@FacesConverter(forClass = model.entity.UnidadeEntrada.class)
+public class UnidadeConverter implements Converter {
+
 	
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
-		UsuarioFacade facade = (UsuarioFacade) Component.getInstance(UsuarioFacade.class);
+		UnidadeEntradaFacade facade = (UnidadeEntradaFacade) Component.getInstance(UnidadeEntradaFacade.class);
 		int id;
 		try {
 			id = Integer.parseInt(arg2);
@@ -30,7 +32,7 @@ public class UsuarioConverter implements Converter {
 		if (arg2 == null) {
 			return "";
 		}
-		Usuario obj = (Usuario) arg2;
+		UnidadeEntrada obj = (UnidadeEntrada) arg2;
 		return String.valueOf(obj.getId());
 	}
 }

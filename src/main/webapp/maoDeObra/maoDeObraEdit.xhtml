@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog header="Cadastrar Mão de Obra" id="maoDeObraDialogId" 
+		widgetVar="maoDeObraDialog" closable="true" modal="true" width="400" height="auto">
+		
+		<h:form id="maoDeObraDialogForm">
+		
+			<div class="row">
+				<div class="col-md-3">
+					Mão de Obra:
+				</div>
+				<div class="col-md-9">
+					<h:inputText id="descricao" value="#{maoDeObraBean.maoDeObra.descricao}" required="true" label="Mão de Obra"> 
+						<f:validateLength minimum="4" />
+					</h:inputText>
+					<h:message for="descricao" styleClass="msg-error" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-3">
+					<h:outputText value="Valor Unitário Dia:" />
+				</div>
+				<div class="col-md-9">
+					<pe:inputNumber id="valorDia" decimalPlaces="2" symbol="R$ "  value="#{maoDeObraBean.maoDeObra.valordia}" required="true" />
+					<h:message for="valorDia" styleClass="msg-error" />
+				</div>		
+			</div>
+			
+			<div class="row">
+				<div class="col-md-3">
+					<h:outputText value="Valor Unitário Hora:" />
+				</div>
+				<div class="col-md-9">
+					<pe:inputNumber id="valorHora" decimalPlaces="2" symbol="R$ " value="#{maoDeObraBean.maoDeObra.valorhora}" required="true" />
+					<h:message for="valorHora" styleClass="msg-error" />
+				</div>		
+			</div>		
+		
+			<div class="buttons">
+								
+				<p:commandButton action="#{maoDeObraBean.createMaoDeObra}" value="Salvar"
+					update=":maoDeObraDialogForm :maoDeObraForm"
+					oncomplete="oncompleteMaoDeObra(xhr, status, args)" />
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('maoDeObraDialog').hide();" />
+			
+			</div>
+			
+		</h:form>
+	</p:dialog>
+	
+	<script type="text/javascript">
+	   function oncompleteMaoDeObra(xhr, status, args) {
+	      if (args.success) {
+	    	  PF('maoDeObraDialog').hide();
+	      }
+	   }
+	</script>
+			
+</f:view>			
