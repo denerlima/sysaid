@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<p:dialog header="Cadastrar Grupo" id="grupoDialogId" 
+		widgetVar="grupoDialog" closable="false" modal="true" width="500" height="auto">
+		
+		<h:form id="grupoDialogForm">
+		
+			<div class="row">
+				<div class="col-md-4">
+					Grupo
+				</div>
+				<div class="col-md-8">
+					<h:inputText id="descricao" value="#{grupoBean.grupo.descricao}" required="true" label="Grupo"> 
+						<f:validateLength minimum="4" />
+					</h:inputText>
+					<h:message for="descricao" styleClass="msg-error" />
+				</div>
+			</div>
+		
+			<div class="row">
+				<div class="col-md-4">
+					Grupo Pai
+				</div>
+				<div class="col-md-8">
+					<h:inputText id="grupoPai" value="#{grupoBean.grupo.grupopai}" required="true" label="Grupo Pai"> 
+						<f:validateLength minimum="4" />
+					</h:inputText>
+					<h:message for="grupoPai" styleClass="msg-error" />
+				</div>
+			</div>
+		
+			<div class="buttons">
+								
+				<p:commandButton action="#{grupoBean.createGrupo}" value="Salvar"
+					update=":grupoDialogForm :grupoForm"
+					oncomplete="oncompleteGrupo(xhr, status, args)"
+					rendered="#{not grupoBean.managed}" />
+					
+				<p:commandButton action="#{grupoBean.updateGrupo}" value="Alterar"
+					update=":grupoDialogForm :grupoForm"
+					oncomplete="oncompleteGrupo(xhr, status, args)"
+					rendered="#{grupoBean.managed}" />		
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('grupoDialog').hide();" />
+			
+			</div>
+			
+		</h:form>
+	</p:dialog>
+	
+	<script type="text/javascript">
+	   function oncompleteGrupo(xhr, status, args) {
+	      if (args.success) {
+	    	  PF('grupoDialog').hide();
+	      }
+	   }
+	</script>
+	
+</f:view>

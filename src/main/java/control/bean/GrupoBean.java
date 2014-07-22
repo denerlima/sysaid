@@ -55,6 +55,10 @@ public class GrupoBean extends AbstractBean implements Serializable {
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
+	public void edit(Integer id) {
+		grupo = grupoFacade.find(id);
+	}
+	
 	public void updateGrupo() {
 		try {
 			getGrupoFacade().update(grupo);
