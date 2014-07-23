@@ -55,11 +55,11 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	private List<NotaFiscalMaterial> materiais;
 	
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 			
@@ -134,21 +134,5 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	public void setAtivo(int ativo) {
 		this.ativo = ativo;
 	}
-
-	@Override
-	public int hashCode() {
-		return id;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof NotaFiscal) {
-			NotaFiscal notaFiscal = (NotaFiscal) obj;
-			return notaFiscal.getId() == id;
-		}
-
-		return false;
-	}
-	
 
 }

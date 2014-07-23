@@ -12,3 +12,18 @@
 	display: block;
 	color: red;
 }
+
+.row:first-child.form-row {
+    padding-top: 3px;
+}
+
+.row.form-row {
+	padding-top: 10px;
+	border-bottom: 1px #f1f1f1 solid;
+}
+
+ .form-row > [class*="col-"] {
+ 	margin-bottom:5px;
+ }
+
+  

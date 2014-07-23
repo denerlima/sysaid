@@ -25,6 +25,10 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	
 	@Inject
 	private OrdemDeCompraFacade ordemDeCompraFacade;
+	
+	@Inject
+	private MaterialFacade materialFacade;
+	
 	private Material material;
 	private List<Material> materiais;
 
@@ -117,12 +121,9 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	
 	public List<Material> completeMaterial(String name) {
 		List<Material> queryResult = new ArrayList<Material>();
-
 		if (materiais == null) {
-			MaterialFacade materialFacade = new MaterialFacade();
 			materiais = materialFacade.listAll();
 		}
-
 		for (Material mat : materiais) {
 			if (mat.getMaterial().toLowerCase().contains(name.toLowerCase())) {
 				queryResult.add(mat);
@@ -131,8 +132,6 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		return queryResult;
 	}
 	
-	
-
 	private void loadOrdensDeCompra() {
 		ordensDeCompra = getOrdemDeCompraFacade().listAll();
 	}
@@ -145,10 +144,10 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		if (ordemDeCompra.getMateriais() == null) {
 			ordemDeCompra.setMateriais(new ArrayList<OrdemDeCompraMaterial>());
 		}
-		OrdemDeCompraMaterial invMat = new OrdemDeCompraMaterial();
-		invMat.setOrdemDeCompra(ordemDeCompra);
-		invMat.setMaterial(material);
-		ordemDeCompra.getMateriais().add(invMat);
+		OrdemDeCompraMaterial ordemMat = new OrdemDeCompraMaterial();
+		ordemMat.setOrdemDeCompra(ordemDeCompra);
+		ordemMat.setMaterial(material);
+		ordemDeCompra.getMateriais().add(ordemMat);
 		this.material = new Material();
 	}
 	

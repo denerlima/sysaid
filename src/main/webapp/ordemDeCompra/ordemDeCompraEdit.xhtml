@@ -83,7 +83,7 @@
 		        <br />
 		        <p:outputPanel id="addMaterialPanel">
 		        	
-					<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
+					<p:autoComplete id="materialAutocomplete" minQueryLength="3" maxResults="10" 
 						value="#{ordemDeCompraBean.material}" label="Material" 
 						var="mat" itemLabel="#{mat.material}" itemValue="#{mat}" 
 						completeMethod="#{ordemDeCompraBean.completeMaterial}" dropdown="true" />

@@ -14,25 +14,79 @@
 		<p:spacer height="10" />
 		<p:tabView>
 			<p:tab title="Dados Gerais">
-				<h:panelGrid columns="2" cellpadding="10">
-					<h:outputText value="Nº da Nota Fiscal" />
-					<h:inputText value="#{notaFiscalBean.notaFiscal.nrNotaFiscal}" label="Numero de Nota Fiscal" />
-					<h:outputText value="Data da Emissão : " />
-					<h:inputText value="#{notaFiscalBean.notaFiscal.dataEmissao}" label="Data da Emissao" />
-					<h:outputText value="Data da Entrega : " />
-					<h:inputText value="#{notaFiscalBean.notaFiscal.dataEntrega}" label="Data da Entrega" />
-					<h:outputText value="Fornecedor : " />					
-					<h:selectOneMenu id="cbFornecedor" immediate="true" value="#{notaFiscalBean.notaFiscal.fornecedor.id}" >
-						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItems value="#{notaFiscalBean.selectItensFornecedores}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
-					</h:selectOneMenu>
-					<h:outputText value="Acréscimos : " />
-					<h:inputText value="#{notaFiscalBean.notaFiscal.acrescimos}" label="Acrecismos" />
-					<h:outputText value="Total dos Produtos : " />
-					<h:inputText value="#{notaFiscalBean.notaFiscal.totalProdutos}" label="Total dos Produtos" />
-					<h:outputText value="Total Geral da Nota : " />
-					<h:inputText value="#{notaFiscalBean.notaFiscal.totalGeralNota}" label="Total Geral da Nota" />
-				</h:panelGrid>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Nº da Nota Fiscal" />		
+					</div>
+					<div class="col-md-10">
+						<h:inputText value="#{notaFiscalBean.notaFiscal.nrNotaFiscal}" label="Numero de Nota Fiscal" />	
+					</div>
+				</div>
+				
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Data da Emissão : " />	
+					</div>
+					<div class="col-md-10">
+						<h:inputText value="#{notaFiscalBean.notaFiscal.dataEmissao}" label="Data da Emissao" />
+					</div>
+				</div>
+					
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Data da Entrega : " />		
+					</div>
+					<div class="col-md-10">
+						<h:inputText value="#{notaFiscalBean.notaFiscal.dataEntrega}" label="Data da Entrega" />	
+					</div>
+				</div>
+				
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Fornecedor : " />	
+					</div>
+					<div class="col-md-10">
+						<h:selectOneMenu id="cbFornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" >
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{notaFiscalBean.allFornecedores}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
+						</h:selectOneMenu>
+					</div>
+				</div>
+					
+
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Acréscimos:" />	
+					</div>
+					<div class="col-md-10">
+						<h:inputText value="#{notaFiscalBean.notaFiscal.acrescimos}" label="Acrecismos" />
+					</div>
+				</div>
+					
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Total dos Produtos : " />	
+					</div>
+					<div class="col-md-10">
+						<h:inputText value="#{notaFiscalBean.notaFiscal.totalProdutos}" label="Total dos Produtos" />
+					</div>
+				</div>
+					
+					
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Total Geral da Nota : " />	
+					</div>
+					<div class="col-md-10">
+						<h:inputText value="#{notaFiscalBean.notaFiscal.totalGeralNota}" label="Total Geral da Nota" />
+					</div>
+				</div>
+					
 			</p:tab>
 
 			<p:tab title="Material">
@@ -54,13 +108,13 @@
 				<h2>Materiais da Nota Fiscal</h2>
 				<p:dataTable id="tabelaMaterial" var="mat" value="#{notaFiscalBean.notaFiscal.materiais}" emptyMessage="Não existem itens nesta lista.">					
 					<p:column headerText="Material">
-						<h:outputText value="#{mat.material}" />
+						
 					</p:column>
 					<p:column headerText="Unidade de Medida Entrada">
-						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />
+						
 					</p:column>
 					<p:column headerText="Estoque Atual">
-						<h:outputText value="#{mat.estoqueInformado}" />
+						
 					</p:column>
 					<p:column headerText="Remover">
 						<p:commandLink value="Remove" update=":newNotaFiscalForm" process=":newNotaFiscalForm:tabView:tabelaMaterial">

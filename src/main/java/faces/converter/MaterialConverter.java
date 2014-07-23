@@ -17,6 +17,10 @@ public class MaterialConverter implements Converter {
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		
+		if (arg2 == null || arg2.equals("null")) {
+			return null;
+		}
+		
 		MaterialFacade materialFacade = (MaterialFacade) Component.getInstance(MaterialFacade.class);
 		
 		int materialId;

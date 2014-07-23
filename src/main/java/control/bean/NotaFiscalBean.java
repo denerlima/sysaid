@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -28,9 +27,17 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	
 	@Inject
 	private NotaFiscalFacade notaFiscalFacade;
+	
+	@Inject
+	private FornecedorFacade fornecedorFacade;
+	
+	@Inject
+	private MaterialFacade materialFacade;
+	
 	private Material material;
 	private List<Material> materiais;
-
+	private List<Fornecedor> fornecedores;
+	
 	public NotaFiscalFacade getNotaFiscalFacade() {
 		return notaFiscalFacade;
 	}
@@ -39,7 +46,6 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		if (notaFiscal == null) {
 			notaFiscal = new NotaFiscal();
 		}
-
 		return notaFiscal;
 	}
 
@@ -47,6 +53,26 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		this.notaFiscal = notaFiscal;
 	}
 
+	public String novo() {
+		return "/notaFiscal/notaFiscalEdit.xhtml?faces-redirect=true";
+	}
+	
+	public String edit(Integer id) {
+		return "/notaFiscal/notaFiscalEdit.xhtml?faces-redirect=true&id="+id;
+	}
+	
+	public void initLoad(Integer id) {
+		if(notaFiscal != null) {
+			return;
+		}
+		if(id == null || id == 0) {
+			notaFiscal = new NotaFiscal();
+			//notaFiscal.setMateriais(new ArrayList<NotaFiscalMaterial>());
+		} else {
+			notaFiscal = getNotaFiscalFacade().find(id);
+		}
+	}
+	
 	public void createNotaFiscal() {
 		try {
 			getNotaFiscalFacade().create(notaFiscal);
@@ -99,12 +125,9 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	
 	public List<Material> completeMaterial(String name) {
 		List<Material> queryResult = new ArrayList<Material>();
-
 		if (materiais == null) {
-			MaterialFacade materialFacade = new MaterialFacade();
 			materiais = materialFacade.listAll();
 		}
-
 		for (Material mat : materiais) {
 			if (mat.getMaterial().toLowerCase().contains(name.toLowerCase())) {
 				queryResult.add(mat);
@@ -113,18 +136,13 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		return queryResult;
 	}
 	
-	public List<SelectItem> getSelectItensFornecedores(){
-		List<SelectItem> lista = new ArrayList<SelectItem>();		
-		FornecedorFacade fornecedorFacade = new FornecedorFacade();
-		for(Fornecedor forn : fornecedorFacade.listAll()){
-			lista.add(new SelectItem(forn.getId(), forn.getNome()));
+	public List<Fornecedor> getAllFornecedores(){
+		if(fornecedores != null) {
+			fornecedores = fornecedorFacade.listAll();
 		}
-		return lista;
+		return fornecedores;
 	}
 	
-	
-	
-
 	private void loadNotasFiscais() {
 		notasFiscais = getNotaFiscalFacade().listAll();
 	}
