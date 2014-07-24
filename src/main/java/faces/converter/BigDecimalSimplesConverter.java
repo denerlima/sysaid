@@ -8,16 +8,16 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter("bigDecimalConverter")
-public class BigDecimalConverter implements javax.faces.convert.Converter {
+@FacesConverter("bigDecimalSimplesConverter")
+public class BigDecimalSimplesConverter implements javax.faces.convert.Converter {
 
-	public BigDecimalConverter() {
+	public BigDecimalSimplesConverter() {
 	}
 
 	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		try {
 			final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
-			nf.setMinimumFractionDigits(2);
+			nf.setMinimumFractionDigits(0);
 			nf.setMaximumFractionDigits(2);
 			return new BigDecimal(nf.parse(value).doubleValue());
 		} catch (final Exception e) {
@@ -31,7 +31,7 @@ public class BigDecimalConverter implements javax.faces.convert.Converter {
 			value = 0.0D;
 		}
 		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
-		nf.setMinimumFractionDigits(2);
+		nf.setMinimumFractionDigits(0);
 		nf.setMaximumFractionDigits(2);
 		return nf.format(Double.valueOf(value.toString()));
 	}

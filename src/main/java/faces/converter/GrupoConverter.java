@@ -22,7 +22,7 @@ public class GrupoConverter implements Converter {
 		try {
 			id = Integer.parseInt(arg2);
 		} catch (NumberFormatException exception) {
-			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Type the name of a Dog and select it (or use the dropdow)", "Type the name of a Dog and select it (or use the dropdow)"));
+			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao converter Grupo", "Erro ao converter Grupo"));
 		}
 		return facade.find(id) ;
 	}

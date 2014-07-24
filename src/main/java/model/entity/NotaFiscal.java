@@ -52,7 +52,7 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	private Fornecedor fornecedor;
 	
 	@OneToMany(mappedBy="notaFiscal", cascade=CascadeType.ALL)
-	private List<NotaFiscalMaterial> materiais;
+	private List<NotaFiscalMaterial> materiais = new ArrayList<NotaFiscalMaterial>();
 	
 
 	public Integer getId() {

@@ -40,12 +40,12 @@
 					</p:column>			
 								
 					<p:column headerText="Ações" style="width:200px">											
-						<p:commandButton value="Editar" update=":notaFiscalForm" icon="ui-icon-pencil" onclick="PF('dialogEdit').show();" style="margin-right:10px" >
-								<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
-						</p:commandButton>	
+						<p:commandButton value="Editar" icon="ui-icon-pencil" action="#{notaFiscalBean.edit(nf.id)}" style="margin-right:10px" />
+								
 						<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();"  style="margin-right:10px">
 							<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
 						</p:commandButton>
+						
 						<p:commandButton value="Cancelar"  icon="ui-icon-cancel" style="margin-right:10px">
 							<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
 						</p:commandButton>												

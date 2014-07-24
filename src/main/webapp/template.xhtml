@@ -12,6 +12,15 @@
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
 	
+	<script type="text/javascript">
+		 
+		function showError() {
+			alert("A requisição não foi concluída. Sua sessão expirou ou o servidor não respondeu corretamente.");
+		    window.location = "${request.contextPath}";
+		}
+          
+	</script>
+	
 </h:head>
 <h:body>
 
@@ -48,6 +57,16 @@
 	<p:messages id="msgs"  autoUpdate="true"/>
 	
 	<ui:insert name="body" />
+	
+	<p:ajaxStatus onstart="PF('dialogAguarde').show()" oncomplete="PF('dialogAguarde').hide();" onerror="showError()" />  
+
+	<p:dialog header="Aguarde..." widgetVar="dialogAguarde" modal="true" resizable="false" closable="false" >
+		<center>
+			<p style="padding: 12px;">
+				<h:graphicImage value="/resources/img/loading.gif" style="vertical-align: middle;" />
+			</p>
+		</center>	
+	</p:dialog>
 	
 </h:body>
 </html>

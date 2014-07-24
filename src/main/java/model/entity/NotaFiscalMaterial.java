@@ -38,19 +38,19 @@ public class NotaFiscalMaterial {
 	private OrdemDeCompraMaterial ordemDeCompraMaterial;
 	
 	@Column(name="quantidade", length = 20, precision = 20, scale= 2 , nullable = false)
-	private BigDecimal quantidade;
+	private BigDecimal quantidade = new BigDecimal(0);
 	
 	@Column(name="preco_unitario", length = 20, precision = 20, scale= 2 , nullable = false)
-	private BigDecimal precoUnitario;
+	private BigDecimal precoUnitario = new BigDecimal(0);
 	
 	@Column(name="percentual_desconto", length = 20, precision = 20, scale= 2 , nullable = false)
-	private BigDecimal percentualDesconto;
+	private BigDecimal percentualDesconto = new BigDecimal(0);
 	
 	@Column(name="valor_desconto", length = 20, precision = 20, scale= 2 , nullable = false)
-	private BigDecimal valorDesconto;
+	private BigDecimal valorDesconto = new BigDecimal(0);
 	
 	@Column(name="total", length = 20, precision = 20, scale= 2 , nullable = false)
-	private BigDecimal total;
+	private BigDecimal total = new BigDecimal(0);
 
 	/*
 	 * Getters and Setters

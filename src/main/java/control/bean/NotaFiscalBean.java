@@ -1,6 +1,7 @@
 package control.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,11 +9,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Fornecedor;
-import model.entity.Material;
 import model.entity.NotaFiscal;
+import model.entity.NotaFiscalMaterial;
+import model.entity.OrdemDeCompra;
+import model.entity.OrdemDeCompraMaterial;
 import model.facade.FornecedorFacade;
-import model.facade.MaterialFacade;
 import model.facade.NotaFiscalFacade;
+import model.facade.OrdemDeCompraFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 
@@ -32,10 +35,10 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	private FornecedorFacade fornecedorFacade;
 	
 	@Inject
-	private MaterialFacade materialFacade;
+	private OrdemDeCompraFacade ordemDeCompraFacade;
 	
-	private Material material;
-	private List<Material> materiais;
+	private OrdemDeCompra ordemDeCompra;
+	private List<OrdemDeCompra> ordensDeCompras;
 	private List<Fornecedor> fornecedores;
 	
 	public NotaFiscalFacade getNotaFiscalFacade() {
@@ -73,32 +76,28 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		}
 	}
 	
-	public void createNotaFiscal() {
+	public String createNotaFiscal() {
 		try {
 			getNotaFiscalFacade().create(notaFiscal);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
-			loadNotasFiscais();
-			resetNotaFiscal();
+			return "/notaFiscal/notaFiscalList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	public void updateNotaFiscal() {
+	public String updateNotaFiscal() {
 		try {
 			getNotaFiscalFacade().update(notaFiscal);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
-			loadNotasFiscais();
-			resetNotaFiscal();
+			return "/notaFiscal/notaFiscalList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	public void deleteNotaFiscal() {
@@ -109,12 +108,58 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			loadNotasFiscais();
 			resetNotaFiscal();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}
 	}
 
+	public void iniciarBuscaOrdensCompra() {
+		ordemDeCompra = new OrdemDeCompra();
+		ordensDeCompras = new ArrayList<OrdemDeCompra>();
+	}
+	
+	public void buscarOrdensCompras() {
+		ordensDeCompras = ordemDeCompraFacade.listAll();
+	}
+	
+	public void adicionarMateriais() {
+		for (OrdemDeCompra oc : ordensDeCompras) {
+			for (OrdemDeCompraMaterial ocm : oc.getMateriais()) {
+				if(ocm.isSelecionado()) {
+					NotaFiscalMaterial nfm = new NotaFiscalMaterial();
+					nfm.setNotaFiscal(notaFiscal);
+					nfm.setOrdemDeCompraMaterial(ocm);
+					notaFiscal.getMateriais().add(nfm);
+				}
+			}
+		}
+	}
+	
+	public void calcular(NotaFiscalMaterial nfm) {
+		calcular(nfm, nfm.getPrecoUnitario());
+	}
+	
+	private void calcular(NotaFiscalMaterial nfm, BigDecimal valorUnitarioComDesconto) {
+		BigDecimal total = nfm.getQuantidade().multiply(valorUnitarioComDesconto);
+		nfm.setTotal(total);
+	}
+	
+	public void calcularPorPercentual(NotaFiscalMaterial nfm) {
+		BigDecimal porcentagem = nfm.getPercentualDesconto();
+		BigDecimal vlrDesconto = porcentagem.multiply(nfm.getPrecoUnitario()).divide(new BigDecimal(100));  
+		nfm.setValorDesconto(vlrDesconto);
+		BigDecimal total = nfm.getPrecoUnitario().subtract(vlrDesconto);
+		calcular(nfm, total);
+	}
+	
+	public void calcularPorDesconto(NotaFiscalMaterial nfm) {
+		BigDecimal vlrDesconto = nfm.getValorDesconto();
+		BigDecimal porcentagem = vlrDesconto.divide(nfm.getPrecoUnitario()).multiply(new BigDecimal(100));
+		nfm.setPercentualDesconto(porcentagem);
+		BigDecimal total = nfm.getPrecoUnitario().subtract(vlrDesconto);
+		calcular(nfm, total);
+	}
+	
 	public List<NotaFiscal> getAllNotasFiscais() {
 		if (notasFiscais == null) {
 			loadNotasFiscais();
@@ -123,21 +168,8 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		return notasFiscais;
 	}
 	
-	public List<Material> completeMaterial(String name) {
-		List<Material> queryResult = new ArrayList<Material>();
-		if (materiais == null) {
-			materiais = materialFacade.listAll();
-		}
-		for (Material mat : materiais) {
-			if (mat.getMaterial().toLowerCase().contains(name.toLowerCase())) {
-				queryResult.add(mat);
-			}
-		}
-		return queryResult;
-	}
-	
 	public List<Fornecedor> getAllFornecedores(){
-		if(fornecedores != null) {
+		if(fornecedores == null) {
 			fornecedores = fornecedorFacade.listAll();
 		}
 		return fornecedores;
@@ -150,29 +182,25 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	public void resetNotaFiscal() {
 		notaFiscal = new NotaFiscal();
 	}
-	
-	public void newMaterial() {
-		if (notaFiscal.getMateriais() == null) {
-			//notaFiscal.setMateriais(new ArrayList<Material>());
-		}		
-		//notaFiscal.getMateriais().add(material);
-		this.material = new Material();
+
+	public List<OrdemDeCompra> getOrdensDeCompras() {
+		return ordensDeCompras;
 	}
 
-	public Material getMaterial() {
-		return material;
+	public void setOrdensDeCompras(List<OrdemDeCompra> ordemsDeCompras) {
+		this.ordensDeCompras = ordemsDeCompras;
 	}
 
-	public void setMaterial(Material material) {
-		this.material = material;
+	public OrdemDeCompra getOrdemDeCompra() {
+		return ordemDeCompra;
 	}
 
-	public List<Material> getMateriais() {
-		return materiais;
-	}
-
-	public void setMateriais(List<Material> materiais) {
-		this.materiais = materiais;
+	public void setOrdemDeCompra(OrdemDeCompra ordemDeCompra) {
+		this.ordemDeCompra = ordemDeCompra;
 	}		
 
+	public boolean isManaged() {
+		return notaFiscal != null && notaFiscal.getId() != null;
+	}
+	
 }

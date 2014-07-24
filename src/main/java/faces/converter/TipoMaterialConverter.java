@@ -22,7 +22,7 @@ public class TipoMaterialConverter implements Converter {
 		try {
 			id = Integer.parseInt(arg2);
 		} catch (NumberFormatException exception) {
-			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Type the name of a Dog and select it (or use the dropdow)", "Type the name of a Dog and select it (or use the dropdow)"));
+			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao converter Tipo de Material", "Erro ao converter Tipo de Material"));
 		}
 		return facade.find(id) ;
 	}
