@@ -12,10 +12,21 @@
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
 	
+	<script type="text/javascript">
+		 
+		function showError() {
+			alert("A requisição não foi concluída. Sua sessão expirou ou o servidor não respondeu corretamente.");
+		    window.location = "${request.contextPath}";
+		}
+          
+	</script>
+	
+	<ui:insert name="head" />
+	
 </h:head>
 <h:body>
 
-	<h3>SysAid Java versão 0.3</h3>
+	<h3><a href="${request.contextPath}">SysAid Java versão 0.3</a></h3>
 
 	<p:menubar>
 		<p:submenu label="Cadastros">
@@ -43,11 +54,25 @@
 		</p:submenu>
 	</p:menubar>
 
-	<ui:insert name="head" />
-	
-	<p:messages id="msgs"  autoUpdate="true"/>
+	<p:messages id="msgs"  autoUpdate="true" globalOnly="true" />
 	
 	<ui:insert name="body" />
+	
+	<p:ajaxStatus onstart="PF('dialogAguarde').show()" oncomplete="PF('dialogAguarde').hide();" onerror="showError()" />  
+
+	<p:dialog header="Aguarde..." widgetVar="dialogAguarde" modal="true" resizable="false" closable="false" >
+		<center>
+			<p style="padding: 12px;">
+				<h:graphicImage value="/resources/img/ajax-loader.gif" style="vertical-align: middle;" />
+			</p>
+		</center>	
+	</p:dialog>
+	
+	<br />
+	<br />
+	
+	<script type='text/javascript' src="#{request.contextPath}/resources/js/bootstrap.js"></script>
+	<script type='text/javascript' src="#{request.contextPath}/resources/js/jquery.price_format.2.0.js"></script>
 	
 </h:body>
 </html>

@@ -40,8 +40,9 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	private int ativo = 1;
 	private Long nrNotaFiscal;
 	private Date dataEmissao;
-	private Date dataEntrega;	
-	private Long acrescimos;
+	private Date dataEntrega;
+	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
+	private BigDecimal acrescimos;
 	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
 	private BigDecimal totalProdutos;
 	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
@@ -52,7 +53,7 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	private Fornecedor fornecedor;
 	
 	@OneToMany(mappedBy="notaFiscal", cascade=CascadeType.ALL)
-	private List<NotaFiscalMaterial> materiais;
+	private List<NotaFiscalMaterial> materiais = new ArrayList<NotaFiscalMaterial>();
 	
 
 	public Integer getId() {
@@ -95,11 +96,11 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 		this.fornecedor = fornecedor;
 	}
 
-	public Long getAcrescimos() {
+	public BigDecimal getAcrescimos() {
 		return acrescimos;
 	}
 
-	public void setAcrescimos(Long acrescimos) {
+	public void setAcrescimos(BigDecimal acrescimos) {
 		this.acrescimos = acrescimos;
 	}
 

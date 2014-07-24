@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Where;
 
@@ -42,6 +43,8 @@ public class OrdemDeCompraMaterial implements Serializable {
 	@Column(name="quantidade_autorizada")
 	private BigDecimal quantidadeAutorizada;
 
+	@Transient
+	private boolean selecionado;
 	
 	public Integer getId() {
 		return id;
@@ -81,6 +84,14 @@ public class OrdemDeCompraMaterial implements Serializable {
 
 	public void setQuantidadeAutorizada(BigDecimal quantidadeAutorizada) {
 		this.quantidadeAutorizada = quantidadeAutorizada;
+	}
+
+	public boolean isSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
 	}
 	
 }
