@@ -18,7 +18,6 @@ import model.facade.NotaFiscalFacade;
 import model.facade.OrdemDeCompraFacade;
 
 import org.omnifaces.cdi.ViewScoped;
-import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -136,7 +135,6 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 				}
 			}
 		}
-		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void calcular(NotaFiscalMaterial nfm) {
@@ -172,33 +170,6 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		}
 		notaFiscal.setTotalProdutos(totalProdutos);
 		notaFiscal.setTotalGeralNota(totalProdutos.add(notaFiscal.getAcrescimos()));
-
-	}
-	
-	public void calcular(NotaFiscalMaterial nfm) {
-		calcular(nfm, nfm.getPrecoUnitario());
-	}
-	
-	private void calcular(NotaFiscalMaterial nfm, BigDecimal valorUnitarioComDesconto) {
-		BigDecimal total = nfm.getQuantidade().multiply(valorUnitarioComDesconto);
-		nfm.setTotal(total);
-	}
-	
-	public void calcularPorPercentual(NotaFiscalMaterial nfm) {
-		BigDecimal porcentagem = nfm.getPercentualDesconto();
-		BigDecimal vlrDesconto = porcentagem.multiply(nfm.getPrecoUnitario()).divide(new BigDecimal(100));  
-		nfm.setValorDesconto(vlrDesconto);
-		BigDecimal total = nfm.getPrecoUnitario().subtract(vlrDesconto);
-		calcular(nfm, total);
-	}
-	
-	public void calcularPorDesconto(NotaFiscalMaterial nfm) {
-		BigDecimal vlrDesconto = nfm.getValorDesconto();
-		BigDecimal porcentagem = vlrDesconto.divide(nfm.getPrecoUnitario()).multiply(new BigDecimal(100));
-		nfm.setPercentualDesconto(porcentagem);
-		BigDecimal total = nfm.getPrecoUnitario().subtract(vlrDesconto);
-		calcular(nfm, total);
->>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 	}
 	
 	public List<NotaFiscal> getAllNotasFiscais() {

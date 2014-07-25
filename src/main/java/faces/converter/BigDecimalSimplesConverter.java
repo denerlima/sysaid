@@ -27,17 +27,10 @@ public class BigDecimalSimplesConverter implements javax.faces.convert.Converter
 	}
 
 	public String getAsString(final FacesContext context, final UIComponent component, Object value) {
-		if ((value == null) || (value.toString().trim().equals(""))) {
-			value = 0.0D;
+		if(value == null) {
+			return "";
 		}
-		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
-		nf.setMinimumFractionDigits(0);
-		nf.setMaximumFractionDigits(2);
-<<<<<<< HEAD
-		return nf.format(Double.valueOf(value.toString())).replace(".", "");
-=======
-		return nf.format(Double.valueOf(value.toString()));
->>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
+		return ((BigDecimal) value).toString().replace(".", ",");
 	}
 	
 }
