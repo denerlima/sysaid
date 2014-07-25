@@ -5,7 +5,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" template="/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	template="/template.xhtml">
 
 	<f:metadata>
 		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
@@ -120,7 +122,8 @@
 				
 				<p:outputPanel id="materiaisPanel">
 					<br />	
-					<p:dataTable id="tabelaMaterial" var="_nfm" value="#{notaFiscalBean.notaFiscal.materiais}" emptyMessage="Não existem itens nesta lista.">					
+					<p:dataTable id="tabelaMaterial" var="_nfm" value="#{notaFiscalBean.notaFiscal.materiais}" emptyMessage="Não existem itens nesta lista."
+						rowIndexVar="_idx">					
 						<p:column headerText="Nº da OC">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" />
 						</p:column>
@@ -137,38 +140,34 @@
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.quantidadeAutorizada}" />
 						</p:column>
 						<p:column headerText="Quantidade NF">
-							<h:inputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter" style="width: 40px;">
+							<h:inputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter" style="width: 40px;" onkeypress="soBigDecimalSimples(this);">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText>
 						</p:column>
 						<p:column headerText="Preço Unitário">
-							<h:inputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter" style="width: 65px;" styleClass="precoUnitario">
+							<h:inputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter" style="width: 65px;" onkeydown="soBigDecimal(this);">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText>
 						</p:column>
 						<p:column headerText="Percentual de Desconto">
-							<h:inputText value="#{_nfm.percentualDesconto}" converter="bigDecimalSimplesConverter" style="width: 35px;">
+							<h:inputText value="#{_nfm.percentualDesconto}" converter="bigDecimalSimplesConverter" style="width: 35px;" onkeypress="soBigDecimalSimples(this);">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcularPorPercentual(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText> %
 						</p:column>
 						<p:column headerText="Valor do Desconto">
-							<h:inputText value="#{_nfm.valorDesconto}" converter="bigDecimalConverter" style="width: 65px;" styleClass="valorDesconto">
+							<h:inputText value="#{_nfm.valorDesconto}" converter="bigDecimalConverter" style="width: 65px;" onkeypress="soBigDecimal(this);">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcularPorDesconto(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText>
-							
 						</p:column>
 						<p:column headerText="Total">
 							<h:outputText value="#{_nfm.total}" converter="bigDecimalConverter" />
 						</p:column>
-						<p:column headerText="Ação">
-							
-						</p:column>
+						
 					</p:dataTable>
 					
-					<script type="text/javascript">
-						$('.precoUnitario').priceFormat({prefix: '',centsSeparator: ',',thousandsSeparator: '.'});
-						$('.valorDesconto').priceFormat({prefix: '',centsSeparator: ',',thousandsSeparator: '.'});
-					</script>
+					<p align="right">
+						Total: <h:outputText value="#{notaFiscalBean.notaFiscal.totalProdutos}" converter="bigDecimalConverter" />
+					</p>
 					
 				</p:outputPanel>
 				

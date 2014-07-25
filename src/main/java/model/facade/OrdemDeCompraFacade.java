@@ -1,6 +1,7 @@
 package model.facade;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,6 +19,10 @@ public class OrdemDeCompraFacade extends GenericFacade<OrdemDeCompra> implements
 	@Override
 	public GenericDAO<OrdemDeCompra> getDAO() {
 		return ordemDeCompraDAO;
+	}
+
+	public List<OrdemDeCompra> listUnidadesMedidasAtivas(Long numeroOc) {
+		return ordemDeCompraDAO.listUnidadesMedidasAtivas(numeroOc);
 	}
 	
 }

@@ -122,7 +122,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	}
 	
 	public void buscarOrdensCompras() {
-		ordensDeCompras = ordemDeCompraFacade.listAll();
+		ordensDeCompras = ordemDeCompraFacade.listUnidadesMedidasAtivas(ordemDeCompra.getNumeroOC());
 	}
 	
 	public void adicionarMateriais() {
@@ -140,10 +140,12 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	}
 	
 	public void calcular(NotaFiscalMaterial nfm) {
+		verificarNotaFiscalMaterial(nfm);
 		calcular(nfm, nfm.getPrecoUnitario());
 	}
 	
 	public void calcularPorPercentual(NotaFiscalMaterial nfm) {
+		verificarNotaFiscalMaterial(nfm);
 		BigDecimal porcentagem = nfm.getPercentualDesconto();
 		BigDecimal vlrDesconto = porcentagem.multiply(nfm.getPrecoUnitario()).divide(new BigDecimal(100));  
 		nfm.setValorDesconto(vlrDesconto);
@@ -152,6 +154,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	}
 	
 	public void calcularPorDesconto(NotaFiscalMaterial nfm) {
+		verificarNotaFiscalMaterial(nfm);
 		BigDecimal vlrDesconto = nfm.getValorDesconto();
 		BigDecimal porcentagem = vlrDesconto.divide(nfm.getPrecoUnitario()).multiply(new BigDecimal(100));
 		nfm.setPercentualDesconto(porcentagem);
@@ -172,6 +175,21 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		}
 		notaFiscal.setTotalProdutos(totalProdutos);
 		notaFiscal.setTotalGeralNota(totalProdutos.add(notaFiscal.getAcrescimos()));
+	}
+	
+	public void verificarNotaFiscalMaterial(NotaFiscalMaterial nfm) {
+		if(nfm.getQuantidade() == null) {
+			nfm.setQuantidade(new BigDecimal(0));
+		}
+		if(nfm.getPrecoUnitario() == null) {
+			nfm.setPrecoUnitario(new BigDecimal(0));
+		}
+		if(nfm.getPercentualDesconto() == null) {
+			nfm.setPercentualDesconto(new BigDecimal(0));
+		}
+		if(nfm.getValorDesconto() == null) {
+			nfm.setValorDesconto(new BigDecimal(0));
+		}
 	}
 	
 	public List<NotaFiscal> getAllNotasFiscais() {
