@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 public abstract class GenericDAO<T> implements Serializable {
@@ -70,12 +71,17 @@ public abstract class GenericDAO<T> implements Serializable {
 		getEntityManager().refresh(entity);
 	}
 	
-	public T find(int entityID) {
+	public T find(Integer entityID) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> c = cb.createQuery(entityClass);
         Root<T> rootCriteria = c.from(entityClass);
-        c.where(cb.equal(rootCriteria.get("id"), cb.parameter(Integer.class, "id")));
-        clausulaWhere(cb, c, rootCriteria);
+        Predicate clauseId = cb.equal(rootCriteria.get("id"), cb.parameter(Integer.class, "id"));
+        Predicate clause = clausulaWhere(cb, rootCriteria);
+        if(clause != null) {
+        	c.where(cb.and(clauseId, clause));
+        } else {
+        	c.where(clauseId);
+        }
         TypedQuery<T> q = em.createQuery(c);
         q.setParameter("id", entityID);
         return (T) q.getSingleResult();
@@ -89,7 +95,10 @@ public abstract class GenericDAO<T> implements Serializable {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> c = cb.createQuery(entityClass);
         Root<T> rootCriteria = c.from(entityClass);
-        clausulaWhere(cb, c, rootCriteria);
+        Predicate clause = clausulaWhere(cb, rootCriteria);
+        if(clause != null) {
+        	c.where(clause);
+        }
         TypedQuery<T> q = em.createQuery(c);
         return q.getResultList();
 	}
@@ -138,8 +147,8 @@ public abstract class GenericDAO<T> implements Serializable {
 		return em;
 	}
 	
-	public CriteriaQuery<T> clausulaWhere(CriteriaBuilder cb, CriteriaQuery<T> c, Root<T> rootCriteria) {
-		return c.where(cb.equal(rootCriteria.get("ativo"), 1));
+	public Predicate clausulaWhere(CriteriaBuilder cb, Root<T> rootCriteria) {
+		return cb.equal(rootCriteria.get("ativo"), 1);
 	}
 	
 }

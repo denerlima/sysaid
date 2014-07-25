@@ -140,24 +140,44 @@
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.quantidadeAutorizada}" />
 						</p:column>
 						<p:column headerText="Quantidade NF">
-							<h:inputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter" style="width: 40px;" onkeypress="soBigDecimalSimples(this);">
+							<h:inputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter" style="width: 40px;" styleClass="quantidade-#{_idx}">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText>
+							<script type="text/javascript">
+								$(function(){
+									$('.quantidade-#{_idx}').forceFloat();
+								});
+							</script>
 						</p:column>
 						<p:column headerText="Preço Unitário">
-							<h:inputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter" style="width: 65px;" onkeydown="soBigDecimal(this);">
+							<h:inputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter" style="width: 65px;" styleClass="precoUnitario-#{_idx}">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText>
+							<script type="text/javascript">
+								$(function(){
+									$('.precoUnitario-#{_idx}').forceMoney();
+								});
+							</script>
 						</p:column>
 						<p:column headerText="Percentual de Desconto">
-							<h:inputText value="#{_nfm.percentualDesconto}" converter="bigDecimalSimplesConverter" style="width: 35px;" onkeypress="soBigDecimalSimples(this);">
+							<h:inputText value="#{_nfm.percentualDesconto}" converter="bigDecimalSimplesConverter" style="width: 35px;" styleClass="percentualDesconto-#{_idx}">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcularPorPercentual(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText> %
+							<script type="text/javascript">
+								$(function(){
+									$('.percentualDesconto-#{_idx}').forceFloat();
+								});
+							</script>
 						</p:column>
 						<p:column headerText="Valor do Desconto">
-							<h:inputText value="#{_nfm.valorDesconto}" converter="bigDecimalConverter" style="width: 65px;" onkeypress="soBigDecimal(this);">
+							<h:inputText value="#{_nfm.valorDesconto}" converter="bigDecimalConverter" style="width: 65px;" styleClass="valorDesconto-#{_idx}">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcularPorDesconto(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText>
+							<script type="text/javascript">
+								$(function(){
+									$('.valorDesconto-#{_idx}').forceMoney();
+								});
+							</script>
 						</p:column>
 						<p:column headerText="Total">
 							<h:outputText value="#{_nfm.total}" converter="bigDecimalConverter" />

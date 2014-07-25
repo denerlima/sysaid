@@ -2,7 +2,7 @@ package persistence.dao;
 
 import javax.inject.Named;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import model.entity.Usuario;
@@ -17,7 +17,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 	}
 
 	@Override
-	public CriteriaQuery<Usuario> clausulaWhere(CriteriaBuilder cb, CriteriaQuery<Usuario> c, Root<Usuario> rootCriteria) {
+	public Predicate clausulaWhere(CriteriaBuilder cb, Root<Usuario> rootCriteria) {
 		return null;
 	}
 	
