@@ -34,6 +34,7 @@ public class BigDecimalSimplesConverter implements javax.faces.convert.Converter
 		nf.setMinimumFractionDigits(0);
 		nf.setMaximumFractionDigits(2);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		return nf.format(Double.valueOf(value.toString())).replace(".", "");
 =======
 		return nf.format(Double.valueOf(value.toString()));
@@ -41,3 +42,9 @@ public class BigDecimalSimplesConverter implements javax.faces.convert.Converter
 	}
 	
 }
+=======
+		return nf.format(Double.valueOf(value.toString()));
+	}
+	
+}
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git

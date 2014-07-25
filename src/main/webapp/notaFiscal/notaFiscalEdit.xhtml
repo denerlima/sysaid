@@ -22,8 +22,12 @@
 		<p:spacer height="10" />
 		
 		<p:tabView id="notaFiscalTab">
+<<<<<<< HEAD
 
 			<p:tab id="tabDadosGerais" title="Dados Gerais">
+=======
+			<p:tab title="Dados Gerais">
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 				
 				<div class="row form-row">
 					<div class="col-md-2">
@@ -31,8 +35,12 @@
 					</div>
 					<div class="col-md-10">
 <<<<<<< HEAD
+<<<<<<< HEAD
 						<h:inputText id="nrNotaFiscal" value="#{notaFiscalBean.notaFiscal.nrNotaFiscal}" required="true" label="Nº da Nota Fiscal" />
 						<h:message for="nrNotaFiscal" styleClass="msg-error" />	
+=======
+						<h:inputText value="#{notaFiscalBean.notaFiscal.nrNotaFiscal}" required="true" label="Nº da Nota Fiscal" />	
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 =======
 						<h:inputText value="#{notaFiscalBean.notaFiscal.nrNotaFiscal}" required="true" label="Nº da Nota Fiscal" />	
 >>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
@@ -46,8 +54,12 @@
 					</div>
 					<div class="col-md-10">
 <<<<<<< HEAD
+<<<<<<< HEAD
 						<p:calendar id="dataEmissao" pattern="dd/MM/yy" locale="pt_BR" value="#{notaFiscalBean.notaFiscal.dataEmissao}" required="true" label="Data da Emissao" size="10" navigator="true" />
 						<h:message for="dataEmissao" styleClass="msg-error" />
+=======
+						<p:calendar pattern="dd/MM/yy" locale="pt_BR" value="#{notaFiscalBean.notaFiscal.dataEmissao}" required="true" label="Data da Emissao" size="10" navigator="true" />
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 =======
 						<p:calendar pattern="dd/MM/yy" locale="pt_BR" value="#{notaFiscalBean.notaFiscal.dataEmissao}" required="true" label="Data da Emissao" size="10" navigator="true" />
 >>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
@@ -61,8 +73,12 @@
 					</div>
 					<div class="col-md-10">
 <<<<<<< HEAD
+<<<<<<< HEAD
 						<p:calendar id="dataEntrega" pattern="dd/MM/yy" locale="pt_BR" value="#{notaFiscalBean.notaFiscal.dataEntrega}" required="true" label="Data da Entrega" size="10" navigator="true" />
 						<h:message for="dataEntrega" styleClass="msg-error" />
+=======
+						<p:calendar pattern="dd/MM/yy" locale="pt_BR" value="#{notaFiscalBean.notaFiscal.dataEntrega}" required="true" label="Data da Entrega" size="10" navigator="true" />
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 =======
 						<p:calendar pattern="dd/MM/yy" locale="pt_BR" value="#{notaFiscalBean.notaFiscal.dataEntrega}" required="true" label="Data da Entrega" size="10" navigator="true" />
 >>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
@@ -76,7 +92,11 @@
 					</div>
 					<div class="col-md-10">
 <<<<<<< HEAD
+<<<<<<< HEAD
 						<h:selectOneMenu id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" required="true" label="Fornecedor">
+=======
+						<h:selectOneMenu id="cbFornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" required="true" label="Fornecedor">
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 =======
 						<h:selectOneMenu id="cbFornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" required="true" label="Fornecedor">
 >>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
@@ -94,11 +114,15 @@
 					</div>
 					<div class="col-md-10">
 <<<<<<< HEAD
+<<<<<<< HEAD
 						<h:inputText id="acrescimos" value="#{notaFiscalBean.notaFiscal.acrescimos}" required="true" label="Acréscimos"
 							converter="bigDecimalConverter" style="width: 85px;">
 							<p:ajax event="change" listener="#{notaFiscalBean.calcularTotais}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:totaisPanel" />
 						</h:inputText>
 						<h:message for="acrescimos" styleClass="msg-error" />
+=======
+						<h:inputText value="#{notaFiscalBean.notaFiscal.acrescimos}" required="true" label="Acrecismos" />
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 =======
 						<h:inputText value="#{notaFiscalBean.notaFiscal.acrescimos}" required="true" label="Acrecismos" />
 >>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
@@ -128,6 +152,9 @@
 =======
 					<div class="col-md-10">
 						<h:inputText value="#{notaFiscalBean.notaFiscal.totalProdutos}" required="true" label="Total dos Produtos" />
+<<<<<<< HEAD
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
+=======
 >>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 					</div>
 <<<<<<< HEAD
@@ -152,6 +179,7 @@
 			<p:tab id="tabMaterial" title="Material">
 				<br />
 				
+<<<<<<< HEAD
 <<<<<<< HEAD
 				<p:commandButton value="Buscar Ordem de Compra" icon="ui-icon-search"
 					process="@this"
@@ -262,6 +290,57 @@
 						</p:column>
 					</p:dataTable>
 >>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
+=======
+				<p:commandButton value="Buscar Ordem de Compra" icon="ui-icon-plus"
+					process="@this"
+					update=":ordemCompraListDialogForm" 
+					onclick="PF('ordeCompraDialog').show();" />
+				
+				<p:outputPanel id="materiaisPanel">	
+					<p:dataTable id="tabelaMaterial" var="_nfm" value="#{notaFiscalBean.notaFiscal.materiais}" emptyMessage="Não existem itens nesta lista.">					
+						<p:column headerText="Nº da OC">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" />
+						</p:column>
+						<p:column headerText="Material">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.descricao}" />
+						</p:column>
+						<p:column headerText="Tipo de Material">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.tipoMaterial.descricao}" />
+						</p:column>
+						<p:column headerText="Unidade de Medida Entrada">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.unidadeMedida.unidadeEntrada.descricao}" />
+						</p:column>
+						<p:column headerText="Quantidade Autorizada">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.quantidadeAutorizada}" />
+						</p:column>
+						<p:column headerText="Quantidade NF">
+							<h:inputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter">
+								<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
+							</h:inputText>
+						</p:column>
+						<p:column headerText="Preço Unitário">
+							<h:inputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter">
+								<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
+							</h:inputText>
+						</p:column>
+						<p:column headerText="Percentual de Desconto">
+							<h:inputText value="#{_nfm.percentualDesconto}" converter="bigDecimalSimplesConverter">
+								<p:ajax event="change" listener="#{notaFiscalBean.calcularPorPercentual(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
+							</h:inputText>
+						</p:column>
+						<p:column headerText="Valor do Desconto">
+							<h:inputText value="#{_nfm.valorDesconto}" converter="bigDecimalConverter">
+								<p:ajax event="change" listener="#{notaFiscalBean.calcularPorDesconto(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
+							</h:inputText>
+						</p:column>
+						<p:column headerText="Total">
+							<h:inputText value="#{_nfm.total}" converter="bigDecimalConverter" />
+						</p:column>
+						<p:column headerText="Ação">
+							
+						</p:column>
+					</p:dataTable>
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 				</p:outputPanel>
 				
 			</p:tab>
@@ -278,7 +357,11 @@
      		rendered="#{notaFiscalBean.managed}" />
      
 <<<<<<< HEAD
+<<<<<<< HEAD
      	<p:commandButton value="Cancelar" action="notaFiscalList.xhtml?faces-redirect=true" process="@this" />
+=======
+     	<p:commandButton value="Cancelar" action="notaFiscalList.xhtml?faces-redirect=true" ajax="false" />
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 =======
      	<p:commandButton value="Cancelar" action="notaFiscalList.xhtml?faces-redirect=true" ajax="false" />
 >>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
@@ -286,6 +369,7 @@
 	</h:form>
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	<!-- Modal -->
 	<div class="modal fade" id="ordemCompraModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -390,6 +474,56 @@
     		</div>
   		</div>
 	</div>
+=======
+	<p:dialog header="Pesquisa Ordem de Compra" id="ordemCompraDialogId" 
+		widgetVar="ordeCompraDialog" closable="true" modal="true" width="800" height="auto">
+		
+		<h:form id="ordemCompraListDialogForm">
+		
+			<p:commandButton value="Buscar" 
+				action="#{notaFiscalBean.buscarOrdensCompras}"
+				update=":ordemCompraListDialogForm" />
+		
+			<br />
+		
+			<ui:repeat id="ocRepeat" varStatus="_idx" var="oc" value="#{notaFiscalBean.ordensDeCompras}">
+				
+				<div>
+							
+					<h:outputText id="numOc" value="#{oc.numeroOC}" />							
+				
+					<h:outputText value="#{oc.dataAutorizacao}" />							
+				
+					<h:outputText value="#{oc.dataEmissao}" />							
+				
+					<h:outputText value="#{oc.autorizador}" />							
+				
+					<h:outputText value="#{oc.contratado}" />
+					
+					<p:dataTable value="#{oc.materiais}" var="_ocm">
+						<p:column>
+							<h:selectBooleanCheckbox value="#{_ocm.selecionado}" />
+						</p:column>
+						<p:column>
+							#{_ocm.material.material}
+						</p:column>
+						<p:column>
+							#{_ocm.material.tipoMaterial.descricao}
+						</p:column>
+					</p:dataTable>					
+				
+				</div>
+								
+			</ui:repeat>
+			
+			<p:commandButton value="Adicionar Materiais Selecionados" 
+				action="#{notaFiscalBean.adicionarMateriais}" 
+				update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
+				
+		</h:form>
+		
+	</p:dialog>
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 =======
 	<p:dialog header="Pesquisa Ordem de Compra" id="ordemCompraDialogId" 
 		widgetVar="ordeCompraDialog" closable="true" modal="true" width="800" height="auto">
