@@ -33,7 +33,11 @@ public class BigDecimalSimplesConverter implements javax.faces.convert.Converter
 		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
 		nf.setMinimumFractionDigits(0);
 		nf.setMaximumFractionDigits(2);
+<<<<<<< HEAD
 		return nf.format(Double.valueOf(value.toString())).replace(".", "");
+=======
+		return nf.format(Double.valueOf(value.toString()));
+>>>>>>> branch 'master' of https://github.com/denerlima/sysaid.git
 	}
 	
 }
