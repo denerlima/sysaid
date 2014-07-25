@@ -1,32 +1,46 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<f:view xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:pe="http://primefaces.org/ui/extensions">
-	
-	<p:dialog header="Cadastro Material" id="materialDialogId" 
-		widgetVar="materialDialog" modal="true" closable="true" width="600" height="auto">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property"
+	template="/template.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
+		<f:event type="preRenderView" listener="#{materialBean.initLoad(_id)}"/>
+	</f:metadata>
+
+	<ui:define name="body">
 		
-		<h:form id="materialDialogForm">
+		<h:form id="materialDialogForm" style="padding: 8px;">
 		    
-			<div class="row">
-				<div class="col-md-4">
+		    <title>Cadastro de Nota Fiscal</title>
+		
+			<center><h2>Cadastro de Nota Fiscal</h2></center>
+		
+			<p:spacer height="10" />
+		    
+			<div class="row form-row">
+				<div class="col-md-2">
 					Material:		
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<h:inputText id="material" value="#{materialBean.material.material}" required="true" label="Material" />
 					<h:message for="material" styleClass="msg-error" />	
 				</div>
 			</div>
 			
 			
-			<div class="row">
-				<div class="col-md-4">
+			<div class="row form-row">
+				<div class="col-md-2">
 					Descrição:		
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<p:inputTextarea id="descricao" rows="5" cols="40" value="#{materialBean.material.descricao}" required="true" label="Descrição"> 
 						<f:validateLength minimum="4" />
 					</p:inputTextarea>
@@ -35,11 +49,11 @@
 			</div>
 			
 			
-			<div class="row">
-				<div class="col-md-4">
+			<div class="row form-row">
+				<div class="col-md-2">
 					Tipo Material:
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<h:selectOneMenu id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="true" label="Tipo Material">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />				
@@ -49,11 +63,11 @@
 			</div>
 			
 			
-			<div class="row">
-				<div class="col-md-4">
+			<div class="row form-row">
+				<div class="col-md-2">
 					Aplicação:
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<h:selectOneMenu id="aplicacao" value="#{materialBean.material.aplicacao}" required="true" label="Aplicação">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
@@ -63,11 +77,11 @@
 			</div>
 			
 
-			<div class="row">
-				<div class="col-md-4">
+			<div class="row form-row">
+				<div class="col-md-2">
 					Marca:
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<h:selectOneMenu id="marca" value="#{materialBean.material.marca}" required="true" label="Marca">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allMarcas}" var="marca" itemLabel="#{marca.descricao}" itemValue="#{marca}" />			
@@ -77,11 +91,11 @@
 			</div>
 			
 
-			<div class="row">
-				<div class="col-md-4">
+			<div class="row form-row">
+				<div class="col-md-2">
 					Grupo:		
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<h:selectOneMenu id="grupo" value="#{materialBean.material.grupo}" required="true" label="Grupo">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricao} - #{grupo.grupopai}" itemValue="#{grupo}" />		
@@ -91,11 +105,11 @@
 			</div>
 			
 			
-			<div class="row">
-				<div class="col-md-4">
+			<div class="row form-row">
+				<div class="col-md-2">
 					Unidade de Medida de Entrada:		
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<h:selectOneMenu id="entrada" value="#{materialBean.material.unidadeMedida}" required="true" label="Unidade Medida de Entrada">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allUnidadesMedidas}" var="um" itemLabel="#{um.unidadeEntrada}" itemValue="#{um}" />				
@@ -105,22 +119,22 @@
 			</div>
 			
 			
-			<div class="row">
-				<div class="col-md-4">
+			<div class="row form-row">
+				<div class="col-md-2">
 					Estoque Informado
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<pe:inputNumber id="estoqueInformado" decimalPlaces="2" value="#{materialBean.material.estoqueInformado}" required="true" label="Estoque Informado" />
 					<h:message for="estoqueInformado" styleClass="msg-error" />	
 				</div>
 			</div>
 			
 			
-			<div class="row">
-				<div class="col-md-4">
+			<div class="row form-row">
+				<div class="col-md-2">
 					Estoque Calculado
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<h:outputText value="#{materialBean.material.estoqueCalculado}" />
 				</div>
 			</div>
@@ -128,30 +142,21 @@
 			
 			<div class="buttons">
 								
-				<p:commandButton action="#{materialBean.createMaterial}" value="Salvar"
-					update=":materialDialogForm :materialForm"
-					oncomplete="oncompleteMaterial(xhr, status, args)"
+				<p:commandButton value="Salvar"
+					action="#{materialBean.createMaterial}"
+					update=":materialDialogForm"
 					rendered="#{not materialBean.managed}" />
 					
-				<p:commandButton action="#{materialBean.updateMaterial}" value="Alterar"
-					update=":materialDialogForm :materialForm"
-					oncomplete="oncompleteMaterial(xhr, status, args)"
+				<p:commandButton value="Alterar"
+					action="#{materialBean.updateMaterial}"
+					update=":materialDialogForm"
 					rendered="#{materialBean.managed}" />		
 				
-				<p:commandButton value="Cancelar" type="button" onclick="PF('materialDialog').hide();" />
+				<p:commandButton value="Cancelar" action="/material/materialList.xhtml?faces-redirect=true" process="@this" />
 			
 			</div>
 			
 		</h:form>
 			
-	</p:dialog>
-	
-	<script type="text/javascript">
-	   function oncompleteMaterial(xhr, status, args) {
-	      if (args.success) {
-	    	  PF('materialDialog').hide();
-	      }
-	   }
-	</script>
-	
-</f:view>
+	</ui:define>
+</ui:composition>

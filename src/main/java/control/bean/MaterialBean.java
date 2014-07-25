@@ -1,7 +1,6 @@
 package control.bean;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,6 @@ import model.facade.TipoMaterialFacade;
 import model.facade.UnidadeMedidaFacade;
 
 import org.omnifaces.cdi.ViewScoped;
-import org.primefaces.context.RequestContext;
 
 import util.Component;
 import util.HibernateUtil;
@@ -60,31 +58,42 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		this.material = material;
 	}	
 
-	public void novo() {
-		resetMaterial();
-		material.setEstoqueCalculado(new BigDecimal(0));
+	public String novo() {
+		return "/material/materialEdit.xhtml?faces-redirect=true";
 	}
 	
-	public void createMaterial() {
+	public String edit(Integer id) {
+		return "/material/materialEdit.xhtml?faces-redirect=true&id="+id;
+	}
+	
+	public void initLoad(Integer id) {
+		if(material != null) {
+			return;
+		}
+		if(id == null || id == 0) {
+			material = new Material();
+		} else {
+			material = getMaterialFacade().find(id);
+		}
+	}
+	
+	public String createMaterial() {
 		try {			
 			getMaterialFacade().create(material);
 			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadMateriais();
 			resetMaterial();
+			return "/material/materialList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
-		RequestContext.getCurrentInstance().addCallbackParam("success", true);
+		return null;
 	}
 	
-	public void edit(Integer id) {
-		material = materialFacade.find(id);
-	}
-	
-	public void updateMaterial() {
+	public String updateMaterial() {
 		try {
 			getMaterialFacade().update(material);
 			closeDialog();
@@ -96,7 +105,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
-		RequestContext.getCurrentInstance().addCallbackParam("success", true);
+		return "/material/materialList.xhtml?faces-redirect=true";
 	}
 	
 	

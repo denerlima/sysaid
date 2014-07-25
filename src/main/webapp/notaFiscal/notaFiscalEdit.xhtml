@@ -7,6 +7,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" 
 	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property"
 	template="/template.xhtml">
 
 	<f:metadata>
@@ -117,7 +118,7 @@
 				<p:commandButton value="Buscar Ordem de Compra" icon="ui-icon-search"
 					process="@this"
 					action="#{notaFiscalBean.iniciarBuscaOrdensCompra}"
-					update=":ordemCompraListDialogForm" 
+					update=":ordemCompraModal:ordemCompraListDialogForm" 
 					oncomplete="$('#ordemCompraModal').modal('show')" />
 				
 				<p:outputPanel id="materiaisPanel">
@@ -140,24 +141,44 @@
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.quantidadeAutorizada}" />
 						</p:column>
 						<p:column headerText="Quantidade NF">
-							<h:inputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter" style="width: 40px;" onkeypress="soBigDecimalSimples(this);">
+							<h:inputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter" style="width: 40px;" styleClass="quantidade-#{_idx}">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText>
+							<script type="text/javascript">
+								$(function(){
+									$('.quantidade-#{_idx}').forceFloat();
+								});
+							</script>
 						</p:column>
 						<p:column headerText="Preço Unitário">
-							<h:inputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter" style="width: 65px;" onkeydown="soBigDecimal(this);">
+							<h:inputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter" style="width: 65px;" styleClass="precoUnitario-#{_idx}">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText>
+							<script type="text/javascript">
+								$(function(){
+									$('.precoUnitario-#{_idx}').forceMoney();
+								});
+							</script>
 						</p:column>
 						<p:column headerText="Percentual de Desconto">
-							<h:inputText value="#{_nfm.percentualDesconto}" converter="bigDecimalSimplesConverter" style="width: 35px;" onkeypress="soBigDecimalSimples(this);">
+							<h:inputText value="#{_nfm.percentualDesconto}" converter="bigDecimalSimplesConverter" style="width: 35px;" styleClass="percentualDesconto-#{_idx}">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcularPorPercentual(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText> %
+							<script type="text/javascript">
+								$(function(){
+									$('.percentualDesconto-#{_idx}').forceFloat();
+								});
+							</script>
 						</p:column>
 						<p:column headerText="Valor do Desconto">
-							<h:inputText value="#{_nfm.valorDesconto}" converter="bigDecimalConverter" style="width: 65px;" onkeypress="soBigDecimal(this);">
+							<h:inputText value="#{_nfm.valorDesconto}" converter="bigDecimalConverter" style="width: 65px;" styleClass="valorDesconto-#{_idx}">
 								<p:ajax event="change" listener="#{notaFiscalBean.calcularPorDesconto(_nfm)}" process="@this" update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" />
 							</h:inputText>
+							<script type="text/javascript">
+								$(function(){
+									$('.valorDesconto-#{_idx}').forceMoney();
+								});
+							</script>
 						</p:column>
 						<p:column headerText="Total">
 							<h:outputText value="#{_nfm.total}" converter="bigDecimalConverter" />
@@ -174,130 +195,115 @@
 			</p:tab>
 		</p:tabView>
 		
-		<p:commandButton value="Salvar" 
-			action="#{notaFiscalBean.createNotaFiscal}" 
-			update=":notaFiscalEditForm"
-			rendered="#{not notaFiscalBean.managed}" />
-     	
-     	<p:commandButton value="Alterar"
-     		action="#{notaFiscalBean.updateNotaFiscal}"
-     		update=":notaFiscalEditForm"
-     		rendered="#{notaFiscalBean.managed}" />
-     
-     	<p:commandButton value="Cancelar" action="notaFiscalList.xhtml?faces-redirect=true" process="@this" />
+		<div class="buttons">
+		
+			<p:commandButton value="Salvar" 
+				action="#{notaFiscalBean.createNotaFiscal}" 
+				update=":notaFiscalEditForm"
+				rendered="#{not notaFiscalBean.managed}" />
+	     	
+	     	<p:commandButton value="Alterar"
+	     		action="#{notaFiscalBean.updateNotaFiscal}"
+	     		update=":notaFiscalEditForm"
+	     		rendered="#{notaFiscalBean.managed}" />
+	     
+	     	<p:commandButton value="Cancelar" action="notaFiscalList.xhtml?faces-redirect=true" process="@this" />
+	   
+		</div>
 		
 	</h:form>
 
-
-	<!-- Modal -->
-	<div class="modal fade" id="ordemCompraModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  		<div class="modal-dialog modal-lg">
-    		<div class="modal-content">
-				<div class="modal-header">
-		        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-		        	<h4 class="modal-title" id="myModalLabel">Consultar Ordem de Compra</h4>
-		      	</div>
-		      	<div class="modal-body">
-        
-					<h:form id="ordemCompraListDialogForm">
-					
-						Nº da OC: <h:inputText value="#{notaFiscalBean.ordemDeCompra.numeroOC}" />
-					
-						<p:commandButton value="Buscar" 
-							action="#{notaFiscalBean.buscarOrdensCompras}"
-							update=":ordemCompraListDialogForm"
-							style="margin-left: 2px;" />
-					
-						<hr />
-					
-						<ui:repeat id="ocRepeat" varStatus="_idx" var="oc" value="#{notaFiscalBean.ordensDeCompras}">
-							
-							<div class="panel panel-default">
-  								<div class="panel-heading">
-									
-									<div class="row">
-										<div class="col-md-4">
-											<b>Nº OC: </b>
-											<h:outputText id="numOc" value="#{oc.numeroOC}" />
-										</div>
-										<div class="col-md-4">
-											<b>Autorização: </b>
-											<h:outputText value="#{oc.dataAutorizacao}">
-												<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-											</h:outputText>
-										</div>
-										<div class="col-md-4">
-											<b>Emissão: </b>
-											<h:outputText value="#{oc.dataEmissao}">
-												<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-											</h:outputText>
-										</div>
-									</div>
-										
-									<div class="row">
-										<div class="col-md-6">
-											<b>Autorizador: </b>
-											<h:outputText value="#{oc.autorizador}" />		
-										</div>
-										<div class="col-md-6">
-											<b>Contratado: </b>
-											<h:outputText value="#{oc.contratado}" />		
-										</div>
-									</div>						
-							
-								</div>
-  								<div class="panel-body">
-    
-									<p:dataTable value="#{oc.materiais}" var="_ocm">
-										<p:column headerText="Selecione">
-											<h:selectBooleanCheckbox value="#{_ocm.selecionado}" />
-										</p:column>
-										<p:column headerText="Material">
-											#{_ocm.material.material}
-										</p:column>
-										<p:column headerText="Tipo Material">
-											#{_ocm.material.tipoMaterial.descricao}
-										</p:column>
-										<p:column headerText="Unidade">
-											#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}
-										</p:column>
-										<p:column headerText="Qtde Autorizada">
-											#{_ocm.quantidadeAutorizada}
-										</p:column>
-									</p:dataTable>
-								
-								</div>					
-							
-							</div>
-											
-						</ui:repeat>
+  	<cp:bootstrapModal id="ordemCompraModal" title="Consultar Ordem de Compra" modalId="ordemCompraModal">      
+		<h:form id="ordemCompraListDialogForm">
+		
+			Nº da OC: <h:inputText value="#{notaFiscalBean.ordemDeCompra.numeroOC}" />
+		
+			<p:commandButton value="Buscar" 
+				action="#{notaFiscalBean.buscarOrdensCompras}"
+				update=":ordemCompraModal:ordemCompraListDialogForm"
+				style="margin-left: 2px;" />
+		
+			<hr />
+		
+			<ui:repeat id="ocRepeat" varStatus="_idx" var="oc" value="#{notaFiscalBean.ordensDeCompras}">
+				
+				<div class="panel panel-default">
+							<div class="panel-heading">
 						
-						<p:commandButton value="Adicionar Materiais Selecionados" 
-							action="#{notaFiscalBean.adicionarMateriais}" 
-							update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel"
-							oncomplete="oncompleteAddMateriais(xhr, status, args)"
-							rendered="#{not empty notaFiscalBean.ordensDeCompras}" />
+						<div class="row">
+							<div class="col-md-4">
+								<b>Nº OC: </b>
+								<h:outputText id="numOc" value="#{oc.numeroOC}" />
+							</div>
+							<div class="col-md-4">
+								<b>Autorização: </b>
+								<h:outputText value="#{oc.dataAutorizacao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+								</h:outputText>
+							</div>
+							<div class="col-md-4">
+								<b>Emissão: </b>
+								<h:outputText value="#{oc.dataEmissao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+								</h:outputText>
+							</div>
+						</div>
 							
-					</h:form>
-		
-					<script type="text/javascript">
-					   function oncompleteAddMateriais(xhr, status, args) {
-					      if (args.success) {
-					    	  $('#ordemCompraModal').modal('hide');
-					      }
-					   }
-					</script>
-		
+						<div class="row">
+							<div class="col-md-6">
+								<b>Autorizador: </b>
+								<h:outputText value="#{oc.autorizador}" />		
+							</div>
+							<div class="col-md-6">
+								<b>Contratado: </b>
+								<h:outputText value="#{oc.contratado}" />		
+							</div>
+						</div>						
+				
+					</div>
+							<div class="panel-body">
+ 
+						<p:dataTable value="#{oc.materiais}" var="_ocm">
+							<p:column headerText="Selecione">
+								<h:selectBooleanCheckbox value="#{_ocm.selecionado}" />
+							</p:column>
+							<p:column headerText="Material">
+								#{_ocm.material.material}
+							</p:column>
+							<p:column headerText="Tipo Material">
+								#{_ocm.material.tipoMaterial.descricao}
+							</p:column>
+							<p:column headerText="Unidade">
+								#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}
+							</p:column>
+							<p:column headerText="Qtde Autorizada">
+								#{_ocm.quantidadeAutorizada}
+							</p:column>
+						</p:dataTable>
+					
+					</div>					
+				
 				</div>
-    		</div>
-  		</div>
-	</div>
-	
-	<style type="text/css">
-		#ordemCompraDialogId {
-			top: 50px !important;
-		}
-	</style>
+								
+			</ui:repeat>
+			
+			<p:commandButton value="Adicionar Materiais Selecionados" 
+				action="#{notaFiscalBean.adicionarMateriais}" 
+				update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel"
+				oncomplete="oncompleteAddMateriais(xhr, status, args)"
+				rendered="#{not empty notaFiscalBean.ordensDeCompras}" />
+				
+		</h:form>
 
+		<script type="text/javascript">
+		   function oncompleteAddMateriais(xhr, status, args) {
+		      if (args.success) {
+		    	  $('#ordemCompraModal').modal('hide');
+		      }
+		   }
+		</script>
+		
+	</cp:bootstrapModal>
+	
 	</ui:define>
 </ui:composition>
