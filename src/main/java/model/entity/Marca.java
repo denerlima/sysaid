@@ -12,12 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
 @Entity
 @SequenceGenerator(name = "marcaSequence", sequenceName = "MARCA_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_MARCA")
-@Where(clause = "ativo = '1'")
 public class Marca extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

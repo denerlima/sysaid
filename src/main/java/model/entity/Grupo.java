@@ -12,12 +12,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
 @Entity
 @SequenceGenerator(name = "grupoSequence", sequenceName = "GRUPO_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_GRUPO")
-@Where(clause = "ativo = '1'") 
 public class Grupo extends GenericModelo implements Serializable{
 	
 	private static final long serialVersionUID = 3305296226510800199L;

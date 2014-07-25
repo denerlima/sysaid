@@ -9,7 +9,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 public abstract class GenericDAO<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -68,24 +71,29 @@ public abstract class GenericDAO<T> implements Serializable {
 	}
 	
 	public T find(int entityID) {
-		return getEntityManager().find(entityClass, entityID);
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> c = cb.createQuery(entityClass);
+        Root<T> rootCriteria = c.from(entityClass);
+        c.where(cb.equal(rootCriteria.get("id"), cb.parameter(Integer.class, "id")));
+        clausulaWhere(cb, c, rootCriteria);
+        TypedQuery<T> q = em.createQuery(c);
+        q.setParameter("id", entityID);
+        return (T) q.getSingleResult();
 	}
 
 	public T findReferenceOnly(int entityID) {
 		return getEntityManager().getReference(entityClass, entityID);
 	}
 
-	// Using the unchecked because JPA does not have a
-	// getEntityManager().getCriteriaBuilder().createQuery()<T> method
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<T> findAll() {
-		CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-		cq.select(cq.from(entityClass));
-		return getEntityManager().createQuery(cq).getResultList();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> c = cb.createQuery(entityClass);
+        Root<T> rootCriteria = c.from(entityClass);
+        clausulaWhere(cb, c, rootCriteria);
+        TypedQuery<T> q = em.createQuery(c);
+        return q.getResultList();
 	}
 
-	// Using the unchecked because JPA does not have a
-	// query.getSingleResult()<T> method
 	@SuppressWarnings("unchecked")
 	protected T findOneResult(String namedQuery, Map<String, Object> parameters) {
 		T result = null;
@@ -128,6 +136,10 @@ public abstract class GenericDAO<T> implements Serializable {
 		*/
 		System.out.println(em.toString());
 		return em;
+	}
+	
+	public CriteriaQuery<T> clausulaWhere(CriteriaBuilder cb, CriteriaQuery<T> c, Root<T> rootCriteria) {
+		return c.where(cb.equal(rootCriteria.get("ativo"), 1));
 	}
 	
 }

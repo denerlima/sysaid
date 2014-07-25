@@ -17,14 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
-
 @Entity
 @SequenceGenerator(name = "materialSequence", sequenceName = "MATERIAL_ID_SEQ", allocationSize = 1)
 @NamedQuery(name = "Material.findMaterialByNomeMaterial", query = "select m from Material m where m.material LIKE :material")
 @Table(name = "MF_MATERIAL")
-@Where(clause = "ativo = '1'")  
 public class Material extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

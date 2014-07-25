@@ -13,12 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
 @Entity
 @SequenceGenerator(name = "notaFiscalMaterialSequence", sequenceName = "NOTAFISCAL_MATERIAL_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_NOTAFISCAL_MF_MATERIAL")
-@Where(clause = "ativo = '1'") 
 public class NotaFiscalMaterial {
 
 	@Id

@@ -14,12 +14,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Where;
-
 @Entity
 @SequenceGenerator(name = "ordemDeCompraMaterialSequence", sequenceName = "ORDEMDECOMPRA_MATERIAL_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_ORDEMDECOMPRA_MF_MATERIAL")
-@Where(clause = "ativo = '1'") 
 public class OrdemDeCompraMaterial implements Serializable {
 
 	private static final long serialVersionUID = 1L;

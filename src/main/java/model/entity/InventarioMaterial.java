@@ -13,13 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
 @Entity
 @SequenceGenerator(name = "inventarioMaterialSequence", sequenceName = "INVENTARIO_MATERIAL_ID_SEQ", allocationSize = 1)
-@Table(name = "MF_INVENTARIO_MF_MATERIAL")
-@Where(clause = "ativo = '1'")  
+@Table(name = "MF_INVENTARIO_MF_MATERIAL")  
 public class InventarioMaterial implements Serializable {
 
 	private static final long serialVersionUID = 1L;

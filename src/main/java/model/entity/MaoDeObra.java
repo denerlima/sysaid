@@ -11,12 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
 @Entity
 @SequenceGenerator(name = "maoDeObraSequence", sequenceName = "MAODEOBRA_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_MAODEOBRA")
-@Where(clause = "ativo = '1'") 
 public class MaoDeObra extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	

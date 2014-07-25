@@ -32,10 +32,10 @@
 						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
 					<p:column headerText="Informado">
-						<h:outputText value="#{mat.estoqueInformado}" />							
+						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
 					<p:column headerText="Calculado">
-						<h:outputText value="#{mat.estoqueCalculado}" />							
+						<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
 					<p:column headerText="Tipo Material">
 						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
@@ -54,9 +54,9 @@
 							action="#{materialBean.edit(mat.id)}"
 							update=":materialDialogForm"
 							oncomplete="PF('materialDialog').show();"
-							style="margin-right:10px" />
+							style="margin-right:5px" />
 									
-						<p:commandButton value="Excluir" icon="ui-icon-trash" onclick="PF('dialogTrash').show();" style="margin-right:10px">
+						<p:commandButton value="Excluir" icon="ui-icon-trash" onclick="PF('dialogTrash').show();">
 							<f:setPropertyActionListener target="#{materialBean.material}" value="#{mat}" />
 						</p:commandButton>
 					</p:column>

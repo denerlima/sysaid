@@ -16,6 +16,7 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
 		super(OrdemDeCompra.class);
 	}
 
+	@Override
 	public void delete(OrdemDeCompra ordemDeCompra) {
 		ordemDeCompra.setAtivo(0);
 		super.update(ordemDeCompra);
