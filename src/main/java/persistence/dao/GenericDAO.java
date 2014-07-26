@@ -118,14 +118,38 @@ public abstract class GenericDAO<T> implements Serializable {
 			result = (T) query.getSingleResult();
 
 		} catch (NoResultException e) {
-			System.out.println("No result found for named query: " + namedQuery);
+			System.out.println("Nenhum resultado retornado pela query: " + namedQuery);  
 		} catch (Exception e) {
-			System.out.println("Error while running query: " + e.getMessage());
+			System.out.println("Erro durante a execução da query: " + e.getMessage() + "\n" + namedQuery);  
 			e.printStackTrace();
 		}
 
 		return result;
 	}
+	
+    @SuppressWarnings("unchecked")  
+    protected List<T> findManyResults(String namedQuery, Map<String, Object> parameters){  
+        List<T> result = null;  
+  
+        try{  
+        	Query query = getEntityManager().createNamedQuery(namedQuery); 
+  
+            if (parameters != null && !parameters.isEmpty()) {  
+                populateQueryParameters(query, parameters);  
+            }
+            
+            result = query.getResultList();  
+  
+        } catch (NoResultException e) {  
+            System.out.println("Nenhum resultado retornado pela query: " + namedQuery);  
+        } catch (Exception e) {  
+            System.out.println("Erro durante a execução da query: " + e.getMessage() + "\n" + namedQuery);  
+            e.printStackTrace();  
+        }  
+  
+        return result;  
+    }
+	
 
 	private void populateQueryParameters(Query query, Map<String, Object> parameters) {
 		for (Entry<String, Object> entry : parameters.entrySet()) {
