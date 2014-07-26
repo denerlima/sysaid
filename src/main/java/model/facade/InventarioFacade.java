@@ -24,7 +24,6 @@ public class InventarioFacade extends GenericFacade<Inventario> implements Seria
 
 	public void create(Inventario entity) {
 		getDAO().beginTransaction();
-		//materialDAO.joinTransaction(inventarioDAO.getEntityManager());
 		definirQuantidades(entity);
 		getDAO().save(entity);
 		getDAO().commit();
@@ -32,7 +31,6 @@ public class InventarioFacade extends GenericFacade<Inventario> implements Seria
 	
 	public void update(Inventario entity) {
 		getDAO().beginTransaction();
-		//materialDAO.joinTransaction(inventarioDAO.getEntityManager());
 		definirQuantidades(entity);
 		getDAO().update(entity);
 		getDAO().commit();
@@ -41,7 +39,7 @@ public class InventarioFacade extends GenericFacade<Inventario> implements Seria
 	private void definirQuantidades(Inventario inventario) {
 		for (InventarioMaterial invMat : inventario.getMateriais()) {
 			invMat.setQuantidadeEstoque(invMat.getMaterial().getEstoqueInformado());
-			invMat.getMaterial().setEstoqueInformado(invMat.getQuantidadeInventariada());
+			invMat.getMaterial().setEstoqueCalculado(invMat.getQuantidadeInventariada());
 			materialDAO.update(invMat.getMaterial());
 		}
 	}

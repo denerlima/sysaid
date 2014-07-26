@@ -150,7 +150,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		InventarioMaterial invMat = new InventarioMaterial();
 		invMat.setInventario(inventario);
 		invMat.setMaterial(material);
-		invMat.setQuantidadeEstoque(material.getEstoqueInformado());
+		invMat.setQuantidadeEstoque(material.getEstoqueCalculado());
 		inventario.getMateriais().add(invMat);
 		this.material = new Material();
 	}
