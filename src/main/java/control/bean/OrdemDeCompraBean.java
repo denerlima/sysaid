@@ -7,11 +7,15 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.Fornecedor;
 import model.entity.Material;
 import model.entity.OrdemDeCompra;
 import model.entity.OrdemDeCompraMaterial;
+import model.entity.Usuario;
+import model.facade.FornecedorFacade;
 import model.facade.MaterialFacade;
 import model.facade.OrdemDeCompraFacade;
+import model.facade.UsuarioFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 
@@ -27,10 +31,17 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	private OrdemDeCompraFacade ordemDeCompraFacade;
 	
 	@Inject
+	private UsuarioFacade usuarioFacade;
+	
+	@Inject
+	private FornecedorFacade fornecedorFacade;
+	
+	@Inject
 	private MaterialFacade materialFacade;
 	
 	private Material material;
 	private List<Material> materiais;
+	private List<Fornecedor> contratados;
 
 	public String novo() {
 		return "/ordemDeCompra/ordemDeCompraEdit.xhtml?faces-redirect=true";
@@ -61,6 +72,17 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 			ordemDeCompra = new OrdemDeCompra();
 		}
 		return ordemDeCompra;
+	}
+	
+	public List<Usuario> getAutorizadores(){
+		return usuarioFacade.listAll();
+	}
+	
+	public List<Fornecedor> getAllContratados(){
+		if(contratados == null) {
+			contratados = fornecedorFacade.listAll();
+		}
+		return contratados;
 	}
 
 	public void setOrdemDeCompra(OrdemDeCompra ordemDeCompra) {

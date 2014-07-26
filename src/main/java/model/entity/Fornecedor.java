@@ -27,6 +27,9 @@ public class Fornecedor extends GenericModelo implements Serializable {
 	@OneToMany(mappedBy="fornecedor")
 	private List<NotaFiscal> notasFiscais;
 	
+	@OneToMany(mappedBy="contratado")
+	private List<OrdemDeCompra> ordensCompra;
+	
 	public int getId() {
 		return id;
 	}
@@ -49,6 +52,14 @@ public class Fornecedor extends GenericModelo implements Serializable {
 
 	public void setNotasFiscais(List<NotaFiscal> notasFiscais) {
 		this.notasFiscais = notasFiscais;
+	}	
+
+	public List<OrdemDeCompra> getOrdensCompra() {
+		return ordensCompra;
+	}
+
+	public void setOrdensCompra(List<OrdemDeCompra> ordensCompra) {
+		this.ordensCompra = ordensCompra;
 	}
 
 	@Override

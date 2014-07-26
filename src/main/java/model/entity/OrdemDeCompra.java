@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -36,8 +38,14 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	private Long numeroOC;
 	private Date dataEmissao;
 	private Date dataAutorizacao;
-	private String autorizador;
-	private String contratado;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id_usuario", referencedColumnName="id")
+	private Usuario autorizador;
+	
+	@ManyToOne
+	@JoinColumn(name="id_fornecedor", referencedColumnName="id")
+	private Fornecedor contratado;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordemDeCompra", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OrdemDeCompraMaterial> materiais;
@@ -75,19 +83,19 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 		this.dataAutorizacao = dataAutorizacao;
 	}
 
-	public String getAutorizador() {
+	public Usuario getAutorizador() {
 		return autorizador;
 	}
 
-	public void setAutorizador(String autorizador) {
+	public void setAutorizador(Usuario autorizador) {
 		this.autorizador = autorizador;
 	}
 
-	public String getContratado() {
+	public Fornecedor getContratado() {
 		return contratado;
 	}
 
-	public void setContratado(String contratado) {
+	public void setContratado(Fornecedor contratado) {
 		this.contratado = contratado;
 	}
 

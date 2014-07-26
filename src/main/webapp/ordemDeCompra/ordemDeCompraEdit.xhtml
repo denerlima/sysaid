@@ -63,7 +63,10 @@
 						<h:outputText value="Autorizador:" />
 					</div>
 					<div class="col-md-10">
-						<h:inputText value="#{ordemDeCompraBean.ordemDeCompra.autorizador}" required="false" label="Autorizador" />	
+						<h:selectOneMenu id="cbAutorizador" immediate="true" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}" >
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{ordemDeCompraBean.autorizadores}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
+						</h:selectOneMenu>
 					</div>
 				</div>
 				
@@ -72,7 +75,10 @@
 						<h:outputText value="Contratado:" />
 					</div>
 					<div class="col-md-10">
-						<h:inputText value="#{ordemDeCompraBean.ordemDeCompra.contratado}" required="false" label="Contratado" />	
+						<h:selectOneMenu id="cbContratado" immediate="true" value="#{ordemDeCompraBean.ordemDeCompra.contratado}" >
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{ordemDeCompraBean.allContratados}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
+						</h:selectOneMenu>							
 					</div>
 				</div>
 	        
