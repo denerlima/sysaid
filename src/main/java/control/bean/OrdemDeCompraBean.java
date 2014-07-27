@@ -154,8 +154,26 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		return queryResult;
 	}
 	
+	public List<OrdemDeCompra> pesquisarOrdemCompraByFilter() {
+		try {			
+			ordensDeCompra = getOrdemDeCompraFacade().pesquisarListaOCbyFilter(ordemDeCompra , material);			
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Ops, não foi possivel achar nennhuma Ordem de Compra. ERRO");
+			e.printStackTrace();
+		}
+		return ordensDeCompra;
+	}
+	
 	private void loadOrdensDeCompra() {
 		ordensDeCompra = getOrdemDeCompraFacade().listAll();
+	}
+	
+	public List<OrdemDeCompra> getOrdensDeCompra() {
+		if (ordensDeCompra == null) {
+			ordensDeCompra = new ArrayList<OrdemDeCompra>();
+		}
+		return ordensDeCompra;
 	}
 
 	public void resetOrdemDeCompra() {
@@ -178,6 +196,9 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	}
 
 	public Material getMaterial() {
+		if (material == null) {
+			material = new Material();
+		}
 		return material;
 	}
 

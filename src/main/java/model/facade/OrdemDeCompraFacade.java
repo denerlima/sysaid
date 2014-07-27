@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import model.entity.Material;
 import model.entity.OrdemDeCompra;
 import persistence.dao.GenericDAO;
 import persistence.dao.OrdemDeCompraDAO;
@@ -23,6 +24,11 @@ public class OrdemDeCompraFacade extends GenericFacade<OrdemDeCompra> implements
 
 	public List<OrdemDeCompra> listUnidadesMedidasAtivas(Long numeroOc) {
 		return ordemDeCompraDAO.listUnidadesMedidasAtivas(numeroOc);
+	}
+
+	public List<OrdemDeCompra> pesquisarListaOCbyFilter(OrdemDeCompra ordemDeCompra , Material material) {
+		List<OrdemDeCompra> result = ordemDeCompraDAO.pesquisarListaOCbyFilter(ordemDeCompra , material);        
+		return result;		
 	}
 	
 }

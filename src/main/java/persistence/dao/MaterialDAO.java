@@ -26,7 +26,7 @@ public class MaterialDAO extends GenericDAO<Material> {
     
 	@SuppressWarnings("unchecked")
 	 public List<Material> findListMaterialByMaterial(String material){
-        Query query = getEntityManager().createQuery("From Material mat WHERE ativo = 1 and mat.material like :material order by mat.id ASC");
+        Query query = getEntityManager().createQuery("From Material mat WHERE ativo = 1 and UPPER(mat.material) like UPPER(:material) order by mat.id ASC");
         query.setParameter("material", "%"+material+"%");
         return query.getResultList();
     }
