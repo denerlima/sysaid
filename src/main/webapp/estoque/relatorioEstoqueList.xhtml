@@ -32,12 +32,13 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="mat" value="#{materialBean.materiais}" rows="2"
+				<p:dataTable id="dtResultado" var="mat" value="#{materialBean.materiais}" rows="2"
                     paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" 
                     currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
-                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="2,10,15"
 					emptyMessage="Não existem itens nesta lista.">
+
 					<p:column headerText="Material">
 						<h:outputText value="#{mat.material}" />							
 					</p:column>
@@ -55,6 +56,20 @@
 					</p:column>
 				</p:dataTable>
 			</p:outputPanel>
+			
+			<p:outputPanel id="export" layout="block" rendered="#{not empty materialBean.materiais}">
+			 		Exportar Relatório : 
+			     <h:commandLink>
+		         	<p:graphicImage name="/img/excel.png" width="24"/>
+		            <p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />
+		         </h:commandLink>
+		 
+		         <h:commandLink>
+		  	       <p:graphicImage name="/img/pdf.png" width="24"/>
+		           <p:dataExporter type="pdf" target="dtResultado" fileName="relatorioEstoque"/>
+		   	     </h:commandLink>
+	   	 	</p:outputPanel>
+
 			</center>
 			
 		</h:form>
