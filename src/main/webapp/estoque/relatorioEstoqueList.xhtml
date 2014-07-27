@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<ui:define name="body">
+
+		<h:form id="estoqueForm" prependId="false">		
+		<title>Relatório de Estoque</title>
+		<center><h2>Relatório de Estoque</h2></center>
+		<p:spacer height="10" />
+		
+		<center>
+		<div class="row">
+			<div class="col-md-2">
+				<h:outputText value="Material:" />	
+			</div>
+			<div class="col-md-5">
+				<h:inputText id="material" size="50" value="#{materialBean.material.material}" />
+			</div>			
+			<div class="col-md-1">
+				<p:commandButton value="Pesquisar" icon="ui-icon-search"
+							action="#{materialBean.pesquisarListaMateriaisbyNome}" update=":estoqueForm" />
+			</div>
+		</div>
+		</center>
+				
+			<center>
+			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
+			<p:spacer width="100" height="30" />
+				<p:dataTable var="mat" value="#{materialBean.materiais}" rows="2"
+                    paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" 
+                    currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+					rowsPerPageTemplate="2,10,15"
+					emptyMessage="Não existem itens nesta lista.">
+					<p:column headerText="Material">
+						<h:outputText value="#{mat.material}" />							
+					</p:column>
+					<p:column headerText="Tipo Material">
+						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
+					</p:column>
+					<p:column headerText="Descrição">
+						<h:outputText value="#{mat.descricao}" />							
+					</p:column>
+					<p:column headerText="Unidade de Medida Entrada">
+						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
+					</p:column>
+					<p:column headerText="Estoque">
+						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />							
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+			</center>
+			
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

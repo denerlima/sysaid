@@ -53,6 +53,13 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		}
 		return material;
 	}
+	
+	public List<Material> getMateriais() {
+		if (materiais == null) {
+			materiais = new ArrayList<Material>();
+		}
+		return materiais;
+	}
 
 	public void setMaterial(Material material) {
 		this.material = material;
@@ -143,10 +150,9 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		return material;
 	}
 	
-	public List<Material> pesquisarListaMateriais() {
+	public List<Material> pesquisarListaMateriaisbyNome() {
 		try {			
-			materiais = getMaterialFacade().findMateriaisByFilter(material);
-			//inventarioBean.getInventario().setMateriais(getAllMateriais());
+			materiais = getMaterialFacade().pesquisarListaMateriaisbyNomeMaterial(material.getMaterial());			
 		} catch (Exception e) {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel achar nennhum material. ERRO");

@@ -1,9 +1,11 @@
 package persistence.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Named;
+import javax.persistence.Query;
 
 import model.entity.Material;
 
@@ -21,6 +23,14 @@ public class MaterialDAO extends GenericDAO<Material> {
         parameters.put("material", "%"+ material +"%"); 
         return super.findOneResult(Material.FIND_BY_NOME_MATERIAL, parameters);
     }
+    
+	@SuppressWarnings("unchecked")
+	 public List<Material> findListMaterialByMaterial(String material){
+        Query query = getEntityManager().createQuery("From Material mat WHERE ativo = 1 and mat.material like :material order by mat.id ASC");
+        query.setParameter("material", "%"+material+"%");
+        return query.getResultList();
+    }
+    
     
 //    public List<Material> findMateriaisByFilter(Material material){
 //        Map<String, Object> parameters = new HashMap<String, Object>();

@@ -33,6 +33,11 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 		return result;
 	}
 	
+	public List<Material> pesquisarListaMateriaisbyNomeMaterial(String nomeMaterial) {		
+		List<Material> result = materialDAO.findListMaterialByMaterial(nomeMaterial);        
+		return result;
+    }
+	
 	@Override
 	public GenericDAO<Material> getDAO() {
 		return materialDAO;
