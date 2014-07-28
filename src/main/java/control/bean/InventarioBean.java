@@ -67,12 +67,8 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	public String createInventario() {
 		try {
 			getInventarioFacade().create(inventario);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
-			loadInventarios();
-			resetInventario();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
@@ -81,31 +77,22 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public List<Material> completeMaterial(String name) {
 		List<Material> queryResult = new ArrayList<Material>();
-
 		if (materiais == null) {
 			materiais = materialFacade.listAll();
 		}
-
-		//allDogs.removeAll(personWithDogs.getDogs());
-
 		for (Material mat : materiais) {
 			if (mat.getMaterial().toLowerCase().contains(name.toLowerCase())) {
 				queryResult.add(mat);
 			}
 		}
-
 		return queryResult;
 	}
 	
 	public String updateInventario() {
 		try {
 			getInventarioFacade().update(inventario);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
-			loadInventarios();
-			resetInventario();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
@@ -115,23 +102,18 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	public void deleteInventario() {
 		try {
 			getInventarioFacade().delete(inventario);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadInventarios();
-			resetInventario();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}
 	}
 	
-
 	public List<Inventario> getAllInventarios() {
 		if (inventarios == null) {
 			loadInventarios();
 		}
-
 		return inventarios;
 	}
 
@@ -139,13 +121,10 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		inventarios = getInventarioFacade().listAll();
 	}
 
-	public void resetInventario() {
-		inventario = new Inventario();
-	}
-	
 	public void addMaterial() {
-		if (inventario.getMateriais() == null) {
-			inventario.setMateriais(new ArrayList<InventarioMaterial>());
+		if(material == null) {
+			displayErrorMessageToUser("Campo Material Obrigatório");
+			return;
 		}
 		InventarioMaterial invMat = new InventarioMaterial();
 		invMat.setInventario(inventario);

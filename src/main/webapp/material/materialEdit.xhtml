@@ -121,12 +121,28 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
+					Código de Barra:		
+				</div>
+				<div class="col-md-10">
+					<h:inputText id="codigoBarra" value="#{materialBean.material.codigoBarra}" required="false" label="Código de Barra" />
+					<h:message for="codigoBarra" styleClass="msg-error" />	
+				</div>
+			</div>
+			
+			
+			<div class="row form-row">
+				<div class="col-md-2">
 					Estoque Informado
 				</div>
 				<div class="col-md-10">
-					<pe:inputNumber id="estoqueInformado" decimalPlaces="2" value="#{materialBean.material.estoqueInformado}" required="true" label="Estoque Informado" />
+					<h:inputText id="estoqueInformado" value="#{materialBean.material.estoqueInformado}" required="true" label="Estoque Informado" converter="bigDecimalSimplesConverter" styleClass="estoqueInformado" />
 					<h:message for="estoqueInformado" styleClass="msg-error" />	
 				</div>
+				<script type="text/javascript">
+					$(function(){
+						$('.estoqueInformado').forceFloat();
+					});
+				</script>
 			</div>
 			
 			
@@ -135,7 +151,7 @@
 					Estoque Calculado
 				</div>
 				<div class="col-md-10">
-					<h:outputText value="#{materialBean.material.estoqueCalculado}" />
+					<h:outputText value="#{materialBean.material.estoqueCalculado}" converter="bigDecimalSimplesConverter" />
 				</div>
 			</div>
 			

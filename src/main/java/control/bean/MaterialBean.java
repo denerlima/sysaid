@@ -1,6 +1,7 @@
 package control.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +80,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		}
 		if(id == null || id == 0) {
 			material = new Material();
+			material.setEstoqueCalculado(new BigDecimal(0));
 		} else {
 			material = getMaterialFacade().find(id);
 		}

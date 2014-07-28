@@ -181,8 +181,9 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	}
 	
 	public void addMaterial() {
-		if (ordemDeCompra.getMateriais() == null) {
-			ordemDeCompra.setMateriais(new ArrayList<OrdemDeCompraMaterial>());
+		if(material == null) {
+			displayErrorMessageToUser("Campo Material Obrigatório");
+			return;
 		}
 		OrdemDeCompraMaterial ordemMat = new OrdemDeCompraMaterial();
 		ordemMat.setOrdemDeCompra(ordemDeCompra);
@@ -191,7 +192,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		this.material = new Material();
 	}
 	
-	public void removerMaterial(Material material) {
+	public void removerMaterial(OrdemDeCompraMaterial material) {
 		ordemDeCompra.getMateriais().remove(material);
 	}
 

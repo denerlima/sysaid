@@ -7,27 +7,30 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:define name="head">
+		<title>Relatório de Estoque</title>	
+	</ui:define>
+	
 	<ui:define name="body">
 
 		<h:form id="estoqueForm" prependId="false">		
-		<title>Relatório de Estoque</title>
-		<center><h2>Relatório de Estoque</h2></center>
-		<p:spacer height="10" />
+			
+			<center><h2>Relatório de Estoque</h2></center>
+			
+			<p:spacer height="10" />
 		
-		<center>
-		<div class="row">
-			<div class="col-md-2">
-				<h:outputText value="Material:" />	
+			<div class="row">
+				<div class="col-md-2">
+					<h:outputText value="Material:" />	
+				</div>
+				<div class="col-md-10">
+					<h:inputText id="material" size="50" value="#{materialBean.material.material}" />
+					<p:commandButton value="Pesquisar" icon="ui-icon-search"
+								action="#{materialBean.pesquisarListaMateriaisbyNome}" update=":estoqueForm" style="margin-left: 5px;" />
+				</div>			
 			</div>
-			<div class="col-md-5">
-				<h:inputText id="material" size="50" value="#{materialBean.material.material}" />
-			</div>			
-			<div class="col-md-1">
-				<p:commandButton value="Pesquisar" icon="ui-icon-search"
-							action="#{materialBean.pesquisarListaMateriaisbyNome}" update=":estoqueForm" />
-			</div>
-		</div>
-		</center>
+		
 				
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
@@ -52,7 +55,7 @@
 						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
 					<p:column headerText="Estoque">
-						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />							
+						<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
 				</p:dataTable>
 			</p:outputPanel>

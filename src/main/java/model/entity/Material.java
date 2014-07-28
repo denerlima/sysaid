@@ -37,15 +37,15 @@ public class Material extends GenericModelo implements Serializable{
 	private String material;
 	private String descricao;
 	private int ativo = 1;
-	
+	private String codigoBarra;
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_unidadeMedida", referencedColumnName="id")
 	private UnidadeMedida unidadeMedida;
 	
-	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
+	@Column(nullable = false)
 	private BigDecimal estoqueInformado;
 	
-	@Column(length = 20, precision = 20, scale= 2 , nullable = false)
+	@Column(nullable = false)
 	private BigDecimal estoqueCalculado;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -108,9 +108,6 @@ public class Material extends GenericModelo implements Serializable{
 	}
 
 	public BigDecimal getEstoqueInformado() {
-		if (estoqueInformado != null) {
-			return this.estoqueInformado.setScale(2,BigDecimal.ROUND_DOWN) ;
-		}
 		return this.estoqueInformado;
 	}
 
@@ -119,9 +116,6 @@ public class Material extends GenericModelo implements Serializable{
 	}
 
 	public BigDecimal getEstoqueCalculado() {
-		if (estoqueCalculado != null) {
-			return this.estoqueCalculado.setScale(2,BigDecimal.ROUND_DOWN) ;
-		}
 		return this.estoqueCalculado;
 	}
 	
@@ -183,6 +177,14 @@ public class Material extends GenericModelo implements Serializable{
 
 	public void setAtivo(int ativo) {
 		this.ativo = ativo;
+	}
+	
+	public String getCodigoBarra() {
+		return codigoBarra;
+	}
+
+	public void setCodigoBarra(String codigoBarra) {
+		this.codigoBarra = codigoBarra;
 	}
 
 	@Override

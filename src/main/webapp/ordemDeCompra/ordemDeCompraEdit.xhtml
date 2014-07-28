@@ -89,7 +89,7 @@
 		        <br />
 		        <p:outputPanel id="addMaterialPanel">
 		        	
-					<p:autoComplete id="materialAutocomplete" minQueryLength="3" maxResults="10" 
+					<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
 						value="#{ordemDeCompraBean.material}" label="Material" 
 						var="mat" itemLabel="#{mat.material}" itemValue="#{mat}" 
 						completeMethod="#{ordemDeCompraBean.completeMaterial}" dropdown="true" />
@@ -101,7 +101,7 @@
 		 		</p:outputPanel>
 	        				
 				<h2>Materiais do Ordem De Compra</h2>
-				<p:dataTable id="tabelaMaterial" var="_mat" value="#{ordemDeCompraBean.ordemDeCompra.materiais}" emptyMessage="Não existem itens nesta lista.">
+				<p:dataTable id="tabelaMaterial" var="_mat" value="#{ordemDeCompraBean.ordemDeCompra.materiais}" emptyMessage="Não existem itens nesta lista." rowIndexVar="_idx">
 					<p:column headerText="Material">
 						<h:outputText value="#{_mat.material.material}" />							
 					</p:column>
@@ -109,10 +109,15 @@
 						<h:outputText value="#{_mat.material.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
 					<p:column headerText="Quantidade">
-						<h:inputText value="#{_mat.quantidadeAutorizada}" />							
+						<h:inputText value="#{_mat.quantidadeAutorizada}" converter="bigDecimalSimplesConverter" styleClass="quantidade_#{_idx}" />
+						<script type="text/javascript">
+							$(function(){
+								$('.quantidade_#{_idx}').forceFloat();
+							});
+						</script>						
 					</p:column>
 					<p:column headerText="Remover">
-		                <p:commandLink value="Remove" action="#{ordemDeCompraBean.removerMaterial(mat)}"
+		                <p:commandLink value="Remove" action="#{ordemDeCompraBean.removerMaterial(_mat)}"
 		                	update=":newOrdemDeCompraForm:tabView:tabelaMaterial" process="@this" />
 					</p:column>
 				</p:dataTable>
