@@ -73,37 +73,34 @@
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 					<p:spacer width="100" height="30" />
-					<p:dataTable id="dtResultado" var="oc"
-						value="#{ordemDeCompraBean.ordensDeCompra}" rows="10" paginator="true"
+					<p:dataTable id="dtResultado" var="_ocm"
+						value="#{ordemDeCompraBean.ordensDeComprasMateriais}" rows="10" paginator="true"
 						paginatorAlwaysVisible="false" paginatorPosition="bottom"
 						currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista.">
 
 						<p:column headerText="Nº de Ordem de Compra">
-							<h:outputText value="#{oc.numeroOC}" />
+							<h:outputText value="#{_ocm.ordemDeCompra.numeroOC}" />
 						</p:column>
 						<p:column headerText="Data Autorização">
-							<h:outputText value="#{oc.dataAutorizacao}" />
+							<h:outputText value="#{_ocm.ordemDeCompra.dataAutorizacao}">
+								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+							</h:outputText>
 						</p:column>
 						<p:column headerText="Autorizador">
-							<h:outputText value="#{oc.autorizador.nomeCompleto}" />
+							<h:outputText value="#{_ocm.ordemDeCompra.autorizador.nomeCompleto}" />
 						</p:column>
 						<p:column headerText="Material">
-							<h:outputText value="#{oc.materiais.get(0).material.material}" />
+							<h:outputText value="#{_ocm.material.material}" />
 						</p:column>
 						<p:column headerText="Tipo de Material">
-							<h:outputText value="#{oc.materiais.get(0).material.tipoMaterial.descricao}" />
+							<h:outputText value="#{_ocm.material.tipoMaterial.descricao}" />
 						</p:column>
 					</p:dataTable>
 				</p:outputPanel>
 
-				<p:outputPanel id="export" layout="block" rendered="#{not empty ordemDeCompraBean.ordensDeCompra}">
-			 		Exportar Relatório : 
-			 		
-		   <!--  <h:commandLink>
-		         	<p:graphicImage name="/img/csv.png" width="24"/>
-		            <p:dataExporter type="csv" target="dtResultado" fileName="relatorioEstoque" />
-		         </h:commandLink>  -->
+				<p:outputPanel id="export" layout="block" rendered="#{not empty ordemDeCompraBean.ordensDeComprasMateriais}">
+			 		Exportar Relatório:  
 					<h:commandLink>
 						<p:graphicImage name="/img/excel.png" width="24" />
 						<p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />

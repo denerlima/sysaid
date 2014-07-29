@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import model.entity.Material;
 import model.entity.OrdemDeCompra;
+import model.entity.OrdemDeCompraMaterial;
 import util.DataUtil;
 
 @Named
@@ -27,7 +28,7 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<OrdemDeCompra> listUnidadesMedidasAtivas(Long numeroOc) {
+	public List<OrdemDeCompra> listOrdensCompras(Long numeroOc) {
 		String numOcStr = "";
 		if(numeroOc != null) {
 			numOcStr = numeroOc.toString();
@@ -37,62 +38,48 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
         return query.getResultList();
     }
 
-	public List<OrdemDeCompra> pesquisarListaOCbyFilter(OrdemDeCompra oc , Material mat) {	
-		List<OrdemDeCompra> lista = new ArrayList<OrdemDeCompra>();
+	@SuppressWarnings("unchecked")
+	public List<OrdemDeCompraMaterial> listMateriaisOrdensCompras(OrdemDeCompra oc, Material mat) {	
+		List<OrdemDeCompraMaterial> lista = new ArrayList<OrdemDeCompraMaterial>();
 		try {
 			StringBuffer sql = new StringBuffer();
-			sql.append("FROM OrdemDeCompra oc WHERE ativo = 1" );	 
-		 if(oc.getDataEmissao() != null ) {
-			 sql.append(" AND oc.dataEmissao >= to_date('"+ DataUtil.formataData(oc.getDataEmissao())+ "','dd/MM/yy')");					 
-		 	}				
-		 if(oc.getDataAutorizacao() != null ) {
-			 sql.append(" AND oc.dataEmissao <= to_date('"+ DataUtil.formataData(oc.getDataAutorizacao())+ "','dd/MM/yy')");
+			sql.append("Select ocm FROM OrdemDeCompraMaterial ocm left join ocm.ordemDeCompra oc WHERE oc.ativo = 1");
+			if (oc.getDataEmissao() != null) {
+				sql.append(" AND oc.dataEmissao >= to_date('"+ DataUtil.formataData(oc.getDataEmissao())+ "','dd/MM/yy')");
 			}
-		if(mat.getMaterial() != null) {
-			sql.append(" AND :material IN oc.materiais ");
-			//sql.append(" AND UPPER(mat.material) like UPPER(:mat) ");
-		}
-		if(mat.getTipoMaterial() != null) {
-			//sql.append(" AND UPPER(mat.tipoMaterial) like UPPER(:mat) ");
-		}
-		if(oc.getAutorizador() != null) {
-			sql.append(" AND oc.autorizador = :autorizador");
-		}
-		sql.append(" ORDER BY oc.id");		
-		
-		Query query = getEntityManager().createQuery(sql.toString());
+			if (oc.getDataAutorizacao() != null) {
+				sql.append(" AND oc.dataEmissao <= to_date('"+ DataUtil.formataData(oc.getDataAutorizacao())+ "','dd/MM/yy')");
+			}
+			if (mat.getMaterial() != null) {
+				sql.append(" AND ocm.material.id = :idMat");
+			}
+			if (mat.getTipoMaterial() != null) {
+				sql.append(" AND ocm.material.tipoMaterial.id = :idTipoMat");
+			}
+			if (oc.getAutorizador() != null) {
+				sql.append(" AND oc.autorizador.id = :autorizador");
+			}
+			
+			sql.append(" ORDER BY oc.id");
 
-		if(mat.getMaterial() != null ) {
-			query.setParameter("material", mat);
-		}
-		if(oc.getAutorizador() != null) {
-			query.setParameter("autorizador", oc.getAutorizador());
-		}
-		
-//		List<Object[]> list = query.getResultList();
-//		
-//		if (list != null) {
-//			OrdemDeCompra ordemCompra = null;
-//			for (Object[] objeto : list) {
-//				ordemCompra = new OrdemDeCompra();
-//				ordemCompra.setTipoSolicitacao((TipoSolicitacao) objeto[0]);
-//				solicitacao.setId(new Long(objeto[1].toString()));
-//				solicitacao.setData((Date) objeto[2]);
-//				solicitacao.getAplicacoes().add((SolicitacaoAplicacao) objeto[3]);
-//				solicitacao.setSolicitante(objeto[4].toString());
-//				solicitacao.setNomeSolicitante(objeto[5].toString());
-//				solicitacao.setKit((Kit)objeto[6]);
-//				lista.add(solicitacao);
-//			}
-//		}
-		
-		lista = query.getResultList(); 
-		
+			Query query = getEntityManager().createQuery(sql.toString());
+
+			
+			if (mat.getMaterial() != null) {
+				query.setParameter("idMat", mat.getId());
+			}
+			if (mat.getTipoMaterial() != null) {
+				query.setParameter("idTipoMat", mat.getTipoMaterial().getId());
+			}
+			if (oc.getAutorizador() != null) {
+				query.setParameter("autorizador", oc.getAutorizador().getId());
+			}
+
+			lista = query.getResultList(); 
 		
 		} catch (Exception e) {
 			e.printStackTrace();		
 		}
-		
 		return lista;
 		
 	}

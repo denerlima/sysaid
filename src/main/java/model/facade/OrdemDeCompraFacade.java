@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import model.entity.Material;
 import model.entity.OrdemDeCompra;
+import model.entity.OrdemDeCompraMaterial;
 import persistence.dao.GenericDAO;
 import persistence.dao.OrdemDeCompraDAO;
 
@@ -22,12 +23,12 @@ public class OrdemDeCompraFacade extends GenericFacade<OrdemDeCompra> implements
 		return ordemDeCompraDAO;
 	}
 
-	public List<OrdemDeCompra> listUnidadesMedidasAtivas(Long numeroOc) {
-		return ordemDeCompraDAO.listUnidadesMedidasAtivas(numeroOc);
+	public List<OrdemDeCompra> listOrdensCompras(Long numeroOc) {
+		return ordemDeCompraDAO.listOrdensCompras(numeroOc);
 	}
 
-	public List<OrdemDeCompra> pesquisarListaOCbyFilter(OrdemDeCompra ordemDeCompra , Material material) {
-		List<OrdemDeCompra> result = ordemDeCompraDAO.pesquisarListaOCbyFilter(ordemDeCompra , material);        
+	public List<OrdemDeCompraMaterial> listMateriaisOrdensCompras(OrdemDeCompra ordemDeCompra, Material material) {
+		List<OrdemDeCompraMaterial> result = ordemDeCompraDAO.listMateriaisOrdensCompras(ordemDeCompra, material);        
 		return result;		
 	}
 	

@@ -122,7 +122,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	}
 	
 	public void buscarOrdensCompras() {
-		ordensDeCompras = ordemDeCompraFacade.listUnidadesMedidasAtivas(ordemDeCompra.getNumeroOC());
+		ordensDeCompras = ordemDeCompraFacade.listOrdensCompras(ordemDeCompra.getNumeroOC());
 	}
 	
 	public void adicionarMateriais() {

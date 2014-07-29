@@ -26,6 +26,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 
 	private OrdemDeCompra ordemDeCompra;	
 	private List<OrdemDeCompra> ordensDeCompra;
+	private List<OrdemDeCompraMaterial> ordensDeComprasMateriais;
 	
 	@Inject
 	private OrdemDeCompraFacade ordemDeCompraFacade;
@@ -92,12 +93,8 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	public String createOrdemDeCompra() {
 		try {
 			getOrdemDeCompraFacade().create(ordemDeCompra);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
-			loadOrdensDeCompra();
-			resetOrdemDeCompra();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
@@ -107,12 +104,8 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	public String updateOrdemDeCompra() {
 		try {
 			getOrdemDeCompraFacade().update(ordemDeCompra);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
-			loadOrdensDeCompra();
-			resetOrdemDeCompra();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
@@ -122,12 +115,9 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	public void deleteOrdemDeCompra() {
 		try {
 			getOrdemDeCompraFacade().delete(ordemDeCompra);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensDeCompra();
-			resetOrdemDeCompra();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}
@@ -137,7 +127,6 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		if (ordensDeCompra == null) {
 			loadOrdensDeCompra();
 		}
-
 		return ordensDeCompra;
 	}
 	
@@ -154,15 +143,14 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		return queryResult;
 	}
 	
-	public List<OrdemDeCompra> pesquisarOrdemCompraByFilter() {
+	public List<OrdemDeCompraMaterial> pesquisarOrdemCompraByFilter() {
 		try {			
-			ordensDeCompra = getOrdemDeCompraFacade().pesquisarListaOCbyFilter(ordemDeCompra , material);			
+			ordensDeComprasMateriais = getOrdemDeCompraFacade().listMateriaisOrdensCompras(ordemDeCompra , material);			
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel achar nennhuma Ordem de Compra. ERRO");
 			e.printStackTrace();
 		}
-		return ordensDeCompra;
+		return ordensDeComprasMateriais;
 	}
 	
 	private void loadOrdensDeCompra() {
@@ -214,7 +202,15 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	public void setMateriais(List<Material> materiais) {
 		this.materiais = materiais;
 	}
-		
+	
+	public List<OrdemDeCompraMaterial> getOrdensDeComprasMateriais() {
+		return ordensDeComprasMateriais;
+	}
+
+	public void setOrdensDeComprasMateriais(List<OrdemDeCompraMaterial> ordensDeComprasMateriais) {
+		this.ordensDeComprasMateriais = ordensDeComprasMateriais;
+	}
+
 	public boolean isManaged() {
 		return ordemDeCompra != null && ordemDeCompra.getId() != null;
 	}

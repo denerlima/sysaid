@@ -11,16 +11,37 @@ public abstract class GenericFacade<T> implements Serializable {
 
 	public abstract GenericDAO<T> getDAO();
 	
-	public void create(T entity) {
-		getDAO().beginTransaction();
-		getDAO().save(entity);
-		getDAO().commit();
+	public void create(T entity) throws Exception {
+		try {
+			getDAO().beginTransaction();
+			getDAO().save(entity);
+			getDAO().commit();
+		} catch (Exception e) {
+			getDAO().rollback();
+			throw e;
+		}
 	}
 
-	public void update(T entity) {
-		getDAO().beginTransaction();
-		getDAO().update(entity);
-		getDAO().commit();
+	public void update(T entity) throws Exception {
+		try {
+			getDAO().beginTransaction();
+			getDAO().update(entity);
+			getDAO().commit();
+		} catch (Exception e) {
+			getDAO().rollback();
+			throw e;
+		}
+	}
+
+	public void delete(T entity) throws Exception {
+		try {
+			getDAO().beginTransaction();
+			getDAO().delete(entity);
+			getDAO().commit();
+		} catch (Exception e) {
+			getDAO().rollback();
+			throw e;
+		}
 	}
 
 	public T find(int id) {
@@ -31,12 +52,6 @@ public abstract class GenericFacade<T> implements Serializable {
 	public List<T> listAll() {
 		List<T> result = getDAO().findAll();
 		return result;
-	}
-
-	public void delete(T entity) {
-		getDAO().beginTransaction();
-		getDAO().delete(entity);
-		getDAO().commit();
 	}
 	
 }
