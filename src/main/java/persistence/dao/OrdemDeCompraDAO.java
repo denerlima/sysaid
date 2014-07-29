@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.inject.Named;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import model.entity.Material;
 import model.entity.OrdemDeCompra;
@@ -83,4 +86,10 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
 		return lista;
 		
 	}
+	
+	public Predicate clausulaWhere(CriteriaBuilder cb, Root<OrdemDeCompra> rootCriteria) {
+		return cb.notEqual(rootCriteria.get("ativo"), 0);
+	}
+	
+	
 }

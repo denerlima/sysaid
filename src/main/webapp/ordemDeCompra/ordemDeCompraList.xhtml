@@ -5,7 +5,10 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" template="/template.xhtml">
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property"
+	template="/template.xhtml">
+	
 	<ui:define name="body">
 
 		<h:form id="ordemDeCompraForm" prependId="false">		
@@ -39,16 +42,25 @@
 										
 					<p:column headerText="Ações" style="width:280px">
 						
-						<p:commandButton value="Editar" action="#{ordemDeCompraBean.edit(oc.id)}"
-						 	icon="ui-icon-pencil" style="margin-right:5px" />
-																
-						<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();"  style="margin-right:5px">
-							<f:setPropertyActionListener target="#{ordemDeCompraBean.ordemDeCompra}" value="#{oc}" />
-						</p:commandButton>
+						<ui:fragment rendered="#{oc.ativo == 1}">
 						
-						<p:commandButton value="Cancelar"  icon="ui-icon-cancel">
-							<f:setPropertyActionListener target="#{ordemDeCompraBean.ordemDeCompra}" value="#{oc}" />
-						</p:commandButton>
+							<p:commandButton value="Editar" action="#{ordemDeCompraBean.edit(oc.id)}"
+							 	icon="ui-icon-pencil" style="margin-right:5px" />
+																	
+							<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();"  style="margin-right:5px">
+								<f:setPropertyActionListener target="#{ordemDeCompraBean.ordemDeCompra}" value="#{oc}" />
+							</p:commandButton>
+							
+							<p:commandButton value="Cancelar" icon="ui-icon-cancel" 
+								update=":ordemCompraCancelamentoModal:ordemCompraCancelamentoForm"
+								oncomplete="$('#ordemCompraCancelamentoModal').modal('show');">
+								<f:setPropertyActionListener target="#{ordemDeCompraBean.ordemDeCompra}" value="#{oc}" />
+							</p:commandButton>
+						
+						</ui:fragment>
+						<ui:fragment rendered="#{oc.ativo == 2}">
+							<b style="color: red;">Cancelada</b>
+						</ui:fragment>
 																		
 					</p:column>
 					
@@ -57,6 +69,86 @@
 			</center>
 						
 		</h:form>
+		
+		
+		<cp:bootstrapModal id="ordemCompraCancelamentoModal" title="Justificativa de cancelamento de OC" modalId="ordemCompraCancelamentoModal">      
+			<h:form id="ordemCompraCancelamentoForm">
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Nº OC:
+					</div>
+					<div class="col-md-10">
+						#{ordemDeCompraBean.ordemDeCompra.numeroOC}
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Data Autorização:
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.dataAutorizacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Data Emissão:
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.dataEmissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Autorizador:
+					</div>
+					<div class="col-md-10">
+						#{ordemDeCompraBean.ordemDeCompra.autorizador.nomeCompleto}
+					</div>
+				</div>
+
+				<div class="row form-row">
+					<div class="col-md-2">
+						Justificativa:
+					</div>
+					<div class="col-md-10">
+						<h:inputTextarea id="justificativa" value="#{ordemDeCompraBean.ordemDeCompra.justificativa}" required="true" label="Justificativa"
+							rows="3" cols="70"> 
+							<f:validateLength minimum="10" />
+						</h:inputTextarea>
+						<h:message for="justificativa" styleClass="msg-error" />
+					</div>
+				</div>
+					
+				<div class="buttons">
+								
+					<p:commandButton action="#{ordemDeCompraBean.cancelarOrdemDeCompra}" value="OK"
+						update=":ordemCompraCancelamentoModal:ordemCompraCancelamentoForm :ordemDeCompraForm"
+						oncomplete="oncompleteCancelamentoOrdemCompra(xhr, status, args)" />
+						
+					
+					<p:commandButton value="Cancelar" type="button" onclick="$('#ordemCompraCancelamentoModal').modal('hide');" />
+				
+				</div>
+				
+			</h:form>
+			
+			<script type="text/javascript">
+			   function oncompleteCancelamentoOrdemCompra(xhr, status, args) {
+			      if (args.success) {
+			    	  $('#ordemCompraCancelamentoModal').modal('hide');;
+			      }
+			   }
+			</script>
+			
+		</cp:bootstrapModal>
 				
 	</ui:define>
 </ui:composition>

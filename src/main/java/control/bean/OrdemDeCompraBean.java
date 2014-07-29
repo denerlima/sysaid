@@ -18,6 +18,7 @@ import model.facade.OrdemDeCompraFacade;
 import model.facade.UsuarioFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -123,6 +124,19 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		}
 	}
 
+	public void cancelarOrdemDeCompra() {
+		try {
+			ordemDeCompra.setAtivo(2);
+			getOrdemDeCompraFacade().update(ordemDeCompra);
+			displayInfoMessageToUser("Cancelado com  Sucesso");
+			loadOrdensDeCompra();
+			RequestContext.getCurrentInstance().addCallbackParam("success", true);
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, não foi possivel cancelar. ERRO");
+			e.printStackTrace();
+		}
+	}
+	
 	public List<OrdemDeCompra> getAllOrdensDeCompra() {
 		if (ordensDeCompra == null) {
 			loadOrdensDeCompra();

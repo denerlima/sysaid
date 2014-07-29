@@ -139,7 +139,7 @@
      		update=":ordemDeCompraForm" 
      		rendered="#{ordemDeCompraBean.managed}" />
      
-     	<p:commandButton value="Cancelar" action="ordemDeCompraList.xhtml?faces-redirect=true" ajax="false" />
+     	<p:commandButton value="Cancelar" action="ordemDeCompraList.xhtml?faces-redirect=true" process="@this" />
      			
 	</h:form>
 
