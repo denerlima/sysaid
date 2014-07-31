@@ -5,11 +5,18 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui" template="/template.xhtml">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property" 
+	template="/template.xhtml">
+	
+	<ui:define name="head">
+		<title>Lista de Nota Fiscal</title>	
+	</ui:define>
+	
 	<ui:define name="body">
 
 		<h:form id="notaFiscalForm" prependId="false">		
-		<title>Lista de Nota Fiscal</title>
+		
 		<center><h2>Lista de Nota Fiscal</h2></center>
 		<p:spacer height="10" />
 			<p:commandButton value="Nova Nota Fiscal" icon="ui-icon-plus" action="notaFiscalEdit.xhtml?faces-redirect=true" ajax="false" />	
@@ -44,15 +51,23 @@
 					</p:column>			
 								
 					<p:column headerText="Ações" style="width:280px">											
-						<p:commandButton value="Editar" icon="ui-icon-pencil" action="#{notaFiscalBean.edit(nf.id)}" style="margin-right:5px" />
-								
-						<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();"  style="margin-right:5px">
-							<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
-						</p:commandButton>
 						
-						<p:commandButton value="Cancelar"  icon="ui-icon-cancel">
-							<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
-						</p:commandButton>												
+						<ui:fragment rendered="#{nf.ativo == 1}">
+							<p:commandButton value="Editar" icon="ui-icon-pencil" action="#{notaFiscalBean.edit(nf.id)}" style="margin-right:5px" />
+									
+							<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();"  style="margin-right:5px">
+								<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
+							</p:commandButton>
+							
+							<p:commandButton value="Cancelar" icon="ui-icon-cancel" 
+									update=":notaFiscalCancelamentoModal:notaFiscalCancelamentoForm"
+									oncomplete="$('#notaFiscalCancelamentoModal').modal('show');">
+								<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
+							</p:commandButton>
+						</ui:fragment>
+						<ui:fragment rendered="#{nf.ativo == 2}">
+							<b style="color: red;">Cancelada</b>
+						</ui:fragment>								
 					</p:column>
 					
 				</p:dataTable>
@@ -60,6 +75,65 @@
 			</center>
 						
 		</h:form>
+		
+		<cp:bootstrapModal id="notaFiscalCancelamentoModal" title="Justificativa de cancelamento de OC" modalId="notaFiscalCancelamentoModal">      
+			<h:form id="notaFiscalCancelamentoForm">
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Nº Nota Fiscal:
+					</div>
+					<div class="col-md-10">
+						#{notaFiscalBean.notaFiscal.nrNotaFiscal}
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Data Emissão:
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{notaFiscalBean.notaFiscal.dataEmissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
+					</div>
+				</div>
+
+				<div class="row form-row">
+					<div class="col-md-2">
+						Justificativa:
+					</div>
+					<div class="col-md-10">
+						<h:inputTextarea id="justificativa" value="#{notaFiscalBean.notaFiscal.justificativa}" required="true" label="Justificativa"
+							rows="3" cols="70"> 
+							<f:validateLength minimum="10" />
+						</h:inputTextarea>
+						<h:message for="justificativa" styleClass="msg-error" />
+					</div>
+				</div>
+					
+				<div class="buttons">
+								
+					<p:commandButton action="#{notaFiscalBean.cancelarNotaFiscal}" value="OK"
+						update=":notaFiscalCancelamentoModal:notaFiscalCancelamentoForm :notaFiscalForm"
+						oncomplete="oncompleteCancelamentoNotaFiscal(xhr, status, args)" />
+						
+					
+					<p:commandButton value="Cancelar" type="button" onclick="$('#notaFiscalCancelamentoModal').modal('hide');" />
+				
+				</div>
+				
+			</h:form>
+			
+			<script type="text/javascript">
+			   function oncompleteCancelamentoNotaFiscal(xhr, status, args) {
+			      if (args.success) {
+			    	  $('#notaFiscalCancelamentoModal').modal('hide');;
+			      }
+			   }
+			</script>
+			
+		</cp:bootstrapModal>
 				
 	</ui:define>
 </ui:composition>

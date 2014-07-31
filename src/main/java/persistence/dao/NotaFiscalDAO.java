@@ -1,6 +1,9 @@
 package persistence.dao;
 
 import javax.inject.Named;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import model.entity.NotaFiscal;
 
@@ -18,4 +21,8 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 		super.update(notaFiscal);
 	}
 
+	public Predicate clausulaWhere(CriteriaBuilder cb, Root<NotaFiscal> rootCriteria) {
+		return cb.notEqual(rootCriteria.get("ativo"), 0);
+	}
+	
 }

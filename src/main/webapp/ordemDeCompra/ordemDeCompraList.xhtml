@@ -9,10 +9,14 @@
 	xmlns:cp="http://java.sun.com/jsf/composite/components/property"
 	template="/template.xhtml">
 	
+	<ui:define name="head">
+		<title>Lista de Ordem de Compra</title>	
+	</ui:define>
+	
 	<ui:define name="body">
 
 		<h:form id="ordemDeCompraForm" prependId="false">		
-		<title>Lista de Ordem de Compra</title>
+		
 		<center><h2>Lista de Ordem de Compra</h2></center>
 		<p:spacer height="10" />
 			<p:commandButton value="Nova Ordem de Compra" icon="ui-icon-plus" action="#{ordemDeCompraBean.novo}" ajax="false" />	

@@ -116,6 +116,19 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		}
 	}
 
+	public void cancelarNotaFiscal() {
+		try {
+			notaFiscal.setAtivo(2);
+			getNotaFiscalFacade().update(notaFiscal);
+			displayInfoMessageToUser("Cancelado com  Sucesso");
+			loadNotasFiscais();
+			RequestContext.getCurrentInstance().addCallbackParam("success", true);
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, não foi possivel cancelar. ERRO");
+			e.printStackTrace();
+		}
+	}
+	
 	public void iniciarBuscaOrdensCompra() {
 		ordemDeCompra = new OrdemDeCompra();
 		ordensDeCompras = new ArrayList<OrdemDeCompra>();

@@ -89,13 +89,9 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	public String createMaterial() {
 		try {			
 			getMaterialFacade().create(material);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
-			loadMateriais();
-			resetMaterial();
 			return "/material/materialList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
@@ -105,58 +101,18 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	public String updateMaterial() {
 		try {
 			getMaterialFacade().update(material);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
-			loadMateriais();
-			resetMaterial();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
 		return "/material/materialList.xhtml?faces-redirect=true";
 	}
 	
-	
-	public List<Material> complete(String name) {
-		List<Material> queryResult = new ArrayList<Material>();
-
-		if (materiais == null) {
-			materialFacade = new MaterialFacade();
-			materiais = materialFacade.listAll();
-		}
-
-		for (Material mat : materiais) {
-			if (mat.getMaterial().toLowerCase().contains(name.toLowerCase())) {
-				queryResult.add(mat);
-			}
-		}
-
-		return queryResult;
-	}
-	
-	
-	
-	public Material pesquisarMaterial() {
-		try {			
-			material = getMaterialFacade().findMaterialbyNomeMaterial(material.getMaterial());
-			closeDialog();
-			//displayInfoMessageToUser("Alterado com  Sucesso");
-			//loadMateriais();
-			//resetMaterial();			
-		} catch (Exception e) {
-			keepDialogOpen();
-			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
-			e.printStackTrace();
-		}
-		return material;
-	}
-	
 	public List<Material> pesquisarListaMateriaisbyNome() {
 		try {			
 			materiais = getMaterialFacade().pesquisarListaMateriaisbyNomeMaterial(material.getMaterial());			
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel achar nennhum material. ERRO");
 			e.printStackTrace();
 		}
@@ -166,12 +122,10 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	public void deleteMaterial() {
 		try {
 			getMaterialFacade().delete(material);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadMateriais();
 			resetMaterial();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}

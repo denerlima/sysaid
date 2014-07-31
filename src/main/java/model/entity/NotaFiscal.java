@@ -35,6 +35,7 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	@Column
 	private Integer id;	
 	private int ativo = 1;
+	private String justificativa;
 	private Long nrNotaFiscal;
 	private Date dataEmissao;
 	private Date dataEntrega;
@@ -131,6 +132,14 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 
 	public void setAtivo(int ativo) {
 		this.ativo = ativo;
+	}
+
+	public String getJustificativa() {
+		return justificativa;
+	}
+
+	public void setJustificativa(String justificativa) {
+		this.justificativa = justificativa;
 	}
 
 }

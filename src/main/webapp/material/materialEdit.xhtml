@@ -17,11 +17,11 @@
 
 	<ui:define name="body">
 		
-		<h:form id="materialDialogForm" style="padding: 8px;">
+		<h:form id="materialEditForm" style="padding: 8px;">
 		    
-		    <title>Cadastro de Nota Fiscal</title>
+		    <title>Cadastro de Material</title>
 		
-			<center><h2>Cadastro de Nota Fiscal</h2></center>
+			<center><h2>Cadastro de Material</h2></center>
 		
 			<p:spacer height="10" />
 		    
@@ -160,12 +160,12 @@
 								
 				<p:commandButton value="Salvar"
 					action="#{materialBean.createMaterial}"
-					update=":materialDialogForm"
+					update=":materialEditForm"
 					rendered="#{not materialBean.managed}" />
 					
 				<p:commandButton value="Alterar"
 					action="#{materialBean.updateMaterial}"
-					update=":materialDialogForm"
+					update=":materialEditForm"
 					rendered="#{materialBean.managed}" />		
 				
 				<p:commandButton value="Cancelar" action="/material/materialList.xhtml?faces-redirect=true" process="@this" />
