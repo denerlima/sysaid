@@ -42,12 +42,10 @@ public class MarcaBean extends AbstractBean implements Serializable {
 	public void createMarca() {
 		try {
 			getMarcaFacade().create(marca);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadMarcas();
 			resetMarca();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
@@ -61,12 +59,10 @@ public class MarcaBean extends AbstractBean implements Serializable {
 	public void updateMarca() {
 		try {
 			getMarcaFacade().update(marca);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadMarcas();
 			resetMarca();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
@@ -76,12 +72,10 @@ public class MarcaBean extends AbstractBean implements Serializable {
 	public void deleteMarca() {
 		try {
 			getMarcaFacade().delete(marca);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadMarcas();
 			resetMarca();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}

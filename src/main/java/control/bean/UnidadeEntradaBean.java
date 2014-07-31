@@ -43,12 +43,10 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 	public void createUnidadeEntrada() {
 		try {
 			getUnidadeEntradaFacade().create(unidadeEntrada);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadUnidadesMedida();
 			resetUnidadeEntrada();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
@@ -58,12 +56,10 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 	public void updateUnidadeEntrada() {
 		try {
 			getUnidadeEntradaFacade().update(unidadeEntrada);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadUnidadesMedida();
 			resetUnidadeEntrada();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
@@ -73,12 +69,10 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 	public void deleteUnidadeEntrada() {
 		try {
 			getUnidadeEntradaFacade().delete(unidadeEntrada);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadUnidadesMedida();
 			resetUnidadeEntrada();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}

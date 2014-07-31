@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property" 
+	template="/template.xhtml">
+	
+	<ui:define name="head">
+		<title>Lista de Ordem de Serviço</title>	
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<center><h2>Lista de Ordem de Serviço</h2></center>
+		
+		<h:form id="ordemServicoEditForm" prependId="false">
+			Id ordem de Serviço:
+			<h:inputText id="idOS" value="#{ordemServicoBean.ordemServico.id}" required="true" label="Id ordem de Serviço" />
+			<p:commandButton value="Add Nota Fiscal" icon="ui-icon-plus" 
+				action="#{ordemServicoBean.createOrdemServico}"
+				update=":ordemServicoEditForm :ordemServicoForm" style="margin-left: 2px;" />
+			<h:message for="idOS" styleClass="msg-error" style="display: block;" />				
+		</h:form>
+
+		<h:form id="ordemServicoForm">		
+			<p:spacer height="10" />
+			<center>
+			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
+				<br />
+				<p:dataTable var="os" value="#{ordemServicoBean.allOrdensServicos}" emptyMessage="Não existem itens nesta lista.">
+					<p:column headerText="Id">
+						<h:outputText value="#{os.id}" />							
+					</p:column>
+											
+					<p:column headerText="Ações" style="width:280px">											
+						
+						<a href="osMaterialList.xhtml?os=#{os.id}">Materiais</a>
+														
+					</p:column>
+					
+				</p:dataTable>
+			</p:outputPanel>
+			</center>
+						
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

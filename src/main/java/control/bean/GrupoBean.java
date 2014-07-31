@@ -43,12 +43,10 @@ public class GrupoBean extends AbstractBean implements Serializable {
 	public void createGrupo() {
 		try {
 			getGrupoFacade().create(grupo);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadGrupos();
 			resetGrupo();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
@@ -62,12 +60,10 @@ public class GrupoBean extends AbstractBean implements Serializable {
 	public void updateGrupo() {
 		try {
 			getGrupoFacade().update(grupo);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadGrupos();
 			resetGrupo();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
@@ -77,12 +73,10 @@ public class GrupoBean extends AbstractBean implements Serializable {
 	public void deleteGrupo() {
 		try {
 			getGrupoFacade().delete(grupo);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadGrupos();
 			resetGrupo();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}

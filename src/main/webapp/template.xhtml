@@ -10,7 +10,7 @@
 
 	<link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-delta" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
-	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css?v=0.5" />
 	
 	<script type="text/javascript">
 		 
@@ -26,17 +26,17 @@
 </h:head>
 <h:body>
 
-	<h3><a href="${request.contextPath}">SysAid Java versão 0.4</a></h3>
+	<h3><a href="${request.contextPath}">SysAid Java versão 0.5</a></h3>
 
 	<p:menubar>
 		<p:submenu label="Cadastros">
 			<p:menuitem value="Unidade de Medida" url="/unidadeMedida/unidadeMedidaList.xhtml" />
-			<p:menuitem value="Material" url="/material/materialList.xhtml" />
-			<p:menuitem value="Mão de Obra" url="/maoDeObra/maoDeObraList.xhtml" />
 			<p:menuitem value="Tipo de Material" url="/tipoMaterial/tipoMaterialList.xhtml" />
 			<p:menuitem value="Aplicação" url="/aplicacao/aplicacaoList.xhtml" />
 			<p:menuitem value="Marca" url="/marca/marcaList.xhtml" />
 			<p:menuitem value="Grupo" url="/grupo/grupoList.xhtml" />
+			<p:menuitem value="Mão de Obra" url="/maoDeObra/maoDeObraList.xhtml" />
+			<p:menuitem value="Material" url="/material/materialList.xhtml" />
 		</p:submenu>
 
 		<p:submenu label="Movimentação">

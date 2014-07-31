@@ -47,12 +47,10 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 	public void createMaoDeObra() {
 		try {
 			getMaoDeObraFacade().create(maoDeObra);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadMaosDeObra();
 			resetMaoDeObra();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
@@ -66,12 +64,10 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 	public void updateMaoDeObra() {
 		try {
 			getMaoDeObraFacade().update(maoDeObra);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadMaosDeObra();
 			resetMaoDeObra();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
@@ -81,12 +77,10 @@ public class MaoDeObraBean extends AbstractBean implements Serializable {
 	public void deleteMaoDeObra() {
 		try {
 			getMaoDeObraFacade().delete(maoDeObra);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadMaosDeObra();
 			resetMaoDeObra();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}

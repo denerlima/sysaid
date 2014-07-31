@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property" 
+	template="/template.xhtml">
+	
+	<f:metadata>
+		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
+		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
+	</f:metadata>
+	
+	<ui:define name="head">
+		<title>Cadastro de Material da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</title>	
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<center><h2>Cadastro de Material da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
+		
+		<h:form id="osMaterialEditForm">		
+			<p:spacer height="10" />
+			
+			<p:outputPanel id="addMaterialPanel">
+		        	
+				<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
+					value="#{ordemServicoBean.material}" label="Material" 
+					var="invMat" itemLabel="#{invMat.material}" itemValue="#{invMat}" 
+					completeMethod="#{ordemServicoBean.completeMaterial}" dropdown="true" />
+			
+		        <p:commandButton value="Adicionar Material" icon="ui-icon-plus" action="#{ordemServicoBean.addMaterial}" 
+		        	update=":osMaterialEditForm" 
+		        	process="@this :osMaterialEditForm:materialAutocomplete" style="margin-left: 35px;" />
+			  	
+	 		</p:outputPanel>
+			
+			<center>
+				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
+					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" emptyMessage="Não existem itens nesta lista.">
+						<p:column headerText="Id">
+							<h:outputText value="#{_mat.id}" />							
+						</p:column>
+						<p:column headerText="Material">
+							<h:outputText value="#{_mat.material.material}" />							
+						</p:column>			
+						<p:column headerText="Ações" style="width:280px">											
+							
+															
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+			</center>
+					
+			<div class="buttons">
+					
+				<p:commandButton value="OK"
+					action="#{ordemServicoBean.updateMateriais}"
+					update=":osMaterialEditForm" />		
+				
+				<p:commandButton value="Cancelar" action="#{ordemServicoBean.redirectMaterialList}" process="@this" />
+			
+			</div>		
+						
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

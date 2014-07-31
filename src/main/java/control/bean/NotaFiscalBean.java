@@ -106,7 +106,6 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	public void deleteNotaFiscal() {
 		try {
 			getNotaFiscalFacade().delete(notaFiscal);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadNotasFiscais();
 			resetNotaFiscal();

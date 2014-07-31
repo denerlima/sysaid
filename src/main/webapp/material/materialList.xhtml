@@ -7,57 +7,59 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:define name="head">
+		<title>Lista de Material</title>	
+	</ui:define>
+	
 	<ui:define name="body">
 
 		<h:form id="materialForm" prependId="false">		
-		<title>Lista de Material</title>
-		<center><h2>Lista de Material</h2></center>
-		<p:spacer height="10" />
+
+			<center><h2>Lista de Material</h2></center>
+			<br />
 			<p:commandButton value="Cadastrar Material" icon="ui-icon-plus"
 				action="#{materialBean.novo}" />
-				
+					
 			<center>
-			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
-			<p:spacer width="100" height="30" />
-				<p:dataTable var="mat" value="#{materialBean.allMateriais}" emptyMessage="Não existem itens nesta lista.">
-					<p:column headerText="Material">
-						<h:outputText value="#{mat.material}" />							
-					</p:column>
-					<p:column headerText="Descrição">
-						<h:outputText value="#{mat.descricao}" />							
-					</p:column>
-					<p:column headerText="Unidade de Medida Entrada">
-						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
-					</p:column>
-					<p:column headerText="Informado">
-						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />							
-					</p:column>
-					<p:column headerText="Calculado">
-						<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />							
-					</p:column>
-					<p:column headerText="Tipo Material">
-						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
-					</p:column>
-					<p:column headerText="Aplicação">
-						<h:outputText value="#{mat.aplicacao.descricao}" />	
-					</p:column>
-					<p:column headerText="Marca">
-						<h:outputText value="#{mat.marca.descricao}" />	
-					</p:column>
-					<p:column headerText="Grupo">
-						<h:outputText value="#{mat.grupo.descricao}" />	
-					</p:column>					
-					<p:column headerText="Ações" style="width:200px">											
-						<p:commandButton value="Editar" icon="ui-icon-pencil"
-							action="#{materialBean.edit(mat.id)}"
-							style="margin-right:5px" />
-									
-						<p:commandButton value="Excluir" icon="ui-icon-trash" onclick="PF('dialogTrash').show();">
-							<f:setPropertyActionListener target="#{materialBean.material}" value="#{mat}" />
-						</p:commandButton>
-					</p:column>
-				</p:dataTable>
-			</p:outputPanel>
+				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
+					<p:spacer width="100" height="30" />
+					<p:dataTable var="mat" value="#{materialBean.allMateriais}" emptyMessage="Não existem itens nesta lista.">
+						<p:column headerText="Material">
+							<h:outputText value="#{mat.material}" />							
+						</p:column>
+						<p:column headerText="Unidade de Medida Entrada">
+							<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
+						</p:column>
+						<p:column headerText="Informado">
+							<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />							
+						</p:column>
+						<p:column headerText="Calculado">
+							<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />							
+						</p:column>
+						<p:column headerText="Tipo Material">
+							<h:outputText value="#{mat.tipoMaterial.descricao}" />	
+						</p:column>
+						<p:column headerText="Aplicação">
+							<h:outputText value="#{mat.aplicacao.descricao}" />	
+						</p:column>
+						<p:column headerText="Marca">
+							<h:outputText value="#{mat.marca.descricao}" />	
+						</p:column>
+						<p:column headerText="Grupo">
+							<h:outputText value="#{mat.grupo.descricao}" />	
+						</p:column>					
+						<p:column headerText="Ações" style="width:200px">											
+							<p:commandButton value="Editar" icon="ui-icon-pencil"
+								action="#{materialBean.edit(mat.id)}"
+								style="margin-right:5px" />
+										
+							<p:commandButton value="Excluir" icon="ui-icon-trash" onclick="PF('dialogTrash').show();">
+								<f:setPropertyActionListener target="#{materialBean.material}" value="#{mat}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
 			</center>
 			
 			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">

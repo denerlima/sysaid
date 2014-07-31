@@ -5,7 +5,6 @@ import org.primefaces.context.RequestContext;
 import util.JSFMessageUtil;
 
 public class AbstractBean {
-	private static final String KEEP_DIALOG_OPENED = "KEEP_DIALOG_OPENED";
 
 	public AbstractBean() {
 		super();
@@ -21,15 +20,8 @@ public class AbstractBean {
 		messageUtil.sendInfoMessageToUser(message);
 	}
 	
-	protected void closeDialog(){
-		getRequestContext().addCallbackParam(KEEP_DIALOG_OPENED, false);
-	}
-	
-	protected void keepDialogOpen(){
-		getRequestContext().addCallbackParam(KEEP_DIALOG_OPENED, true);
-	}
-	
 	protected RequestContext getRequestContext(){
 		return RequestContext.getCurrentInstance();
 	}
+	
 }

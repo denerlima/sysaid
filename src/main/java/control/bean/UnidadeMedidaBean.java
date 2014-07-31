@@ -55,12 +55,10 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	public void createUnidadeMedida() {
 		try {
 			getUnidadeMedidaFacade().create(unidadeMedida);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadUnidadesMedida();
 			unidadeMedida = new UnidadeMedida(unidadeMedida.getUnidadeEntrada());
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
@@ -73,12 +71,10 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	public void updateUnidadeMedida() {
 		try {
 			getUnidadeMedidaFacade().update(unidadeMedida);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadUnidadesMedida();
 			resetUnidadeMedida();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
@@ -88,12 +84,10 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	public void deleteUnidadeMedida() {
 		try {
 			getUnidadeMedidaFacade().delete(unidadeMedida);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadUnidadesMedida();
 			resetUnidadeMedida();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}

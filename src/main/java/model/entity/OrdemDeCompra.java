@@ -25,19 +25,24 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public OrdemDeCompra() {
-		super();
-		this.materiais = new ArrayList<OrdemDeCompraMaterial>();
-	}
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ordemDeCompraSequence")
 	@Column
 	private Integer id;	
+	
+	@Column
 	private int ativo = 1;
+	
+	@Column
 	private String justificativa;
+	
+	@Column
 	private Long numeroOC;
+	
+	@Column
 	private Date dataEmissao;
+	
+	@Column
 	private Date dataAutorizacao;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -49,7 +54,7 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	private Fornecedor contratado;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordemDeCompra", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<OrdemDeCompraMaterial> materiais;
+	private List<OrdemDeCompraMaterial> materiais = new ArrayList<OrdemDeCompraMaterial>();
 	
 
 	public Integer getId() {

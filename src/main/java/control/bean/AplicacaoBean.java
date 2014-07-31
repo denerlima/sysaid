@@ -43,12 +43,10 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 	public void createAplicacao() {
 		try {
 			getAplicacaoFacade().create(aplicacao);
-			closeDialog();
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadAplicacoes();
 			resetAplicacao();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
 		}
@@ -62,12 +60,10 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 	public void updateAplicacao() {
 		try {
 			getAplicacaoFacade().update(aplicacao);
-			closeDialog();
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadAplicacoes();
 			resetAplicacao();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
@@ -77,12 +73,10 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 	public void deleteAplicacao() {
 		try {
 			getAplicacaoFacade().delete(aplicacao);
-			closeDialog();
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadAplicacoes();
 			resetAplicacao();
 		} catch (Exception e) {
-			keepDialogOpen();
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
 		}

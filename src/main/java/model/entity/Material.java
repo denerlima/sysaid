@@ -33,14 +33,26 @@ public class Material extends GenericModelo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "materialSequence")
 	@Column
-	private Integer id;		
+	private Integer id;
+	
+	@Column
 	private String material;
+	
+	@Column
 	private String descricao;
+	
+	@Column
 	private int ativo = 1;
+	
+	@Column
 	private String codigoBarra;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_unidadeMedida", referencedColumnName="id")
 	private UnidadeMedida unidadeMedida;
+	
+	@Column(nullable = false)
+	private BigDecimal estoque;
 	
 	@Column(nullable = false)
 	private BigDecimal estoqueInformado;
@@ -186,6 +198,14 @@ public class Material extends GenericModelo implements Serializable{
 	public void setCodigoBarra(String codigoBarra) {
 		this.codigoBarra = codigoBarra;
 	}
+	
+	public BigDecimal getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(BigDecimal estoque) {
+		this.estoque = estoque;
+	}
 
 	@Override
 	public int hashCode() {
@@ -215,6 +235,13 @@ public class Material extends GenericModelo implements Serializable{
 	@Override
 	public String toString() {
 		return material;
+	}
+	
+	public String nomeLabel() {
+		if(getMarca() != null) {
+			return getMaterial() + " - " + getMarca().getDescricao();
+		} 
+		return getMaterial();
 	}
 	
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property" 
+	template="/template.xhtml">
+	
+	<f:metadata>
+		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
+		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
+	</f:metadata>
+	
+	<ui:define name="head">
+		<title>Lista de Materiais</title>	
+	</ui:define>
+	
+	<ui:define name="body">
+
+		<center><h2>Lista de Materiais da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
+		
+		<h:form id="osMaterialForm">		
+			<p:spacer height="10" />
+			
+			<p:commandButton value="Adicionar Materiais" icon="ui-icon-plus" action="#{ordemServicoBean.addNovoMaterial}" process="@this" />
+			
+			<center>
+				<br />
+				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
+					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" emptyMessage="Não existem itens nesta lista.">
+						<p:column headerText="Id">
+							<h:outputText value="#{_mat.id}" />							
+						</p:column>
+												
+						<p:column headerText="Ações" style="width:280px">											
+							
+															
+						</p:column>
+						
+					</p:dataTable>
+				</p:outputPanel>
+			</center>
+						
+		</h:form>
+		
+	</ui:define>
+</ui:composition>
