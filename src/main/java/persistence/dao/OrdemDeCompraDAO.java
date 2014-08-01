@@ -41,6 +41,17 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
         return query.getResultList();
     }
 
+	public boolean isOrdemDeCompraUtilizadaPorNotaFiscal(Integer id) {
+		String sql = "Select count(ocm) FROM OrdemDeCompraMaterial ocm left join ocm.ordemDeCompra oc "
+				   + " WHERE oc.ativo = 1"
+				   + "   AND oc.id = :idOC "
+				   + "   AND ocm.ativo = 1 "
+				   + "   AND (Select count(nfm) FROM NotaFiscalMaterial nfm WHERE nfm.ordemDeCompraMaterial.id = ocm.id AND nfm.ativo = 1) > 0" ;
+        Query query = getEntityManager().createQuery(sql);
+        query.setParameter("idOC", id);
+        return (Long) query.getSingleResult() > 0;
+    }
+	
 	@SuppressWarnings("unchecked")
 	public List<OrdemDeCompraMaterial> listMateriaisOrdensCompras(OrdemDeCompra oc, Material mat) {	
 		List<OrdemDeCompraMaterial> lista = new ArrayList<OrdemDeCompraMaterial>();
