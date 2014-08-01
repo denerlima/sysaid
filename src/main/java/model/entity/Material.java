@@ -18,7 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "materialSequence", sequenceName = "MATERIAL_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "materialSequence", sequenceName = "MF_MATERIAL_ID_SEQ", allocationSize = 1)
 @NamedQuery(name = "Material.findMaterialByNomeMaterial", query = "select m from Material m where m.material LIKE :material")
 @Table(name = "MF_MATERIAL")
 public class Material extends GenericModelo implements Serializable{

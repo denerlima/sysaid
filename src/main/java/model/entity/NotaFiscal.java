@@ -19,7 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "notaFiscalSequence", sequenceName = "NOTAFISCAL_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "notaFiscalSequence", sequenceName = "MF_NOTAFISCAL_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_NOTAFISCAL")
 public class NotaFiscal extends GenericModelo implements Serializable{
 	

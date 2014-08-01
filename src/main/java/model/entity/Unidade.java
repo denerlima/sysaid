@@ -1,36 +1,32 @@
 package model.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "unidadeEntradaSequence", sequenceName = "UNIDADEENTRADA_ID_SEQ", allocationSize = 1)
-@Table(name = "MF_UNIDADEENTRADA")
-public class UnidadeEntrada extends GenericModelo implements Serializable{
+@SequenceGenerator(name = "unidadeSequence", sequenceName = "MF_UNIDADE_ID_SEQ", allocationSize = 1)
+@Table(name = "MF_UNIDADE")
+public class Unidade extends GenericModelo implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
-	public UnidadeEntrada() {
-		super();
-	}
-	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "unidadeEntradaSequence")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "unidadeSequence")
 	@Column
 	private Integer id;	
-	private String descricao;
-	private int ativo = 1;
 	
-	@OneToMany(mappedBy="unidadeEntrada")
-	private List<UnidadeEntrada> unidadeEntrada;
+	@Column
+	private String descricao;
+	
+	@Column
+	private int ativo = 1;
 	
 	public Integer getId() {
 		return id;
@@ -46,14 +42,6 @@ public class UnidadeEntrada extends GenericModelo implements Serializable{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-	
-	public List<UnidadeEntrada> getUnidadeEntrada() {
-		return unidadeEntrada;
-	}
-
-	public void setUnidadeEntrada(List<UnidadeEntrada> unidadeEntrada) {
-		this.unidadeEntrada = unidadeEntrada;
 	}
 	
 	public int getAtivo() {
@@ -80,7 +68,7 @@ public class UnidadeEntrada extends GenericModelo implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UnidadeEntrada other = (UnidadeEntrada) obj;
+		Unidade other = (Unidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

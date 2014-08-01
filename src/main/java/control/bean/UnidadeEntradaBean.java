@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import model.entity.UnidadeEntrada;
+import model.entity.Unidade;
 import model.facade.UnidadeEntradaFacade;
 
 import org.omnifaces.cdi.ViewScoped;
@@ -18,8 +18,8 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private UnidadeEntrada unidadeEntrada;	
-	private List<UnidadeEntrada> unidadesMedida;
+	private Unidade unidadeEntrada;	
+	private List<Unidade> unidadesMedida;
 	
 	@Inject
 	private UnidadeEntradaFacade unidadeEntradaFacade;
@@ -29,14 +29,14 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 		return unidadeEntradaFacade;
 	}
 
-	public UnidadeEntrada getUnidadeEntrada() {
+	public Unidade getUnidadeEntrada() {
 		if (unidadeEntrada == null) {
-			unidadeEntrada = new UnidadeEntrada();
+			unidadeEntrada = new Unidade();
 		}
 		return unidadeEntrada;
 	}
 
-	public void setUnidadeEntrada(UnidadeEntrada unidadeEntrada) {
+	public void setUnidadeEntrada(Unidade unidadeEntrada) {
 		this.unidadeEntrada = unidadeEntrada;
 	}
 
@@ -79,10 +79,10 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 	}
 
 	public void newUnidadeEntrada() {
-		unidadeEntrada = new UnidadeEntrada();
+		unidadeEntrada = new Unidade();
 	}
 	
-	public List<UnidadeEntrada> getAllUnidadesMedida() {
+	public List<Unidade> getAllUnidadesMedida() {
 		if (unidadesMedida == null) {
 			loadUnidadesMedida();
 		}
@@ -95,7 +95,7 @@ public class UnidadeEntradaBean extends AbstractBean implements Serializable {
 	}
 
 	public void resetUnidadeEntrada() {
-		unidadeEntrada = new UnidadeEntrada();
+		unidadeEntrada = new Unidade();
 	}
 	
 	public boolean isManaged() {

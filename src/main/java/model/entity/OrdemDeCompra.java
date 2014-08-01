@@ -19,7 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "ordemDeCompraSequence", sequenceName = "ORDEMDECOMPRA_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "ordemDeCompraSequence", sequenceName = "MF_ORDEMDECOMPRA_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_ORDEMDECOMPRA")
 public class OrdemDeCompra extends GenericModelo implements Serializable{
 	

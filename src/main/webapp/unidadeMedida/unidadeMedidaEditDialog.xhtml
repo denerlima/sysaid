@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<p:dialog header="Cadastrar Unidade" id="unidadeMedidaDialogId2" closable="true"
+		widgetVar="unidadeMedidaDialog" modal="true" dynamic="false" width="800" height="auto" styleClass="ui-dialog-top">
+		<h:form id="unidadeMedidaDialogForm">
+			
+			<div class="row">
+				<div class="col-md-4">
+					Unidade Entrada: <span class="required">*</span>
+				</div>
+				<div class="col-md-8">
+					<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" required="true" label="Unidade Entrada">
+						<p:ajax event="change" process="@this" />
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{unidadeMedidaBean.unidades}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
+					</h:selectOneMenu>
+					<p:commandLink value="Nova Unidade"
+						action="#{unidadeEntradaBean.newUnidadeEntrada}"
+						update=":unidadeDialogForm"
+						oncomplete="PF('unidadeDialog').show();"
+						style="margin-left: 8px; text-decoration: underline;" />
+					<h:message for="entrada" styleClass="msg-error" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12">
+					<br />
+					<p:commandButton value="Adicionar Unidade de Saída" 
+						action="#{unidadeMedidaBean.addUnidadeSaida}"
+						update=":unidadeMedidaDialogForm" />
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12">
+					<p:dataTable id="tableSaidas" value="#{unidadeMedidaBean.unidadeMedida.saidas}" var="_saida"
+						emptyMessage="Não existem itens nesta lista." style="margin-top: 5px;">
+						<p:column headerText="">
+							<h:selectOneMenu id="unidadeSaida" value="#{_saida.unidade}" required="true" label="Unidade Saída">
+								<f:selectItem itemValue="" itemLabel="Selecione" />
+								<f:selectItems value="#{unidadeMedidaBean.unidades}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
+							</h:selectOneMenu>
+							<p:commandLink value="Nova Unidade"
+								action="#{unidadeEntradaBean.newUnidadeEntrada}"
+								update=":unidadeDialogForm"
+								oncomplete="PF('unidadeDialog').show();"
+								style="margin-left: 8px; text-decoration: underline;" />
+							<h:message for="unidadeSaida" styleClass="msg-error" />				
+						</p:column>
+						<p:column headerText="Fator de Conversão">
+							<h:inputText id="fatorConversao" value="#{_saida.fatorConversao}" />
+							<h:message for="fatorConversao" styleClass="msg-error" />
+						</p:column>
+						<p:column headerText="Ações">
+							<p:commandButton value="Excluir" 
+								action="#{unidadeMedidaBean.removerUnidadeSaida(_saida)}"
+								update=":unidadeMedidaDialogForm:tableSaidas" />
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12 buttons">
+			
+					<p:commandButton action="#{unidadeMedidaBean.createUnidadeMedida}" value="Salvar" rendered="#{not unidadeMedidaBean.managed}"
+						update=":unidadeMedidaDialogForm :unidadeMedidaForm:unidadesTable"
+						oncomplete="oncompleteUnidadeMedida(xhr, status, args)" />
+						
+					<p:commandButton action="#{unidadeMedidaBean.updateUnidadeMedida}" value="Alterar" rendered="#{unidadeMedidaBean.managed}"
+						update=":unidadeMedidaDialogForm :unidadeMedidaForm:unidadesTable"
+						oncomplete="oncompleteUnidadeMedida(xhr, status, args)" />
+						
+					<p:commandButton value="Cancelar" type="button" onclick="PF('unidadeMedidaDialog').hide();" />
+				
+				</div>	
+			</div>			
+			
+		</h:form>
+	</p:dialog>
+	
+	<script type="text/javascript">
+	   function oncompleteUnidadeMedida(xhr, status, args) {
+	      if (args.success) {
+	    	  PF('unidadeMedidaDialog').hide();
+	      }
+	   }
+	</script>
+
+</f:view>

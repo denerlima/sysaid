@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "marcaSequence", sequenceName = "MARCA_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "marcaSequence", sequenceName = "MF_MARCA_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_MARCA")
 public class Marca extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;

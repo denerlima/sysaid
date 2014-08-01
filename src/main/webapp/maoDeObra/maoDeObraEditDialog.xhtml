@@ -7,13 +7,13 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<p:dialog header="Cadastrar Mão de Obra" id="maoDeObraDialogId" 
-		widgetVar="maoDeObraDialog" closable="true" modal="true" width="600" height="auto">
+		widgetVar="maoDeObraDialog" closable="true" modal="true" width="600" height="auto" styleClass="ui-dialog-top">
 		
 		<h:form id="maoDeObraDialogForm">
 		
-			<div class="row">
+			<div class="row form-row">
 				<div class="col-md-4">
-					Mão de Obra:
+					Mão de Obra: <span class="required">*</span>
 				</div>
 				<div class="col-md-8">
 					<h:inputText id="descricao" value="#{maoDeObraBean.maoDeObra.descricao}" required="true" label="Mão de Obra"> 
@@ -23,9 +23,9 @@
 				</div>
 			</div>
 			
-			<div class="row">
+			<div class="row form-row">
 				<div class="col-md-4">
-					<h:outputText value="Valor Unitário Dia:" />
+					Valor Unitário Dia: <span class="required">*</span>
 				</div>
 				<div class="col-md-8">
 					<pe:inputNumber id="valorDia" decimalPlaces="2" symbol="R$ "  value="#{maoDeObraBean.maoDeObra.valordia}" required="true" label="Valor Dia" />
@@ -33,9 +33,9 @@
 				</div>		
 			</div>
 			
-			<div class="row">
+			<div class="row form-row">
 				<div class="col-md-4">
-					<h:outputText value="Valor Unitário Hora:" />
+					Valor Unitário Hora: <span class="required">*</span>
 				</div>
 				<div class="col-md-8">
 					<pe:inputNumber id="valorHora" decimalPlaces="2" symbol="R$ " value="#{maoDeObraBean.maoDeObra.valorhora}" required="true" label="Valor Hora"/>

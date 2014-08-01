@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "aplicacaoSequence", sequenceName = "APLICACAO_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "aplicacaoSequence", sequenceName = "MF_APLICACAO_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_APLICACAO")
 public class Aplicacao extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;

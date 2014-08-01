@@ -193,7 +193,12 @@
 						<p:column headerText="Total">
 							<h:outputText value="#{_nfm.total}" converter="bigDecimalConverter" />
 						</p:column>
-						
+						<p:column headerText="Ações">
+			                <p:commandButton value="Excluir" 
+			                	action="#{notaFiscalBean.removerMaterial(_nfm)}"
+			                	update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" 
+			                	process="@this" />
+						</p:column>
 					</p:dataTable>
 					
 					<p align="right">

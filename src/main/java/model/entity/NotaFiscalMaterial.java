@@ -14,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "notaFiscalMaterialSequence", sequenceName = "NOTAFISCAL_MATERIAL_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "notaFiscalMaterialSequence", sequenceName = "MF_NOTAFISCAL_MATERIAL_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_NOTAFISCAL_MF_MATERIAL")
 public class NotaFiscalMaterial {
 

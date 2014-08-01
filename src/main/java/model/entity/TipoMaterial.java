@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "tipoMaterialSequence", sequenceName = "TIPOMATERIAL_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "tipoMaterialSequence", sequenceName = "MF_TIPOMATERIAL_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_TIPOMATERIAL")
 public class TipoMaterial extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;

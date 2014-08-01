@@ -156,6 +156,10 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
+	public void removerMaterial(NotaFiscalMaterial nfm) {
+		notaFiscal.getMateriais().remove(nfm);
+	}
+	
 	public void calcular(NotaFiscalMaterial nfm) {
 		verificarNotaFiscalMaterial(nfm);
 		calcular(nfm, nfm.getPrecoUnitario());

@@ -7,13 +7,13 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
 	<p:dialog header="Cadastro de Marca" id="marcaDialogId" 
-		widgetVar="marcaDialog" closable="false" modal="true" width="500" height="auto">
+		widgetVar="marcaDialog" closable="false" modal="true" width="500" height="auto" styleClass="ui-dialog-top">
 		
 		<h:form id="marcaDialogForm">
 		
 			<div class="row">
 				<div class="col-md-4">
-					Marca
+					Marca: <span class="required">*</span>
 				</div>
 				<div class="col-md-8">
 					<h:inputText id="descricao" value="#{marcaBean.marca.descricao}" required="true" label="Marca"> 

@@ -8,10 +8,10 @@ import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
 import util.Component;
-import model.entity.UnidadeEntrada;
+import model.entity.Unidade;
 import model.facade.UnidadeEntradaFacade;
 
-@FacesConverter(forClass = model.entity.UnidadeEntrada.class)
+@FacesConverter(forClass = model.entity.Unidade.class)
 public class UnidadeConverter implements Converter {
 
 	
@@ -32,7 +32,7 @@ public class UnidadeConverter implements Converter {
 		if (arg2 == null) {
 			return "";
 		}
-		UnidadeEntrada obj = (UnidadeEntrada) arg2;
+		Unidade obj = (Unidade) arg2;
 		return String.valueOf(obj.getId());
 	}
 }

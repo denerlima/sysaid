@@ -23,25 +23,18 @@
 			<p:outputPanel id="resultado" layout="block" style="width:80%; overflow:auto">
 				<br />
 				<p:dataTable id="unidadesTable" var="um" value="#{unidadeMedidaBean.allUnidadesMedida}" emptyMessage="Não existem itens nesta lista.">
-					<p:columnGroup type="header">
-						 <p:row>                
-			                <p:column colspan="2" headerText="Unidade de Medida" />
-			                <p:column rowspan="2" headerText="Fator de conversão" />
-			                <p:column rowspan="2" headerText="Ações" />
-			           	 </p:row>		           	 	
-			           	 <p:row>
-			           	 	<p:column headerText="Entrada" />
-			           	 	<p:column headerText="Saída" />		           	 
-			           	 </p:row>
-					</p:columnGroup>
-					<p:column >
+					<p:column headerText="Entrada">
 						<h:outputText value="#{um.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column>
-						<h:outputText value="#{um.unSaida}" />							
-					</p:column>
-					<p:column >
-						<h:outputText  value="#{um.fatorConversao}" />
+					<p:column headerText="Saídas/Fator Conversão">
+						<p:dataTable value="#{um.saidas}" var="_saida" rendered="#{not empty um.saidas}">
+							<p:column headerText="Saída">
+								<h:outputText value="#{_saida.unidade.descricao}" />
+							</p:column>
+							<p:column headerText="Fator Conversão">
+								<h:outputText value="#{_saida.fatorConversao}" />
+							</p:column>
+						</p:dataTable>
 					</p:column>
 					<p:column style="width:200px">											
 						<p:commandButton value="Editar" update=":unidadeMedidaDialogForm" icon="ui-icon-pencil" oncomplete="PF('unidadeMedidaDialog').show();"  style="margin-right:10px" >
@@ -55,18 +48,18 @@
 			</p:outputPanel>
 			</center>
 			
-			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
+			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
 			  <center>		
 				<p:commandButton value="Sim" icon="ui-icon-check"  update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.deleteUnidadeMedida()}" onclick="PF('dialogTrash').hide();" />
-				<p:spacer height="30" />
+				<p:spacer width="5" />
 				<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
 			  </center>
 			</p:dialog>
 
 		</h:form>
 		
-		<ui:include src="/unidadeMedida/unidadeMedidaDialog.xhtml" />
-		<ui:include src="/unidadeMedida/unidadeDialog.xhtml" />
+		<ui:include src="/unidadeMedida/unidadeMedidaEditDialog.xhtml" />
+		<ui:include src="/unidadeMedida/unidadeEditDialog.xhtml" />
 
 	</ui:define>
 </ui:composition>

@@ -12,7 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "maoDeObraSequence", sequenceName = "MAODEOBRA_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "maoDeObraSequence", sequenceName = "MF_MAODEOBRA_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_MAODEOBRA")
 public class MaoDeObra extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;

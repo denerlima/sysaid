@@ -7,13 +7,13 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
 	<p:dialog header="Cadastro de Tipo Material" id="tipoMaterialDialogId" 
-		widgetVar="tipoMaterialDialog" closable="false" modal="true" width="500" height="auto">
+		widgetVar="tipoMaterialDialog" closable="false" modal="true" width="500" height="auto" styleClass="ui-dialog-top">
 		
 		<h:form id="tipoMaterialDialogForm">
 		
 			<div class="row">
 				<div class="col-md-4">
-					Tipo Material
+					Tipo Material: <span class="required">*</span>
 				</div>
 				<div class="col-md-8">
 					<h:inputText id="descricao" value="#{tipoMaterialBean.tipoMaterial.descricao}" required="true" label="Tipo Material"> 

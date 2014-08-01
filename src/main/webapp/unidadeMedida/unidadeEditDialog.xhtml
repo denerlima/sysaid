@@ -7,12 +7,12 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<p:dialog header="Cadastrar Unidade" id="unidadeDialogId" closable="true"
-		widgetVar="unidadeDialog" modal="true" dynamic="false" height="200" width="300">
+		widgetVar="unidadeDialog" modal="true" dynamic="false" width="400" height="auto" styleClass="ui-dialog-top">
 		<h:form id="unidadeDialogForm">
 			
-			<div class="row">
+			<div class="row form-row">
 				<div class="col-md-3">
-					Unidade
+					Unidade: <span class="required">*</span> 
 				</div>
 				<div class="col-md-9">
 					<h:inputText id="descricao" value="#{unidadeEntradaBean.unidadeEntrada.descricao}" required="true" label="Unidade" />
@@ -22,7 +22,7 @@
 					
 			<div class="buttons">		
 				<p:commandButton action="#{unidadeEntradaBean.createUnidadeEntrada}" value="Salvar"
-					update=":unidadeDialogForm :unidadeMedidaDialogForm:entrada"
+					update=":unidadeDialogForm :unidadeMedidaDialogForm:entrada :unidadeMedidaDialogForm:tableSaidas"
 					oncomplete="oncompleteUnidade(xhr, status, args)" />
 					
 				<p:commandButton value="Cancelar" type="button" onclick="PF('unidadeDialog').hide();" />

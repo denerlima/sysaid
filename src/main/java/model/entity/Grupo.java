@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "grupoSequence", sequenceName = "GRUPO_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "grupoSequence", sequenceName = "MF_GRUPO_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_GRUPO")
 public class Grupo extends GenericModelo implements Serializable{
 	

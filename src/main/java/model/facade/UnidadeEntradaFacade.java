@@ -5,12 +5,12 @@ import java.io.Serializable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import model.entity.UnidadeEntrada;
+import model.entity.Unidade;
 import persistence.dao.GenericDAO;
 import persistence.dao.UnidadeEntradaDAO;
 
 @Named
-public class UnidadeEntradaFacade extends GenericFacade<UnidadeEntrada> implements Serializable{
+public class UnidadeEntradaFacade extends GenericFacade<Unidade> implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -18,7 +18,7 @@ public class UnidadeEntradaFacade extends GenericFacade<UnidadeEntrada> implemen
 	private UnidadeEntradaDAO unidadeEntradaDAO;
 
 	@Override
-	public GenericDAO<UnidadeEntrada> getDAO() {
+	public GenericDAO<Unidade> getDAO() {
 		return unidadeEntradaDAO;
 	}
 

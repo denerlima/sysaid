@@ -19,7 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "inventarioSequence", sequenceName = "INVENTARIO_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "inventarioSequence", sequenceName = "MF_INVENTARIO_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_INVENTARIO")
 public class Inventario extends GenericModelo implements Serializable{
 	private static final long serialVersionUID = 1L;

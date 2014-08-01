@@ -1,15 +1,14 @@
 package control.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import model.entity.UnidadeEntrada;
+import model.entity.Unidade;
 import model.entity.UnidadeMedida;
+import model.entity.UnidadeMedidaSaida;
 import model.facade.UnidadeEntradaFacade;
 import model.facade.UnidadeMedidaFacade;
 
@@ -57,7 +56,8 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 			getUnidadeMedidaFacade().create(unidadeMedida);
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadUnidadesMedida();
-			unidadeMedida = new UnidadeMedida(unidadeMedida.getUnidadeEntrada());
+			resetUnidadeMedida();
+			RequestContext.getCurrentInstance().addCallbackParam("success", true);
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
@@ -74,11 +74,11 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadUnidadesMedida();
 			resetUnidadeMedida();
+			RequestContext.getCurrentInstance().addCallbackParam("success", true);
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
 		}
-		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void deleteUnidadeMedida() {
@@ -101,16 +101,17 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 		return unidadesMedida;
 	}
 	
-	public List<SelectItem> getSelectItensUnidadeEntrada(){
-		List<SelectItem> lista = new ArrayList<SelectItem>();
-		UnidadeEntradaFacade unidadeEntradaFacade = new UnidadeEntradaFacade();
-		for(UnidadeEntrada unidadeEntrada : unidadeEntradaFacade.listAll()){
-			lista.add(new SelectItem(unidadeEntrada.getId(), unidadeEntrada.getDescricao()));
-		}
-		return lista;
-	}	
-
-	public List<UnidadeEntrada> getUnidadesEntradas(){
+	public void addUnidadeSaida() {
+		UnidadeMedidaSaida ums = new UnidadeMedidaSaida();
+		ums.setUnidadeMedida(unidadeMedida);
+		getUnidadeMedida().getSaidas().add(ums);
+	}
+	
+	public void removerUnidadeSaida(UnidadeMedidaSaida ums) {
+		getUnidadeMedida().getSaidas().remove(ums);
+	}
+	
+	public List<Unidade> getUnidades(){
 		return unidadeEntradaFacade.listAll();
 	}
 	

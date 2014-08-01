@@ -14,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name = "inventarioMaterialSequence", sequenceName = "INVENTARIO_MATERIAL_ID_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "inventarioMaterialSequence", sequenceName = "MF_INVENTARIO_MATERIAL_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_INVENTARIO_MF_MATERIAL")  
 public class InventarioMaterial implements Serializable {
 
