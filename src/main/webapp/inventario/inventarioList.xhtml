@@ -39,7 +39,9 @@
 						<p:commandButton value="Visualizar" action="#{inventarioBean.view(inv.id)}"
 						 	icon="ui-icon-search" style="margin-right:10px" />
 						 	
-						<p:commandButton value="Excluir" icon="ui-icon-trash" onclick="PF('dialogTrash').show();" style="margin-right:10px" rendered="false">
+						<p:commandButton value="Excluir" icon="ui-icon-trash" 
+							onclick="PF('dialogTrash').show();" 
+							style="margin-right:10px" rendered="false">
 							<f:setPropertyActionListener target="#{inventarioBean.inventario}" value="#{inv}" />
 						</p:commandButton>
 						

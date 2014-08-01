@@ -32,4 +32,8 @@ public class OrdemDeCompraFacade extends GenericFacade<OrdemDeCompra> implements
 		return result;		
 	}
 	
+	public boolean isOrdemDeCompraUtilizadaPorNotaFiscal(Integer id) {
+		return ordemDeCompraDAO.isOrdemDeCompraUtilizadaPorNotaFiscal(id);
+	}
+	
 }

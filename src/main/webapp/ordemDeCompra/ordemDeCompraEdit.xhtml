@@ -8,6 +8,8 @@
 	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
+	<ui:param name="pageTitle" value="Cadastro de Ordem de Compra" />
+	
 	<f:metadata>
 		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
 		<f:event type="preRenderView" listener="#{ordemDeCompraBean.initLoad(_id)}"/>
@@ -15,133 +17,135 @@
 	
 	<ui:define name="body">
 	
-	<h:form id="ordemDeCompraForm">
-		<title>Cadastro de Ordem de Compra</title>
-		<center><h2>Cadastro de Ordem de Compra</h2></center>
-		<p:spacer height="10" />					
-	    <p:tabView  id="tabView">
-	        <p:tab title="Dados Gerais">
-	        	
-	        	<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Nº de Ordem de Compra:" />
-					</div>
-					<div class="col-md-10">
-						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.id}" label="Número de Ordem de Compra" />	
-					</div>
-				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Nº OC: " />
-					</div>
-					<div class="col-md-10">
-						<h:inputText id="nrOC" value="#{ordemDeCompraBean.ordemDeCompra.numeroOC}" required="true" label="Número de Ordem de Compra" />
-						<h:message for="nrOC" styleClass="msg-error" />	
-					</div>
-				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Data de Emissão:" />
-					</div>
-					<div class="col-md-10">
-						<p:calendar id="dataEmissao" pattern="dd/MM/yy" locale="pt_BR" value="#{ordemDeCompraBean.ordemDeCompra.dataEmissao}" size="10" navigator="true" required="true" label="Data de Emissão" />
-						<h:message for="dataEmissao" styleClass="msg-error" />	
-					</div>
-				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Data de Autorização:" />
-					</div>
-					<div class="col-md-10">
-						<p:calendar id="dataAutorizacao" pattern="dd/MM/yy" locale="pt_BR" value="#{ordemDeCompraBean.ordemDeCompra.dataAutorizacao}" size="10" navigator="true" required="true" label="Data de Autorização" />
-						<h:message for="dataAutorizacao" styleClass="msg-error" />	
-					</div>
-				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Autorizador:" />
-					</div>
-					<div class="col-md-10">
-						<h:selectOneMenu id="autorizador" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}" required="true" label="Autorizador">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{ordemDeCompraBean.autorizadores}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
-						</h:selectOneMenu>
-						<h:message for="autorizador" styleClass="msg-error" />
-					</div>
-				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Contratado:" />
-					</div>
-					<div class="col-md-10">
-						<h:selectOneMenu id="contratado" value="#{ordemDeCompraBean.ordemDeCompra.contratado}" required="true" label="Contratado">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{ordemDeCompraBean.allContratados}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
-						</h:selectOneMenu>		
-						<h:message for="contratado" styleClass="msg-error" />					
-					</div>
-				</div>
-	        
-	        </p:tab>
-	        
-	        <p:tab title="Material" >
-		        
-		        <br />
-		        <p:outputPanel id="addMaterialPanel">
+		<h:form id="ordemDeCompraForm">
+			<center><h2>Cadastro de Ordem de Compra</h2></center>
+			<br />					
+		    <p:tabView  id="tabView">
+		        <p:tab title="Dados Gerais">
 		        	
-					<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
-						value="#{ordemDeCompraBean.material}" label="Material" 
-						var="mat" itemLabel="#{mat.material}" itemValue="#{mat}" 
-						completeMethod="#{ordemDeCompraBean.completeMaterial}" dropdown="true" />
-				
-			        <p:commandButton value="Adicionar Material" icon="ui-icon-plus" action="#{ordemDeCompraBean.addMaterial}" 
-			        	update=":ordemDeCompraForm:tabView:tabelaMaterial :ordemDeCompraForm:tabView:addMaterialPanel" 
-			        	process="@this :ordemDeCompraForm:tabView:materialAutocomplete" style="margin-left: 35px;" />
-				  	
-		 		</p:outputPanel>
-	        				
-				<h2>Materiais do Ordem De Compra</h2>
-				<p:dataTable id="tabelaMaterial" var="_mat" value="#{ordemDeCompraBean.ordemDeCompra.materiais}" emptyMessage="Não existem itens nesta lista." rowIndexVar="_idx">
-					<p:column headerText="Material">
-						<h:outputText value="#{_mat.material.material}" />							
-					</p:column>
-					<p:column headerText="Unidade de Medida Entrada">
-						<h:outputText value="#{_mat.material.unidadeMedida.unidadeEntrada.descricao}" />							
-					</p:column>
-					<p:column headerText="Quantidade">
-						<h:inputText value="#{_mat.quantidadeAutorizada}" converter="bigDecimalSimplesConverter" styleClass="quantidade_#{_idx}" />
-						<script type="text/javascript">
-							$(function(){
-								$('.quantidade_#{_idx}').forceFloat();
-							});
-						</script>						
-					</p:column>
-					<p:column headerText="Remover">
-		                <p:commandLink value="Remove" action="#{ordemDeCompraBean.removerMaterial(_mat)}"
-		                	update=":ordemDeCompraForm:tabView:tabelaMaterial" process="@this" />
-					</p:column>
-				</p:dataTable>
-	        </p:tab>
-     	</p:tabView>
-     	
-     	<p:commandButton value="Salvar"
-     		action="#{ordemDeCompraBean.createOrdemDeCompra}" 
-     		update=":ordemDeCompraForm"
-     		rendered="#{not ordemDeCompraBean.managed}" />
-     	
-     	<p:commandButton value="Alterar"
-     		action="#{ordemDeCompraBean.updateOrdemDeCompra}"
-     		update=":ordemDeCompraForm" 
-     		rendered="#{ordemDeCompraBean.managed}" />
-     
-     	<p:commandButton value="Cancelar" action="ordemDeCompraList.xhtml?faces-redirect=true" process="@this" />
-     			
-	</h:form>
+		        	<div class="row form-row">
+						<div class="col-md-2">
+							<h:outputText value="Nº de Ordem de Compra:" />
+						</div>
+						<div class="col-md-10">
+							<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.id}" label="Número de Ordem de Compra" />	
+						</div>
+					</div>
+					
+					<div class="row form-row">
+						<div class="col-md-2">
+							<h:outputText value="Nº OC: " />
+						</div>
+						<div class="col-md-10">
+							<h:inputText id="nrOC" value="#{ordemDeCompraBean.ordemDeCompra.numeroOC}" required="true" label="Número de Ordem de Compra" />
+							<h:message for="nrOC" styleClass="msg-error" />	
+						</div>
+					</div>
+					
+					<div class="row form-row">
+						<div class="col-md-2">
+							<h:outputText value="Data de Emissão:" />
+						</div>
+						<div class="col-md-10">
+							<p:calendar id="dataEmissao" pattern="dd/MM/yy" locale="pt_BR" value="#{ordemDeCompraBean.ordemDeCompra.dataEmissao}" size="10" navigator="true" required="true" label="Data de Emissão" />
+							<h:message for="dataEmissao" styleClass="msg-error" />	
+						</div>
+					</div>
+					
+					<div class="row form-row">
+						<div class="col-md-2">
+							<h:outputText value="Data de Autorização:" />
+						</div>
+						<div class="col-md-10">
+							<p:calendar id="dataAutorizacao" pattern="dd/MM/yy" locale="pt_BR" value="#{ordemDeCompraBean.ordemDeCompra.dataAutorizacao}" size="10" navigator="true" required="true" label="Data de Autorização" />
+							<h:message for="dataAutorizacao" styleClass="msg-error" />	
+						</div>
+					</div>
+					
+					<div class="row form-row">
+						<div class="col-md-2">
+							<h:outputText value="Autorizador:" />
+						</div>
+						<div class="col-md-10">
+							<h:selectOneMenu id="autorizador" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}" required="true" label="Autorizador">
+								<f:selectItem itemValue="" itemLabel="Selecione" />
+								<f:selectItems value="#{ordemDeCompraBean.autorizadores}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
+							</h:selectOneMenu>
+							<h:message for="autorizador" styleClass="msg-error" />
+						</div>
+					</div>
+					
+					<div class="row form-row">
+						<div class="col-md-2">
+							<h:outputText value="Contratado:" />
+						</div>
+						<div class="col-md-10">
+							<h:selectOneMenu id="contratado" value="#{ordemDeCompraBean.ordemDeCompra.contratado}" required="true" label="Contratado">
+								<f:selectItem itemValue="" itemLabel="Selecione" />
+								<f:selectItems value="#{ordemDeCompraBean.allContratados}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
+							</h:selectOneMenu>		
+							<h:message for="contratado" styleClass="msg-error" />					
+						</div>
+					</div>
+		        
+		        </p:tab>
+		        
+		        <p:tab title="Material" >
+			        
+			        <br />
+			        <p:outputPanel id="addMaterialPanel">
+			        	
+						<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
+							value="#{ordemDeCompraBean.material}" label="Material" 
+							var="mat" itemLabel="#{mat.material}" itemValue="#{mat}" 
+							completeMethod="#{ordemDeCompraBean.completeMaterial}" dropdown="true" />
+					
+				        <p:commandButton value="Adicionar Material" icon="ui-icon-plus" action="#{ordemDeCompraBean.addMaterial}" 
+				        	update=":ordemDeCompraForm:tabView:tabelaMaterial :ordemDeCompraForm:tabView:addMaterialPanel" 
+				        	process="@this :ordemDeCompraForm:tabView:materialAutocomplete" style="margin-left: 35px;" />
+					  	
+			 		</p:outputPanel>
+		        	
+		        	<br />			
+					<h4>Materiais do Ordem De Compra</h4>
+					<p:dataTable id="tabelaMaterial" var="_mat" value="#{ordemDeCompraBean.ordemDeCompra.materiais}" emptyMessage="Não existem itens nesta lista." rowIndexVar="_idx">
+						<p:column headerText="Material">
+							<h:outputText value="#{_mat.material.material}" />							
+						</p:column>
+						<p:column headerText="Unidade de Medida Entrada">
+							<h:outputText value="#{_mat.material.unidadeMedida.unidadeEntrada.descricao}" />							
+						</p:column>
+						<p:column headerText="Quantidade">
+							<h:inputText value="#{_mat.quantidadeAutorizada}" converter="bigDecimalSimplesConverter" styleClass="quantidade_#{_idx}" />
+							<script type="text/javascript">
+								$(function(){
+									$('.quantidade_#{_idx}').forceFloat();
+								});
+							</script>						
+						</p:column>
+						<p:column headerText="Ações">
+			                <p:commandButton value="Excluir" 
+			                	action="#{ordemDeCompraBean.removerMaterial(_mat)}"
+			                	update=":ordemDeCompraForm:tabView:tabelaMaterial" 
+			                	process="@this" />
+						</p:column>
+					</p:dataTable>
+		        </p:tab>
+	     	</p:tabView>
+	     	
+	     	<p:commandButton value="Salvar"
+	     		action="#{ordemDeCompraBean.createOrdemDeCompra}" 
+	     		update=":ordemDeCompraForm"
+	     		rendered="#{not ordemDeCompraBean.managed}" />
+	     	
+	     	<p:commandButton value="Alterar"
+	     		action="#{ordemDeCompraBean.updateOrdemDeCompra}"
+	     		update=":ordemDeCompraForm" 
+	     		rendered="#{ordemDeCompraBean.managed}" />
+	     
+	     	<p:commandButton value="Cancelar" action="ordemDeCompraList.xhtml?faces-redirect=true" process="@this" />
+	     			
+		</h:form>
 
 	</ui:define>
 </ui:composition>

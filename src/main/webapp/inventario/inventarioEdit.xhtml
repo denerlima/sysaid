@@ -100,8 +100,11 @@
 						<h:inputText value="#{invMat.quantidadeInventariada}" />							
 					</p:column>
 					<p:column headerText="Ações">
-		                <p:commandLink value="Excluir" action="#{inventarioBean.removerMaterial(mat)}"
-		                	update=":inventarioEditForm:tabView:tabelaMaterial" process="@this" rendered="#{not inventarioBean.managed}" />
+		                <p:commandButton value="Excluir" 
+		                	action="#{inventarioBean.removerMaterial(mat)}"
+		                	update=":inventarioEditForm:tabView:tabelaMaterial" 
+		                	process="@this" 
+		                	rendered="#{not inventarioBean.managed}" />
 					</p:column>
 				</p:dataTable>
 	        </p:tab>

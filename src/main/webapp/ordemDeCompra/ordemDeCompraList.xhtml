@@ -44,20 +44,21 @@
 						<h:outputText value="#{oc.contratado.nome}" />							
 					</p:column>				
 										
-					<p:column headerText="Ações" style="width:280px">
+					<p:column headerText="Ações" style="width:185px">
 						
 						<ui:fragment rendered="#{oc.ativo == 1}">
 						
 							<p:commandButton value="Editar" action="#{ordemDeCompraBean.edit(oc.id)}"
-							 	icon="ui-icon-pencil" style="margin-right:5px" />
+							 	icon="ui-icon-pencil" />
 																	
-							<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();"  style="margin-right:5px">
+							<p:commandButton value="Excluir"  icon="ui-icon-trash" onclick="PF('dialogTrash').show();"  style="margin-left:5px">
 								<f:setPropertyActionListener target="#{ordemDeCompraBean.ordemDeCompra}" value="#{oc}" />
 							</p:commandButton>
 							
 							<p:commandButton value="Cancelar" icon="ui-icon-cancel" 
 								update=":ordemCompraCancelamentoModal:ordemCompraCancelamentoForm"
-								oncomplete="$('#ordemCompraCancelamentoModal').modal('show');">
+								oncomplete="$('#ordemCompraCancelamentoModal').modal('show');"
+								rendered="false">
 								<f:setPropertyActionListener target="#{ordemDeCompraBean.ordemDeCompra}" value="#{oc}" />
 							</p:commandButton>
 						
@@ -71,10 +72,22 @@
 				</p:dataTable>
 			</p:outputPanel>
 			</center>
+				
+			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50" styleClass="ui-dialog-top">
+			  	<center>		
+					<p:commandButton value="Sim" icon="ui-icon-check"   
+						action="#{ordemDeCompraBean.deleteOrdemDeCompra}"
+						update=":ordemDeCompraForm:resultado" 
+						onclick="PF('dialogTrash').hide();" />
+					<p:spacer height="5" />
+					<p:commandButton value="Não" icon="ui-icon-close"
+						onclick="PF('dialogTrash').hide();"/>
+				</center>
+			</p:dialog>	
 						
 		</h:form>
 		
-		
+
 		<cp:bootstrapModal id="ordemCompraCancelamentoModal" title="Justificativa de cancelamento de OC" modalId="ordemCompraCancelamentoModal">      
 			<h:form id="ordemCompraCancelamentoForm">
 				

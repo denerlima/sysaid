@@ -115,6 +115,10 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	
 	public void deleteOrdemDeCompra() {
 		try {
+			if(ordemDeCompraFacade.isOrdemDeCompraUtilizadaPorNotaFiscal(ordemDeCompra.getId())) {
+				displayErrorMessageToUser("Não é possível excluir a Ordem de Compra, pois está incluída em uma Nota Fiscal.");
+				return;
+			}
 			getOrdemDeCompraFacade().delete(ordemDeCompra);
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensDeCompra();
