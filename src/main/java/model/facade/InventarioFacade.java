@@ -39,7 +39,7 @@ public class InventarioFacade extends GenericFacade<Inventario> implements Seria
 	private void definirQuantidades(Inventario inventario) {
 		for (InventarioMaterial invMat : inventario.getMateriais()) {
 			invMat.setQuantidadeEstoque(invMat.getMaterial().getEstoqueInformado());
-			invMat.getMaterial().setEstoqueCalculado(invMat.getQuantidadeInventariada());
+			invMat.getMaterial().setEstoque(invMat.getQuantidadeInventariada());
 			materialDAO.update(invMat.getMaterial());
 		}
 	}

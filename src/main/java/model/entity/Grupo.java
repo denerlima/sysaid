@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -27,8 +29,14 @@ public class Grupo extends GenericModelo implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "grupoSequence")
 	@Column
 	private Integer id;	
+	
+	@Column
 	private String descricao;
-	private String grupopai;
+	
+	@ManyToOne
+	@JoinColumn(name="id_grupo_pai", referencedColumnName="id")
+	private Grupo grupoPai;
+	
 	private int ativo = 1;
 	
 	@OneToMany(mappedBy="grupo")
@@ -66,12 +74,12 @@ public class Grupo extends GenericModelo implements Serializable{
 		this.ativo = ativo;
 	}
 	
-	public String getGrupopai() {
-		return grupopai;
+	public Grupo getGrupoPai() {
+		return grupoPai;
 	}
 
-	public void setGrupopai(String grupopai) {
-		this.grupopai = grupopai;
+	public void setGrupoPai(Grupo grupoPai) {
+		this.grupoPai = grupoPai;
 	}
 
 	@Override
@@ -102,6 +110,13 @@ public class Grupo extends GenericModelo implements Serializable{
 	@Override
 	public String toString() {
 		return descricao;
+	}
+	
+	public String getDescricaoLabel() {
+		if(getGrupoPai() != null) {
+			return getDescricao() + " - " + getGrupoPai();
+		}
+		return getDescricao();
 	}
 	
 }

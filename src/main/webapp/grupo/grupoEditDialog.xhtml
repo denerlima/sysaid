@@ -7,13 +7,13 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
 	<p:dialog header="Cadastro de Grupo" id="grupoDialogId" 
-		widgetVar="grupoDialog" closable="false" modal="true" width="500" height="auto">
+		widgetVar="grupoDialog" closable="false" modal="true" width="500" height="auto" styleClass="ui-dialog-top">
 		
 		<h:form id="grupoDialogForm">
 		
-			<div class="row">
+			<div class="row form-row">
 				<div class="col-md-4">
-					Grupo
+					Grupo: <span class="required">*</span>
 				</div>
 				<div class="col-md-8">
 					<h:inputText id="descricao" value="#{grupoBean.grupo.descricao}" required="true" label="Grupo"> 
@@ -23,14 +23,15 @@
 				</div>
 			</div>
 		
-			<div class="row">
+			<div class="row form-row">
 				<div class="col-md-4">
 					Grupo Pai
 				</div>
 				<div class="col-md-8">
-					<h:inputText id="grupoPai" value="#{grupoBean.grupo.grupopai}" required="true" label="Grupo Pai"> 
-						<f:validateLength minimum="4" />
-					</h:inputText>
+					<h:selectOneMenu id="grupoPai" value="#{grupoBean.grupo.grupoPai}" label="Grupo Pai" styleClass="input-sm">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{grupoBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricao}" itemValue="#{grupo}" />		
+					</h:selectOneMenu>
 					<h:message for="grupoPai" styleClass="msg-error" />
 				</div>
 			</div>

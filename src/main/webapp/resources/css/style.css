@@ -26,6 +26,11 @@
  	margin-bottom:5px;
 }
   
+.required {
+	color: red;
+	font-weight: bold;
+	font-size: 16px;
+}
   
 .ui-widget {
     font-size: 12px;
@@ -38,3 +43,7 @@
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
     font-size: 12px;
 }  
+
+.ui-dialog-top {
+	top: 30px !important;
+}

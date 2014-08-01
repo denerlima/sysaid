@@ -8,6 +8,8 @@
 	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
+	<ui:param name="pageTitle" value="Cadastro de Inventário" />
+	
 	<f:metadata>
 		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
 		<f:event type="preRenderView" listener="#{inventarioBean.initLoad(_id)}"/>
@@ -15,10 +17,9 @@
 	
 	<ui:define name="body">
 	
-	<h:form id="newInventarioForm">
-		<title>Cadastro de Inventário</title>
+	<h:form id="inventarioEditForm">
 		<center><h2>Cadastro de Inventário</h2></center>
-		<p:spacer height="10" />					
+		<br />					
 	    <p:tabView  id="tabView">
 	        <p:tab title="Dados Gerais">
 	        	
@@ -33,31 +34,35 @@
 				
 				<div class="row form-row">
 					<div class="col-md-2">
-						<h:outputText value="Data de Inventário : " />
+						Data de Inventário: <span class="required">*</span>
 					</div>
 					<div class="col-md-10">
-						<p:calendar pattern="dd/MM/yy" locale="pt_BR" value="#{inventarioBean.inventario.dataInventario}" size="10" navigator="true" />	
+						<p:calendar id="dataInventario" pattern="dd/MM/yy" locale="pt_BR" value="#{inventarioBean.inventario.dataInventario}" size="10" navigator="true"
+							required="true" label="Data de Inventário" />
+						<h:message for="dataInventario" styleClass="msg-error" />		
 					</div>
 				</div>
 				
 				<div class="row form-row">
 					<div class="col-md-2">
-						<h:outputText value="Atendente:" />
+						Atendente: <span class="required">*</span>
 					</div>
 					<div class="col-md-10">
-						<h:selectOneMenu id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}" >
+						<h:selectOneMenu id="atendente" value="#{inventarioBean.inventario.atendente}" required="true" label="Atendente" styleClass="input-sm">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
 						</h:selectOneMenu>	
+						<h:message for="atendente" styleClass="msg-error" />
 					</div>
 				</div>
 				
 				<div class="row form-row form-group">
 					<div class="col-md-2">
-						<h:outputText value="Justificativa : " />
+						Justificativa: <span class="required">*</span>
 					</div>
 					<div class="col-md-10">
-						<h:inputTextarea value="#{inventarioBean.inventario.justificativa}" rows="3" cols="70" label="Justificativa para realização do Inventário" />	
+						<h:inputTextarea id="justificativa" value="#{inventarioBean.inventario.justificativa}" rows="3" cols="70" required="true" label="Justificativa" />
+						<h:message for="justificativa" styleClass="msg-error" />	
 					</div>
 				</div>
 	        
@@ -74,13 +79,14 @@
 						completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 				
 			        <p:commandButton value="Adicionar Material" icon="ui-icon-plus" action="#{inventarioBean.addMaterial}" 
-			        	update=":newInventarioForm:tabView:tabelaMaterial :newInventarioForm:tabView:addMaterialPanel" 
-			        	process="@this :newInventarioForm:tabView:materialAutocomplete" style="margin-left: 35px;" />
+			        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
+			        	process="@this :inventarioEditForm:tabView:materialAutocomplete" style="margin-left: 35px;" />
 				  	
 		 		</p:outputPanel>
 	        				
 				<h2>Materiais do Inventario</h2>
-				<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existem itens nesta lista.">
+				<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existem itens nesta lista." 
+					sortBy="#{invMat.material.material}" sortOrder="ASCENDING">
 					<p:column headerText="Material">
 						<h:outputText value="#{invMat.material.material}" />							
 					</p:column>
@@ -93,17 +99,23 @@
 					<p:column headerText="Estoque Inventariado">
 						<h:inputText value="#{invMat.quantidadeInventariada}" />							
 					</p:column>
-					<p:column headerText="Remover">
-		                <p:commandLink value="Remove" action="#{inventarioBean.removerMaterial(mat)}"
-		                	update=":newInventarioForm:tabView:tabelaMaterial" process="@this" />
+					<p:column headerText="Ações">
+		                <p:commandLink value="Excluir" action="#{inventarioBean.removerMaterial(mat)}"
+		                	update=":inventarioEditForm:tabView:tabelaMaterial" process="@this" rendered="#{not inventarioBean.managed}" />
 					</p:column>
 				</p:dataTable>
 	        </p:tab>
      	</p:tabView>
      	
-     	<p:commandButton action="#{inventarioBean.createInventario}" value="Salvar" rendered="#{not inventarioBean.managed}" />
+     	<p:commandButton value="Salvar"
+     		action="#{inventarioBean.createInventario}" 
+     		update=":inventarioEditForm"
+     		rendered="#{not inventarioBean.managed}" />
      	
-     	<p:commandButton action="#{inventarioBean.updateInventario}" value="Alterar" rendered="#{inventarioBean.managed}" />
+     	<p:commandButton value="Alterar"
+     		action="#{inventarioBean.updateInventario}" 
+     		update=":inventarioEditForm"
+     		rendered="#{inventarioBean.managed}" />
      
      	<p:commandButton action="inventarioList.xhtml?faces-redirect=true" value="Cancelar" ajax="false" />
      			

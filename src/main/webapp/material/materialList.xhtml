@@ -25,31 +25,52 @@
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 					<p:spacer width="100" height="30" />
 					<p:dataTable var="mat" value="#{materialBean.allMateriais}" emptyMessage="Não existem itens nesta lista.">
-						<p:column headerText="Material">
+						<p:columnGroup type="header">
+				            <p:row>
+				                <p:column rowspan="2" headerText="Material" />
+				                <p:column rowspan="2" headerText="Unidade de Medida Entrada" />
+				                <p:column colspan="2" headerText="Estoque Mínimo" />
+				                <p:column rowspan="2" headerText="Estoque" />
+				                <p:column rowspan="2" headerText="Tipo Material" />
+				                <p:column rowspan="2" headerText="Aplicação" />
+				                <p:column rowspan="2" headerText="Marca" />
+				                <p:column rowspan="2" headerText="Grupo" />
+				                <p:column rowspan="2" headerText="Ações" style="width:185px;" />
+				            </p:row>
+				            <p:row>
+				                <p:column headerText="Informado" />
+				                <p:column headerText="Calculado" />
+				            </p:row>
+				        </p:columnGroup>
+						
+						<p:column >
 							<h:outputText value="#{mat.material}" />							
 						</p:column>
-						<p:column headerText="Unidade de Medida Entrada">
+						<p:column>
 							<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
 						</p:column>
-						<p:column headerText="Informado">
+						<p:column >
 							<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />							
 						</p:column>
-						<p:column headerText="Calculado">
+						<p:column >
 							<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />							
 						</p:column>
-						<p:column headerText="Tipo Material">
+						<p:column >
+							<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
+						</p:column>
+						<p:column >
 							<h:outputText value="#{mat.tipoMaterial.descricao}" />	
 						</p:column>
-						<p:column headerText="Aplicação">
+						<p:column >
 							<h:outputText value="#{mat.aplicacao.descricao}" />	
 						</p:column>
-						<p:column headerText="Marca">
+						<p:column >
 							<h:outputText value="#{mat.marca.descricao}" />	
 						</p:column>
-						<p:column headerText="Grupo">
+						<p:column >
 							<h:outputText value="#{mat.grupo.descricao}" />	
 						</p:column>					
-						<p:column headerText="Ações" style="width:200px">											
+						<p:column>											
 							<p:commandButton value="Editar" icon="ui-icon-pencil"
 								action="#{materialBean.edit(mat.id)}"
 								style="margin-right:5px" />
@@ -65,7 +86,7 @@
 			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
 			  	<center>		
 					<p:commandButton value="Sim" icon="ui-icon-check"  update=":materialForm:resultado" actionListener="#{materialBean.deleteMaterial()}" onclick="PF('dialogTrash').hide();" />
-					<p:spacer height="10" />
+					<p:spacer height="5" />
 					<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
 				</center>
 			</p:dialog>

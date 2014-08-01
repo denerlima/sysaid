@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:param name="pageTitle" value="Cadastro de Inventário" />
+	
+	<f:metadata>
+		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
+		<f:event type="preRenderView" listener="#{inventarioBean.initLoad(_id)}"/>
+	</f:metadata>
+	
+	<ui:define name="body">
+	
+	<h:form id="inventarioEditForm">
+		<center><h2>Cadastro de Inventário</h2></center>
+		<br />					
+	    <p:tabView  id="tabView">
+	        <p:tab title="Dados Gerais">
+	        	
+	        	<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Nº de Inventário:" />
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{inventarioBean.inventario.id}"  label="Numero de Inventário" />	
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Data de Inventário:" />
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{inventarioBean.inventario.dataInventario}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>	
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Atendente:" />
+					</div>
+					<div class="col-md-10">
+						<h:outputText id="atendente" value="#{inventarioBean.inventario.atendente}" />
+					</div>
+				</div>
+				
+				<div class="row form-row form-group">
+					<div class="col-md-2">
+						<h:outputText value="Justificativa:" />
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{inventarioBean.inventario.justificativa}" />	
+					</div>
+				</div>
+	        
+	        </p:tab>
+	        
+	        <p:tab title="Material" >
+	        				
+				<h4>Materiais do Inventário</h4>
+				<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existem itens nesta lista."
+					sortBy="#{invMat.material.material}" sortOrder="ASCENDING">
+					<p:column headerText="Material">
+						<h:outputText value="#{invMat.material.material}" />							
+					</p:column>
+					<p:column headerText="Unidade de Medida Entrada">
+						<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							
+					</p:column>
+					<p:column headerText="Estoque Atual">
+						<h:outputText value="#{invMat.quantidadeEstoque}" />							
+					</p:column>
+					<p:column headerText="Estoque Inventariado">
+						<h:outputText value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />							
+					</p:column>
+				</p:dataTable>
+	        </p:tab>
+     	</p:tabView>
+     
+     	<p:commandButton action="inventarioList.xhtml?faces-redirect=true" value="Voltar" process="@this" />
+     			
+	</h:form>
+
+	</ui:define>
+</ui:composition>

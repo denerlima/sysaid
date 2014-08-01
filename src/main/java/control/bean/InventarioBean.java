@@ -52,6 +52,10 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&id="+id;
 	}
 	
+	public String view(Integer id) {
+		return "/inventario/inventarioView.xhtml?faces-redirect=true&id="+id;
+	}
+	
 	public void initLoad(Integer id) {
 		if(inventario != null) {
 			return;
@@ -66,6 +70,10 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public String createInventario() {
 		try {
+			if(inventario.getMateriais().isEmpty()) {
+				displayErrorMessageToUser("Nenhum material foi informado.");
+				return null;
+			}
 			getInventarioFacade().create(inventario);
 			displayInfoMessageToUser("Criado com Sucesso");
 		} catch (Exception e) {
@@ -126,10 +134,16 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Campo Material Obrigatório");
 			return;
 		}
+		for(InventarioMaterial invMat : inventario.getMateriais()) {
+			if(invMat.getMaterial().getId().intValue() == material.getId().intValue()) {
+				displayErrorMessageToUser("Não permitir adicionar material repetido");
+				return;
+			}
+		}
 		InventarioMaterial invMat = new InventarioMaterial();
 		invMat.setInventario(inventario);
 		invMat.setMaterial(material);
-		invMat.setQuantidadeEstoque(material.getEstoqueCalculado());
+		invMat.setQuantidadeEstoque(material.getEstoque());
 		inventario.getMateriais().add(invMat);
 		this.material = new Material();
 	}

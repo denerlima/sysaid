@@ -15,22 +15,22 @@
 		<f:event type="preRenderView" listener="#{materialBean.initLoad(_id)}"/>
 	</f:metadata>
 
+	<ui:param name="pageTitle" value="Cadastro de Material" />
+
 	<ui:define name="body">
 		
 		<h:form id="materialEditForm" style="padding: 8px;">
 		    
-		    <title>Cadastro de Material</title>
-		
 			<center><h2>Cadastro de Material</h2></center>
 		
 			<p:spacer height="10" />
 		    
 			<div class="row form-row">
 				<div class="col-md-2">
-					Material:		
+					Material: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<h:inputText id="material" value="#{materialBean.material.material}" required="true" label="Material" />
+					<h:inputText id="material" value="#{materialBean.material.material}" required="true" label="Material" style="width: 400px;" />
 					<h:message for="material" styleClass="msg-error" />	
 				</div>
 			</div>
@@ -41,9 +41,7 @@
 					Descrição:		
 				</div>
 				<div class="col-md-10">
-					<p:inputTextarea id="descricao" rows="5" cols="40" value="#{materialBean.material.descricao}" required="true" label="Descrição"> 
-						<f:validateLength minimum="4" />
-					</p:inputTextarea>
+					<p:inputTextarea id="descricao" rows="3" cols="75" value="#{materialBean.material.descricao}" label="Descrição" />
 					<h:message for="descricao" styleClass="msg-error" />
 				</div>
 			</div>
@@ -51,10 +49,10 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Tipo Material:
+					Tipo Material: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="true" label="Tipo Material">
+					<h:selectOneMenu id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="true" label="Tipo Material" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />				
 					</h:selectOneMenu>
@@ -65,10 +63,10 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Aplicação:
+					Aplicação: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="aplicacao" value="#{materialBean.material.aplicacao}" required="true" label="Aplicação">
+					<h:selectOneMenu id="aplicacao" value="#{materialBean.material.aplicacao}" required="true" label="Aplicação" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
 					</h:selectOneMenu>
@@ -82,7 +80,7 @@
 					Marca:
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="marca" value="#{materialBean.material.marca}" required="true" label="Marca">
+					<h:selectOneMenu id="marca" value="#{materialBean.material.marca}" label="Marca" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allMarcas}" var="marca" itemLabel="#{marca.descricao}" itemValue="#{marca}" />			
 					</h:selectOneMenu>
@@ -96,9 +94,9 @@
 					Grupo:		
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="grupo" value="#{materialBean.material.grupo}" required="true" label="Grupo">
+					<h:selectOneMenu id="grupo" value="#{materialBean.material.grupo}" label="Grupo" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItems value="#{materialBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricao} - #{grupo.grupopai}" itemValue="#{grupo}" />		
+						<f:selectItems value="#{materialBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricaoLabel}" itemValue="#{grupo}" />		
 					</h:selectOneMenu>
 					<h:message for="grupo" styleClass="msg-error" />
 				</div>
@@ -107,10 +105,10 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Unidade de Medida de Entrada:		
+					Unidade de Medida de Entrada: <span class="required">*</span>		
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="entrada" value="#{materialBean.material.unidadeMedida}" required="true" label="Unidade Medida de Entrada">
+					<h:selectOneMenu id="entrada" value="#{materialBean.material.unidadeMedida}" required="true" label="Unidade Medida de Entrada" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allUnidadesMedidas}" var="um" itemLabel="#{um.unidadeEntrada}" itemValue="#{um}" />				
 					</h:selectOneMenu>
@@ -124,18 +122,37 @@
 					Código de Barra:		
 				</div>
 				<div class="col-md-10">
-					<h:inputText id="codigoBarra" value="#{materialBean.material.codigoBarra}" required="false" label="Código de Barra" />
+					<h:inputText id="codigoBarra" value="#{materialBean.material.codigoBarra}" label="Código de Barra" />
 					<h:message for="codigoBarra" styleClass="msg-error" />	
 				</div>
 			</div>
 			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Estoque: <span class="required">*</span>
+				</div>
+				<div class="col-md-10">
+					<ui:fragment rendered="#{not materialBean.managed}">
+						<h:inputText id="estoque" value="#{materialBean.material.estoque}" required="true" label="Estoque" converter="bigDecimalSimplesConverter" styleClass="estoque" />
+						<h:message for="estoque" styleClass="msg-error" />
+						<script type="text/javascript">
+							$(function(){
+								$('.estoque').forceFloat();
+							});
+						</script>
+					</ui:fragment>
+					<ui:fragment rendered="#{materialBean.managed}">
+						<h:outputText value="#{materialBean.material.estoque}" />
+					</ui:fragment>	
+				</div>
+			</div>
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Estoque Informado
+					Estoque Mínimo Informado: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<h:inputText id="estoqueInformado" value="#{materialBean.material.estoqueInformado}" required="true" label="Estoque Informado" converter="bigDecimalSimplesConverter" styleClass="estoqueInformado" />
+					<h:inputText id="estoqueInformado" value="#{materialBean.material.estoqueInformado}" required="true" label="Estoque Mínimo Informado" converter="bigDecimalSimplesConverter" styleClass="estoqueInformado" />
 					<h:message for="estoqueInformado" styleClass="msg-error" />	
 				</div>
 				<script type="text/javascript">
@@ -148,7 +165,7 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Estoque Calculado
+					Estoque Mínimo Calculado:
 				</div>
 				<div class="col-md-10">
 					<h:outputText value="#{materialBean.material.estoqueCalculado}" converter="bigDecimalSimplesConverter" />
