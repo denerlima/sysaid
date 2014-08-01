@@ -14,6 +14,7 @@ import model.entity.Material;
 import model.entity.NotaFiscal;
 import model.entity.NotaFiscalMaterial;
 import model.entity.OrdemDeCompra;
+import util.DataUtil;
 
 @Named
 public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
@@ -57,6 +58,28 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 			if (nf.getFornecedor() != null) {
 				sql.append(" AND nf.fornecedor.id = :fornecedor");
 			}
+			if (mat.getAplicacao() != null) {
+				sql.append(" AND nfm.ordemDeCompraMaterial.material.aplicacao = :aplicacao");
+			}			
+			if (dtEmissaoInicial != null) {
+				sql.append(" AND nf.dataEmissao >= to_date('"+ DataUtil.formataData(dtEmissaoInicial)+ "','dd/MM/yy')");
+			}
+			if (dtEmissaoFinal != null) {
+				sql.append(" AND nf.dataEmissao <= to_date('"+ DataUtil.formataData(dtEmissaoFinal)+ "','dd/MM/yy')");
+			}
+			if (dtEntregaInicial != null) {
+				sql.append(" AND nf.dataEntrega >= to_date('"+ DataUtil.formataData(dtEntregaInicial)+ "','dd/MM/yy')");
+			}
+			if (dtEntregaFinal != null) {
+				sql.append(" AND nf.dataEntrega <= to_date('"+ DataUtil.formataData(dtEntregaFinal)+ "','dd/MM/yy')");
+			}
+			//Percentual Desconto
+			if (nf.getAcrescimos() != null) {
+				sql.append(" AND nfm.percentualDesconto = :percentualDesconto");
+			}
+			if (nf.getTotalGeralNota() != null) {
+				sql.append(" AND nfm.total = :totalGeral");
+			}			
 			
 			sql.append(" ORDER BY nf.id");
 
