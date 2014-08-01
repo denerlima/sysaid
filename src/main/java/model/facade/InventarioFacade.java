@@ -1,12 +1,15 @@
 package model.facade;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Inventario;
 import model.entity.InventarioMaterial;
+import model.entity.Material;
 import persistence.dao.GenericDAO;
 import persistence.dao.InventarioDAO;
 import persistence.dao.MaterialDAO;
@@ -42,6 +45,11 @@ public class InventarioFacade extends GenericFacade<Inventario> implements Seria
 			invMat.getMaterial().setEstoque(invMat.getQuantidadeInventariada());
 			materialDAO.update(invMat.getMaterial());
 		}
+	}
+	
+	public List<InventarioMaterial> listMateriaisInventarios(Inventario inventario, Material material , Date dtInicial , Date dtFinal) {
+		List<InventarioMaterial> result = inventarioDAO.listMateriaisInventarios(inventario, material, dtInicial, dtFinal);        
+		return result;		
 	}
 	
 	@Override

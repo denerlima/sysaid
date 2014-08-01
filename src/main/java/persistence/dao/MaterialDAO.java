@@ -1,5 +1,6 @@
 package persistence.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,5 +54,38 @@ public class MaterialDAO extends GenericDAO<Material> {
 		material.setAtivo(0);
 		super.update(material);
 	}
+
+	@SuppressWarnings("unchecked")
+	public List<Material> listMateriais(Material material) {
+		List<Material> lista = new ArrayList<Material>();
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("Select m FROM Material m  WHERE m.ativo = 1");
+			if (material.getMaterial() != null) {
+				sql.append(" AND m.material LIKE :material");
+			}			
+			if (material.getTipoMaterial() != null) {
+				sql.append(" AND m.material.tipoMaterial.id = :idTipoMat");
+			}
+			
+			sql.append(" ORDER BY m.material");
+			Query query = getEntityManager().createQuery(sql.toString());
+			
+			if (material.getMaterial() != null) {
+				query.setParameter("material", "%"+material.getMaterial()+"%");	}
+			
+			if (material.getTipoMaterial() != null) {
+				query.setParameter("idTipoMat", material.getTipoMaterial().getId());
+			}
+			
+			lista = query.getResultList(); 
+		
+		} catch (Exception e) {
+			e.printStackTrace();		
+		}
+		return lista;
+		
+	}
+
 
 }

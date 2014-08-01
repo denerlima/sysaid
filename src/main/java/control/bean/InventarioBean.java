@@ -2,6 +2,7 @@ package control.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -26,6 +27,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	private Inventario inventario;	
 	private List<Inventario> inventarios;
+	private List<InventarioMaterial> inventariosMateriais;
 	
 	@Inject
 	private InventarioFacade inventarioFacade;
@@ -38,6 +40,8 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	private Material material;
 	private List<Material> materiais;
+	private Date dataInicialInventario;
+	private Date dataFinalInventario;
 
 	@PostConstruct 
 	public void init() { 
@@ -124,6 +128,17 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		}
 		return inventarios;
 	}
+	
+	
+	public List<InventarioMaterial> pesquisarInventarioByFilter() {
+		try {			
+			inventariosMateriais = getInventarioFacade().listMateriaisInventarios(inventario , material , dataInicialInventario , dataFinalInventario);			
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, não foi possivel achar nennhum Inventário. ERRO");
+			e.printStackTrace();
+		}
+		return inventariosMateriais;
+	}
 
 	private void loadInventarios() {
 		inventarios = getInventarioFacade().listAll();
@@ -173,6 +188,9 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	}
 	
 	public Material getMaterial() {
+		if (material == null) {
+			material = new Material();
+		}
 		return material;
 	}
 
@@ -188,6 +206,30 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		this.materiais = materiais;
 	}
 	
+	public Date getDataInicialInventario() {
+		return dataInicialInventario;
+	}
+
+	public void setDataInicialInventario(Date dataInicialInventario) {
+		this.dataInicialInventario = dataInicialInventario;
+	}
+
+	public Date getDataFinalInventario() {
+		return dataFinalInventario;
+	}
+
+	public void setDataFinalInventario(Date dataFinalInventario) {
+		this.dataFinalInventario = dataFinalInventario;
+	}
+	
+	public List<InventarioMaterial> getInventariosMateriais() {
+		return inventariosMateriais;
+	}
+
+	public void setInventariosMateriais(List<InventarioMaterial> inventariosMateriais) {
+		this.inventariosMateriais = inventariosMateriais;
+	}
+
 	public boolean isManaged() {
 		return inventario != null && inventario.getId() != null;
 	}

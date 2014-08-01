@@ -2,6 +2,8 @@ package model.facade;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -9,6 +11,7 @@ import javax.inject.Named;
 import model.entity.Material;
 import model.entity.NotaFiscal;
 import model.entity.NotaFiscalMaterial;
+import model.entity.OrdemDeCompra;
 import persistence.dao.GenericDAO;
 import persistence.dao.MaterialDAO;
 import persistence.dao.NotaFiscalDAO;
@@ -44,6 +47,16 @@ public class NotaFiscalFacade extends GenericFacade<NotaFiscal> implements Seria
 	@Override
 	public GenericDAO<NotaFiscal> getDAO() {
 		return notaFiscalDAO;
+	}
+
+	public List<NotaFiscalMaterial> pesquisarNotaFiscalbyFilters(
+			NotaFiscal notaFiscal, OrdemDeCompra ordemDeCompra,
+			Material material, Date dtEmissaoInicial, Date dtEmissaoFinal,
+			Date dtEntregaInicial, Date dtEntregaFinal) {
+		
+		List<NotaFiscalMaterial> result = notaFiscalDAO.listMateriaisNotasFiscais(notaFiscal,
+				ordemDeCompra, material, dtEmissaoInicial , dtEmissaoFinal , dtEntregaInicial , dtEntregaFinal);      
+		return result;		
 	}
 	
 }

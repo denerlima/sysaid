@@ -3,12 +3,14 @@ package control.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Fornecedor;
+import model.entity.Material;
 import model.entity.NotaFiscal;
 import model.entity.NotaFiscalMaterial;
 import model.entity.OrdemDeCompra;
@@ -28,6 +30,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 
 	private NotaFiscal notaFiscal;	
 	private List<NotaFiscal> notasFiscais;
+	private List<NotaFiscalMaterial> notasFiscaisMateriais;
 	
 	@Inject
 	private NotaFiscalFacade notaFiscalFacade;
@@ -41,6 +44,8 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	private OrdemDeCompra ordemDeCompra;
 	private List<OrdemDeCompra> ordensDeCompras;
 	private List<Fornecedor> fornecedores;
+	private Material material;
+	private Date dtEmissaoInicial , dtEmissaoFinal , dtEntregaInicial , dtEntregaFinal ;
 	
 	public NotaFiscalFacade getNotaFiscalFacade() {
 		return notaFiscalFacade;
@@ -204,6 +209,17 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		}
 	}
 	
+	public List<NotaFiscalMaterial> pesquisarNotaFiscalbyFilters() {
+		try {			
+			notasFiscaisMateriais = getNotaFiscalFacade().pesquisarNotaFiscalbyFilters(notaFiscal,
+					ordemDeCompra, material, dtEmissaoInicial , dtEmissaoFinal , dtEntregaInicial , dtEntregaFinal);			
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, não foi possivel achar nennhuma Ordem de Compra. ERRO");
+			e.printStackTrace();
+		}
+		return notasFiscaisMateriais;
+	}		
+	
 	public List<NotaFiscal> getAllNotasFiscais() {
 		if (notasFiscais == null) {
 			loadNotasFiscais();
@@ -236,15 +252,70 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	}
 
 	public OrdemDeCompra getOrdemDeCompra() {
+		if (ordemDeCompra == null) {
+			ordemDeCompra = new OrdemDeCompra();
+		}
 		return ordemDeCompra;
 	}
 
 	public void setOrdemDeCompra(OrdemDeCompra ordemDeCompra) {
 		this.ordemDeCompra = ordemDeCompra;
-	}		
+	}
+	
+	public Material getMaterial() {
+		if (material == null) {
+			material = new Material();
+		}
+		return material;
+	}
+
+	public void setMaterial(Material material) {
+		this.material = material;
+	}
 
 	public boolean isManaged() {
 		return notaFiscal != null && notaFiscal.getId() != null;
+	}
+
+	public Date getDtEmissaoInicial() {
+		return dtEmissaoInicial;
+	}
+
+	public void setDtEmissaoInicial(Date dtEmissaoInicial) {
+		this.dtEmissaoInicial = dtEmissaoInicial;
+	}
+
+	public Date getDtEmissaoFinal() {
+		return dtEmissaoFinal;
+	}
+
+	public void setDtEmissaoFinal(Date dtEmissaoFinal) {
+		this.dtEmissaoFinal = dtEmissaoFinal;
+	}
+
+	public Date getDtEntregaInicial() {
+		return dtEntregaInicial;
+	}
+
+	public void setDtEntregaInicial(Date dtEntregaInicial) {
+		this.dtEntregaInicial = dtEntregaInicial;
+	}
+
+	public Date getDtEntregaFinal() {
+		return dtEntregaFinal;
+	}
+
+	public void setDtEntregaFinal(Date dtEntregaFinal) {
+		this.dtEntregaFinal = dtEntregaFinal;
+	}
+
+	public List<NotaFiscalMaterial> getNotasFiscaisMateriais() {
+		return notasFiscaisMateriais;
+	}
+
+	public void setNotasFiscaisMateriais(
+			List<NotaFiscalMaterial> notasFiscaisMateriais) {
+		this.notasFiscaisMateriais = notasFiscaisMateriais;
 	}
 	
 }

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	<ui:define name="body">
+
+		<h:form id="notaFiscalForm" prependId="false">
+			<title>Relatório de Nota Fiscal</title>
+			<center>
+				<h2>Relatório de Nota Fiscal</h2>
+			</center>
+			<p:spacer height="10" />
+			
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Nº da Nota Fiscal:" />
+					</div>
+					<div class="col-md-3">
+						<h:inputText id="nrNotaFiscal" size="30" value="#{notaFiscalBean.notaFiscal.nrNotaFiscal}" />					
+					</div>
+					<div class="col-md-2">
+						<h:outputText value="Nº da O.C:" />
+					</div>
+					<div class="col-md-3">
+						<h:inputText id="nrOC" size="30" value="#{notaFiscalBean.ordemDeCompra.numeroOC}" />					
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Material:" />
+					</div>
+					<div class="col-md-3">
+						<h:inputText id="material" size="50" value="#{notaFiscalBean.material.material}" />
+					</div>
+					<div class="col-md-2">Tipo Material:</div>
+					<div class="col-md-3">
+						<h:selectOneMenu id="tipoMaterial" value="#{notaFiscalBean.material.tipoMaterial}" required="false" label="Tipo Material">
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+						</h:selectOneMenu>
+						<h:message for="tipoMaterial" styleClass="msg-error" />
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Fornecedor:" />	
+					</div>
+					<div class="col-md-3">
+						<h:selectOneMenu id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" label="Fornecedor">
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{notaFiscalBean.allFornecedores}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
+						</h:selectOneMenu>
+
+					</div>
+					<div class="col-md-2">
+						<h:outputText value="Aplicação:" />	
+					</div>
+					<div class="col-md-3">
+						<h:selectOneMenu id="aplicacao" value="#{materialBean.material.aplicacao}" label="Aplicação" styleClass="input-sm">
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{materialBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
+						</h:selectOneMenu>
+					</div>					
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Data Emissão:" />
+					</div>
+					<div class="col-md-3">
+						<p:calendar pattern="dd/MM/yy" locale="pt_BR"
+							value="#{notaFiscalBean.dtEmissaoInicial}" size="10" navigator="true" />
+					</div>
+					<div class="col-md-2">
+						<h:outputText value="Até:" />
+					</div>
+					<div class="col-md-3">
+						<p:calendar pattern="dd/MM/yy" locale="pt_BR"
+							value="#{notaFiscalBean.dtEmissaoFinal}" size="10" navigator="true" />
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Data Entrega:" />
+					</div>
+					<div class="col-md-3">
+						<p:calendar pattern="dd/MM/yy" locale="pt_BR"
+							value="#{notaFiscalBean.dtEntregaInicial}" size="10" navigator="true" />
+					</div>
+					<div class="col-md-2">
+						<h:outputText value="Até:" />
+					</div>
+					<div class="col-md-3">
+						<p:calendar pattern="dd/MM/yy" locale="pt_BR"
+							value="#{notaFiscalBean.dtEntregaFinal}" size="10" navigator="true" />
+					</div>
+				</div>				
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Percentual de desconto:" />	
+					</div>
+					<div class="col-md-2">
+						<h:outputText id="total" value="#{notaFiscalBean.notaFiscal.acrescimos}" converter="bigDecimalConverter"  />
+					</div>
+				
+					<div class="col-md-2">
+						<h:outputText value="Total Geral da Nota:" />	
+					</div>
+					<div class="col-md-2">
+						<h:outputText id="totalGeral" value="#{notaFiscalBean.notaFiscal.totalGeralNota}" converter="bigDecimalConverter" />						
+					</div>
+					<div class="col-md-2">
+						<p:commandButton value="Pesquisar" icon="ui-icon-search"
+								action="#{notaFiscalBean.pesquisarNotaFiscalbyFilters}" update=":notaFiscalForm" style="margin-left: 5px;" />
+					</div>
+				</div>
+				
+			<center>
+				<p:outputPanel id="resultado" layout="block" style="width:95%; overflow:auto">
+					<p:spacer width="100" height="30" />
+					<p:dataTable id="dtResultado" var="_nfm"
+						value="#{notaFiscalBean.notasFiscaisMateriais}" rows="10" paginator="true"
+						paginatorAlwaysVisible="false" paginatorPosition="bottom"
+						currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista.">
+
+						<p:column headerText="Nº do NF">
+							<h:outputText value="#{_nfm.notaFiscal.nrNotaFiscal}" />
+						</p:column>	
+						<p:column headerText="Data de Emissão">
+							<h:outputText value="#{_nfm.notaFiscal.dataEmissao}">
+								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+							</h:outputText>
+						</p:column>		
+						<p:column headerText="Data de Entrega">
+							<h:outputText value="#{_nfm.notaFiscal.dataEntrega}">
+								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Fornecedor">
+							<h:outputText value="#{_nfm.notaFiscal.fornecedor}" />
+						</p:column>
+						<p:column headerText="Nº OC">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.numeroOC}" />
+						</p:column>
+						<p:column headerText="Material">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.material}" />
+						</p:column>								
+						<p:column headerText="Tipo de Material">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.tipoMaterial.descricao}" />
+						</p:column>
+						<p:column headerText="Unidade de medida Entrada">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.unidadeMedida.unidadeEntrada.descricao}" />
+						</p:column>
+						<p:column headerText="Quantidade Autorizada ">
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.quantidadeAutorizada}" />
+						</p:column>				
+						<p:column headerText="Quantidade NF ">
+							<h:outputText value="#{_nfm.quantidade}" />
+						</p:column>
+						<p:column headerText="Preço Unitário">
+							<h:outputText value="#{_nfm.precoUnitario}" />
+						</p:column>
+						<p:column headerText="Total">
+							<h:outputText value="#{_nfm.total}" />
+						</p:column>											
+					</p:dataTable>
+				</p:outputPanel>
+
+				<p:outputPanel id="export" layout="block" rendered="#{not empty inventarioBean.inventariosMateriais}">
+			 		Exportar Relatório:  
+					<h:commandLink>
+						<p:graphicImage name="/img/excel.png" width="24" />
+						<p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />
+					</h:commandLink>
+
+					<h:commandLink>
+						<p:graphicImage name="/img/pdf.png" width="24" />
+						<p:dataExporter type="pdf" target="dtResultado" fileName="relatorioEstoque" />
+					</h:commandLink>
+				</p:outputPanel>
+
+			</center>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

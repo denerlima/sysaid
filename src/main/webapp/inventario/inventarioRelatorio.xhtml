@@ -9,63 +9,63 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	<ui:define name="body">
 
-		<h:form id="ordemCompraForm" prependId="false">
-			<title>Relatório de Ordem de Compra</title>
+		<h:form id="inventarioForm" prependId="false">
+			<title>Relatório de Inventário</title>
 			<center>
-				<h2>Relatório de Ordem de Compra</h2>
+				<h2>Relatório de Inventário</h2>
 			</center>
 			<p:spacer height="10" />
 
 			
 				<div class="row form-row">
 					<div class="col-md-2">
-						<h:outputText value="Data Emissão:" />
-					</div>
-					<div class="col-md-2">
-						<p:calendar pattern="dd/MM/yy" locale="pt_BR"
-							value="#{ordemDeCompraBean.ordemDeCompra.dataEmissao}" size="10" navigator="true" />
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Até:" />
-					</div>
-					<div class="col-md-2">
-						<p:calendar pattern="dd/MM/yy" locale="pt_BR"
-							value="#{ordemDeCompraBean.ordemDeCompra.dataAutorizacao}" size="10" navigator="true" />
-					</div>
-				</div>
-
-				<div class="row form-row">
-					<div class="col-md-2">
 						<h:outputText value="Material:" />
 					</div>
 					<div class="col-md-2">
 						<p:autoComplete id="materialAutocomplete" minQueryLength="3"
-							maxResults="10" value="#{ordemDeCompraBean.material}"
+							maxResults="10" value="#{inventarioBean.material}"
 							label="Material" var="mat" itemLabel="#{mat.material}" itemValue="#{mat}"
-							completeMethod="#{ordemDeCompraBean.completeMaterial}" dropdown="true" />
+							completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 					</div>
 					<div class="col-md-2">Tipo Material:</div>
 					<div class="col-md-2">
-						<h:selectOneMenu id="tipoMaterial" value="#{ordemDeCompraBean.material.tipoMaterial}" required="false" label="Tipo Material">
+						<h:selectOneMenu id="tipoMaterial" value="#{inventarioBean.material.tipoMaterial}" required="false" label="Tipo Material">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						</h:selectOneMenu>
 						<h:message for="tipoMaterial" styleClass="msg-error" />
 					</div>
 				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Data Inicial:" />
+					</div>
+					<div class="col-md-2">
+						<p:calendar pattern="dd/MM/yy" locale="pt_BR"
+							value="#{inventarioBean.dataInicialInventario}" size="10" navigator="true" />
+					</div>
+					<div class="col-md-2">
+						<h:outputText value="Data Final:" />
+					</div>
+					<div class="col-md-2">
+						<p:calendar pattern="dd/MM/yy" locale="pt_BR"
+							value="#{inventarioBean.dataFinalInventario}" size="10" navigator="true" />
+					</div>
+				</div>
 
 				<div class="row form-row">
 					<div class="col-md-2">
-						<h:outputText value="Autorizador:" />
+						<h:outputText value="Atendente:" />
 					</div>
 					<div class="col-md-2">
-						<h:selectOneMenu id="cbAutorizador" immediate="true" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}">
+						<h:selectOneMenu id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{ordemDeCompraBean.autorizadores}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
+							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
 						</h:selectOneMenu>
 					</div>
 					<div class="col-md-4">
-						<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{ordemDeCompraBean.pesquisarOrdemCompraByFilter}" update=":ordemCompraForm" />
+						<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{inventarioBean.pesquisarInventarioByFilter}" update=":inventarioForm" />
 					</div>
 				</div>
 			
@@ -73,33 +73,40 @@
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 					<p:spacer width="100" height="30" />
-					<p:dataTable id="dtResultado" var="_ocm"
-						value="#{ordemDeCompraBean.ordensDeComprasMateriais}" rows="10" paginator="true"
+					<p:dataTable id="dtResultado" var="_invm"
+						value="#{inventarioBean.inventariosMateriais}" rows="10" paginator="true"
 						paginatorAlwaysVisible="false" paginatorPosition="bottom"
 						currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista.">
 
-						<p:column headerText="Nº de Ordem de Compra">
-							<h:outputText value="#{_ocm.ordemDeCompra.numeroOC}" />
-						</p:column>
-						<p:column headerText="Data Autorização">
-							<h:outputText value="#{_ocm.ordemDeCompra.dataAutorizacao}">
+						<p:column headerText="Data">
+							<h:outputText value="#{_invm.inventario.dataInventario}">
 								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 							</h:outputText>
-						</p:column>
-						<p:column headerText="Autorizador">
-							<h:outputText value="#{_ocm.ordemDeCompra.autorizador.nomeCompleto}" />
+						</p:column>											
+						<p:column headerText="Nº do Inventário">
+							<h:outputText value="#{_invm.inventario.id}" />
+						</p:column>						
+						<p:column headerText="Atendente">
+							<h:outputText value="#{_invm.inventario.atendente.nomeCompleto}" />
 						</p:column>
 						<p:column headerText="Material">
-							<h:outputText value="#{_ocm.material.material}" />
+							<h:outputText value="#{_invm.material.material}" />
 						</p:column>
 						<p:column headerText="Tipo de Material">
-							<h:outputText value="#{_ocm.material.tipoMaterial.descricao}" />
+							<h:outputText value="#{_invm.material.tipoMaterial.descricao}" />
 						</p:column>
+						<p:column headerText="Unidade de medida Entrada">
+							<h:outputText value="#{_invm.material.unidadeMedida.unidadeEntrada.descricao}" />
+						</p:column>
+						<p:column headerText="Quantidade Inventariada	">
+							<h:outputText value="#{_invm.quantidadeInventariada}" />
+						</p:column>
+											
 					</p:dataTable>
 				</p:outputPanel>
 
-				<p:outputPanel id="export" layout="block" rendered="#{not empty ordemDeCompraBean.ordensDeComprasMateriais}">
+				<p:outputPanel id="export" layout="block" rendered="#{not empty inventarioBean.inventariosMateriais}">
 			 		Exportar Relatório:  
 					<h:commandLink>
 						<p:graphicImage name="/img/excel.png" width="24" />

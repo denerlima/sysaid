@@ -43,4 +43,10 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 		return materialDAO;
 	}
 
+	public List<Material> pesquisarMaterialByFilter(Material material) {
+		List<Material> result = materialDAO.listMateriais(material);        
+		return result;
+		
+	}
+
 }
