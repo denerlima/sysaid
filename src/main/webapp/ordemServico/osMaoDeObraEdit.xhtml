@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property" 
+	template="/template.xhtml">
+	
+	<ui:param name="pageTitle" value="Cadastro de Mão de Obra da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}" />
+	
+	<f:metadata>
+		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
+		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
+	</f:metadata>
+	
+	
+	<ui:define name="body">
+
+		<center><h2>Cadastro de Mão de Obra da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
+		
+		<h:form id="osMaoDeObraForm">		
+			<p:spacer height="10" />
+			
+			<p:outputPanel id="addMaterialPanel">
+		        	
+				<p:autoComplete id="maoDeObraAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
+					value="#{ordemServicoBean.maoDeObra}" label="Mão de Obra" 
+					var="_mao" itemLabel="#{_mao.descricao}" itemValue="#{_mao}" 
+					completeMethod="#{ordemServicoBean.completeMaoDeObra}" dropdown="true" />
+			
+		        <p:commandButton value="Adicionar Mão de Obra" icon="ui-icon-plus" action="#{ordemServicoBean.addMaoDeObra}" 
+		        	update=":osMaoDeObraForm" 
+		        	process="@this :osMaoDeObraForm:maoDeObraAutocomplete" style="margin-left: 35px;" />
+			  	
+	 		</p:outputPanel>
+			
+			<center>
+				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
+					<br />
+					<p:dataTable var="_maoDeObra" value="#{ordemServicoBean.ordemServico.maosDeObras}" 
+						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
+						
+						<p:column headerText="Mão de Obra">
+							<h:outputText value="#{_maoDeObra.maoDeObra.descricao}" />
+						</p:column>
+						
+						<p:column headerText="Quantidade">
+							<h:inputText value="#{_maoDeObra.quantidade}" />
+						</p:column>
+						
+						<p:column headerText="Período">
+							<h:inputText value="#{_maoDeObra.periodo}" />
+						</p:column>
+						
+						<p:column headerText="Unidade de Medida">
+							<h:selectOneMenu value="#{_maoDeObra.unidadeMedida}">
+								<f:selectItem itemValue="1" itemLabel="Hora" />
+								<f:selectItem itemValue="2" itemLabel="Dia" />
+							</h:selectOneMenu>
+						</p:column>
+						
+						<p:column headerText="Valor Total">
+							<h:outputText value="#{_maoDeObra.total}" />
+						</p:column>
+									
+						<p:column headerText="Ações">											
+							<p:commandButton value="Excluir"
+								action="#{ordemServicoBean.removerMaoDeObra(_mat)}"
+								update=":osMaoDeObraForm:resultado"
+								process="@this" />
+															
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+			</center>
+					
+			<div class="buttons">
+					
+				<p:commandButton value="Salvar"
+					action="#{ordemServicoBean.updateMaosDeObras}"
+					update=":osMaoDeObraForm" />		
+				
+				<p:commandButton value="Cancelar" action="#{ordemServicoBean.redirectMaoDeObraList}" process="@this" />
+			
+			</div>		
+						
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

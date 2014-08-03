@@ -30,6 +30,9 @@ public class OrdemServico extends GenericModelo implements Serializable{
 	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL)
 	private List<OrdemServicoMaterial> materiais = new ArrayList<OrdemServicoMaterial>();
 	
+	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL)
+	private List<OrdemServicoMaoDeObra> maosDeObras = new ArrayList<OrdemServicoMaoDeObra>();
+	
 	/*
 	 * Getters and Setters
 	 */
@@ -65,5 +68,13 @@ public class OrdemServico extends GenericModelo implements Serializable{
 	public void setMateriais(List<OrdemServicoMaterial> materiais) {
 		this.materiais = materiais;
 	}
-			
+
+	public List<OrdemServicoMaoDeObra> getMaosDeObras() {
+		return maosDeObras;
+	}
+
+	public void setMaosDeObras(List<OrdemServicoMaoDeObra> maosDeObras) {
+		this.maosDeObras = maosDeObras;
+	}
+		
 }

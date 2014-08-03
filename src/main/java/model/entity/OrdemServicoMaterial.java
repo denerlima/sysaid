@@ -34,6 +34,10 @@ public class OrdemServicoMaterial {
 	@JoinColumn(name="id_material", referencedColumnName="id")
 	private Material material;
 	
+	@ManyToOne
+	@JoinColumn(name="id_uni_med_saida", referencedColumnName="id")
+	private UnidadeMedidaSaida unidadeMedidaSaida;
+	
 	@Column(name="quantidade_solicitada", nullable = false)
 	private BigDecimal quantidadeSolicitada = new BigDecimal(0);
 	
@@ -42,6 +46,7 @@ public class OrdemServicoMaterial {
 	
 	@Column(name="quantidade_pendente", nullable = false)
 	private BigDecimal quantidadePendente = new BigDecimal(0);
+	
 	
 
 	/*
@@ -102,6 +107,14 @@ public class OrdemServicoMaterial {
 
 	public void setQuantidadePendente(BigDecimal quantidadePendente) {
 		this.quantidadePendente = quantidadePendente;
+	}
+
+	public UnidadeMedidaSaida getUnidadeMedidaSaida() {
+		return unidadeMedidaSaida;
+	}
+
+	public void setUnidadeMedidaSaida(UnidadeMedidaSaida unidadeMedidaSaida) {
+		this.unidadeMedidaSaida = unidadeMedidaSaida;
 	}
 
 }

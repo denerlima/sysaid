@@ -237,7 +237,7 @@ public class Material extends GenericModelo implements Serializable{
 		return material;
 	}
 	
-	public String nomeLabel() {
+	public String getMaterialLabel() {
 		if(getMarca() != null) {
 			return getMaterial() + " - " + getMarca().getDescricao();
 		} 

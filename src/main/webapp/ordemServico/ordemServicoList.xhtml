@@ -29,17 +29,18 @@
 		<h:form id="ordemServicoForm">		
 			<p:spacer height="10" />
 			<center>
-			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
+			<p:outputPanel id="resultado" layout="block" style="width:50%; overflow:auto">
 				<br />
-				<p:dataTable var="os" value="#{ordemServicoBean.allOrdensServicos}" emptyMessage="Não existem itens nesta lista.">
-					<p:column headerText="Id">
-						<h:outputText value="#{os.id}" />							
-					</p:column>
-											
-					<p:column headerText="Ações" style="width:280px">											
+				<p:dataTable var="os" value="#{ordemServicoBean.allOrdensServicos}" emptyMessage="Não existem itens nesta lista.">						
+					<p:column headerText="Ordens de Serviços" style="width:400px">											
+						<h:outputText value="OS: #{os.id}" />
+
+						<p:button value="Material" href="osMaterialList.xhtml?os=#{os.id}" style="margin-left: 10px;" />
 						
-						<a href="osMaterialList.xhtml?os=#{os.id}">Materiais</a>
-														
+						<p:button value="Realizado" href="osRealizadoEdit.xhtml?os=#{os.id}" style="margin-left: 3px;" />
+						
+						<p:button value="Mão de Obra" href="osMaoDeObraList.xhtml?os=#{os.id}" style="margin-left: 3px;" />
+						
 					</p:column>
 					
 				</p:dataTable>

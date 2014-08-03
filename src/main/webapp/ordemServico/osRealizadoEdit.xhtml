@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property" 
+	template="/template.xhtml">
+
+	<ui:param name="pageTitle" value="Cadastro de Realizado da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}" />
+	
+	<f:metadata>
+		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
+		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
+	</f:metadata>
+	
+	<ui:define name="body">
+
+		<center><h2>Cadastro de Realizado da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
+		
+		<h:form id="osMaterialEditForm">		
+			<p:spacer height="10" />
+			
+			<center>
+				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
+					<br />
+					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" 
+						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
+						
+						<p:columnGroup type="header">
+				            <p:row>
+				            	<p:column rowspan="2" headerText="Data" />
+				                <p:column rowspan="2" headerText="Material" />
+				                <p:column rowspan="2" headerText="Unidade de Medida" />
+				                <p:column colspan="2" headerText="Quantidade" />
+				            </p:row>
+				            <p:row>
+				            	<p:column headerText="Solicitada" />
+				                <p:column headerText="Entregue" />
+				            </p:row>
+				        </p:columnGroup>
+						
+						<p:column>
+							dd/mm/yyyy							
+						</p:column>
+						<p:column>
+							<h:outputText value="#{_mat.material.materialLabel}" />							
+						</p:column>
+						<p:column>
+							<h:outputText value="#{_mat.unidadeMedidaSaida.unidade.descricao}" />							
+						</p:column>
+						<p:column>
+							0							
+						</p:column>
+						<p:column>
+							0							
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+			</center>
+					
+			<div class="buttons">
+					
+				<p:commandButton value="Salvar"
+					action="#{ordemServicoBean.updateMateriais}"
+					update=":osMaterialEditForm" />
+			
+			</div>		
+						
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

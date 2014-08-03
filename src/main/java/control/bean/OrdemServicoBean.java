@@ -7,9 +7,12 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.MaoDeObra;
 import model.entity.Material;
 import model.entity.OrdemServico;
+import model.entity.OrdemServicoMaoDeObra;
 import model.entity.OrdemServicoMaterial;
+import model.facade.MaoDeObraFacade;
 import model.facade.MaterialFacade;
 import model.facade.OrdemServicoFacade;
 
@@ -30,8 +33,14 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	@Inject
 	private MaterialFacade materialFacade;
 	
+	@Inject
+	private MaoDeObraFacade maoDeObraFacade;
+	
 	private Material material;
 	private List<Material> materiais;
+	
+	private MaoDeObra maoDeObra;
+	private List<MaoDeObra> maosDeObras;
 	
 	public OrdemServicoFacade getOrdemServicoFacade() {
 		return ordemServicoFacade;
@@ -48,13 +57,31 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		this.ordemServico = ordemServico;
 	}
 	
-	public String addNovoMaterial() {
+	public String redirectAddMaterial() {
 		return "/ordemServico/osMaterialEdit.xhtml?faces-redirect=true&os="+ordemServico.getId();
+	}
+	
+	public String redirectAddMaoDeObra() {
+		return "/ordemServico/osMaoDeObraEdit.xhtml?faces-redirect=true&os="+ordemServico.getId();
+	}
+	
+	public String redirectPendencia() {
+		return "/ordemServico/osPendenciaEdit.xhtml?faces-redirect=true&os="+ordemServico.getId();
+	}
+	
+	public String redirectDevolucao() {
+		return "/ordemServico/osDevolucaoEdit.xhtml?faces-redirect=true&os="+ordemServico.getId();
 	}
 	
 	public String redirectMaterialList() {
 		return "/ordemServico/osMaterialList.xhtml?faces-redirect=true&os="+ordemServico.getId();
 	}
+	
+	public String redirectMaoDeObraList() {
+		return "/ordemServico/osMaoDeObraList.xhtml?faces-redirect=true&os="+ordemServico.getId();
+	}
+	
+	
 	
 	public void initLoad(Integer id) {
 		if(ordemServico != null) {
@@ -71,6 +98,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		try {
 			getOrdemServicoFacade().create(ordemServico);
 			displayInfoMessageToUser("Criado com Sucesso");
+			loadOrdensServicos();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
@@ -94,6 +122,18 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			getOrdemServicoFacade().update(ordemServico);
 			displayInfoMessageToUser("Operação realizada com sucesso");
 			return redirectMaterialList();
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String updateMaosDeObras() {
+		try {
+			getOrdemServicoFacade().update(ordemServico);
+			displayInfoMessageToUser("Operação realizada com sucesso");
+			return redirectMaoDeObraList();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
@@ -158,6 +198,49 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		this.material = new Material();
 	}
 	
+	public void removerMaterial(OrdemServicoMaterial osm) {
+		ordemServico.getMateriais().remove(osm); 
+	}
 	
+	public List<MaoDeObra> completeMaoDeObra(String name) {
+		List<MaoDeObra> queryResult = new ArrayList<MaoDeObra>();
+		if (maosDeObras == null) {
+			maosDeObras = maoDeObraFacade.listAll();
+		}
+		for (MaoDeObra mao : maosDeObras) {
+			if (mao.getDescricao().toLowerCase().contains(name.toLowerCase())) {
+				queryResult.add(mao);
+			}
+		}
+		return queryResult;
+	}
+	
+	public MaoDeObra getMaoDeObra() {
+		return maoDeObra;
+	}
+
+	public void setMaoDeObra(MaoDeObra maoDeObra) {
+		this.maoDeObra = maoDeObra;
+	}
+
+	public List<MaoDeObra> getMaosDeObras() {
+		return maosDeObras;
+	}
+
+	public void addMaoDeObra() {
+		if(maoDeObra == null) {
+			displayErrorMessageToUser("Campo Mão de Obra Obrigatório");
+			return;
+		}
+		OrdemServicoMaoDeObra osMaoDeObra = new OrdemServicoMaoDeObra();
+		osMaoDeObra.setOrdemServico(ordemServico);
+		osMaoDeObra.setMaoDeObra(maoDeObra);
+		ordemServico.getMaosDeObras().add(osMaoDeObra);
+		this.maoDeObra = new MaoDeObra();
+	}
+	
+	public void removerMaoDeObra(OrdemServicoMaoDeObra osmo) {
+		ordemServico.getMaosDeObras().remove(osmo); 
+	}
 	
 }

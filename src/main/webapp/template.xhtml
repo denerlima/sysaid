@@ -54,9 +54,14 @@
 			<p:menuitem value="Sugestão de Compra" url="/estoque/sugestaoCompraRelatorio.xhtml" />
 			<p:menuitem value="Inventário" url="/inventario/inventarioRelatorio.xhtml" />
 		</p:submenu>
+		
+		<p:submenu label="Externo">
+			<p:menuitem value="Ordem de Serviço" url="/ordemServico/ordemServicoList.xhtml" />
+		</p:submenu>
+		
 	</p:menubar>
 
-	<p:messages id="msgs"  autoUpdate="true" globalOnly="true" />
+	<p:messages id="msgs"  autoUpdate="true" globalOnly="false" />
 	
 	<ui:insert name="body" />
 	

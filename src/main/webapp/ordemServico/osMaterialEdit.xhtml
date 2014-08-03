@@ -9,14 +9,13 @@
 	xmlns:cp="http://java.sun.com/jsf/composite/components/property" 
 	template="/template.xhtml">
 	
+	<ui:param name="pageTitle" value="Cadastro de Material da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}" />
+	
 	<f:metadata>
 		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
 		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
 	</f:metadata>
 	
-	<ui:define name="head">
-		<title>Cadastro de Material da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</title>	
-	</ui:define>
 	
 	<ui:define name="body">
 
@@ -40,15 +39,71 @@
 			
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
-					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" emptyMessage="Não existem itens nesta lista.">
-						<p:column headerText="Id">
-							<h:outputText value="#{_mat.id}" />							
-						</p:column>
-						<p:column headerText="Material">
+					<br />
+					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" 
+						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
+						
+						<p:columnGroup type="header">
+				            <p:row>
+				                <p:column rowspan="2" headerText="Material" />
+				                <p:column colspan="2" headerText="Unidade de Medida" />
+				                <p:column colspan="3" headerText="Quantidade" />
+				                <p:column rowspan="2" headerText="Em Estoque" />
+				                <p:column rowspan="2" headerText="Ações" />
+				            </p:row>
+				            <p:row>
+				            	<p:column headerText="Entrada" />
+				                <p:column headerText="Saida" />
+				                <p:column headerText="Solicitada" />
+				                <p:column headerText="Entregue" />
+				                <p:column headerText="Pendente" />
+				            </p:row>
+				        </p:columnGroup>
+						
+						<p:column>
 							<h:outputText value="#{_mat.material.material}" />							
-						</p:column>			
-						<p:column headerText="Ações" style="width:280px">											
-							
+						</p:column>
+						<p:column>
+							<h:outputText value="#{_mat.material.unidadeMedida.unidadeEntrada.descricao}" />							
+						</p:column>
+						<p:column>
+							<h:selectOneMenu value="#{_mat.unidadeMedidaSaida}">
+								<f:selectItems value="#{_mat.material.unidadeMedida.saidas}" var="_saida" itemLabel="#{_saida.unidade.descricao}" itemValue="#{_saida}" />
+							</h:selectOneMenu>							
+						</p:column>
+						<p:column>
+							<h:inputText value="#{_mat.quantidadeSolicitada}" style="width: 40px;" styleClass="qtdeSolicitada-#{_idx}" />
+							<script type="text/javascript">
+								$(function(){
+									$('.qtdeSolicitada-#{_idx}').forceFloat();
+								});
+							</script>							
+						</p:column>
+						<p:column>
+							<h:inputText value="#{_mat.quantidadeEntregue}" style="width: 40px;" styleClass="qtdeEntregue-#{_idx}" />
+							<script type="text/javascript">
+								$(function(){
+									$('.qtdeEntregue-#{_idx}').forceFloat();
+								});
+							</script>							
+						</p:column>
+						<p:column>
+							<h:inputText value="#{_mat.quantidadePendente}" style="width: 40px;" styleClass="qtdePendente-#{_idx}" />
+							<script type="text/javascript">
+								$(function(){
+									$('.qtdePendente-#{_idx}').forceFloat();
+								});
+							</script>							
+						</p:column>
+						<p:column>
+							<h:outputText value="#{_mat.material.estoque}" />							
+						</p:column>
+									
+						<p:column>											
+							<p:commandButton value="Excluir"
+								action="#{ordemServicoBean.removerMaterial(_mat)}"
+								update=":osMaterialEditForm:resultado"
+								process="@this" />
 															
 						</p:column>
 					</p:dataTable>
