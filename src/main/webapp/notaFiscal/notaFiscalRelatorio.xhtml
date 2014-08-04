@@ -109,14 +109,14 @@
 						<h:outputText value="Percentual de desconto:" />	
 					</div>
 					<div class="col-md-2">
-						<h:outputText id="total" value="#{notaFiscalBean.notaFiscal.acrescimos}" converter="bigDecimalConverter"  />
+						<h:inputText id="total" value="#{notaFiscalBean.notaFiscal.acrescimos}" converter="bigDecimalConverter"  />
 					</div>
 				
 					<div class="col-md-2">
 						<h:outputText value="Total Geral da Nota:" />	
 					</div>
 					<div class="col-md-2">
-						<h:outputText id="totalGeral" value="#{notaFiscalBean.notaFiscal.totalGeralNota}" converter="bigDecimalConverter" />						
+						<h:inputText id="totalGeral" value="#{notaFiscalBean.notaFiscal.totalGeralNota}" converter="bigDecimalConverter" />						
 					</div>
 					<div class="col-md-2">
 						<p:commandButton value="Pesquisar" icon="ui-icon-search"
