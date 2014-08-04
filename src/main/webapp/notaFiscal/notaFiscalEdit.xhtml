@@ -135,7 +135,7 @@
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" />
 						</p:column>
 						<p:column headerText="Material">
-							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.descricao}" />
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.materialLabel}" />
 						</p:column>
 						<p:column headerText="Tipo de Material">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.tipoMaterial.descricao}" />
@@ -147,15 +147,20 @@
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.quantidadeAutorizada}" />
 						</p:column>
 						<p:column headerText="Quantidade NF">
-							<h:inputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter" style="width: 40px;" styleClass="quantidade-#{_idx}">
-								<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" 
-									update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel :notaFiscalEditForm:notaFiscalTab:totaisPanel" />
-							</h:inputText>
-							<script type="text/javascript">
-								$(function(){
-									$('.quantidade-#{_idx}').forceFloat();
-								});
-							</script>
+							<ui:fragment rendered="#{notaFiscalBean.managed}">
+								<h:outputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter" />
+							</ui:fragment>
+							<ui:fragment rendered="#{not notaFiscalBean.managed}">
+								<h:inputText value="#{_nfm.quantidade}" converter="bigDecimalSimplesConverter" style="width: 40px;" styleClass="quantidade-#{_idx}">
+									<p:ajax event="change" listener="#{notaFiscalBean.calcular(_nfm)}" process="@this" 
+										update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel :notaFiscalEditForm:notaFiscalTab:totaisPanel" />
+								</h:inputText>
+								<script type="text/javascript">
+									$(function(){
+										$('.quantidade-#{_idx}').forceFloat();
+									});
+								</script>
+							</ui:fragment>
 						</p:column>
 						<p:column headerText="Preço Unitário">
 							<h:inputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter" style="width: 65px;" styleClass="precoUnitario-#{_idx}">
@@ -197,7 +202,8 @@
 			                <p:commandButton value="Excluir" 
 			                	action="#{notaFiscalBean.removerMaterial(_nfm)}"
 			                	update=":notaFiscalEditForm:notaFiscalTab:materiaisPanel" 
-			                	process="@this" />
+			                	process="@this"
+			                	rendered="#{not notaFiscalBean.managed}" />
 						</p:column>
 					</p:dataTable>
 					
@@ -283,7 +289,7 @@
 								<h:selectBooleanCheckbox value="#{_ocm.selecionado}" />
 							</p:column>
 							<p:column headerText="Material">
-								#{_ocm.material.material}
+								#{_ocm.material.materialLabel}
 							</p:column>
 							<p:column headerText="Tipo Material">
 								#{_ocm.material.tipoMaterial.descricao}

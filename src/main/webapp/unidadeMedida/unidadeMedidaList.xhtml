@@ -22,7 +22,8 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:80%; overflow:auto">
 				<br />
-				<p:dataTable id="unidadesTable" var="um" value="#{unidadeMedidaBean.allUnidadesMedida}" emptyMessage="Não existem itens nesta lista.">
+				<p:dataTable id="unidadesTable" var="um" value="#{unidadeMedidaBean.allUnidadesMedida}" emptyMessage="Não existem itens nesta lista."
+					rows="10" paginator="true" paginatorPosition="bottom">
 					<p:column headerText="Entrada">
 						<h:outputText value="#{um.unidadeEntrada.descricao}" />							
 					</p:column>
@@ -48,7 +49,7 @@
 			</p:outputPanel>
 			</center>
 			
-			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
+			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50" styleClass="ui-dialog-top">
 			  <center>		
 				<p:commandButton value="Sim" icon="ui-icon-check"  update=":unidadeMedidaForm" actionListener="#{unidadeMedidaBean.deleteUnidadeMedida()}" onclick="PF('dialogTrash').hide();" />
 				<p:spacer width="5" />

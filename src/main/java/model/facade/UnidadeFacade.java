@@ -7,15 +7,15 @@ import javax.inject.Named;
 
 import model.entity.Unidade;
 import persistence.dao.GenericDAO;
-import persistence.dao.UnidadeEntradaDAO;
+import persistence.dao.UnidadeDAO;
 
 @Named
-public class UnidadeEntradaFacade extends GenericFacade<Unidade> implements Serializable{
+public class UnidadeFacade extends GenericFacade<Unidade> implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private UnidadeEntradaDAO unidadeEntradaDAO;
+	private UnidadeDAO unidadeEntradaDAO;
 
 	@Override
 	public GenericDAO<Unidade> getDAO() {

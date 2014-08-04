@@ -15,13 +15,13 @@
 					Unidade Entrada: <span class="required">*</span>
 				</div>
 				<div class="col-md-8">
-					<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" required="true" label="Unidade Entrada">
+					<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" required="true" label="Unidade Entrada" converter="omnifaces.SelectItemsIndexConverter">
 						<p:ajax event="change" process="@this" />
-						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{unidadeMedidaBean.unidades}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
 					</h:selectOneMenu>
 					<p:commandLink value="Nova Unidade"
-						action="#{unidadeEntradaBean.newUnidadeEntrada}"
+						action="#{unidadeBean.newUnidade}"
 						update=":unidadeDialogForm"
 						oncomplete="PF('unidadeDialog').show();"
 						style="margin-left: 8px; text-decoration: underline;" />
@@ -34,7 +34,8 @@
 					<br />
 					<p:commandButton value="Adicionar Unidade de Saída" 
 						action="#{unidadeMedidaBean.addUnidadeSaida}"
-						update=":unidadeMedidaDialogForm" />
+						update=":unidadeMedidaDialogForm"
+						process="@this :unidadeMedidaDialogForm:entrada" />
 				</div>
 			</div>
 			
@@ -43,25 +44,29 @@
 					<p:dataTable id="tableSaidas" value="#{unidadeMedidaBean.unidadeMedida.saidas}" var="_saida"
 						emptyMessage="Não existem itens nesta lista." style="margin-top: 5px;">
 						<p:column headerText="">
-							<h:selectOneMenu id="unidadeSaida" value="#{_saida.unidade}" required="true" label="Unidade Saída">
-								<f:selectItem itemValue="" itemLabel="Selecione" />
+							<h:selectOneMenu id="unidadeSaida" value="#{_saida.unidade}" required="true" label="Unidade Saída" converter="omnifaces.SelectItemsIndexConverter">
+								<p:ajax event="change" process="@this" />
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 								<f:selectItems value="#{unidadeMedidaBean.unidades}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
 							</h:selectOneMenu>
 							<p:commandLink value="Nova Unidade"
-								action="#{unidadeEntradaBean.newUnidadeEntrada}"
+								action="#{unidadeBean.newUnidade}"
 								update=":unidadeDialogForm"
 								oncomplete="PF('unidadeDialog').show();"
 								style="margin-left: 8px; text-decoration: underline;" />
 							<h:message for="unidadeSaida" styleClass="msg-error" />				
 						</p:column>
 						<p:column headerText="Fator de Conversão">
-							<h:inputText id="fatorConversao" value="#{_saida.fatorConversao}" />
+							<h:inputText id="fatorConversao" value="#{_saida.fatorConversao}" required="true" label="Fator de Conversão">
+								<p:ajax event="change" process="@this" />
+							</h:inputText>
 							<h:message for="fatorConversao" styleClass="msg-error" />
 						</p:column>
 						<p:column headerText="Ações">
 							<p:commandButton value="Excluir" 
 								action="#{unidadeMedidaBean.removerUnidadeSaida(_saida)}"
-								update=":unidadeMedidaDialogForm:tableSaidas" />
+								update=":unidadeMedidaDialogForm:tableSaidas"
+								process="@this" />
 						</p:column>
 					</p:dataTable>
 				</div>

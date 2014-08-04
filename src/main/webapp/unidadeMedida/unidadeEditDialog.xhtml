@@ -15,13 +15,13 @@
 					Unidade: <span class="required">*</span> 
 				</div>
 				<div class="col-md-9">
-					<h:inputText id="descricao" value="#{unidadeEntradaBean.unidadeEntrada.descricao}" required="true" label="Unidade" />
+					<h:inputText id="descricao" value="#{unidadeBean.unidade.descricao}" required="true" label="Unidade" />
 					<h:message for="descricao" styleClass="msg-error" />
 				</div>
 			</div>
 					
 			<div class="buttons">		
-				<p:commandButton action="#{unidadeEntradaBean.createUnidadeEntrada}" value="Salvar"
+				<p:commandButton action="#{unidadeBean.createUnidade}" value="Salvar"
 					update=":unidadeDialogForm :unidadeMedidaDialogForm:entrada :unidadeMedidaDialogForm:tableSaidas"
 					oncomplete="oncompleteUnidade(xhr, status, args)" />
 					

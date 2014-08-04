@@ -40,7 +40,7 @@ public class UnidadeMedida extends GenericModelo implements Serializable{
 	@Column
 	private int ativo = 1;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="id_unidadeentrada", referencedColumnName="id")
 	private Unidade unidadeEntrada;
 	

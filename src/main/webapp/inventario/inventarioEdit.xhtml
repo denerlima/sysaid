@@ -88,7 +88,7 @@
 				<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existem itens nesta lista." 
 					sortBy="#{invMat.material.material}" sortOrder="ASCENDING">
 					<p:column headerText="Material">
-						<h:outputText value="#{invMat.material.material}" />							
+						<h:outputText value="#{invMat.material.materialLabel}" />							
 					</p:column>
 					<p:column headerText="Unidade de Medida Entrada">
 						<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							

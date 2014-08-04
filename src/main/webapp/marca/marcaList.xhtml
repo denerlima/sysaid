@@ -21,7 +21,8 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="_marca" value="#{marcaBean.allMarcas}" emptyMessage="Não existem itens nesta lista."> 
+				<p:dataTable var="_marca" value="#{marcaBean.allMarcas}" emptyMessage="Não existem itens nesta lista."
+					rows="10" paginator="true" paginatorPosition="bottom"> 
 					<p:column headerText="Marca">
 						<h:outputText value="#{_marca.descricao}" />							
 					</p:column>
@@ -41,10 +42,10 @@
 			</center>
 					
 			
-			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
+			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50" styleClass="ui-dialog-top">
 			  	<center>		
 					<p:commandButton value="Sim" icon="ui-icon-check"  update=":marcaForm:resultado" actionListener="#{marcaBean.deleteMarca()}" onclick="PF('dialogTrash').hide();" />
-					<p:spacer height="10" />
+					<p:spacer height="5" />
 					<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
 				</center>
 			</p:dialog>

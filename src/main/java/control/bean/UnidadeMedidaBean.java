@@ -9,11 +9,13 @@ import javax.inject.Named;
 import model.entity.Unidade;
 import model.entity.UnidadeMedida;
 import model.entity.UnidadeMedidaSaida;
-import model.facade.UnidadeEntradaFacade;
+import model.facade.UnidadeFacade;
 import model.facade.UnidadeMedidaFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.context.RequestContext;
+
+import util.HibernateUtil;
 
 @Named
 @ViewScoped
@@ -23,12 +25,13 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 
 	private UnidadeMedida unidadeMedida;	
 	private List<UnidadeMedida> unidadesMedida;
+	private List<Unidade> unidades;
 	
 	@Inject
 	private UnidadeMedidaFacade unidadeMedidaFacade;
 	
 	@Inject
-	private UnidadeEntradaFacade unidadeEntradaFacade;
+	private UnidadeFacade unidadeEntradaFacade;
 	
 	
 	public void novo() {
@@ -112,7 +115,14 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	}
 	
 	public List<Unidade> getUnidades(){
-		return unidadeEntradaFacade.listAll();
+		if(unidades == null) {
+			unidades = HibernateUtil.unproxy(unidadeEntradaFacade.listAll());
+		}
+		return unidades;
+	}
+	
+	public void setUnidades(List<Unidade> unidades) {
+		this.unidades = unidades; 
 	}
 	
 	private void loadUnidadesMedida() {

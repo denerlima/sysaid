@@ -23,7 +23,8 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 				<br />
-				<p:dataTable var="nf" value="#{notaFiscalBean.allNotasFiscais}" emptyMessage="Não existem itens nesta lista.">
+				<p:dataTable var="nf" value="#{notaFiscalBean.allNotasFiscais}" emptyMessage="Não existem itens nesta lista."
+					rows="10" paginator="true" paginatorPosition="bottom">
 					<p:column headerText="Nº da Nota Fiscal">
 						<h:outputText value="#{nf.nrNotaFiscal}" />							
 					</p:column>

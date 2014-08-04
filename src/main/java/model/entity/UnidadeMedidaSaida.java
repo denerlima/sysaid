@@ -3,8 +3,10 @@ package model.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,11 +42,11 @@ public class UnidadeMedidaSaida extends GenericModelo implements Serializable{
 	@Column(nullable = false)
 	private BigDecimal fatorConversao;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="id_unidade", referencedColumnName="id")
 	private Unidade unidade;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_unidade_medida", referencedColumnName="id")
 	private UnidadeMedida unidadeMedida;
 

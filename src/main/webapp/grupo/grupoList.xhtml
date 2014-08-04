@@ -20,7 +20,8 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="_grupo" value="#{grupoBean.allGrupos}" emptyMessage="Não existem itens nesta lista.">
+				<p:dataTable var="_grupo" value="#{grupoBean.allGrupos}" emptyMessage="Não existem itens nesta lista."
+					rows="10" paginator="true" paginatorPosition="bottom">
 					<p:column headerText="Grupo">
 						<h:outputText value="#{_grupo.descricao}" />							
 					</p:column>
@@ -44,7 +45,7 @@
 			</center>
 
 			
-			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
+			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50" styleClass="ui-dialog-top">
 				<center>		
 					<p:commandButton value="Sim" icon="ui-icon-check"  update=":grupoForm:resultado" actionListener="#{grupoBean.deleteGrupo()}" onclick="PF('dialogTrash').hide();" />
 					<p:spacer height="5" />

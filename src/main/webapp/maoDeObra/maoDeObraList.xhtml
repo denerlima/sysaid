@@ -22,7 +22,8 @@
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
-				<p:dataTable var="mao" value="#{maoDeObraBean.allMaosDeObra}" emptyMessage="Não existem itens nesta lista.">
+				<p:dataTable var="mao" value="#{maoDeObraBean.allMaosDeObra}" emptyMessage="Não existem itens nesta lista."
+					rows="10" paginator="true" paginatorPosition="bottom">
 				 
 					<p:column headerText="Mão de Obra">
 						<h:outputText value="#{mao.descricao}" />							
@@ -48,7 +49,7 @@
 			</p:outputPanel>
 			</center>
 					
-			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50">
+			<p:dialog header="Confirma a Exclusão?" closable="false" widgetVar="dialogTrash" modal="true" height="50" styleClass="ui-dialog-top">
 			  <center>		
 				<p:commandButton value="Sim" icon="ui-icon-check"  update=":maoDeObraForm:resultado" actionListener="#{maoDeObraBean.deleteMaoDeObra()}" onclick="PF('dialogTrash').hide();" />
 				<p:spacer height="5" />
