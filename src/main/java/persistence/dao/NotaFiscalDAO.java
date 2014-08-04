@@ -99,7 +99,16 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 			}
 			if (nf.getFornecedor() != null) {
 				query.setParameter("fornecedor", nf.getFornecedor().getId());
-			} 
+			}		
+			if (mat.getAplicacao() != null) {
+				query.setParameter("aplicacao", mat.getAplicacao().getId());				
+			}
+			if (nf.getAcrescimos() != null) {
+				query.setParameter("percentualDesconto", nf.getAcrescimos());				
+			}
+			if (nf.getTotalGeralNota() != null) {
+				query.setParameter("totalGeral", nf.getTotalGeralNota());				
+			}
 
 			lista = query.getResultList(); 
 		
