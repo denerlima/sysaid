@@ -33,7 +33,7 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	@Column
 	private int ativo = 1;
 	
-	@Column
+	@Column(length=1000)
 	private String justificativa;
 	
 	@Column
@@ -46,7 +46,7 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	private Date dataAutorizacao;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_usuario", referencedColumnName="id")
+	@JoinColumn(name="user_name_autorizador", referencedColumnName="user_name")
 	private Usuario autorizador;
 	
 	@ManyToOne

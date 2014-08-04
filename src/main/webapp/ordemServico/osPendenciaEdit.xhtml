@@ -13,7 +13,7 @@
 	
 	<f:metadata>
 		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
-		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
+		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoadPendencias(_os)}"/>
 	</f:metadata>
 	
 	<ui:define name="body">
@@ -26,7 +26,7 @@
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 					<br />
-					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" 
+					<p:dataTable var="_pendencia" value="#{ordemServicoBean.pendencias}" 
 						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
 						
 						<p:columnGroup type="header">
@@ -43,19 +43,19 @@
 				        </p:columnGroup>
 						
 						<p:column>
-							dd/mm/yyyy							
+							<p:calendar id="data" pattern="dd/MM/yy" locale="pt_BR" value="#{_pendencia.data}" size="10" navigator="true" required="true" label="Data de Emissão" />						
 						</p:column>
 						<p:column>
-							<h:outputText value="#{_mat.material.materialLabel}" />							
+							<h:outputText value="#{_pendencia.ordemServicoMaterial.material.materialLabel}" />							
 						</p:column>
 						<p:column>
-							0							
+							<h:inputText value="#{_pendencia.quantidade}" />					
 						</p:column>
 						<p:column>
-							0							
+							<h:outputText value="#{_pendencia.ordemServicoMaterial.quantidadePendente}" />							
 						</p:column>
 						<p:column>
-							<h:outputText value="#{_mat.unidadeMedidaSaida.unidade.descricao}" />							
+							<h:outputText value="#{_pendencia.ordemServicoMaterial.unidadeMedidaSaida.unidade.descricao}" />							
 						</p:column>
 					</p:dataTable>
 				</p:outputPanel>
@@ -64,7 +64,7 @@
 			<div class="buttons">
 					
 				<p:commandButton value="OK"
-					action="#{ordemServicoBean.updateMateriais}"
+					action="#{ordemServicoBean.updatePendencias}"
 					update=":osMaterialEditForm" />		
 				
 				<p:commandButton value="Cancelar" action="#{ordemServicoBean.redirectMaterialList}" process="@this" />

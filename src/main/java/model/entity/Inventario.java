@@ -36,6 +36,8 @@ public class Inventario extends GenericModelo implements Serializable{
 	private int ativo = 1;
 	private Long numeroInventario;
 	private Date dataInventario;
+	
+	@Column(length=1000)
 	private String justificativa;
 	
 	
@@ -43,7 +45,7 @@ public class Inventario extends GenericModelo implements Serializable{
 	private List<InventarioMaterial> materiais;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="id_atendente", referencedColumnName="id")
+	@JoinColumn(name="user_name_atendente", referencedColumnName="user_name")
 	private Usuario atendente;
 	
 

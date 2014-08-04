@@ -45,7 +45,7 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 				sql.append(" AND invm.material.tipoMaterial.id = :idTipoMat");
 			}
 			if (inv.getAtendente() != null) {
-				sql.append(" AND inv.atendente.id = :atendente");
+				sql.append(" AND inv.atendente.userName = :atendente");
 			}
 			
 			sql.append(" ORDER BY inv.id");
@@ -60,7 +60,7 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 				query.setParameter("idTipoMat", mat.getTipoMaterial().getId());
 			}
 			if (inv.getAtendente() != null) {
-				query.setParameter("atendente", inv.getAtendente().getId());
+				query.setParameter("atendente", inv.getAtendente().getUserName());
 			}
 
 			lista = query.getResultList(); 

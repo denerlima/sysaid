@@ -21,4 +21,8 @@ public class UsuarioFacade extends GenericFacade<Usuario> implements Serializabl
 		return usuarioDAO;
 	}
 
+	public Usuario find(String userName) {
+		return usuarioDAO.find(userName);
+	}
+	
 }

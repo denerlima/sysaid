@@ -33,7 +33,7 @@ public class NotaFiscalFacade extends GenericFacade<NotaFiscal> implements Seria
 			for (NotaFiscalMaterial nfm : notaFiscal.getMateriais()) {
 				Material mat = nfm.getOrdemDeCompraMaterial().getMaterial();
 				BigDecimal estoque = mat.getEstoque();
-				mat.setEstoque(estoque.subtract(nfm.getQuantidade()));
+				mat.setEstoque(estoque.add(nfm.getQuantidade()));
 				materialDAO.save(mat);
 			}
 			getDAO().save(notaFiscal);

@@ -71,7 +71,7 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
 				sql.append(" AND ocm.material.tipoMaterial.id = :idTipoMat");
 			}
 			if (oc.getAutorizador() != null) {
-				sql.append(" AND oc.autorizador.id = :autorizador");
+				sql.append(" AND oc.autorizador.userName = :autorizador");
 			}
 			
 			sql.append(" ORDER BY oc.id");
@@ -86,7 +86,7 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
 				query.setParameter("idTipoMat", mat.getTipoMaterial().getId());
 			}
 			if (oc.getAutorizador() != null) {
-				query.setParameter("autorizador", oc.getAutorizador().getId());
+				query.setParameter("autorizador", oc.getAutorizador().getUserName());
 			}
 
 			lista = query.getResultList(); 

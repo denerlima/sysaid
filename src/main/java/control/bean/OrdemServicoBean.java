@@ -2,6 +2,7 @@ package control.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import model.entity.Material;
 import model.entity.OrdemServico;
 import model.entity.OrdemServicoMaoDeObra;
 import model.entity.OrdemServicoMaterial;
+import model.entity.OrdemServicoMaterialHistorico;
 import model.facade.MaoDeObraFacade;
 import model.facade.MaterialFacade;
 import model.facade.OrdemServicoFacade;
@@ -26,6 +28,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 
 	private OrdemServico ordemServico;	
 	private List<OrdemServico> ordensServicos;
+	private List<OrdemServicoMaterialHistorico> pendencias;
 	
 	@Inject
 	private OrdemServicoFacade ordemServicoFacade;
@@ -94,6 +97,26 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		}
 	}
 	
+	public void initLoadPendencias(Integer id) {
+		if(ordemServico != null) {
+			return;
+		}
+		initLoad(id);
+		pendencias = new ArrayList<OrdemServicoMaterialHistorico>();
+		for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
+			if(osm.getQuantidadePendente().longValue() > 0) {
+				OrdemServicoMaterialHistorico osmh = new OrdemServicoMaterialHistorico();
+				osmh.setOrdemServicoMaterial(osm);
+				osmh.setData(new Date());
+				osmh.setTipo(1);
+				osmh.setQuantidadeAnterior(osm.getQuantidadePendente());
+				osm.getBaixasPendencias().add(osmh);
+				pendencias.add(osmh);
+			}
+		}
+	}
+	
+	
 	public void createOrdemServico() {
 		try {
 			getOrdemServicoFacade().create(ordemServico);
@@ -136,6 +159,18 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			return redirectMaoDeObraList();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String updatePendencias() {
+		try {
+			getOrdemServicoFacade().update(ordemServico);
+			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
+			return redirectMaterialList();
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, não foi possivel baixar pendências. ERRO");
 			e.printStackTrace();
 		}
 		return null;
@@ -241,6 +276,14 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	
 	public void removerMaoDeObra(OrdemServicoMaoDeObra osmo) {
 		ordemServico.getMaosDeObras().remove(osmo); 
+	}
+
+	public List<OrdemServicoMaterialHistorico> getPendencias() {
+		return pendencias;
+	}
+
+	public void setPendencias(List<OrdemServicoMaterialHistorico> pendencias) {
+		this.pendencias = pendencias;
 	}
 	
 }

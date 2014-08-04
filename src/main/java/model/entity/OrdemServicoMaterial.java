@@ -1,7 +1,10 @@
 package model.entity;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,8 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Where;
 
 @Entity
 @SequenceGenerator(name = "ordemServicoMaterialSequence", sequenceName = "MF_ORDEMSERVICO_MAT_ID_SEQ", allocationSize = 1)
@@ -47,7 +53,9 @@ public class OrdemServicoMaterial {
 	@Column(name="quantidade_pendente", nullable = false)
 	private BigDecimal quantidadePendente = new BigDecimal(0);
 	
-	
+	@OneToMany(mappedBy="ordemServicoMaterial", cascade=CascadeType.ALL)
+	@Where(clause="tipo = 1")
+	private Set<OrdemServicoMaterialHistorico> baixasPendencias = new HashSet<OrdemServicoMaterialHistorico>();
 
 	/*
 	 * Getters and Setters
@@ -117,4 +125,12 @@ public class OrdemServicoMaterial {
 		this.unidadeMedidaSaida = unidadeMedidaSaida;
 	}
 
+	public Set<OrdemServicoMaterialHistorico> getBaixasPendencias() {
+		return baixasPendencias;
+	}
+
+	public void setBaixasPendencias(Set<OrdemServicoMaterialHistorico> baixasPendencias) {
+		this.baixasPendencias = baixasPendencias;
+	}
+	
 }
