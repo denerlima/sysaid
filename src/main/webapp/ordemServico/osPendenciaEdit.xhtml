@@ -49,7 +49,15 @@
 							<h:outputText value="#{_pendencia.ordemServicoMaterial.material.materialLabel}" />							
 						</p:column>
 						<p:column>
-							<h:inputText value="#{_pendencia.quantidade}" />					
+							<h:inputText id="qtde" value="#{_pendencia.quantidade}" required="true" label="Retirada" styleClass="retirada-#{_idx}">
+								<p:ajax event="change" listener="#{ordemServicoBean.calcularBaixaDePendencia(_pendencia)}" process="@this" 
+										update=":osMaterialEditForm:resultado" />
+							</h:inputText>
+							<script type="text/javascript">
+								$(function(){
+									$('.retirada-#{_idx}').forceFloat();
+								});
+							</script>					
 						</p:column>
 						<p:column>
 							<h:outputText value="#{_pendencia.ordemServicoMaterial.quantidadePendente}" />							

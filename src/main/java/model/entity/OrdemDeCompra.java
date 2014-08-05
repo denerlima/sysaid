@@ -50,7 +50,7 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	private Usuario autorizador;
 	
 	@ManyToOne
-	@JoinColumn(name="id_fornecedor", referencedColumnName="id")
+	@JoinColumn(name="id_fornecedor", referencedColumnName="company_id")
 	private Fornecedor contratado;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordemDeCompra", cascade = CascadeType.ALL, orphanRemoval = true)

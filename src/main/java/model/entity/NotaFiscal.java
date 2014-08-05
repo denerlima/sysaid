@@ -35,6 +35,8 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	@Column
 	private Integer id;	
 	private int ativo = 1;
+	
+	@Column(length=1000)
 	private String justificativa;
 	private Long nrNotaFiscal;
 	private Date dataEmissao;
@@ -47,7 +49,7 @@ public class NotaFiscal extends GenericModelo implements Serializable{
 	private BigDecimal totalGeralNota;
 		
 	@ManyToOne
-	@JoinColumn(name="id_fornecedor", referencedColumnName="id")
+	@JoinColumn(name="id_fornecedor", referencedColumnName="company_id")
 	private Fornecedor fornecedor;
 	
 	@OneToMany(mappedBy="notaFiscal", cascade=CascadeType.ALL)

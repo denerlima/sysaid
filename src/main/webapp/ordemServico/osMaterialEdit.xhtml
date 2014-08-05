@@ -72,7 +72,11 @@
 							</h:selectOneMenu>							
 						</p:column>
 						<p:column>
-							<h:inputText value="#{_mat.quantidadeSolicitada}" style="width: 40px;" styleClass="qtdeSolicitada-#{_idx}" />
+							<h:inputText id="qtdeSolicitada" value="#{_mat.quantidadeSolicitada}" style="width: 40px;" converter="bigDecimalSimplesConverter" styleClass="qtdeSolicitada-#{_idx}" required="true" label="Quantidade Solicitada" disabled="#{_mat.id != null}">
+								<p:ajax event="change" listener="#{ordemServicoBean.calcularPendencia(_mat)}" process="@this" 
+										update=":osMaterialEditForm:resultado" />
+							</h:inputText>
+							<h:message for="qtdeSolicitada" styleClass="msg-error" />
 							<script type="text/javascript">
 								$(function(){
 									$('.qtdeSolicitada-#{_idx}').forceFloat();
@@ -80,7 +84,11 @@
 							</script>							
 						</p:column>
 						<p:column>
-							<h:inputText value="#{_mat.quantidadeEntregue}" style="width: 40px;" styleClass="qtdeEntregue-#{_idx}" />
+							<h:inputText id="qtdeEntregue" value="#{_mat.quantidadeEntregue}" style="width: 40px;" converter="bigDecimalSimplesConverter" styleClass="qtdeEntregue-#{_idx}" required="true" label="Quantidade Entregue" disabled="#{_mat.id != null}">
+								<p:ajax event="change" listener="#{ordemServicoBean.calcularPendencia(_mat)}" process="@this" 
+										update=":osMaterialEditForm:resultado" />
+							</h:inputText>
+							<h:message for="qtdeEntregue" styleClass="msg-error" />
 							<script type="text/javascript">
 								$(function(){
 									$('.qtdeEntregue-#{_idx}').forceFloat();
@@ -88,12 +96,7 @@
 							</script>							
 						</p:column>
 						<p:column>
-							<h:inputText value="#{_mat.quantidadePendente}" style="width: 40px;" styleClass="qtdePendente-#{_idx}" />
-							<script type="text/javascript">
-								$(function(){
-									$('.qtdePendente-#{_idx}').forceFloat();
-								});
-							</script>							
+							<h:outputText value="#{_mat.quantidadePendente}" style="width: 40px;" converter="bigDecimalSimplesConverter" styleClass="qtdePendente-#{_idx}" />
 						</p:column>
 						<p:column>
 							<h:outputText value="#{_mat.material.estoque}" />							
@@ -103,7 +106,7 @@
 							<p:commandButton value="Excluir"
 								action="#{ordemServicoBean.removerMaterial(_mat)}"
 								update=":osMaterialEditForm:resultado"
-								process="@this" />
+								process="@this" rendered="#{_mat.id == null}" />
 															
 						</p:column>
 					</p:dataTable>

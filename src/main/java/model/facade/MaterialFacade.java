@@ -51,6 +51,12 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 		update(material);
     }
 	
+	public void retirarEstoque(Material material, BigDecimal quantidade) {
+		//materialDAO.beginTransaction();
+		material.setEstoque(material.getEstoque().subtract(quantidade));
+		//materialDAO.commit();
+	}
+	
 	@Override
 	public GenericDAO<Material> getDAO() {
 		return materialDAO;

@@ -1,6 +1,7 @@
 package control.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -142,7 +143,13 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 
 	public String updateMateriais() {
 		try {
-			getOrdemServicoFacade().update(ordemServico);
+			for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
+				if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
+					displayErrorMessageToUser("A quantidade solicitada não pode ser maior que a quantidade entregue");
+					return null;
+				}
+			}
+			getOrdemServicoFacade().updateMateriais(ordemServico);
 			displayInfoMessageToUser("Operação realizada com sucesso");
 			return redirectMaterialList();
 		} catch (Exception e) {
@@ -166,7 +173,14 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	
 	public String updatePendencias() {
 		try {
-			getOrdemServicoFacade().update(ordemServico);
+			for(OrdemServicoMaterialHistorico osmh : pendencias) {
+				BigDecimal qtdePendente = osmh.getQuantidadeAnterior();
+				if(osmh.getQuantidade().longValue() > qtdePendente.longValue()) {
+					displayErrorMessageToUser("A quantidade a ser baixada não pode ser maior que a quantidade pendente");
+					return null;
+				}
+			}
+			getOrdemServicoFacade().updatePendencias(ordemServico, pendencias);
 			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
 			return redirectMaterialList();
 		} catch (Exception e) {
@@ -284,6 +298,23 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 
 	public void setPendencias(List<OrdemServicoMaterialHistorico> pendencias) {
 		this.pendencias = pendencias;
+	}
+	
+	public void calcularPendencia(OrdemServicoMaterial osm) {
+		if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
+			displayErrorMessageToUser("A quantidade solicitada não pode ser maior que a quantidade entregue");
+			return;
+		}
+		osm.setQuantidadePendente(osm.getQuantidadeSolicitada().subtract(osm.getQuantidadeEntregue()));
+	}
+	
+	public void calcularBaixaDePendencia(OrdemServicoMaterialHistorico osmh) {
+		BigDecimal qtdePendente = osmh.getOrdemServicoMaterial().getQuantidadePendente();
+		if(osmh.getQuantidade().longValue() > qtdePendente.longValue()) {
+			displayErrorMessageToUser("A quantidade a ser baixada não pode ser maior que a quantidade pendente");
+			return;
+		}
+		osmh.getOrdemServicoMaterial().setQuantidadePendente(qtdePendente.subtract(osmh.getQuantidade()));
 	}
 	
 }

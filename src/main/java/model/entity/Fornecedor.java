@@ -19,8 +19,9 @@ public class Fornecedor extends GenericModelo implements Serializable {
 	}
 
 	@Id
-	@Column
-	private int id;
+	@Column(name="COMPANY_ID", length=11)
+	private Integer id;
+	
 	@Column(name = "COMPANY_NAME")
 	private String nome;
 
@@ -30,11 +31,15 @@ public class Fornecedor extends GenericModelo implements Serializable {
 	@OneToMany(mappedBy="contratado")
 	private List<OrdemDeCompra> ordensCompra;
 	
-	public int getId() {
+	/*
+	 * Métodos getters and setters
+	 */
+	
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -60,28 +65,6 @@ public class Fornecedor extends GenericModelo implements Serializable {
 
 	public void setOrdensCompra(List<OrdemDeCompra> ordensCompra) {
 		this.ordensCompra = ordensCompra;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Fornecedor other = (Fornecedor) obj;
-		if (id != other.id)
-			return false;
-		return true;
 	}
 
 }
