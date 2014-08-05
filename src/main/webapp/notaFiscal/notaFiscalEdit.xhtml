@@ -237,7 +237,7 @@
   	<cp:bootstrapModal id="ordemCompraModal" title="Consultar Ordem de Compra" modalId="ordemCompraModal">      
 		<h:form id="ordemCompraListDialogForm">
 		
-			Nº da OC: <h:inputText value="#{notaFiscalBean.ordemDeCompra.numeroOC}" />
+			Nº da OC: <h:inputText value="#{notaFiscalBean.ordemDeCompra.id}" />
 		
 			<p:commandButton value="Buscar" 
 				action="#{notaFiscalBean.buscarOrdensCompras}"
@@ -254,7 +254,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								<b>Nº OC: </b>
-								<h:outputText id="numOc" value="#{oc.numeroOC}" />
+								<h:outputText id="numOc" value="#{oc.id}" />
 							</div>
 							<div class="col-md-4">
 								<b>Autorização: </b>

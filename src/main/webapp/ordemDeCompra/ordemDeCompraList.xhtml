@@ -26,7 +26,7 @@
 				<p:dataTable var="oc" value="#{ordemDeCompraBean.allOrdensDeCompra}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom">
 					<p:column headerText="Nº da Ordem de Compra">
-						<h:outputText value="#{oc.numeroOC}" />							
+						<h:outputText value="#{oc.id}" />							
 					</p:column>
 					<p:column headerText="Data da autorização">
 						<h:outputText value="#{oc.dataAutorizacao}">
@@ -97,7 +97,7 @@
 						Nº OC:
 					</div>
 					<div class="col-md-10">
-						#{ordemDeCompraBean.ordemDeCompra.numeroOC}
+						#{ordemDeCompraBean.ordemDeCompra.id}
 					</div>
 				</div>
 				

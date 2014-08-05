@@ -27,7 +27,7 @@
 						<h:outputText value="Nº da O.C:" />
 					</div>
 					<div class="col-md-3">
-						<h:inputText id="nrOC" size="30" value="#{notaFiscalBean.ordemDeCompra.numeroOC}" />					
+						<h:inputText id="nrOC" size="30" value="#{notaFiscalBean.ordemDeCompra.id}" />					
 					</div>
 				</div>
 				
@@ -150,7 +150,7 @@
 							<h:outputText value="#{_nfm.notaFiscal.fornecedor}" />
 						</p:column>
 						<p:column headerText="Nº OC">
-							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.numeroOC}" />
+							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" />
 						</p:column>
 						<p:column headerText="Material">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.materialLabel}" />

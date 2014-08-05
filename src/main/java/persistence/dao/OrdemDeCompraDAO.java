@@ -31,12 +31,12 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<OrdemDeCompra> listOrdensCompras(Long numeroOc) {
+	public List<OrdemDeCompra> listOrdensCompras(Integer id) {
 		String numOcStr = "";
-		if(numeroOc != null) {
-			numOcStr = numeroOc.toString();
+		if(id != null) {
+			numOcStr = id.toString();
 		}
-        Query query = getEntityManager().createQuery("From OrdemDeCompra oc WHERE ativo = 1 and to_char(oc.numeroOC) like :numOC order by oc.id ASC");
+        Query query = getEntityManager().createQuery("From OrdemDeCompra oc WHERE ativo = 1 and to_char(oc.id) like :numOC order by oc.id ASC");
         query.setParameter("numOC", "%"+numOcStr+"%");
         return query.getResultList();
     }

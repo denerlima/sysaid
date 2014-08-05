@@ -94,7 +94,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	public String createOrdemDeCompra() {
 		try {
 			getOrdemDeCompraFacade().create(ordemDeCompra);
-			displayInfoMessageToUser("Criado com Sucesso");
+			displayInfoMessageToUser("Criado com Sucesso. Número da Ordem de Compra: "+ordemDeCompra.getId());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();

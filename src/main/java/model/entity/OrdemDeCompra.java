@@ -37,9 +37,6 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	private String justificativa;
 	
 	@Column
-	private Long numeroOC;
-	
-	@Column
 	private Date dataEmissao;
 	
 	@Column
@@ -65,14 +62,6 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 		this.id = id;
 	}
 			
-	public Long getNumeroOC() {
-		return numeroOC;
-	}
-
-	public void setNumeroOC(Long numeroOC) {
-		this.numeroOC = numeroOC;
-	}
-
 	public Date getDataEmissao() {
 		return dataEmissao;
 	}

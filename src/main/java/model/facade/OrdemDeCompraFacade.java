@@ -23,7 +23,7 @@ public class OrdemDeCompraFacade extends GenericFacade<OrdemDeCompra> implements
 		return ordemDeCompraDAO;
 	}
 
-	public List<OrdemDeCompra> listOrdensCompras(Long numeroOc) {
+	public List<OrdemDeCompra> listOrdensCompras(Integer numeroOc) {
 		return ordemDeCompraDAO.listOrdensCompras(numeroOc);
 	}
 

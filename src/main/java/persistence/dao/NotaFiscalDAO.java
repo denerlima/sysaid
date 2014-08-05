@@ -46,8 +46,8 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 			if (nf.getNrNotaFiscal() != null) {
 				sql.append(" AND nf.nrNotaFiscal = :nrNotaFiscal");
 			}
-			if (oc.getNumeroOC() != null) {
-				sql.append(" AND nfm.ordemDeCompraMaterial.ordemDeCompra.numeroOC = :nrOC");
+			if (oc.getId() != null) {
+				sql.append(" AND nfm.ordemDeCompraMaterial.ordemDeCompra.id = :nrOC");
 			}
 			if (mat.getMaterial() != null) {
 				sql.append(" AND nfm.ordemDeCompraMaterial.material.material LIKE :mMat");
@@ -88,8 +88,8 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 			if (nf.getNrNotaFiscal() != null) {
 				query.setParameter("nrNotaFiscal", nf.getNrNotaFiscal());
 			}
-			if (oc.getNumeroOC() != null) {
-				query.setParameter("nrOC", oc.getNumeroOC());
+			if (oc.getId() != null) {
+				query.setParameter("nrOC", oc.getId());
 			}
 			if (mat.getMaterial() != null) {
 				query.setParameter("mMat", "%"+mat.getMaterial()+"%");
