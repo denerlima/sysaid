@@ -60,6 +60,12 @@ public class Material extends GenericModelo implements Serializable{
 	@Column(nullable = false)
 	private BigDecimal estoqueCalculado;
 	
+	@Column(nullable = false)
+	private BigDecimal ajuste;
+	
+	@Column(nullable = false)
+	private BigDecimal qtdSolicitada;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_tipomaterial", referencedColumnName="id")
 	private TipoMaterial tipoMaterial;
@@ -133,6 +139,22 @@ public class Material extends GenericModelo implements Serializable{
 	
 	public void setEstoqueCalculado(BigDecimal estoqueCalculado) {
 		this.estoqueCalculado = estoqueCalculado;
+	}
+	
+	public BigDecimal getAjuste() {
+		return ajuste;
+	}
+
+	public void setAjuste(BigDecimal ajuste) {
+		this.ajuste = ajuste;
+	}
+	
+	public BigDecimal getQtdSolicitada() {
+		return qtdSolicitada;
+	}
+
+	public void setQtdSolicitada(BigDecimal qtdSolicitada) {
+		this.qtdSolicitada = qtdSolicitada;
 	}
 
 	public TipoMaterial getTipoMaterial() {

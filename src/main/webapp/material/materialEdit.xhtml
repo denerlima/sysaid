@@ -129,39 +129,21 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Estoque: <span class="required">*</span>
+					Estoque:
 				</div>
 				<div class="col-md-10">
-					<ui:fragment rendered="#{not materialBean.managed}">
-						<h:inputText id="estoque" value="#{materialBean.material.estoque}" required="true" label="Estoque" converter="bigDecimalSimplesConverter" styleClass="estoque" />
-						<h:message for="estoque" styleClass="msg-error" />
-						<script type="text/javascript">
-							$(function(){
-								$('.estoque').forceFloat();
-							});
-						</script>
-					</ui:fragment>
-					<ui:fragment rendered="#{materialBean.managed}">
-						<h:outputText value="#{materialBean.material.estoque}" />
-					</ui:fragment>	
+					<h:outputText value="#{materialBean.material.estoque}" converter="bigDecimalSimplesConverter" />				
 				</div>
 			</div>
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Estoque Mínimo Informado: <span class="required">*</span>
+					Quantidade Solicitada:
 				</div>
 				<div class="col-md-10">
-					<h:inputText id="estoqueInformado" value="#{materialBean.material.estoqueInformado}" required="true" label="Estoque Mínimo Informado" converter="bigDecimalSimplesConverter" styleClass="estoqueInformado" />
-					<h:message for="estoqueInformado" styleClass="msg-error" />	
+					<h:outputText value="#{materialBean.material.qtdSolicitada}" converter="bigDecimalSimplesConverter" />				
 				</div>
-				<script type="text/javascript">
-					$(function(){
-						$('.estoqueInformado').forceFloat();
-					});
-				</script>
 			</div>
-			
 			
 			<div class="row form-row">
 				<div class="col-md-2">
@@ -172,6 +154,35 @@
 				</div>
 			</div>
 			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Ajuste para Sugestão de Compra: 
+				</div>
+				<div class="col-md-10">
+					<h:inputText id="ajuste" value="#{materialBean.material.ajuste}"  label="Ajuste para Sugestão de Compra" converter="bigDecimalSimplesConverter" styleClass="ajuste" /> &nbsp;% 
+					<h:message for="ajuste" styleClass="msg-error" />	
+				</div>
+				<script type="text/javascript">
+					$(function(){
+						$('.ajuste').forceFloat();
+					});
+				</script>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Estoque Mínimo Informado: 
+				</div>
+				<div class="col-md-10">
+					<h:inputText id="estoqueInformado" value="#{materialBean.material.estoqueInformado}"  label="Estoque Mínimo Informado" converter="bigDecimalSimplesConverter" styleClass="estoqueInformado" />
+					<h:message for="estoqueInformado" styleClass="msg-error" />	
+				</div>
+				<script type="text/javascript">
+					$(function(){
+						$('.estoqueInformado').forceFloat();
+					});
+				</script>
+			</div>
 			
 			<div class="buttons">
 								

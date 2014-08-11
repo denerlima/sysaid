@@ -81,6 +81,8 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		if(id == null || id == 0) {
 			material = new Material();
 			material.setEstoqueCalculado(new BigDecimal(0));
+			material.setEstoque(new BigDecimal(0));
+			material.setQtdSolicitada(new BigDecimal(0));
 		} else {
 			material = getMaterialFacade().find(id);
 		}

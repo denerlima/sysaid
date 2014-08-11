@@ -43,6 +43,9 @@ public class OrdemServicoMaoDeObra {
 	@Column(name="unidade_medida")
 	private Integer unidadeMedida;
 	
+	@Column(name="valor_unitario", length = 20, precision = 20, scale= 2 , nullable = false)
+	private BigDecimal valorUnitario = new BigDecimal(0);
+	
 	@Column(name="total", length = 20, precision = 20, scale= 2 , nullable = false)
 	private BigDecimal total = new BigDecimal(0);
 
@@ -104,6 +107,14 @@ public class OrdemServicoMaoDeObra {
 
 	public void setUnidadeMedida(Integer unidadeMedida) {
 		this.unidadeMedida = unidadeMedida;
+	}
+	
+	public BigDecimal getValorUnitario() {
+		return valorUnitario;
+	}
+
+	public void setValorUnitario(BigDecimal valorUnitario) {
+		this.valorUnitario = valorUnitario;
 	}
 
 	public BigDecimal getTotal() {
