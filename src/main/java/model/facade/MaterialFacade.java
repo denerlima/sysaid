@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Material;
+import model.entity.UnidadeMedidaSaida;
 import persistence.dao.GenericDAO;
 import persistence.dao.MaterialDAO;
 
@@ -51,9 +52,25 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 		update(material);
     }
 	
-	public void retirarEstoque(Material material, BigDecimal quantidade) {
+	public void retirarEstoque(Material material, BigDecimal quantidade, UnidadeMedidaSaida unidadeMedidaSaida) {
 		//materialDAO.beginTransaction();
-		material.setEstoque(material.getEstoque().subtract(quantidade));
+		BigDecimal novaQuantidade = quantidade;
+		if(material.getUnidadeMedida().getUnidadeEntrada()
+					.getId().intValue() != unidadeMedidaSaida.getUnidade().getId().intValue()) {
+			novaQuantidade = quantidade.divide(unidadeMedidaSaida.getFatorConversao());
+		}
+		material.setEstoque(material.getEstoque().subtract(novaQuantidade));
+		//materialDAO.commit();
+	}
+	
+	public void adicionarEstoque(Material material, BigDecimal quantidade, UnidadeMedidaSaida unidadeMedidaSaida) {
+		//materialDAO.beginTransaction();
+		BigDecimal novaQuantidade = quantidade;
+		if(material.getUnidadeMedida().getUnidadeEntrada()
+				.getId().intValue() != unidadeMedidaSaida.getUnidade().getId().intValue()) {
+			novaQuantidade = quantidade.divide(unidadeMedidaSaida.getFatorConversao());
+		}
+		material.setEstoque(material.getEstoque().add(novaQuantidade));
 		//materialDAO.commit();
 	}
 	

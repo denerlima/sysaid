@@ -30,6 +30,8 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	private OrdemServico ordemServico;	
 	private List<OrdemServico> ordensServicos;
 	private List<OrdemServicoMaterialHistorico> pendencias;
+	private List<OrdemServicoMaterialHistorico> devolucoes;
+	private List<OrdemServicoMaterialHistorico> realizados;
 	
 	@Inject
 	private OrdemServicoFacade ordemServicoFacade;
@@ -77,15 +79,21 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		return "/ordemServico/osDevolucaoEdit.xhtml?faces-redirect=true&os="+ordemServico.getId();
 	}
 	
-	public String redirectMaterialList() {
-		return "/ordemServico/osMaterialList.xhtml?faces-redirect=true&os="+ordemServico.getId();
+	public String redirectRealizado() {
+		return "/ordemServico/osRealizadoEdit.xhtml?faces-redirect=true&os="+ordemServico.getId();
 	}
 	
 	public String redirectMaoDeObraList() {
 		return "/ordemServico/osMaoDeObraList.xhtml?faces-redirect=true&os="+ordemServico.getId();
 	}
 	
+	public String redirectMaterialList() {
+		return "/ordemServico/osMaterialList.xhtml?faces-redirect=true&os="+ordemServico.getId();
+	}
 	
+	public String redirectRealizadoList() {
+		return "/ordemServico/osRealizadoList.xhtml?faces-redirect=true&os="+ordemServico.getId();
+	}
 	
 	public void initLoad(Integer id) {
 		if(ordemServico != null) {
@@ -114,6 +122,44 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 				osm.getBaixasPendencias().add(osmh);
 				pendencias.add(osmh);
 			}
+		}
+	}
+	
+	public void initLoadDevolucao(Integer id) {
+		if(ordemServico != null) {
+			return;
+		}
+		initLoad(id);
+		devolucoes = new ArrayList<OrdemServicoMaterialHistorico>();
+		for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
+			//if(osm.getQuantidadePendente().longValue() > 0) {
+				OrdemServicoMaterialHistorico osmh = new OrdemServicoMaterialHistorico();
+				osmh.setOrdemServicoMaterial(osm);
+				osmh.setData(new Date());
+				osmh.setTipo(2);
+				//osmh.setQuantidadeAnterior(osm.getQuantidadePendente());
+				osm.getDevolucoes().add(osmh);
+				devolucoes.add(osmh);
+			//}
+		}
+	}
+	
+	public void initLoadRealizados(Integer id) {
+		if(ordemServico != null) {
+			return;
+		}
+		initLoad(id);
+		realizados = new ArrayList<OrdemServicoMaterialHistorico>();
+		for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
+			//if(osm.getQuantidadePendente().longValue() > 0) {
+				OrdemServicoMaterialHistorico osmh = new OrdemServicoMaterialHistorico();
+				osmh.setOrdemServicoMaterial(osm);
+				osmh.setData(new Date());
+				osmh.setTipo(3);
+				osmh.setQuantidadeAnterior(osm.getQuantidadeUtilizada());
+				osm.getDevolucoes().add(osmh);
+				realizados.add(osmh);
+			//}
 		}
 	}
 	
@@ -183,6 +229,30 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			getOrdemServicoFacade().updatePendencias(ordemServico, pendencias);
 			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
 			return redirectMaterialList();
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, não foi possivel baixar pendências. ERRO");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String updateDevolucoes() {
+		try {
+			getOrdemServicoFacade().updateDevolucoes(ordemServico, devolucoes);
+			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
+			return redirectMaterialList();
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, não foi possivel baixar pendências. ERRO");
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public String updateRealizados() {
+		try {
+			getOrdemServicoFacade().updateRealizados(ordemServico, realizados);
+			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
+			return redirectRealizadoList();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel baixar pendências. ERRO");
 			e.printStackTrace();
@@ -284,6 +354,8 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		OrdemServicoMaoDeObra osMaoDeObra = new OrdemServicoMaoDeObra();
 		osMaoDeObra.setOrdemServico(ordemServico);
 		osMaoDeObra.setMaoDeObra(maoDeObra);
+		osMaoDeObra.setValorUnitario(maoDeObra.getValorhora());
+		osMaoDeObra.setUnidadeMedida(1);
 		ordemServico.getMaosDeObras().add(osMaoDeObra);
 		this.maoDeObra = new MaoDeObra();
 	}
@@ -315,6 +387,33 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			return;
 		}
 		osmh.getOrdemServicoMaterial().setQuantidadePendente(qtdePendente.subtract(osmh.getQuantidade()));
+	}
+	
+	public void calcularMaoDeObra(OrdemServicoMaoDeObra osmo) {
+		BigDecimal total = osmo.getQuantidade().multiply(osmo.getValorUnitario());
+		osmo.setTotal(total);
+	}
+	
+	public void changeUnidadeMaoDeObra(OrdemServicoMaoDeObra osmo) {
+		if(osmo.getUnidadeMedida() == 1) {
+			osmo.setValorUnitario(osmo.getMaoDeObra().getValorhora());
+		}
+		else if(osmo.getUnidadeMedida() == 2) {
+			osmo.setValorUnitario(osmo.getMaoDeObra().getValordia());
+		}
+		calcularMaoDeObra(osmo);
+	}
+	
+	public void calcularRealizado(OrdemServicoMaterialHistorico osmh) {
+		
+	}
+	
+	public List<OrdemServicoMaterialHistorico> getDevolucoes() {
+		return devolucoes;
+	}
+
+	public List<OrdemServicoMaterialHistorico> getRealizados() {
+		return realizados;
 	}
 	
 }

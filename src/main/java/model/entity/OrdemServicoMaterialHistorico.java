@@ -41,8 +41,7 @@ public class OrdemServicoMaterialHistorico {
 	private BigDecimal quantidade = new BigDecimal(0);
 	
 	@Column(name="quantidade_anterior", nullable=false)
-	private BigDecimal quantidadeAnterior = new BigDecimal(0);
-
+	private BigDecimal quantidadeAnterior = new BigDecimal(0);	
 	
 	/*
 	 * Getters and Setters

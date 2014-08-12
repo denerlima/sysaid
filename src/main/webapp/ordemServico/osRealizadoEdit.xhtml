@@ -9,16 +9,16 @@
 	xmlns:cp="http://java.sun.com/jsf/composite/components/property" 
 	template="/template.xhtml">
 
-	<ui:param name="pageTitle" value="Cadastro de Realizado da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}" />
+	<ui:param name="pageTitle" value="Baixar Pendência da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}" />
 	
 	<f:metadata>
 		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
-		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
+		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoadRealizados(_os)}"/>
 	</f:metadata>
 	
 	<ui:define name="body">
 
-		<center><h2>Cadastro de Realizado da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
+		<center><h2>Realizar Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
 		
 		<h:form id="osMaterialEditForm">		
 			<p:spacer height="10" />
@@ -26,36 +26,46 @@
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 					<br />
-					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" 
+					<p:dataTable var="_realizado" value="#{ordemServicoBean.realizados}" 
 						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
 						
 						<p:columnGroup type="header">
 				            <p:row>
-				            	<p:column rowspan="2" headerText="Data" />
+				                <p:column rowspan="2" headerText="Data" />
 				                <p:column rowspan="2" headerText="Material" />
 				                <p:column rowspan="2" headerText="Unidade de Medida" />
 				                <p:column colspan="2" headerText="Quantidade" />
 				            </p:row>
 				            <p:row>
-				            	<p:column headerText="Solicitada" />
-				                <p:column headerText="Entregue" />
+				            	<p:column headerText="Retirada" />
+				                <p:column headerText="Utilizada" />
 				            </p:row>
 				        </p:columnGroup>
 						
 						<p:column>
-							dd/mm/yyyy							
+							<p:calendar id="data" pattern="dd/MM/yy" locale="pt_BR" value="#{_realizado.data}" size="10" navigator="true" required="true" label="Data" />
+							<h:message for="data" styleClass="msg-error" />						
 						</p:column>
 						<p:column>
-							<h:outputText value="#{_mat.material.materialLabel}" />							
+							<h:outputText value="#{_realizado.ordemServicoMaterial.material.materialLabel}" />							
 						</p:column>
 						<p:column>
-							<h:outputText value="#{_mat.unidadeMedidaSaida.unidade.descricao}" />							
+							<h:outputText value="#{_realizado.ordemServicoMaterial.unidadeMedidaSaida.unidade.descricao}" />							
 						</p:column>
 						<p:column>
-							0							
+							<h:outputText value="#{_realizado.ordemServicoMaterial.quantidadeRetirada}" />							
 						</p:column>
 						<p:column>
-							0							
+							<h:inputText id="qtde" value="#{_realizado.quantidade}" converter="bigDecimalSimplesConverter" required="true" label="Retirada" styleClass="retirada-#{_idx}">
+								<p:ajax event="change" listener="#{ordemServicoBean.calcularRealizado(_realizado)}" process="@this" 
+										update=":osMaterialEditForm:resultado" />
+							</h:inputText>
+							<h:message for="qtde" styleClass="msg-error" />
+							<script type="text/javascript">
+								$(function(){
+									$('.retirada-#{_idx}').forceFloat();
+								});
+							</script>					
 						</p:column>
 					</p:dataTable>
 				</p:outputPanel>
@@ -63,9 +73,11 @@
 					
 			<div class="buttons">
 					
-				<p:commandButton value="Salvar"
-					action="#{ordemServicoBean.updateMateriais}"
-					update=":osMaterialEditForm" />
+				<p:commandButton value="OK"
+					action="#{ordemServicoBean.updateRealizados}"
+					update=":osMaterialEditForm" />		
+				
+				<p:commandButton value="Cancelar" action="#{ordemServicoBean.redirectRealizadoList}" process="@this" />
 			
 			</div>		
 						

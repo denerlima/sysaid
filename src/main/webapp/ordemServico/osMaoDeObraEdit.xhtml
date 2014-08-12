@@ -48,26 +48,55 @@
 						</p:column>
 						
 						<p:column headerText="Quantidade">
-							<h:inputText value="#{_maoDeObra.quantidade}" />
+							<h:inputText id="quantidade" value="#{_maoDeObra.quantidade}" style="width: 40px;" converter="bigDecimalSimplesConverter" styleClass="quantidade-#{_idx}" required="true" label="Quantidade">
+								<p:ajax event="change" listener="#{ordemServicoBean.calcularMaoDeObra(_maoDeObra)}" process="@this" 
+										update=":osMaoDeObraForm:resultado" />
+							</h:inputText>
+							<h:message for="quantidade" styleClass="msg-error" />
+							<script type="text/javascript">
+								$(function(){
+									$('.quantidade-#{_idx}').forceFloat();
+								});
+							</script>
 						</p:column>
 						
 						<p:column headerText="Valor Unitário">
-							<h:inputText value="#{_maoDeObra.valorUnitario}" />
+							<h:inputText id="valorUnitario" value="#{_maoDeObra.valorUnitario}" converter="bigDecimalConverter" styleClass="valorUnitario-#{_idx}" required="true" label="Valor Unitário">
+								<p:ajax event="change" listener="#{ordemServicoBean.calcularMaoDeObra(_maoDeObra)}" process="@this" 
+										update=":osMaoDeObraForm:resultado" />
+							</h:inputText>
+							<h:message for="valorUnitario" styleClass="msg-error" />
+							<script type="text/javascript">
+								$(function(){
+									$('.valorUnitario-#{_idx}').forceMoney();
+								});
+							</script>
 						</p:column>
 						
 						<p:column headerText="Período">
-							<h:inputText value="#{_maoDeObra.periodo}" />
+							<h:inputText id="periodo" value="#{_maoDeObra.periodo}" converter="bigDecimalSimplesConverter" styleClass="periodo-#{_idx}" required="true" label="Período">
+								<p:ajax event="change" listener="#{ordemServicoBean.calcularMaoDeObra(_maoDeObra)}" process="@this" 
+										update=":osMaoDeObraForm:resultado" />
+							</h:inputText>
+							<h:message for="periodo" styleClass="msg-error" />
+							<script type="text/javascript">
+								$(function(){
+									$('.periodo-#{_idx}').forceFloat();
+								});
+							</script>
 						</p:column>
 						
 						<p:column headerText="Unidade de Medida">
 							<h:selectOneMenu value="#{_maoDeObra.unidadeMedida}">
+								<p:ajax event="change" listener="#{ordemServicoBean.changeUnidadeMaoDeObra(_maoDeObra)}" process="@this" 
+										update=":osMaoDeObraForm:resultado" />
 								<f:selectItem itemValue="1" itemLabel="Hora" />
 								<f:selectItem itemValue="2" itemLabel="Dia" />
 							</h:selectOneMenu>
 						</p:column>
 						
 						<p:column headerText="Valor Total">
-							<h:outputText value="#{_maoDeObra.total}" />
+							<h:outputText value="#{_maoDeObra.total}" converter="bigDecimalConverter" />
 						</p:column>
 									
 						<p:column headerText="Ações">											

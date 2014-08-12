@@ -53,10 +53,24 @@ public class OrdemServicoMaterial {
 	@Column(name="quantidade_pendente", nullable = false)
 	private BigDecimal quantidadePendente = new BigDecimal(0);
 	
+	@Column(name="quantidade_devolvida", nullable = false)
+	private BigDecimal quantidadeDevolvida = new BigDecimal(0);
+	
+	@Column(name="quantidade_utilizada", nullable = false)
+	private BigDecimal quantidadeUtilizada = new BigDecimal(0);
+	
 	@OneToMany(mappedBy="ordemServicoMaterial", cascade=CascadeType.ALL)
 	@Where(clause="tipo = 1")
 	private Set<OrdemServicoMaterialHistorico> baixasPendencias = new HashSet<OrdemServicoMaterialHistorico>();
 
+	@OneToMany(mappedBy="ordemServicoMaterial", cascade=CascadeType.ALL)
+	@Where(clause="tipo = 2")
+	private Set<OrdemServicoMaterialHistorico> devolucoes = new HashSet<OrdemServicoMaterialHistorico>();
+	
+	@OneToMany(mappedBy="ordemServicoMaterial", cascade=CascadeType.ALL)
+	@Where(clause="tipo = 3")
+	private Set<OrdemServicoMaterialHistorico> realizados = new HashSet<OrdemServicoMaterialHistorico>();
+	
 	/*
 	 * Getters and Setters
 	 */
@@ -105,6 +119,14 @@ public class OrdemServicoMaterial {
 		return quantidadeEntregue;
 	}
 
+	public BigDecimal getQuantidadeDevolvida() {
+		return quantidadeDevolvida;
+	}
+
+	public void setQuantidadeDevolvida(BigDecimal quantidadeDevolvida) {
+		this.quantidadeDevolvida = quantidadeDevolvida;
+	}
+
 	public void setQuantidadeEntregue(BigDecimal quantidadeEntregue) {
 		this.quantidadeEntregue = quantidadeEntregue;
 	}
@@ -115,6 +137,14 @@ public class OrdemServicoMaterial {
 
 	public void setQuantidadePendente(BigDecimal quantidadePendente) {
 		this.quantidadePendente = quantidadePendente;
+	}
+
+	public BigDecimal getQuantidadeUtilizada() {
+		return quantidadeUtilizada;
+	}
+
+	public void setQuantidadeUtilizada(BigDecimal quantidadeUtilizada) {
+		this.quantidadeUtilizada = quantidadeUtilizada;
 	}
 
 	public UnidadeMedidaSaida getUnidadeMedidaSaida() {
@@ -131,6 +161,26 @@ public class OrdemServicoMaterial {
 
 	public void setBaixasPendencias(Set<OrdemServicoMaterialHistorico> baixasPendencias) {
 		this.baixasPendencias = baixasPendencias;
+	}
+
+	public Set<OrdemServicoMaterialHistorico> getDevolucoes() {
+		return devolucoes;
+	}
+
+	public void setDevolucoes(Set<OrdemServicoMaterialHistorico> devolucoes) {
+		this.devolucoes = devolucoes;
+	}
+
+	public Set<OrdemServicoMaterialHistorico> getRealizados() {
+		return realizados;
+	}
+
+	public void setRealizados(Set<OrdemServicoMaterialHistorico> realizados) {
+		this.realizados = realizados;
+	}
+
+	public BigDecimal getQuantidadeRetirada() {
+		return getQuantidadeEntregue().subtract(getQuantidadeDevolvida());
 	}
 	
 }

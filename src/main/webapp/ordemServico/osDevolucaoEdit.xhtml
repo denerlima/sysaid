@@ -13,7 +13,7 @@
 	
 	<f:metadata>
 		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
-		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
+		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoadDevolucao(_os)}"/>
 	</f:metadata>
 	
 	
@@ -26,20 +26,29 @@
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 					<br />
-					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" 
+					<p:dataTable var="_devolucao" value="#{ordemServicoBean.devolucoes}" 
 						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
 						
 						<p:column headerText="Data">
-							<h:outputText value="dd/mm/yyyy" />							
+							<p:calendar id="data" pattern="dd/MM/yy" locale="pt_BR" value="#{_devolucao.data}" size="10" navigator="true" required="true" label="Data" />
+							<h:message for="data" styleClass="msg-error" />					
 						</p:column>
 						<p:column headerText="Material">
-							<h:outputText value="#{_mat.material.materialLabel}" />							
+							<h:outputText value="#{_devolucao.ordemServicoMaterial.material.materialLabel}" />							
 						</p:column>
 						<p:column headerText="Quantidade devolvida">
-							0								
+							<h:inputText id="quantidade" value="#{_devolucao.quantidade}" converter="bigDecimalSimplesConverter" required="true" label="Quantidade" styleClass="quantidade-#{_idx}">
+							
+							</h:inputText>	
+							<h:message for="quantidade" styleClass="msg-error" />
+							<script type="text/javascript">
+								$(function(){
+									$('.quantidade-#{_idx}').forceFloat();
+								});
+							</script>							
 						</p:column>
 						<p:column headerText="Unidade de Medida">
-							<h:outputText value="#{_mat.unidadeMedidaSaida.unidade.descricao}" />							
+							<h:outputText value="#{_devolucao.ordemServicoMaterial.unidadeMedidaSaida.unidade.descricao}" />							
 						</p:column>
 					</p:dataTable>
 				</p:outputPanel>
@@ -48,7 +57,7 @@
 			<div class="buttons">
 					
 				<p:commandButton value="OK"
-					action="#{ordemServicoBean.updateMateriais}"
+					action="#{ordemServicoBean.updateDevolucoes}"
 					update=":osMaterialEditForm" />		
 				
 				<p:commandButton value="Cancelar" action="#{ordemServicoBean.redirectMaterialList}" process="@this" />

@@ -45,7 +45,7 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 			getDAO().beginTransaction();
 			for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
 				if(osm.getId() == null) {
-					materialFacade.retirarEstoque(osm.getMaterial(), osm.getQuantidadeEntregue());
+					materialFacade.retirarEstoque(osm.getMaterial(), osm.getQuantidadeEntregue(), osm.getUnidadeMedidaSaida());
 				}
 			}
 			getDAO().update(ordemServico);
@@ -60,7 +60,7 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 		try {
 			getDAO().beginTransaction();
 			for(OrdemServicoMaterialHistorico osmh : pendencias) {
-				materialFacade.retirarEstoque(osmh.getOrdemServicoMaterial().getMaterial(), osmh.getQuantidade());
+				materialFacade.retirarEstoque(osmh.getOrdemServicoMaterial().getMaterial(), osmh.getQuantidade(), osmh.getOrdemServicoMaterial().getUnidadeMedidaSaida());
 				osmh.getOrdemServicoMaterial().setQuantidadeEntregue(osmh.getOrdemServicoMaterial().getQuantidadeEntregue().add(osmh.getQuantidade()));
 			}
 			getDAO().update(ordemServico);
@@ -69,6 +69,37 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 			getDAO().rollback();
 			throw e;
 		}
-	} 
+	}
+	
+	public void updateDevolucoes(OrdemServico ordemServico, List<OrdemServicoMaterialHistorico> devolucoes) throws Exception {
+		try {
+			getDAO().beginTransaction();
+			for(OrdemServicoMaterialHistorico osmh : devolucoes) {
+				if(osmh.getQuantidade().longValue() > 0) {
+					materialFacade.adicionarEstoque(osmh.getOrdemServicoMaterial().getMaterial(), osmh.getQuantidade(), osmh.getOrdemServicoMaterial().getUnidadeMedidaSaida());
+					osmh.getOrdemServicoMaterial().setQuantidadeDevolvida(osmh.getOrdemServicoMaterial().getQuantidadeDevolvida().add(osmh.getQuantidade()));
+				}
+			}
+			getDAO().update(ordemServico);
+			getDAO().commit();
+		} catch (Exception e) {
+			getDAO().rollback();
+			throw e;
+		}
+	}
+	
+	public void updateRealizados(OrdemServico ordemServico, List<OrdemServicoMaterialHistorico> realizados) throws Exception {
+		try {
+			getDAO().beginTransaction();
+			for(OrdemServicoMaterialHistorico osmh : realizados) {
+				osmh.getOrdemServicoMaterial().setQuantidadeUtilizada(osmh.getOrdemServicoMaterial().getQuantidadeUtilizada().add(osmh.getQuantidade()));
+			}
+			getDAO().update(ordemServico);
+			getDAO().commit();
+		} catch (Exception e) {
+			getDAO().rollback();
+			throw e;
+		}
+	}
 	
 }

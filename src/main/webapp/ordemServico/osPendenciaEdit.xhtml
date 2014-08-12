@@ -43,16 +43,18 @@
 				        </p:columnGroup>
 						
 						<p:column>
-							<p:calendar id="data" pattern="dd/MM/yy" locale="pt_BR" value="#{_pendencia.data}" size="10" navigator="true" required="true" label="Data de Emissão" />						
+							<p:calendar id="data" pattern="dd/MM/yy" locale="pt_BR" value="#{_pendencia.data}" size="10" navigator="true" required="true" label="Data" />
+							<h:message for="data" styleClass="msg-error" />						
 						</p:column>
 						<p:column>
 							<h:outputText value="#{_pendencia.ordemServicoMaterial.material.materialLabel}" />							
 						</p:column>
 						<p:column>
-							<h:inputText id="qtde" value="#{_pendencia.quantidade}" required="true" label="Retirada" styleClass="retirada-#{_idx}">
+							<h:inputText id="qtde" value="#{_pendencia.quantidade}" converter="bigDecimalSimplesConverter" required="true" label="Retirada" styleClass="retirada-#{_idx}">
 								<p:ajax event="change" listener="#{ordemServicoBean.calcularBaixaDePendencia(_pendencia)}" process="@this" 
 										update=":osMaterialEditForm:resultado" />
 							</h:inputText>
+							<h:message for="qtde" styleClass="msg-error" />
 							<script type="text/javascript">
 								$(function(){
 									$('.retirada-#{_idx}').forceFloat();

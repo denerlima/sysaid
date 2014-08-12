@@ -19,24 +19,14 @@
 	
 	<ui:define name="body">
 
-		<center><h2>Lista de Materiais da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
+		<center><h2>Lista de Realizados da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
 		
 		<h:form id="osMaterialForm">		
 			<p:spacer height="10" />
 			
-			<p:commandButton value="Adicionar Materiais" icon="ui-icon-plus" 
-				action="#{ordemServicoBean.redirectAddMaterial}" 
+			<p:commandButton value="Realizar" icon="ui-icon-plus" 
+				action="#{ordemServicoBean.redirectRealizado}" 
 				process="@this" />
-			
-			<p:commandButton value="Baixar Pendência" icon="ui-icon-plus" 
-				action="#{ordemServicoBean.redirectPendencia}" 
-				process="@this"
-				style="margin-left: 5px;" />
-			
-			<p:commandButton value="Devolução" icon="ui-icon-plus" 
-				action="#{ordemServicoBean.redirectDevolucao}" 
-				process="@this"
-				style="margin-left: 5px;" />
 			
 			<p:commandButton value="Imprimir" icon="ui-icon-plus" 
 				type="button"
@@ -51,18 +41,14 @@
 				            <p:row>
 				                <p:column rowspan="2" headerText="Material" />
 				                <p:column rowspan="2" headerText="Unidade de Medida Saída" />
-				                <p:column colspan="4" headerText="Quantidade" />
-				                <p:column rowspan="2" headerText="Em Estoque" />
+				                <p:column colspan="2" headerText="Quantidade" />
 				                <p:column rowspan="2" headerText="Ações" />
 				            </p:row>
 				            <p:row>
-				                <p:column headerText="Solicitada" />
-				                <p:column headerText="Entregue" />
-				                <p:column headerText="Pendente" />
-				                <p:column headerText="Devolvida" />
+				                <p:column headerText="Retirada" />
+				                <p:column headerText="Utilizada" />
 				            </p:row>
 				        </p:columnGroup>
-						
 						<p:column>
 							<h:outputText value="#{_mat.material.materialLabel}" />
 						</p:column>
@@ -70,24 +56,14 @@
 							<h:outputText value="#{_mat.unidadeMedidaSaida.unidade.descricao}" />
 						</p:column>
 						<p:column>
-							<h:outputText value="#{_mat.quantidadeSolicitada}" />
+							<h:outputText value="#{_mat.quantidadeRetirada}" />
 						</p:column>
 						<p:column>
-							<h:outputText value="#{_mat.quantidadeEntregue}" />
-						</p:column>
-						<p:column>
-							<h:outputText value="#{_mat.quantidadePendente}" />
-						</p:column>
-						<p:column>
-							<h:outputText value="#{_mat.quantidadeDevolvida}" />
-						</p:column>
-						<p:column>
-							<h:outputText value="#{_mat.material.estoque}" />
+							<h:outputText value="#{_mat.quantidadeUtilizada}" />
 						</p:column>
 						<p:column>
 							
 						</p:column>
-						
 					</p:dataTable>
 				</p:outputPanel>
 			</center>

@@ -156,10 +156,10 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Ajuste para Sugestão de Compra: 
+					Ajuste para Sugestão de Compra: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<h:inputText id="ajuste" value="#{materialBean.material.ajuste}"  label="Ajuste para Sugestão de Compra" converter="bigDecimalSimplesConverter" styleClass="ajuste" /> &nbsp;% 
+					<h:inputText id="ajuste" value="#{materialBean.material.ajuste}" required="true" label="Ajuste para Sugestão de Compra" converter="bigDecimalSimplesConverter" styleClass="ajuste" /> &nbsp;% 
 					<h:message for="ajuste" styleClass="msg-error" />	
 				</div>
 				<script type="text/javascript">
@@ -171,10 +171,10 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Estoque Mínimo Informado: 
+					Estoque Mínimo Informado: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<h:inputText id="estoqueInformado" value="#{materialBean.material.estoqueInformado}"  label="Estoque Mínimo Informado" converter="bigDecimalSimplesConverter" styleClass="estoqueInformado" />
+					<h:inputText id="estoqueInformado" value="#{materialBean.material.estoqueInformado}" required="true" label="Estoque Mínimo Informado" converter="bigDecimalSimplesConverter" styleClass="estoqueInformado" />
 					<h:message for="estoqueInformado" styleClass="msg-error" />	
 				</div>
 				<script type="text/javascript">
