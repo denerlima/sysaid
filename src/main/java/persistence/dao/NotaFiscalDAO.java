@@ -1,5 +1,6 @@
 package persistence.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -117,6 +118,12 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 		}
 		return lista;
 		
+	}
+
+	public BigDecimal calculaTotalSaidas(Material material, Date dataInicial,
+			Date dataFinal) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
