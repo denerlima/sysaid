@@ -2,6 +2,7 @@ package model.facade;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,6 +11,9 @@ import javax.inject.Named;
 import model.entity.Material;
 import persistence.dao.GenericDAO;
 import persistence.dao.MaterialDAO;
+import persistence.dao.NotaFiscalDAO;
+import persistence.dao.ParametroDAO;
+import util.DataUtil;
 
 @Named
 public class MaterialFacade extends GenericFacade<Material> implements Serializable{
@@ -18,7 +22,13 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 	
 	@Inject
 	private MaterialDAO materialDAO;
+	
+	@Inject
+	private ParametroDAO parametroDAO;
 
+	@Inject
+	private NotaFiscalDAO notaFiscalDAO;
+	
 	public Material findMaterialbyNomeMaterial(String nomeMaterial) {
 		//materialDAO.beginTransaction();
 		Material material = materialDAO.findMaterialByMaterial(nomeMaterial);
@@ -38,13 +48,24 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 		List<Material> result = materialDAO.findListMaterialByMaterial(nomeMaterial);        
 		return result;
     }
-	
-	public void atualizaEstoqueMinimoCalculado(Material material , Integer qtdeMeses) throws Exception {
+	/**
+	 * Será calculada a média mensal de todas as SAÍDAS de estoque, descontando as DEVOLUÇÕES * Percentual Ajuste no periodo @qtdMeses;
+	 * 
+	 * @param material
+	 * @param qtdMeses Quantidade de meses de movimentação imediatamente anteriores ao mês atual a serem considerados no cálculo do estoque mínimo;
+	 * @throws Exception
+	 */
+	public void atualizaEstoqueMinimoCalculado(Material material ) throws Exception {
 		BigDecimal mediaMensal = new BigDecimal(30);		
-		// Será calculada a média mensal de todas as SAÍDAS de estoque, descontando as DEVOLUÇÕES;
-		// @qtdeMeses Quantidade de meses de movimentação imediatamente anteriores ao mês atual a serem considerados no cálculo do estoque mínimo; 
+		Integer qtdMeses = parametroDAO.find(new Integer(1)).getQtdMeses();
+		Date dataInicial = new Date();
+		Date dataFinal = new Date();
+		
+		dataFinal = DataUtil.subtrairDiasAData(qtdMeses * 30);
+		// Será calculada a média mensal de todas as SAÍDAS de estoque, descontando as DEVOLUÇÕES * Percentual Ajuste no periodo de meses do @qtdMeses;		 
 		// Verificar o SUM da Coluna
-		// mediaMensal = materialDAO.findMediaMaterial(material , qtdeMeses);
+		
+		BigDecimal totalSaidas =  notaFiscalDAO.calculaTotalSaidas(material , dataInicial , dataFinal);
 		
 		//Adicionar uma dataAtual na MF_ORDEMSERVICO_MF_MATERIAL
 		material.setEstoqueCalculado(mediaMensal);		
