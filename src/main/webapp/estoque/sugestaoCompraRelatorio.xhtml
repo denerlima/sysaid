@@ -50,19 +50,20 @@
 					<p:column headerText="Tipo Material">
 						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
 					</p:column>
-					<p:column headerText="Descrição">
-						<h:outputText value="#{mat.descricao}" />							
-					</p:column>
 					<p:column headerText="Unidade de Medida Entrada">
 						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
+					</p:column>
+					<p:column headerText="Estoque">
+						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
+					</p:column>
+					<p:column headerText="Estoque Minimo Calculado">
+						<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
 					<p:column headerText="Estoque Minimo Informado">
 						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
-					<p:column headerText="Estoque Atual">
-						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
-					</p:column>
-					<p:column headerText="Quantidade Comprada">
+
+					<p:column headerText="Quantidade Solicitada">
 						<h:outputText value=" ?????"  />							
 					</p:column>
 					<p:column headerText="Sugestão de Compra">

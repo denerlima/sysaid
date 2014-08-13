@@ -2,6 +2,7 @@ package model.facade;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import model.entity.Material;
 import model.entity.UnidadeMedidaSaida;
 import persistence.dao.GenericDAO;
 import persistence.dao.MaterialDAO;
-import persistence.dao.NotaFiscalDAO;
+import persistence.dao.OrdemServicoDAO;
 import persistence.dao.ParametroDAO;
 import util.DataUtil;
 
@@ -28,7 +29,7 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 	private ParametroDAO parametroDAO;
 
 	@Inject
-	private NotaFiscalDAO notaFiscalDAO;
+	private OrdemServicoDAO ordemServicoDAO;
 	
 	public Material findMaterialbyNomeMaterial(String nomeMaterial) {
 		//materialDAO.beginTransaction();
@@ -56,21 +57,17 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 	 * @param qtdMeses Quantidade de meses de movimentação imediatamente anteriores ao mês atual a serem considerados no cálculo do estoque mínimo;
 	 * @throws Exception
 	 */
-	public void atualizaEstoqueMinimoCalculado(Material material ) throws Exception {
-		BigDecimal mediaMensal = new BigDecimal(30);		
-		Integer qtdMeses = parametroDAO.find(new Integer(1)).getQtdMeses();
+	public void atualizaEstoqueMinimoCalculado(Material material) throws Exception {
+		BigDecimal mediaMensal = new BigDecimal(1);		
+		Integer qtdMeses = parametroDAO.findReferenceOnly(new Integer(1)).getQtdMeses();
 		Date dataInicial = new Date();
-		Date dataFinal = new Date();
+		Date dataFinal = new Date();		
 		
-		dataFinal = DataUtil.subtrairDiasAData(qtdMeses * 30);
-		// Será calculada a média mensal de todas as SAÍDAS de estoque, descontando as DEVOLUÇÕES * Percentual Ajuste no periodo de meses do @qtdMeses;		 
-		// Verificar o SUM da Coluna
+		dataFinal = DataUtil.subtrairDiasAData(qtdMeses * 30);		
+		BigDecimal totalSaidas =  ordemServicoDAO.calculaTotalSaidas(material , dataInicial , dataFinal);
+		mediaMensal = totalSaidas.divide(new BigDecimal(qtdMeses * 30), 2, RoundingMode.HALF_UP);
 		
-		BigDecimal totalSaidas =  notaFiscalDAO.calculaTotalSaidas(material , dataInicial , dataFinal);
-		
-		//Adicionar uma dataAtual na MF_ORDEMSERVICO_MF_MATERIAL
 		material.setEstoqueCalculado(mediaMensal);		
-		update(material);
     }
 	
 	public void retirarEstoque(Material material, BigDecimal quantidade, UnidadeMedidaSaida unidadeMedidaSaida) {
