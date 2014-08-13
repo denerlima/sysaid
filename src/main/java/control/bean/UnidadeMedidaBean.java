@@ -76,7 +76,7 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 	
 	public boolean isUnidadeValida() {
 		for(UnidadeMedidaSaida ums : unidadeMedida.getSaidas()) {
-			if(ums.getUnidade().getId().intValue() == unidadeMedida.getUnidadeEntrada().getId().intValue()) {
+			if(ums.getUnidade().equals(unidadeMedida.getUnidadeEntrada())) {
 				return true;
 			}
 		}
