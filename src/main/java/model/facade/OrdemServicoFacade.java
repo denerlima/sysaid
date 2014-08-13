@@ -40,11 +40,12 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 		}
 	}
 	
-	public void updateMateriais(OrdemServico ordemServico) throws Exception {
+	public void updateMateriais(OrdemServico ordemServico, List<OrdemServicoMaterial> materiais) throws Exception {
 		try {
 			getDAO().beginTransaction();
-			for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
+			for(OrdemServicoMaterial osm : materiais) {
 				if(osm.getId() == null) {
+					ordemServico.getMateriais().add(osm);
 					materialFacade.retirarEstoque(osm.getMaterial(), osm.getQuantidadeEntregue(), osm.getUnidadeMedidaSaida());
 				}
 			}

@@ -13,7 +13,7 @@
 	
 	<f:metadata>
 		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
-		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
+		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoadMateriais(_os)}"/>
 	</f:metadata>
 	
 	
@@ -40,7 +40,7 @@
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 					<br />
-					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" 
+					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServicoMateriais}" 
 						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
 						
 						<p:columnGroup type="header">

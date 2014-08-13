@@ -56,6 +56,9 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 
 	public void createUnidadeMedida() {
 		try {
+			if(!isUnidadeValida()) {
+				return;
+			}
 			getUnidadeMedidaFacade().create(unidadeMedida);
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadUnidadesMedida();
@@ -71,8 +74,21 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 		System.out.println(id);
 	}
 	
+	public boolean isUnidadeValida() {
+		for(UnidadeMedidaSaida ums : unidadeMedida.getSaidas()) {
+			if(ums.getUnidade().getId().intValue() == unidadeMedida.getUnidadeEntrada().getId().intValue()) {
+				return true;
+			}
+		}
+		displayInfoMessageToUser("A Unidade deve ter pelo menos a própria unidade como saída");
+		return false;
+	}
+	
 	public void updateUnidadeMedida() {
 		try {
+			if(!isUnidadeValida()) {
+				return;
+			}
 			getUnidadeMedidaFacade().update(unidadeMedida);
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadUnidadesMedida();
