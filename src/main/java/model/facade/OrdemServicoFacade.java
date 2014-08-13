@@ -1,6 +1,8 @@
 package model.facade;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,6 +47,15 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 			getDAO().beginTransaction();
 			for(OrdemServicoMaterial osm : materiais) {
 				if(osm.getId() == null) {
+					if(osm.getQuantidadeEntregue().longValue() > 0) {
+						OrdemServicoMaterialHistorico osmh = new OrdemServicoMaterialHistorico();
+						osmh.setOrdemServicoMaterial(osm);
+						osmh.setData(new Date());
+						osmh.setTipo(0);
+						osmh.setQuantidade(osm.getQuantidadeEntregue());
+						osmh.setQuantidadeAnterior(new BigDecimal(0));
+						osm.getEntregas().add(osmh);
+					}
 					ordemServico.getMateriais().add(osm);
 					materialFacade.retirarEstoque(osm.getMaterial(), osm.getQuantidadeEntregue(), osm.getUnidadeMedidaSaida());
 				}

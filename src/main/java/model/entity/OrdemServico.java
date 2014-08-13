@@ -1,8 +1,8 @@
 package model.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,10 +28,10 @@ public class OrdemServico extends GenericModelo implements Serializable{
 	private String justificativa;
 	
 	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL)
-	private List<OrdemServicoMaterial> materiais = new ArrayList<OrdemServicoMaterial>();
+	private Set<OrdemServicoMaterial> materiais = new HashSet<OrdemServicoMaterial>();
 	
 	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL)
-	private List<OrdemServicoMaoDeObra> maosDeObras = new ArrayList<OrdemServicoMaoDeObra>();
+	private Set<OrdemServicoMaoDeObra> maosDeObras = new HashSet<OrdemServicoMaoDeObra>();
 	
 	/*
 	 * Getters and Setters
@@ -61,19 +61,19 @@ public class OrdemServico extends GenericModelo implements Serializable{
 		this.justificativa = justificativa;
 	}
 
-	public List<OrdemServicoMaterial> getMateriais() {
+	public Set<OrdemServicoMaterial> getMateriais() {
 		return materiais;
 	}
 
-	public void setMateriais(List<OrdemServicoMaterial> materiais) {
+	public void setMateriais(Set<OrdemServicoMaterial> materiais) {
 		this.materiais = materiais;
 	}
 
-	public List<OrdemServicoMaoDeObra> getMaosDeObras() {
+	public Set<OrdemServicoMaoDeObra> getMaosDeObras() {
 		return maosDeObras;
 	}
 
-	public void setMaosDeObras(List<OrdemServicoMaoDeObra> maosDeObras) {
+	public void setMaosDeObras(Set<OrdemServicoMaoDeObra> maosDeObras) {
 		this.maosDeObras = maosDeObras;
 	}
 		

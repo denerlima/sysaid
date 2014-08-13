@@ -322,10 +322,10 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		}
 		OrdemServicoMaterial osMat = new OrdemServicoMaterial();
 		osMat.setOrdemServico(ordemServico);
-		osMat.setMaterial(material);
+		osMat.setMaterial(materialFacade.find(material.getId()));
 		for(UnidadeMedidaSaida ums : material.getUnidadeMedida().getSaidas()) {
 			if(ums.getUnidade().getId().intValue() == material.getUnidadeMedida().getUnidadeEntrada().getId().intValue()) {
-				osMat.setUnidadeMedidaSaida(ums);
+				//osMat.setUnidadeMedidaSaida(ums);
 				break;
 			}
 		}

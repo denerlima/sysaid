@@ -60,6 +60,10 @@ public class OrdemServicoMaterial {
 	private BigDecimal quantidadeUtilizada = new BigDecimal(0);
 	
 	@OneToMany(mappedBy="ordemServicoMaterial", cascade=CascadeType.ALL)
+	@Where(clause="tipo = 0")
+	private Set<OrdemServicoMaterialHistorico> entregas = new HashSet<OrdemServicoMaterialHistorico>();
+	
+	@OneToMany(mappedBy="ordemServicoMaterial", cascade=CascadeType.ALL)
 	@Where(clause="tipo = 1")
 	private Set<OrdemServicoMaterialHistorico> baixasPendencias = new HashSet<OrdemServicoMaterialHistorico>();
 
@@ -177,6 +181,14 @@ public class OrdemServicoMaterial {
 
 	public void setRealizados(Set<OrdemServicoMaterialHistorico> realizados) {
 		this.realizados = realizados;
+	}
+
+	public Set<OrdemServicoMaterialHistorico> getEntregas() {
+		return entregas;
+	}
+
+	public void setEntregas(Set<OrdemServicoMaterialHistorico> entregas) {
+		this.entregas = entregas;
 	}
 
 	public BigDecimal getQuantidadeRetirada() {
