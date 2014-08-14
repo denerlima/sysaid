@@ -28,38 +28,42 @@
 </h:head>
 <h:body>
 	
-	<h3><a href="${request.contextPath}">SysAid Java versão 0.7</a></h3>
+	<ui:fragment rendered="true">
+		
+		<h3><a href="${request.contextPath}">SysAid Java versão 0.7</a></h3>
+		
+		<p:menubar>
+			<p:submenu label="Cadastros">
+				<p:menuitem value="Unidade de Medida" url="/unidadeMedida/unidadeMedidaList.xhtml" />
+				<p:menuitem value="Tipo de Material" url="/tipoMaterial/tipoMaterialList.xhtml" />
+				<p:menuitem value="Aplicação" url="/aplicacao/aplicacaoList.xhtml" />
+				<p:menuitem value="Marca" url="/marca/marcaList.xhtml" />
+				<p:menuitem value="Grupo" url="/grupo/grupoList.xhtml" />
+				<p:menuitem value="Mão de Obra" url="/maoDeObra/maoDeObraList.xhtml" />
+				<p:menuitem value="Material" url="/material/materialList.xhtml" />
+			</p:submenu>
 	
-	<p:menubar rendered="true">
-		<p:submenu label="Cadastros">
-			<p:menuitem value="Unidade de Medida" url="/unidadeMedida/unidadeMedidaList.xhtml" />
-			<p:menuitem value="Tipo de Material" url="/tipoMaterial/tipoMaterialList.xhtml" />
-			<p:menuitem value="Aplicação" url="/aplicacao/aplicacaoList.xhtml" />
-			<p:menuitem value="Marca" url="/marca/marcaList.xhtml" />
-			<p:menuitem value="Grupo" url="/grupo/grupoList.xhtml" />
-			<p:menuitem value="Mão de Obra" url="/maoDeObra/maoDeObraList.xhtml" />
-			<p:menuitem value="Material" url="/material/materialList.xhtml" />
-		</p:submenu>
-
-		<p:submenu label="Movimentação">
-			<p:menuitem value="Nota Fiscal" url="/notaFiscal/notaFiscalList.xhtml" />
-			<p:menuitem value="Ordem de Compra" url="/ordemDeCompra/ordemDeCompraList.xhtml" />
-			<p:menuitem value="Inventário" url="/inventario/inventarioList.xhtml" />
-		</p:submenu>
-
-		<p:submenu label="Relatórios">
-			<p:menuitem value="Estoque" url="/estoque/estoqueRelatorio.xhtml" />
-			<p:menuitem value="Ordem de Compra"  url="/ordemDeCompra/ordemDeCompraRelatorio.xhtml" />
-			<p:menuitem value="Nota Fiscal" url="/notaFiscal/notaFiscalRelatorio.xhtml" />
-			<p:menuitem value="Sugestão de Compra" url="/estoque/sugestaoCompraRelatorio.xhtml" />
-			<p:menuitem value="Inventário" url="/inventario/inventarioRelatorio.xhtml" />
-		</p:submenu>
-		
-		<p:submenu label="Externo">
-			<p:menuitem value="Ordem de Serviço" url="/ordemServico/ordemServicoList.xhtml" />
-		</p:submenu>
-		
-	</p:menubar>
+			<p:submenu label="Movimentação">
+				<p:menuitem value="Nota Fiscal" url="/notaFiscal/notaFiscalList.xhtml" />
+				<p:menuitem value="Ordem de Compra" url="/ordemDeCompra/ordemDeCompraList.xhtml" />
+				<p:menuitem value="Inventário" url="/inventario/inventarioList.xhtml" />
+			</p:submenu>
+	
+			<p:submenu label="Relatórios">
+				<p:menuitem value="Estoque" url="/estoque/estoqueRelatorio.xhtml" />
+				<p:menuitem value="Ordem de Compra"  url="/ordemDeCompra/ordemDeCompraRelatorio.xhtml" />
+				<p:menuitem value="Nota Fiscal" url="/notaFiscal/notaFiscalRelatorio.xhtml" />
+				<p:menuitem value="Sugestão de Compra" url="/estoque/sugestaoCompraRelatorio.xhtml" />
+				<p:menuitem value="Inventário" url="/inventario/inventarioRelatorio.xhtml" />
+			</p:submenu>
+			
+			<p:submenu label="Externo">
+				<p:menuitem value="Ordem de Serviço" url="/ordemServico/ordemServicoList.xhtml" />
+			</p:submenu>
+			
+		</p:menubar>
+	
+	</ui:fragment>
 
 	<p:messages id="msgs"  autoUpdate="true" globalOnly="false" />
 	
