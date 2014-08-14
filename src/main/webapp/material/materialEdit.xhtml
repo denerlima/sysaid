@@ -52,7 +52,7 @@
 					Tipo Material: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="true" label="Tipo Material" styleClass="input-sm">
+					<h:selectOneMenu id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" converter="objectConverter" required="true" label="Tipo Material" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />				
 					</h:selectOneMenu>
@@ -66,7 +66,7 @@
 					Aplicação: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="aplicacao" value="#{materialBean.material.aplicacao}" required="true" label="Aplicação" styleClass="input-sm">
+					<h:selectOneMenu id="aplicacao" value="#{materialBean.material.aplicacao}" converter="objectConverter" required="true" label="Aplicação" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
 					</h:selectOneMenu>
@@ -80,7 +80,7 @@
 					Marca:
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="marca" value="#{materialBean.material.marca}" label="Marca" styleClass="input-sm">
+					<h:selectOneMenu id="marca" value="#{materialBean.material.marca}" converter="objectConverter" label="Marca" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allMarcas}" var="marca" itemLabel="#{marca.descricao}" itemValue="#{marca}" />			
 					</h:selectOneMenu>
@@ -94,7 +94,7 @@
 					Grupo:		
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="grupo" value="#{materialBean.material.grupo}" label="Grupo" styleClass="input-sm">
+					<h:selectOneMenu id="grupo" value="#{materialBean.material.grupo}" converter="objectConverter" label="Grupo" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricaoLabel}" itemValue="#{grupo}" />		
 					</h:selectOneMenu>
@@ -108,9 +108,9 @@
 					Unidade de Medida de Entrada: <span class="required">*</span>		
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="entrada" value="#{materialBean.material.unidadeMedida}" required="true" label="Unidade Medida de Entrada" styleClass="input-sm">
+					<h:selectOneMenu id="entrada" value="#{materialBean.material.unidadeMedida}" converter="objectConverter" required="true" label="Unidade Medida de Entrada" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItems value="#{materialBean.allUnidadesMedidas}" var="um" itemLabel="#{um.unidadeEntrada}" itemValue="#{um}" />				
+						<f:selectItems value="#{materialBean.allUnidadesMedidas}" var="um" itemLabel="#{um.unidadeEntrada.descricao}" itemValue="#{um}" />				
 					</h:selectOneMenu>
 					<h:message for="entrada" styleClass="msg-error" />
 				</div>

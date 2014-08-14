@@ -28,7 +28,7 @@
 					Grupo Pai
 				</div>
 				<div class="col-md-8">
-					<h:selectOneMenu id="grupoPai" value="#{grupoBean.grupo.grupoPai}" label="Grupo Pai" styleClass="input-sm">
+					<h:selectOneMenu converter="objectConverter" id="grupoPai" value="#{grupoBean.grupo.grupoPai}" label="Grupo Pai" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{grupoBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricao}" itemValue="#{grupo}" />		
 					</h:selectOneMenu>

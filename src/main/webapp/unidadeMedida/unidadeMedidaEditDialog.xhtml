@@ -17,7 +17,7 @@
 					Unidade Entrada: <span class="required">*</span>
 				</div>
 				<div class="col-md-8">
-					<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" required="true" label="Unidade Entrada" converter="omnifaces.SelectItemsIndexConverter">
+					<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" required="true" label="Unidade Entrada" converter="objectConverter">
 						<p:ajax event="change" process="@this" />
 						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 						<f:selectItems value="#{unidadeMedidaBean.unidades}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
@@ -47,7 +47,7 @@
 					<p:dataTable id="tableSaidas" value="#{unidadeMedidaBean.unidadeMedida.saidas}" var="_saida"
 						emptyMessage="Não existem itens nesta lista." style="margin-top: 5px;">
 						<p:column headerText="">
-							<h:selectOneMenu id="unidadeSaida" value="#{_saida.unidade}" required="true" label="Unidade Saída" converter="omnifaces.SelectItemsIndexConverter">
+							<h:selectOneMenu id="unidadeSaida" value="#{_saida.unidade}" required="true" label="Unidade Saída" converter="objectConverter">
 								<p:ajax event="change" process="@this" />
 								<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
 								<f:selectItems value="#{unidadeMedidaBean.unidades}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									

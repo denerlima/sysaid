@@ -40,7 +40,7 @@
 					</div>
 					<div class="col-md-2">Tipo Material:</div>
 					<div class="col-md-3">
-						<h:selectOneMenu id="tipoMaterial" value="#{notaFiscalBean.material.tipoMaterial}" required="false" label="Tipo Material">
+						<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{notaFiscalBean.material.tipoMaterial}" required="false" label="Tipo Material">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						</h:selectOneMenu>
@@ -53,7 +53,7 @@
 						<h:outputText value="Fornecedor:" />	
 					</div>
 					<div class="col-md-3">
-						<h:selectOneMenu id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" label="Fornecedor">
+						<h:selectOneMenu converter="objectConverter" id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" label="Fornecedor">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{notaFiscalBean.allFornecedores}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
 						</h:selectOneMenu>
@@ -63,7 +63,7 @@
 						<h:outputText value="Aplicação:" />	
 					</div>
 					<div class="col-md-3">
-						<h:selectOneMenu id="aplicacao" value="#{materialBean.material.aplicacao}" label="Aplicação" styleClass="input-sm">
+						<h:selectOneMenu converter="objectConverter" id="aplicacao" value="#{materialBean.material.aplicacao}" label="Aplicação" styleClass="input-sm">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{materialBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
 						</h:selectOneMenu>

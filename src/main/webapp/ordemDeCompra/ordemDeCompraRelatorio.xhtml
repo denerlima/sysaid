@@ -40,13 +40,13 @@
 					</div>
 					<div class="col-md-2">
 						<p:autoComplete id="materialAutocomplete" minQueryLength="3"
-							maxResults="10" value="#{ordemDeCompraBean.material}"
+							maxResults="10" value="#{ordemDeCompraBean.material}" converter="objectConverter"
 							label="Material" var="mat" itemLabel="#{mat.material}" itemValue="#{mat}"
 							completeMethod="#{ordemDeCompraBean.completeMaterial}" dropdown="true" />
 					</div>
 					<div class="col-md-2">Tipo Material:</div>
 					<div class="col-md-2">
-						<h:selectOneMenu id="tipoMaterial" value="#{ordemDeCompraBean.material.tipoMaterial}" required="false" label="Tipo Material">
+						<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{ordemDeCompraBean.material.tipoMaterial}" required="false" label="Tipo Material">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 						</h:selectOneMenu>
@@ -59,7 +59,7 @@
 						<h:outputText value="Autorizador:" />
 					</div>
 					<div class="col-md-2">
-						<h:selectOneMenu id="cbAutorizador" immediate="true" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}">
+						<h:selectOneMenu converter="objectConverter" id="cbAutorizador" immediate="true" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{ordemDeCompraBean.autorizadores}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
 						</h:selectOneMenu>

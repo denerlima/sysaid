@@ -27,7 +27,7 @@
 			<p:outputPanel id="addMaterialPanel">
 		        	
 				<p:autoComplete id="maoDeObraAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
-					value="#{ordemServicoBean.maoDeObra}" label="Mão de Obra" 
+					value="#{ordemServicoBean.maoDeObra}" converter="objectConverter" label="Mão de Obra" 
 					var="_mao" itemLabel="#{_mao.descricao}" itemValue="#{_mao}" 
 					completeMethod="#{ordemServicoBean.completeMaoDeObra}" dropdown="true" />
 			
@@ -87,7 +87,7 @@
 						</p:column>
 						
 						<p:column headerText="Unidade de Medida">
-							<h:selectOneMenu value="#{_maoDeObra.unidadeMedida}">
+							<h:selectOneMenu converter="objectConverter" value="#{_maoDeObra.unidadeMedida}">
 								<p:ajax event="change" listener="#{ordemServicoBean.changeUnidadeMaoDeObra(_maoDeObra)}" process="@this" 
 										update=":osMaoDeObraForm:resultado" />
 								<f:selectItem itemValue="1" itemLabel="Hora" />

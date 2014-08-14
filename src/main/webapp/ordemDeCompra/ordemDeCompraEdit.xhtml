@@ -57,7 +57,7 @@
 							<h:outputText value="Autorizador:" />
 						</div>
 						<div class="col-md-10">
-							<h:selectOneMenu id="autorizador" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}" required="true" label="Autorizador">
+							<h:selectOneMenu converter="objectConverter" id="autorizador" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}" required="true" label="Autorizador">
 								<f:selectItem itemValue="" itemLabel="Selecione" />
 								<f:selectItems value="#{ordemDeCompraBean.autorizadores}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
 							</h:selectOneMenu>
@@ -70,7 +70,7 @@
 							<h:outputText value="Contratado:" />
 						</div>
 						<div class="col-md-10">
-							<h:selectOneMenu id="contratado" value="#{ordemDeCompraBean.ordemDeCompra.contratado}" required="true" label="Contratado">
+							<h:selectOneMenu converter="objectConverter" id="contratado" value="#{ordemDeCompraBean.ordemDeCompra.contratado}" required="true" label="Contratado">
 								<f:selectItem itemValue="" itemLabel="Selecione" />
 								<f:selectItems value="#{ordemDeCompraBean.allContratados}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
 							</h:selectOneMenu>		
@@ -86,7 +86,7 @@
 			        <p:outputPanel id="addMaterialPanel">
 			        	
 						<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
-							value="#{ordemDeCompraBean.material}" label="Material" 
+							value="#{ordemDeCompraBean.material}" converter="objectConverter" label="Material" 
 							var="mat" itemLabel="#{mat.material}" itemValue="#{mat}" 
 							completeMethod="#{ordemDeCompraBean.completeMaterial}" dropdown="true" />
 					

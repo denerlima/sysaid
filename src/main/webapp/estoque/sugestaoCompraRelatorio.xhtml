@@ -24,7 +24,7 @@
 				</div>
 				<div class="col-md-1">Tipo Material:</div>
 				<div class="col-md-2">
-					<h:selectOneMenu id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="false" label="Tipo Material">
+					<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="false" label="Tipo Material">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 					</h:selectOneMenu>

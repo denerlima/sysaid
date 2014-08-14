@@ -27,7 +27,7 @@
 			<p:outputPanel id="addMaterialPanel">
 		        	
 				<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
-					value="#{ordemServicoBean.material}" label="Material" 
+					value="#{ordemServicoBean.material}" converter="objectConverter" label="Material" 
 					var="invMat" itemLabel="#{invMat.material}" itemValue="#{invMat}" 
 					completeMethod="#{ordemServicoBean.completeMaterial}" dropdown="true" />
 			
@@ -40,7 +40,7 @@
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 					<br />
-					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServicoMateriais}" 
+					<p:dataTable var="_mat" id="table" value="#{ordemServicoBean.ordemServicoMateriais}" 
 						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
 						
 						<p:columnGroup type="header">
@@ -67,8 +67,9 @@
 							<h:outputText value="#{_mat.material.unidadeMedida.unidadeEntrada.descricao}" />							
 						</p:column>
 						<p:column>
-							<h:selectOneMenu value="#{_mat.unidadeMedidaSaida}">
+							<h:selectOneMenu converter="objectConverter" value="#{_mat.unidadeMedidaSaida}">
 								<f:selectItems value="#{_mat.material.unidadeMedida.saidas}" var="_saida" itemLabel="#{_saida.unidade.descricao}" itemValue="#{_saida}" />
+								<p:ajax event="change" process="@this" update=":osMaterialEditForm:resultado" />
 							</h:selectOneMenu>							
 						</p:column>
 						<p:column>

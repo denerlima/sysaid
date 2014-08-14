@@ -48,7 +48,7 @@
 						Atendente: <span class="required">*</span>
 					</div>
 					<div class="col-md-10">
-						<h:selectOneMenu id="atendente" value="#{inventarioBean.inventario.atendente}" required="true" label="Atendente" styleClass="input-sm">
+						<h:selectOneMenu converter="objectConverter" id="atendente" value="#{inventarioBean.inventario.atendente}" required="true" label="Atendente" styleClass="input-sm">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
 						</h:selectOneMenu>	
@@ -75,7 +75,7 @@
 		        	
 					<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
 						value="#{inventarioBean.material}" label="Material" 
-						var="invMat" itemLabel="#{invMat.material}" itemValue="#{invMat}" 
+						var="invMat" itemLabel="#{invMat.material}" converter="objectConverter" itemValue="#{invMat}" 
 						completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 				
 			        <p:commandButton value="Adicionar Material" icon="ui-icon-plus" action="#{inventarioBean.addMaterial}" 
