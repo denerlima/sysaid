@@ -1,6 +1,7 @@
 package control.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,7 @@ import model.facade.MaterialFacade;
 import model.facade.UsuarioFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 @Named
 @ViewScoped
@@ -28,6 +30,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	private Inventario inventario;	
 	private List<Inventario> inventarios;
 	private List<InventarioMaterial> inventariosMateriais;
+	private InventarioMaterial inventarioMaterial;
 	
 	@Inject
 	private InventarioFacade inventarioFacade;
@@ -111,6 +114,23 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		return "/inventario/inventarioList.xhtml?faces-redirect=true";
 	}
 	
+	public String concluirInventario() {
+		try {
+			for(InventarioMaterial im : inventario.getMateriais()) {
+				if(im.isStatusNull()) {
+					displayErrorMessageToUser("Para concluir todos os materiais devem ser aprovados ou rejeitados.");
+					return null;
+				}
+			}
+			getInventarioFacade().concluir(inventario);
+			displayInfoMessageToUser("Alterado com  Sucesso");
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
+			e.printStackTrace();
+		}
+		return "/inventario/inventarioList.xhtml?faces-redirect=true";
+	}
+	
 	public void deleteInventario() {
 		try {
 			getInventarioFacade().delete(inventario);
@@ -144,6 +164,18 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		inventarios = getInventarioFacade().listAll();
 	}
 
+	public void addTodosMateriais() {
+		List<Material> mats = materialFacade.listAll();
+		forMat: for(Material mat : mats) {
+			for(InventarioMaterial invMat : inventario.getMateriais()) {
+				if(invMat.getMaterial().getId().intValue() == mat.getId().intValue()) {
+					continue forMat; 
+				}
+			}
+			addMaterial(mat);
+		}
+	}
+	
 	public void addMaterial() {
 		if(material == null) {
 			displayErrorMessageToUser("Campo Material Obrigatório");
@@ -151,19 +183,23 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		}
 		for(InventarioMaterial invMat : inventario.getMateriais()) {
 			if(invMat.getMaterial().getId().intValue() == material.getId().intValue()) {
-				displayErrorMessageToUser("Não permitir adicionar material repetido");
+				displayErrorMessageToUser("Não é permitido adicionar material repetido");
 				return;
 			}
 		}
-		InventarioMaterial invMat = new InventarioMaterial();
-		invMat.setInventario(inventario);
-		invMat.setMaterial(material);
-		invMat.setQuantidadeEstoque(material.getEstoque());
-		inventario.getMateriais().add(invMat);
+		addMaterial(material);
 		this.material = new Material();
 	}
 	
-	public void removerMaterial(Material material) {
+	public void addMaterial(Material mat) {
+		InventarioMaterial invMat = new InventarioMaterial();
+		invMat.setInventario(inventario);
+		invMat.setMaterial(mat);
+		invMat.setQuantidadeEstoque(mat.getEstoque());
+		inventario.getMateriais().add(invMat);
+	}
+	
+	public void removerMaterial(InventarioMaterial material) {
 		inventario.getMateriais().remove(material);
 	}
 
@@ -232,6 +268,33 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	public boolean isManaged() {
 		return inventario != null && inventario.getId() != null;
+	}
+	
+	public InventarioMaterial getInventarioMaterial() {
+		return inventarioMaterial;
+	}
+
+	public void setInventarioMaterial(InventarioMaterial inventarioMaterial) {
+		this.inventarioMaterial = inventarioMaterial;
+	}
+
+	public void editarMaterial(InventarioMaterial im) {
+		setInventarioMaterial(im);
+	}
+	
+	public void aprovarMaterial() {
+		if(inventarioMaterial.getQuantidadeAprovada().longValue() < 0) {
+			displayErrorMessageToUser("A quantidade aprovada não pode ser menor que zero.");
+			return;
+		}
+		inventarioMaterial.setStatus(InventarioMaterial.STATUS_APROVADO);
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
+	}
+	
+	public void rejeitarMaterial() {
+		inventarioMaterial.setStatus(InventarioMaterial.STATUS_REJEITADO);
+		inventarioMaterial.setQuantidadeAprovada(new BigDecimal(0));
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 }

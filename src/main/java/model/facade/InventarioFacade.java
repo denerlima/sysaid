@@ -27,23 +27,37 @@ public class InventarioFacade extends GenericFacade<Inventario> implements Seria
 
 	public void create(Inventario entity) {
 		getDAO().beginTransaction();
-		definirQuantidades(entity);
+		//definirQuantidades(entity);
 		getDAO().save(entity);
 		getDAO().commit();
 	}
 	
 	public void update(Inventario entity) {
 		getDAO().beginTransaction();
-		definirQuantidades(entity);
+		//definirQuantidades(entity);
 		getDAO().update(entity);
 		getDAO().commit();
 	}
 	
+	public void concluir(Inventario entity) {
+		try {
+			getDAO().beginTransaction();
+			definirQuantidades(entity);
+			entity.setStatus(Inventario.STATUS_CONCLUIDO);
+			getDAO().update(entity);
+			getDAO().commit();
+		} catch (Exception e) {
+			getDAO().rollback();
+		}
+	}
+	
 	private void definirQuantidades(Inventario inventario) {
 		for (InventarioMaterial invMat : inventario.getMateriais()) {
-			invMat.setQuantidadeEstoque(invMat.getMaterial().getEstoqueInformado());
-			invMat.getMaterial().setEstoque(invMat.getQuantidadeInventariada());
-			materialDAO.update(invMat.getMaterial());
+			if(invMat.isAprovado()) {
+				invMat.setQuantidadeEstoque(invMat.getMaterial().getEstoque());
+				invMat.getMaterial().setEstoque(invMat.getQuantidadeAprovada());
+				materialDAO.update(invMat.getMaterial());
+			}
 		}
 	}
 	

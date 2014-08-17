@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +20,9 @@ import javax.persistence.Table;
 public class InventarioMaterial implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	public static final int STATUS_REJEITADO = 0;
+	public static final int STATUS_APROVADO = 1;
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventarioMaterialSequence")
@@ -37,10 +41,27 @@ public class InventarioMaterial implements Serializable {
 	private Material material;
 	
 	@Column(name="quantidade_estoque")
-	private BigDecimal quantidadeEstoque;
+	private BigDecimal quantidadeEstoque = new BigDecimal(0);
 	
 	@Column(name="quantidade_inventariada")
-	private BigDecimal quantidadeInventariada;
+	private BigDecimal quantidadeInventariada = new BigDecimal(0);
+	
+	@Column(name="quantidade_aprovada")
+	private BigDecimal quantidadeAprovada = new BigDecimal(0);
+	
+	@Column(length=1000)
+	private String justificativa;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_name_usuario", referencedColumnName="user_name")
+	private Usuario usuario;
+	
+	@Column
+	private Integer status;
+	
+	/*
+	 * Métodos Getters/Setters
+	 */
 
 	public Integer getId() {
 		return id;
@@ -88,6 +109,66 @@ public class InventarioMaterial implements Serializable {
 
 	public void setQuantidadeInventariada(BigDecimal quantidadeInventariada) {
 		this.quantidadeInventariada = quantidadeInventariada;
+	}
+
+	public BigDecimal getQuantidadeAprovada() {
+		return quantidadeAprovada;
+	}
+
+	public void setQuantidadeAprovada(BigDecimal quantidadeAprovada) {
+		this.quantidadeAprovada = quantidadeAprovada;
+	}
+
+	public String getJustificativa() {
+		return justificativa;
+	}
+
+	public void setJustificativa(String justificativa) {
+		this.justificativa = justificativa;
+	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	
+	public String getStatusLabel() {
+		if(status == null) {
+			return ""; 
+		} else if(status == 0) {
+			return "Rejeitado";
+		}
+		else if(status == 1) {
+			return "Aprovado";
+		}
+		return null;
+	}
+	
+	public boolean isAprovado() {
+		return status != null && status == STATUS_APROVADO;
+	}
+	
+	public boolean isRejeitado() {
+		return status != null && status == STATUS_REJEITADO;
+	}
+	
+	public boolean isStatusNull() {
+		return status == null;
+	}
+
+	public BigDecimal getDiferenca() {
+		return getQuantidadeInventariada().subtract(getQuantidadeAprovada());
 	}
 	
 }

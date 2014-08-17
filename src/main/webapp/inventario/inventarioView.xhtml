@@ -75,10 +75,19 @@
 						<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
 					<p:column headerText="Estoque Atual">
-						<h:outputText value="#{invMat.quantidadeEstoque}" />							
+						<h:outputText value="#{invMat.material.estoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
 					<p:column headerText="Estoque Inventariado">
 						<h:outputText value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />							
+					</p:column>
+					<p:column headerText="Estoque Aprovado">
+						<h:outputText value="#{invMat.quantidadeAprovada}" converter="bigDecimalSimplesConverter" />
+					</p:column>
+					<p:column headerText="Status">
+						<h:outputText value="#{invMat.statusLabel}" />
+					</p:column>
+					<p:column headerText="Usuário">
+						<h:outputText value="#{invMat.usuario.nomeCompleto}" />
 					</p:column>
 				</p:dataTable>
 	        </p:tab>

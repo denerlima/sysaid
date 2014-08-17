@@ -22,7 +22,9 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "inventarioSequence", sequenceName = "MF_INVENTARIO_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_INVENTARIO")
 public class Inventario extends GenericModelo implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
+	public static final int STATUS_CONCLUIDO = 1;
 	
 	public Inventario() {
 		super();
@@ -48,6 +50,12 @@ public class Inventario extends GenericModelo implements Serializable{
 	@JoinColumn(name="user_name_atendente", referencedColumnName="user_name")
 	private Usuario atendente;
 	
+	@Column
+	private Integer status;
+	
+	/*
+	 * Métodos Getters and Setters
+	 */
 
 	public Integer getId() {
 		return id;
@@ -105,20 +113,47 @@ public class Inventario extends GenericModelo implements Serializable{
 		this.ativo = ativo;
 	}
 
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
 	@Override
 	public int hashCode() {
-		return id;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Inventario) {
-			Inventario inventario = (Inventario) obj;
-			return inventario.getId() == id;
-		}
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Inventario other = (Inventario) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 
-		return false;
+	public boolean isStatusNull() {
+		return status == null;
 	}
 	
-
+	public String getStatusLabel() {
+		if(status != null && status == 1) {
+			return "Concluído";
+		}
+		return "Não Concluído";
+	}
 }
