@@ -12,7 +12,7 @@
 	
 	<link type="text/css" rel="stylesheet" href="/project/faces/javax.faces.resource/theme.css?ln=primefaces-delta" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
-	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css?v=0.7" />
+	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css?v=#{initParam['versaoApp']}" />
 	
 	<script type="text/javascript">
 		 
@@ -28,9 +28,9 @@
 </h:head>
 <h:body>
 	
-	<ui:fragment rendered="true">
+	<ui:fragment rendered="#{initParam['menuRendered']}">
 		
-		<h3><a href="${request.contextPath}">SysAid Java versão 0.7</a></h3>
+		<h3><a href="${request.contextPath}">SysAid Java versão #{initParam['versaoApp']}</a></h3>
 		
 		<p:menubar>
 			<p:submenu label="Cadastros">
@@ -82,7 +82,7 @@
 	<br />
 	
 	<script type='text/javascript' src="#{request.contextPath}/resources/js/bootstrap.js"></script>
-	<script type='text/javascript' src="#{request.contextPath}/resources/js/utils.js?v=0.7"></script>
+	<script type='text/javascript' src="#{request.contextPath}/resources/js/utils.js?v=#{initParam['versaoApp']}"></script>
 	
 </h:body>
 </html>
