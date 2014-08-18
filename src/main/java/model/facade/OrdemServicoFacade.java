@@ -56,8 +56,10 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 						osmh.setQuantidadeAnterior(new BigDecimal(0));
 						osm.getEntregas().add(osmh);
 					}
+					
 					ordemServico.getMateriais().add(osm);
-					materialFacade.retirarEstoque(osm.getMaterial(), osm.getQuantidadeEntregue(), osm.getUnidadeMedidaSaida());
+					materialFacade.retirarEstoque(osm.getMaterial(), osm.getQuantidadeEntregue(), osm.getUnidadeMedidaSaida());					
+					materialFacade.atualizaEstoqueMinimoCalculado(osm.getMaterial());
 				}
 			}
 			getDAO().update(ordemServico);
@@ -73,7 +75,7 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 			getDAO().beginTransaction();
 			for(OrdemServicoMaterialHistorico osmh : pendencias) {
 				materialFacade.retirarEstoque(osmh.getOrdemServicoMaterial().getMaterial(), osmh.getQuantidade(), osmh.getOrdemServicoMaterial().getUnidadeMedidaSaida());
-				osmh.getOrdemServicoMaterial().setQuantidadeEntregue(osmh.getOrdemServicoMaterial().getQuantidadeEntregue().add(osmh.getQuantidade()));
+				osmh.getOrdemServicoMaterial().setQuantidadeEntregue(osmh.getOrdemServicoMaterial().getQuantidadeEntregue().add(osmh.getQuantidade()));				
 			}
 			getDAO().update(ordemServico);
 			getDAO().commit();
@@ -89,7 +91,8 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 			for(OrdemServicoMaterialHistorico osmh : devolucoes) {
 				if(osmh.getQuantidade().longValue() > 0) {
 					materialFacade.adicionarEstoque(osmh.getOrdemServicoMaterial().getMaterial(), osmh.getQuantidade(), osmh.getOrdemServicoMaterial().getUnidadeMedidaSaida());
-					osmh.getOrdemServicoMaterial().setQuantidadeDevolvida(osmh.getOrdemServicoMaterial().getQuantidadeDevolvida().add(osmh.getQuantidade()));					
+					osmh.getOrdemServicoMaterial().setQuantidadeDevolvida(osmh.getOrdemServicoMaterial().getQuantidadeDevolvida().add(osmh.getQuantidade()));				
+					materialFacade.atualizaEstoqueMinimoCalculado(osmh.getOrdemServicoMaterial().getMaterial());
 				}
 			}
 			getDAO().update(ordemServico);
@@ -113,5 +116,5 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 			throw e;
 		}
 	}
-	
+
 }

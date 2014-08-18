@@ -50,6 +50,7 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 		List<Material> result = materialDAO.findListMaterialByMaterial(nomeMaterial);        
 		return result;
     }
+	
 	/**
 	 * Será calculada a média mensal de todas as SAÍDAS de estoque, descontando as DEVOLUÇÕES * Percentual Ajuste no periodo @qtdMeses;
 	 * 
@@ -63,7 +64,7 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 		Date dataInicial = new Date();
 		Date dataFinal = new Date();		
 		
-		dataFinal = DataUtil.subtrairDiasAData(qtdMeses * 30);		
+		dataInicial = DataUtil.subtrairDiasAData(qtdMeses * 30);		
 		BigDecimal totalSaidas =  ordemServicoDAO.calculaTotalSaidas(material , dataInicial , dataFinal);
 		mediaMensal = totalSaidas.divide(new BigDecimal(qtdMeses * 30), 2, RoundingMode.HALF_UP);
 		
