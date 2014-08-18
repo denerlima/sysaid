@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @SequenceGenerator(name = "materialSequence", sequenceName = "MF_MATERIAL_ID_SEQ", allocationSize = 1)
@@ -88,6 +89,8 @@ public class Material extends GenericModelo implements Serializable{
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="material")
 	private List<InventarioMaterial> inventarios;
 	
+	@Transient
+	private BigDecimal sugestaoCompra;
 	
 	/*
 	 * Getters and Setters
@@ -227,6 +230,29 @@ public class Material extends GenericModelo implements Serializable{
 
 	public void setEstoque(BigDecimal estoque) {
 		this.estoque = estoque;
+	}
+	
+	/**
+	 * Fórmula do campo SUGESTÃO DE COMPRA: SUGESTÃO DE COMPRA = [ESTOQUE MINIMO] - ESTOQUE - [QUANTIDADE SOLICITADA] + [PENDENCIAS]
+	 * @return BigDecimal
+	 */
+	
+	public BigDecimal getSugestaoCompra() {		
+		if (sugestaoCompra == null) {
+			if (getMaterial() != null){
+				BigDecimal estoqueMinimo = new BigDecimal(0);
+				if (getEstoqueInformado() != null) {
+					estoqueMinimo = getEstoqueInformado();
+				}else {
+					estoqueMinimo = (getEstoqueCalculado().multiply(getAjuste()));
+				}				
+				return (estoqueMinimo.subtract(getEstoque()).subtract(getQtdSolicitada()));
+								
+			}
+		}
+		
+		
+		return new BigDecimal(0);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package persistence.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -85,6 +86,50 @@ public class MaterialDAO extends GenericDAO<Material> {
 		}
 		return lista;
 		
+	}
+
+	public BigDecimal totalMatOC(Material mat) {
+		BigDecimal result = new BigDecimal(0);
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("Select SUM(ocm.quantidadeAutorizada) FROM OrdemDeCompraMaterial ocm left join ocm.ordemDeCompra oc WHERE oc.ativo = 1");
+			if (mat.getMaterial() != null) {
+				sql.append(" AND ocm.material.id = :idMat");
+			}
+			
+			Query query = getEntityManager().createQuery(sql.toString());			
+			if (mat.getMaterial() != null) {
+				query.setParameter("idMat", mat.getId());
+			}
+			
+			result = (BigDecimal) query.getSingleResult();
+			
+		} catch (Exception e) {
+			e.printStackTrace();		
+		}
+		return result == null ? new BigDecimal(0) : result ;
+	}
+
+	public BigDecimal totalMatNF(Material mat) {
+		BigDecimal result = new BigDecimal(0);
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("Select SUM(nfm.quantidade) FROM NotaFiscalMaterial nfm left join nfm.notaFiscal nf WHERE nf.ativo = 1");
+			if (mat.getMaterial() != null) {
+				sql.append(" AND nfm.ordemDeCompraMaterial.material.id = :idMat");
+			}
+			
+			Query query = getEntityManager().createQuery(sql.toString());			
+			if (mat.getMaterial() != null) {
+				query.setParameter("idMat", mat.getId());
+			}
+			
+			result = (BigDecimal) query.getSingleResult();
+			
+		} catch (Exception e) {
+			e.printStackTrace();		
+		}
+		return result == null ? new BigDecimal(0) : result ;
 	}
 
 

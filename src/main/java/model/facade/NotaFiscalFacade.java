@@ -2,6 +2,7 @@ package model.facade;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import model.entity.Material;
 import model.entity.NotaFiscal;
 import model.entity.NotaFiscalMaterial;
 import model.entity.OrdemDeCompra;
+import model.entity.OrdemDeCompraMaterial;
 import persistence.dao.GenericDAO;
 import persistence.dao.MaterialDAO;
 import persistence.dao.NotaFiscalDAO;
@@ -27,6 +29,9 @@ public class NotaFiscalFacade extends GenericFacade<NotaFiscal> implements Seria
 	@Inject
 	private MaterialDAO materialDAO;
 	
+	@Inject
+	private MaterialFacade materialFacade;
+	
 	public void create(NotaFiscal notaFiscal) throws Exception {
 		try {
 			getDAO().beginTransaction();
@@ -34,6 +39,9 @@ public class NotaFiscalFacade extends GenericFacade<NotaFiscal> implements Seria
 				Material mat = nfm.getOrdemDeCompraMaterial().getMaterial();
 				BigDecimal estoque = mat.getEstoque();
 				mat.setEstoque(estoque.add(nfm.getQuantidade()));
+				List<OrdemDeCompraMaterial> lista = new ArrayList<OrdemDeCompraMaterial>();
+				lista.add(nfm.getOrdemDeCompraMaterial());
+				materialFacade.atualizaQuantidadeSolicitadaOC(lista);
 				materialDAO.save(mat);
 			}
 			getDAO().save(notaFiscal);

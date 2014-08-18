@@ -94,6 +94,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	public String createOrdemDeCompra() {
 		try {
 			getOrdemDeCompraFacade().create(ordemDeCompra);
+			materialFacade.atualizaQuantidadeSolicitadaOC(ordemDeCompra.getMateriais());
 			displayInfoMessageToUser("Criado com Sucesso. Número da Ordem de Compra: "+ordemDeCompra.getId());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
@@ -105,6 +106,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	public String updateOrdemDeCompra() {
 		try {
 			getOrdemDeCompraFacade().update(ordemDeCompra);
+			materialFacade.atualizaQuantidadeSolicitadaOC(ordemDeCompra.getMateriais());
 			displayInfoMessageToUser("Alterado com  Sucesso");
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
@@ -120,6 +122,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 				return;
 			}
 			getOrdemDeCompraFacade().delete(ordemDeCompra);
+			materialFacade.atualizaQuantidadeSolicitadaOC(ordemDeCompra.getMateriais());
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensDeCompra();
 		} catch (Exception e) {

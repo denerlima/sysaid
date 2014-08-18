@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Material;
+import model.entity.OrdemDeCompraMaterial;
 import model.entity.UnidadeMedidaSaida;
 import persistence.dao.GenericDAO;
 import persistence.dao.MaterialDAO;
@@ -102,6 +103,28 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 		List<Material> result = materialDAO.listMateriais(material);        
 		return result;
 		
+	}
+
+	public void atualizaQuantidadeSolicitadaOC(List<OrdemDeCompraMaterial> materiais) {
+		try {
+			getDAO().beginTransaction();
+			for(OrdemDeCompraMaterial ocm : materiais) {
+				if(ocm.getOrdemDeCompra() != null && ocm.getMaterial() != null) {
+					BigDecimal totalOC =  materialDAO.totalMatOC(ocm.getMaterial());
+					BigDecimal totalNF =  materialDAO.totalMatNF(ocm.getMaterial());					
+					
+					//[QUANTIDADE SOLICITADA]: é a soma das quantidades do material de todas Ordens de Compra menos a soma de todas as NF de COMPRA,
+					//ou seja, este campo representa tudo o que foi comprado mas ainda não chegou
+					ocm.getMaterial().setQtdSolicitada(totalOC.subtract(totalNF));
+					getDAO().update(ocm.getMaterial());
+				}
+			}
+			
+			getDAO().commit();
+		} catch (Exception e) {
+			getDAO().rollback();
+			e.printStackTrace();		
+		}
 	}
 
 }
