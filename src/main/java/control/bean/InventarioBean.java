@@ -1,5 +1,6 @@
 package control.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -164,6 +165,40 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		inventarios = getInventarioFacade().listAll();
 	}
 
+	public void imprimirChecklist() throws IOException {
+		StringBuffer sb = new StringBuffer().append("");
+		sb.append("Material;");
+		sb.append("Grupo;");
+		sb.append("Unidade medida;");
+		sb.append("Estoque atual;");
+		sb.append("Estoque inventariado");
+		sb.append("Justificativa");
+		sb.append("\n");
+		for (InventarioMaterial im : inventario.getMateriais()) {
+			if(im.isSelecionado()){
+				sb.append(im.getMaterial().getMaterialLabel());
+				sb.append(";");
+				sb.append(im.getMaterial().getGrupo().getDescricaoLabel());
+				sb.append(";");
+				sb.append(im.getMaterial().getUnidadeMedida().getUnidadeEntrada().getDescricao());
+				sb.append(";");
+				sb.append(im.getMaterial().getEstoque());
+				sb.append(" ;");
+				sb.append(" ;");
+				sb.append("\n");
+			}
+		}
+		geraExtractCSV(sb.toString(), "Inventário-" + inventario.getId());
+	}
+	
+	public void removerSelecionados() {
+		for(InventarioMaterial im : new ArrayList<InventarioMaterial>(inventario.getMateriais())) {
+			if(im.isSelecionado()) {
+				inventario.getMateriais().remove(im);
+			}
+		}
+	}
+	
 	public void addTodosMateriais() {
 		List<Material> mats = materialFacade.listAll();
 		forMat: for(Material mat : mats) {
@@ -195,6 +230,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		InventarioMaterial invMat = new InventarioMaterial();
 		invMat.setInventario(inventario);
 		invMat.setMaterial(mat);
+		invMat.setQuantidadeInventariada(mat.getEstoque());
 		invMat.setQuantidadeEstoque(mat.getEstoque());
 		inventario.getMateriais().add(invMat);
 	}
@@ -296,5 +332,6 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		inventarioMaterial.setQuantidadeAprovada(new BigDecimal(0));
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
+
 	
 }

@@ -84,21 +84,39 @@
 			        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
 			        	process="@this :inventarioEditForm:tabView:materialAutocomplete" style="margin-left: 35px;" />
 			        	
-			        	
 			       	<p:commandButton value="Adicionar Todos Materiais" icon="ui-icon-plus" action="#{inventarioBean.addTodosMateriais}" 
 			        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
-			        	process="@this" style="margin-left: 5px;" /> 	
+			        	process="@this" style="margin-left: 5px;" />
+			        
+			        <p:commandButton value="Imprimir Checklist" icon="ui-icon-print" action="#{inventarioBean.imprimirChecklist}" 
+			        	process="@this :inventarioEditForm:tabView:tabelaMaterial" style="margin-left: 5px;" ajax="false" />
+			        	
+			        <p:commandButton value="Concluir" icon="ui-icon-disk"
+			     		action="#{inventarioBean.concluirInventario}" 
+			     		update=":materialEditModal:materialEditDialogForm"
+			     		rendered="#{inventarioBean.managed}"
+			     		style="margin-left: 5px;" />
+			        	
+			      	<p:commandButton value="Excluir Selecionados" icon="ui-icon-circle-close" action="#{inventarioBean.removerSelecionados}" 
+			        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
+			        	process="@this :inventarioEditForm:tabView:tabelaMaterial" style="margin-left: 5px;" />  	 	
 				  	
 		 		</p:outputPanel>
 	        				
 				<h2>Materiais do Inventario</h2>
 				<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existem itens nesta lista." 
 					sortBy="#{invMat.material.material}" sortOrder="ASCENDING">
+					<p:column headerText="" style="width: 35px;">
+						<h:selectBooleanCheckbox value="#{invMat.selecionado}" />
+					</p:column>
 					<p:column headerText="Material">
 						<h:outputText value="#{invMat.material.materialLabel}" />							
 					</p:column>
 					<p:column headerText="Unidade de Medida Entrada">
 						<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							
+					</p:column>
+					<p:column headerText="Grupo">
+						<h:outputText value="#{invMat.material.grupo.descricaoLabel}" />							
 					</p:column>
 					<p:column headerText="Estoque Atual">
 						<h:outputText value="#{invMat.material.estoque}" converter="bigDecimalSimplesConverter" />							
@@ -121,6 +139,9 @@
 					<p:column headerText="Estoque Aprovado" rendered="#{inventarioBean.managed}">
 						<h:outputText value="#{invMat.quantidadeAprovada}" converter="bigDecimalSimplesConverter" />
 					</p:column>
+					<p:column headerText="Diferença" rendered="#{inventarioBean.managed}">
+						<h:outputText value="#{invMat.diferenca}" converter="bigDecimalSimplesConverter" />
+					</p:column>
 					<p:column headerText="Status" rendered="#{inventarioBean.managed}">
 						<h:outputText value="#{invMat.statusLabel}" />
 					</p:column>
@@ -131,13 +152,13 @@
 		                	update=":materialEditModal:materialEditDialogForm"
 		                	oncomplete="$('#materialEditModal').modal('show')" 
 		                	process="@this" 
-		                	rendered="#{invMat.status == null and inventarioBean.managed}" />
+		                	rendered="#{invMat.statusNull and inventarioBean.managed}" />
 		                
 		                <p:commandButton value="Excluir" 
 		                	action="#{inventarioBean.removerMaterial(invMat)}"
 		                	update=":inventarioEditForm:tabView:tabelaMaterial" 
 		                	process="@this" 
-		                	rendered="#{invMat.status == null}" />
+		                	rendered="#{invMat.statusNull}" />
 		                	
 					</p:column>
 				</p:dataTable>
@@ -154,11 +175,6 @@
      		update=":inventarioEditForm"
      		rendered="#{inventarioBean.managed}" />
 
-		<p:commandButton value="Concluir"
-     		action="#{inventarioBean.concluirInventario}" 
-     		update=":materialEditModal:materialEditDialogForm"
-     		rendered="#{inventarioBean.managed}" />
-     
      	<p:commandButton action="inventarioList.xhtml?faces-redirect=true" value="Cancelar" process="@this" />
      			
 	</h:form>

@@ -19,7 +19,7 @@ public class BigDecimalConverter implements javax.faces.convert.Converter {
 			final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
 			nf.setMinimumFractionDigits(2);
 			nf.setMaximumFractionDigits(2);
-			return new BigDecimal(nf.parse(value).doubleValue());
+			return new BigDecimal(nf.parse(value).toString()).setScale(2);
 		} catch (final Exception e) {
 			// return 0.0D;
 			return null;

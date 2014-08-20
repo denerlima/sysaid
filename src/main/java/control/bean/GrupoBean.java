@@ -11,6 +11,8 @@ import model.facade.GrupoFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 @Named
 @ViewScoped
@@ -23,6 +25,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 	@Inject
 	private GrupoFacade grupoFacade;
 
+	private TreeNode root;
 	
 	public GrupoFacade getGrupoFacade() {
 		return grupoFacade;
@@ -46,6 +49,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadGrupos();
 			resetGrupo();
+			root = null;
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
 			e.printStackTrace();
@@ -63,6 +67,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadGrupos();
 			resetGrupo();
+			root = null;
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
 			e.printStackTrace();
@@ -76,6 +81,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadGrupos();
 			resetGrupo();
+			root = null;
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
 			e.printStackTrace();
@@ -100,6 +106,24 @@ public class GrupoBean extends AbstractBean implements Serializable {
 
 	public boolean isManaged() {
 		return grupo != null && grupo.getId() != null;
+	}
+
+	public TreeNode getRoot() {
+	    if(root == null) {
+	    	root = new DefaultTreeNode("Grupos", null);
+	    	for(Grupo g : grupoFacade.listGrupoRoot()) {
+	    		TreeNode node = new DefaultTreeNode(g.getDescricaoLabel(), root);
+	    		recursiveNode(node, g);
+	    	}
+	    }
+		return root;
+	}
+	
+	public void recursiveNode(TreeNode root, Grupo g) {
+		for(Grupo subGrupo : grupoFacade.listSubGrupo(g)) {
+			TreeNode node = new DefaultTreeNode(subGrupo.getDescricaoLabel(), root);
+    		recursiveNode(node, subGrupo);
+		}
 	}
 	
 }

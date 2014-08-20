@@ -1,6 +1,7 @@
 package model.facade;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -21,5 +22,13 @@ public class GrupoFacade extends GenericFacade<Grupo> implements Serializable {
 	public GenericDAO<Grupo> getDAO() {
 		return grupoDAO;
 	}
+	
+	public List<Grupo> listGrupoRoot() {
+		return grupoDAO.listGrupoRoot();
+	}
 
+	public List<Grupo> listSubGrupo(Grupo g){
+		return grupoDAO.listSubGrupo(g);
+	}
+	
 }
