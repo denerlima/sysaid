@@ -171,8 +171,8 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		sb.append("Grupo;");
 		sb.append("Unidade medida;");
 		sb.append("Estoque atual;");
-		sb.append("Estoque inventariado");
-		sb.append("Justificativa");
+		sb.append("Estoque inventariado;");
+		sb.append("Justificativa;");
 		sb.append("\n");
 		for (InventarioMaterial im : inventario.getMateriais()) {
 			if(im.isSelecionado()){
