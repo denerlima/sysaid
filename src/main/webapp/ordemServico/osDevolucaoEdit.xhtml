@@ -30,7 +30,7 @@
 						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
 						
 						<p:column headerText="Data">
-							<p:calendar id="data" pattern="dd/MM/yy" locale="pt_BR" value="#{_devolucao.data}" size="10" navigator="true" required="true" label="Data" />
+							<p:calendar id="data" pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true" value="#{_devolucao.data}" size="10" navigator="true" required="true" label="Data" />
 							<h:message for="data" styleClass="msg-error" />					
 						</p:column>
 						<p:column headerText="Material">

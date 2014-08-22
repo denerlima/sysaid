@@ -98,7 +98,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	
 	public String updateNotaFiscal() {
 		try {
-			getNotaFiscalFacade().update(notaFiscal);
+			getNotaFiscalFacade().updateNota(notaFiscal);
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			return "/notaFiscal/notaFiscalList.xhtml?faces-redirect=true";
 		} catch (Exception e) {

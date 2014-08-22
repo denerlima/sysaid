@@ -53,6 +53,22 @@ public class NotaFiscalFacade extends GenericFacade<NotaFiscal> implements Seria
 		}
 	}
 	
+	public void updateNota(NotaFiscal notaFiscal) throws Exception {
+		try {
+			getDAO().beginTransaction();
+			for (NotaFiscalMaterial nfm : notaFiscal.getMateriais()) {
+				Material mat = nfm.getOrdemDeCompraMaterial().getMaterial();
+				mat.setPrecoUnitario(nfm.getPrecoUnitario());
+				materialDAO.save(mat);
+			}
+			getDAO().update(notaFiscal);
+			getDAO().commit();
+		} catch (Exception e) {
+			getDAO().rollback();
+			throw e;
+		}
+	}
+	
 	@Override
 	public GenericDAO<NotaFiscal> getDAO() {
 		return notaFiscalDAO;
