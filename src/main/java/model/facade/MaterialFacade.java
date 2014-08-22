@@ -107,7 +107,7 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 
 	public void atualizaQuantidadeSolicitadaOC(List<OrdemDeCompraMaterial> materiais) {
 		try {
-			getDAO().beginTransaction();
+			//getDAO().beginTransaction();
 			for(OrdemDeCompraMaterial ocm : materiais) {
 				if(ocm.getOrdemDeCompra() != null && ocm.getMaterial() != null) {
 					BigDecimal totalOC =  materialDAO.totalMatOC(ocm.getMaterial());
@@ -120,10 +120,10 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 				}
 			}
 			
-			getDAO().commit();
+			//getDAO().commit();
 		} catch (Exception e) {
-			getDAO().rollback();
-			e.printStackTrace();		
+			//getDAO().rollback();
+			throw new RuntimeException(e);		
 		}
 	}
 

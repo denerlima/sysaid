@@ -2,9 +2,11 @@ package control.bean;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -435,6 +437,17 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 
 	public List<OrdemServicoMaterial> getOrdemServicoMateriais() {
 		return ordemServicoMateriais;
+	}
+	
+	public String getCustoTotalRealizado() {
+		BigDecimal custo = new BigDecimal(0);
+		for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
+			custo = custo.add(osm.getPrecoTotal());
+		}
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(custo.toString()));
 	}
 	
 }

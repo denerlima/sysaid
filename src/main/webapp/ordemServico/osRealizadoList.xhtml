@@ -42,6 +42,8 @@
 				                <p:column rowspan="2" headerText="Material" />
 				                <p:column rowspan="2" headerText="Unidade de Medida Saída" />
 				                <p:column colspan="2" headerText="Quantidade" />
+				                <p:column rowspan="2" headerText="Valor Unitário" />
+				                <p:column rowspan="2" headerText="Valor Total" />
 				                <p:column rowspan="2" headerText="Ações" />
 				            </p:row>
 				            <p:row>
@@ -62,8 +64,23 @@
 							<h:outputText value="#{_mat.quantidadeUtilizada}" />
 						</p:column>
 						<p:column>
+							<h:outputText value="#{_mat.precoUnitario}" converter="bigDecimalConverter" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{_mat.precoTotal}" converter="bigDecimalConverter" />
+						</p:column>
+						<p:column>
 							
 						</p:column>
+						
+						<p:columnGroup type="footer">
+				            <p:row>
+				                <p:column colspan="5" style="text-align:right" footerText="Custo Total:" />
+				                <p:column footerText="#{ordemServicoBean.custoTotalRealizado}" />
+				                <p:column footerText="" />
+				            </p:row>
+				        </p:columnGroup>
+						
 					</p:dataTable>
 				</p:outputPanel>
 			</center>

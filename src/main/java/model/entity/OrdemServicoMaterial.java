@@ -59,6 +59,9 @@ public class OrdemServicoMaterial {
 	@Column(name="quantidade_utilizada", nullable = false)
 	private BigDecimal quantidadeUtilizada = new BigDecimal(0);
 	
+	@Column(name="preco_unitario", length = 20, precision = 20, scale= 2 , nullable = false)
+	private BigDecimal precoUnitario = new BigDecimal(0);
+	
 	@OneToMany(mappedBy="ordemServicoMaterial", cascade=CascadeType.ALL)
 	@Where(clause="tipo = 0")
 	private Set<OrdemServicoMaterialHistorico> entregas = new HashSet<OrdemServicoMaterialHistorico>();
@@ -151,6 +154,14 @@ public class OrdemServicoMaterial {
 		this.quantidadeUtilizada = quantidadeUtilizada;
 	}
 
+	public BigDecimal getPrecoUnitario() {
+		return precoUnitario;
+	}
+
+	public void setPrecoUnitario(BigDecimal precoUnitario) {
+		this.precoUnitario = precoUnitario;
+	}
+
 	public UnidadeMedidaSaida getUnidadeMedidaSaida() {
 		return unidadeMedidaSaida;
 	}
@@ -193,6 +204,10 @@ public class OrdemServicoMaterial {
 
 	public BigDecimal getQuantidadeRetirada() {
 		return getQuantidadeEntregue().subtract(getQuantidadeDevolvida());
+	}
+	
+	public BigDecimal getPrecoTotal() {
+		return getPrecoUnitario().multiply(getQuantidadeUtilizada());
 	}
 	
 }

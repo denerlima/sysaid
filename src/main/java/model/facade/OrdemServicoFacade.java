@@ -108,6 +108,7 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 			getDAO().beginTransaction();
 			for(OrdemServicoMaterialHistorico osmh : realizados) {
 				osmh.getOrdemServicoMaterial().setQuantidadeUtilizada(osmh.getOrdemServicoMaterial().getQuantidadeUtilizada().add(osmh.getQuantidade()));
+				osmh.getOrdemServicoMaterial().setPrecoUnitario(osmh.getOrdemServicoMaterial().getMaterial().getPrecoUnitario());
 			}
 			getDAO().update(ordemServico);
 			getDAO().commit();
