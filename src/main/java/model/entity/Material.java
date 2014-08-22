@@ -83,6 +83,9 @@ public class Material extends GenericModelo implements Serializable{
 	@JoinColumn(name="id_marca", referencedColumnName="id")
 	private Marca marca;
 	
+	@Column(name="preco_unitario", length = 20, precision = 20, scale= 2 , nullable = false)
+	private BigDecimal precoUnitario = new BigDecimal(0);
+	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="material")
 	private List<OrdemDeCompraMaterial> ordensDeCompra;
 
@@ -232,6 +235,14 @@ public class Material extends GenericModelo implements Serializable{
 		this.estoque = estoque;
 	}
 	
+	public BigDecimal getPrecoUnitario() {
+		return precoUnitario;
+	}
+
+	public void setPrecoUnitario(BigDecimal valorUnitario) {
+		this.precoUnitario = valorUnitario;
+	}
+
 	/**
 	 * Fórmula do campo SUGESTÃO DE COMPRA: SUGESTÃO DE COMPRA = [ESTOQUE MINIMO] - ESTOQUE - [QUANTIDADE SOLICITADA] + [PENDENCIAS]
 	 * @return BigDecimal

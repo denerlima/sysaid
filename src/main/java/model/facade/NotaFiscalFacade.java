@@ -39,6 +39,7 @@ public class NotaFiscalFacade extends GenericFacade<NotaFiscal> implements Seria
 				Material mat = nfm.getOrdemDeCompraMaterial().getMaterial();
 				BigDecimal estoque = mat.getEstoque();
 				mat.setEstoque(estoque.add(nfm.getQuantidade()));
+				mat.setPrecoUnitario(nfm.getPrecoUnitario());
 				List<OrdemDeCompraMaterial> lista = new ArrayList<OrdemDeCompraMaterial>();
 				lista.add(nfm.getOrdemDeCompraMaterial());
 				materialFacade.atualizaQuantidadeSolicitadaOC(lista);

@@ -1,0 +1,19 @@
+<Resource 
+			  name="jdbc/sysaid" 
+			  auth="Container" 
+			  type="javax.sql.DataSource" 
+			  
+			  autoReconnect="true"
+			  maxActive="6" 
+			  maxIdle="2"
+			  maxWait="10000"
+			  minEvictableIdleTimeMillis="10000"
+			  timeBetweenEvictionRunsMillis="14000"		      
+		      testOnBorrow="true"
+		      removeAbandoned="true"
+		      removeAbandonedTimeout="5"
+			  
+			  username="SYSAID" 
+			  password="sysaid" 
+			  driverClassName="oracle.jdbc.driver.OracleDriver" 
+			  url="jdbc:oracle:thin:@adriano-vm:1521:XE" />
