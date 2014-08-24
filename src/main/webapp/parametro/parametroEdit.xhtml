@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template.xhtml">
+	<ui:define name="body">
+
+		<h:form id="parametroForm" prependId="false">			
+			<title>Lista de Parâmetro</title>
+			<center><h2>Lista de Parâmetro</h2></center>
+			<p:spacer height="10" />
+	
+			<div class="row">
+				<div class="col-md-4">
+					Parametro: <span class="required">*</span>
+				</div>
+				<div class="col-md-8">
+					<h:inputText id="qtdMeses" value="#{parametroBean.parametro.qtdMeses}" required="true" label="Marca"/>					
+					<h:message for="qtdMeses" styleClass="msg-error" />
+				</div>
+			</div>
+		
+			<div class="buttons">								
+				<p:commandButton action="#{parametroBean.updateParametro}" value="Alterar" update=":parametroForm" />
+			</div>		
+		</h:form>		
+	</ui:define>
+</ui:composition>
