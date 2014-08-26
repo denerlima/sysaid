@@ -21,8 +21,9 @@
 			<p:outputPanel id="resultado" layout="block" style="width:60%; overflow:auto">
 			<p:spacer width="100" height="30" />
 				<p:dataTable var="app" value="#{aplicacaoBean.allAplicacoes}" emptyMessage="Não existem itens nesta lista."
-					rows="10" paginator="true" paginatorPosition="bottom"> 
-					<p:column headerText="Aplicação">
+					rows="10" paginator="true" paginatorPosition="bottom"
+					sortBy="#{app.descricao}" sortOrder="ASCENDING"> 
+					<p:column headerText="Aplicação" sortBy="#{app.descricao}">
 						<h:outputText value="#{app.descricao}" />							
 					</p:column>
 					<p:column headerText="Ações" style="width:200px">											

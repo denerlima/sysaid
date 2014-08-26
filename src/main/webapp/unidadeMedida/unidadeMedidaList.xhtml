@@ -23,8 +23,9 @@
 			<p:outputPanel id="resultado" layout="block" style="width:80%; overflow:auto">
 				<br />
 				<p:dataTable id="unidadesTable" var="um" value="#{unidadeMedidaBean.allUnidadesMedida}" emptyMessage="Não existem itens nesta lista."
-					rows="10" paginator="true" paginatorPosition="bottom">
-					<p:column headerText="Entrada">
+					rows="10" paginator="true" paginatorPosition="bottom"
+					sortBy="#{um.unidadeEntrada.descricao}" sortOrder="ASCENDING">
+					<p:column headerText="Entrada" sortBy="#{um.unidadeEntrada.descricao}">
 						<h:outputText value="#{um.unidadeEntrada.descricao}" />							
 					</p:column>
 					<p:column headerText="Saídas/Fator Conversão">
