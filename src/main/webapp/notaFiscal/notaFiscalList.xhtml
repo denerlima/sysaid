@@ -24,30 +24,31 @@
 			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 				<br />
 				<p:dataTable var="nf" value="#{notaFiscalBean.allNotasFiscais}" emptyMessage="Não existem itens nesta lista."
-					rows="10" paginator="true" paginatorPosition="bottom">
-					<p:column headerText="Nº da Nota Fiscal">
+					rows="10" paginator="true" paginatorPosition="bottom"
+					sortBy="#{nf.nrNotaFiscal}" sortOrder="ASCENDING">
+					<p:column headerText="Nº da Nota Fiscal" sortBy="#{nf.nrNotaFiscal}">
 						<h:outputText value="#{nf.nrNotaFiscal}" />							
 					</p:column>
-					<p:column headerText="Data da emissão">
+					<p:column headerText="Data da emissão" sortBy="#{nf.dataEmissao}">
 						<h:outputText value="#{nf.dataEmissao}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Data da entrega">
+					<p:column headerText="Data da entrega" sortBy="#{nf.dataEntrega}">
 						<h:outputText value="#{nf.dataEntrega}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Fornecedor">
+					<p:column headerText="Fornecedor" sortBy="#{nf.fornecedor.nome}">
 						<h:outputText value="#{nf.fornecedor.nome}" />	
 					</p:column>
-					<p:column headerText="Acréscimos">
+					<p:column headerText="Acréscimos" sortBy="#{nf.acrescimos}">
 						<h:outputText value="#{nf.acrescimos}" converter="bigDecimalConverter" />							
 					</p:column>
-					<p:column headerText="Total dos Produtos">
+					<p:column headerText="Total dos Produtos" sortBy="#{nf.totalProdutos}">
 						<h:outputText value="#{nf.totalProdutos}" converter="bigDecimalConverter" />							
 					</p:column>	
-					<p:column headerText="Total Geral da Nota">
+					<p:column headerText="Total Geral da Nota" sortBy="#{nf.totalGeralNota}">
 						<h:outputText value="#{nf.totalGeralNota}" converter="bigDecimalConverter" />							
 					</p:column>			
 								

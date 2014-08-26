@@ -90,7 +90,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Criado com Sucesso");
 			return "/notaFiscal/notaFiscalList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
 		return null;
@@ -102,7 +102,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			return "/notaFiscal/notaFiscalList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
 		}
 		return null;
@@ -115,7 +115,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			loadNotasFiscais();
 			resetNotaFiscal();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
 		}
 	}
@@ -128,7 +128,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			loadNotasFiscais();
 			RequestContext.getCurrentInstance().addCallbackParam("success", true);
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel cancelar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel cancelar. ERRO");
 			e.printStackTrace();
 		}
 	}
@@ -218,7 +218,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			notasFiscaisMateriais = getNotaFiscalFacade().pesquisarNotaFiscalbyFilters(notaFiscal,
 					ordemDeCompra, material, dtEmissaoInicial , dtEmissaoFinal , dtEntregaInicial , dtEntregaFinal);			
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel achar nennhuma Ordem de Compra. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhuma Ordem de Compra. ERRO");
 			e.printStackTrace();
 		}
 		return notasFiscaisMateriais;

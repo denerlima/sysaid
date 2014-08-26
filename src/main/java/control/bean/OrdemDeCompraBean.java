@@ -97,7 +97,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 			materialFacade.atualizaQuantidadeSolicitadaOC(ordemDeCompra.getMateriais());
 			displayInfoMessageToUser("Criado com Sucesso. Número da Ordem de Compra: "+ordemDeCompra.getId());
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
 		return "/ordemDeCompra/ordemDeCompraList.xhtml?faces-redirect=true";
@@ -109,7 +109,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 			materialFacade.atualizaQuantidadeSolicitadaOC(ordemDeCompra.getMateriais());
 			displayInfoMessageToUser("Alterado com  Sucesso");
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
 		}
 		return "/ordemDeCompra/ordemDeCompraList.xhtml?faces-redirect=true";
@@ -118,7 +118,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	public void deleteOrdemDeCompra() {
 		try {
 			if(ordemDeCompraFacade.isOrdemDeCompraUtilizadaPorNotaFiscal(ordemDeCompra.getId())) {
-				displayErrorMessageToUser("Não é possível excluir a Ordem de Compra, pois está incluída em uma Nota Fiscal.");
+				displayErrorMessageToUser("n‹o é possível excluir a Ordem de Compra, pois está incluída em uma Nota Fiscal.");
 				return;
 			}
 			getOrdemDeCompraFacade().delete(ordemDeCompra);
@@ -126,7 +126,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensDeCompra();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
 		}
 	}
@@ -139,7 +139,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 			loadOrdensDeCompra();
 			RequestContext.getCurrentInstance().addCallbackParam("success", true);
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel cancelar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel cancelar. ERRO");
 			e.printStackTrace();
 		}
 	}
@@ -168,7 +168,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		try {			
 			ordensDeComprasMateriais = getOrdemDeCompraFacade().listMateriaisOrdensCompras(ordemDeCompra , material);			
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel achar nennhuma Ordem de Compra. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhuma Ordem de Compra. ERRO");
 			e.printStackTrace();
 		}
 		return ordensDeComprasMateriais;

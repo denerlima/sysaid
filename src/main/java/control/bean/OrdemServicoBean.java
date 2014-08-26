@@ -104,7 +104,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			return;
 		}
 		if(id == null || id == 0) {
-			throw new RuntimeException("Parametro OS não encontrado");
+			throw new RuntimeException("Parametro OS n‹o encontrado");
 		} else {
 			ordemServico = getOrdemServicoFacade().findOrCreate(id);
 		}
@@ -182,7 +182,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadOrdensServicos();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
 	}
@@ -194,7 +194,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			loadOrdensServicos();
 			resetOrdemServico();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
 		}
 	}
@@ -203,7 +203,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		try {
 			for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
 				if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
-					displayErrorMessageToUser("A quantidade solicitada não pode ser maior que a quantidade entregue");
+					displayErrorMessageToUser("A quantidade solicitada n‹o pode ser maior que a quantidade entregue");
 					return null;
 				}
 			}
@@ -211,7 +211,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Operação realizada com sucesso");
 			return redirectMaterialList();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
 		return null;
@@ -223,7 +223,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Operação realizada com sucesso");
 			return redirectMaoDeObraList();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
 		return null;
@@ -234,7 +234,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			for(OrdemServicoMaterialHistorico osmh : pendencias) {
 				BigDecimal qtdePendente = osmh.getQuantidadeAnterior();
 				if(osmh.getQuantidade().longValue() > qtdePendente.longValue()) {
-					displayErrorMessageToUser("A quantidade a ser baixada não pode ser maior que a quantidade pendente");
+					displayErrorMessageToUser("A quantidade a ser baixada n‹o pode ser maior que a quantidade pendente");
 					return null;
 				}
 			}
@@ -242,7 +242,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
 			return redirectMaterialList();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel baixar pendências. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel baixar pendências. ERRO");
 			e.printStackTrace();
 		}
 		return null;
@@ -254,7 +254,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
 			return redirectMaterialList();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel baixar pendências. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel baixar pendências. ERRO");
 			e.printStackTrace();
 		}
 		return null;
@@ -266,7 +266,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
 			return redirectRealizadoList();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel baixar pendências. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel baixar pendências. ERRO");
 			e.printStackTrace();
 		}
 		return null;
@@ -393,7 +393,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	
 	public void calcularPendencia(OrdemServicoMaterial osm) {
 		if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
-			displayErrorMessageToUser("A quantidade solicitada não pode ser maior que a quantidade entregue");
+			displayErrorMessageToUser("A quantidade solicitada n‹o pode ser maior que a quantidade entregue");
 			return;
 		}
 		osm.setQuantidadePendente(osm.getQuantidadeSolicitada().subtract(osm.getQuantidadeEntregue()));
@@ -402,7 +402,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	public void calcularBaixaDePendencia(OrdemServicoMaterialHistorico osmh) {
 		BigDecimal qtdePendente = osmh.getOrdemServicoMaterial().getQuantidadePendente();
 		if(osmh.getQuantidade().longValue() > qtdePendente.longValue()) {
-			displayErrorMessageToUser("A quantidade a ser baixada não pode ser maior que a quantidade pendente");
+			displayErrorMessageToUser("A quantidade a ser baixada n‹o pode ser maior que a quantidade pendente");
 			return;
 		}
 		osmh.getOrdemServicoMaterial().setQuantidadePendente(qtdePendente.subtract(osmh.getQuantidade()));

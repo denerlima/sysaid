@@ -52,7 +52,7 @@ public class UnidadeBean extends AbstractBean implements Serializable {
 			resetUnidade();
 			RequestContext.getCurrentInstance().addCallbackParam("success", true);
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
 	}
@@ -66,7 +66,7 @@ public class UnidadeBean extends AbstractBean implements Serializable {
 			unidadeMedidaBean.setUnidades(null);
 			RequestContext.getCurrentInstance().addCallbackParam("success", true);
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
 		}
 	}
@@ -79,7 +79,7 @@ public class UnidadeBean extends AbstractBean implements Serializable {
 			resetUnidade();
 			unidadeMedidaBean.setUnidades(null);
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
 		}
 	}
