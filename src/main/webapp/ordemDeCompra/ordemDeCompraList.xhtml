@@ -24,24 +24,25 @@
 			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 			<p:spacer width="100" height="30" />
 				<p:dataTable var="oc" value="#{ordemDeCompraBean.allOrdensDeCompra}" emptyMessage="Não existem itens nesta lista."
-					rows="10" paginator="true" paginatorPosition="bottom">
-					<p:column headerText="Nº da Ordem de Compra">
+					rows="10" paginator="true" paginatorPosition="bottom"
+					sortBy="#{oc.id}" sortOrder="ASCENDING">
+					<p:column headerText="Nº da Ordem de Compra" sortBy="#{oc.id}">
 						<h:outputText value="#{oc.id}" />							
 					</p:column>
-					<p:column headerText="Data da autorização">
+					<p:column headerText="Data da autorização" sortBy="#{oc.dataAutorizacao}">
 						<h:outputText value="#{oc.dataAutorizacao}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Data da emissão">
+					<p:column headerText="Data da emissão" sortBy="#{oc.dataEmissao}">
 						<h:outputText value="#{oc.dataEmissao}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Autorizador">
+					<p:column headerText="Autorizador" sortBy="#{oc.autorizador.nomeCompleto}">
 						<h:outputText value="#{oc.autorizador.nomeCompleto}" />							
 					</p:column>
-					<p:column headerText="Contratado">
+					<p:column headerText="Contratado" sortBy="#{oc.contratado.nome}">
 						<h:outputText value="#{oc.contratado.nome}" />							
 					</p:column>				
 										

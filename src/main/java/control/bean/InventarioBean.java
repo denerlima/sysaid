@@ -85,7 +85,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			getInventarioFacade().create(inventario);
 			displayInfoMessageToUser("Criado com Sucesso");
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
 		return "/inventario/inventarioList.xhtml?faces-redirect=true";
@@ -109,7 +109,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			getInventarioFacade().update(inventario);
 			displayInfoMessageToUser("Alterado com  Sucesso");
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
 		}
 		return "/inventario/inventarioList.xhtml?faces-redirect=true";
@@ -126,7 +126,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			getInventarioFacade().concluir(inventario);
 			displayInfoMessageToUser("Alterado com  Sucesso");
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
 		}
 		return "/inventario/inventarioList.xhtml?faces-redirect=true";
@@ -138,7 +138,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadInventarios();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
 		}
 	}
@@ -155,7 +155,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		try {			
 			inventariosMateriais = getInventarioFacade().listMateriaisInventarios(inventario , material , dataInicialInventario , dataFinalInventario);			
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel achar nennhum Inventário. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhum Inventário. ERRO");
 			e.printStackTrace();
 		}
 		return inventariosMateriais;
@@ -218,7 +218,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		}
 		for(InventarioMaterial invMat : inventario.getMateriais()) {
 			if(invMat.getMaterial().getId().intValue() == material.getId().intValue()) {
-				displayErrorMessageToUser("Não é permitido adicionar material repetido");
+				displayErrorMessageToUser("n‹o é permitido adicionar material repetido");
 				return;
 			}
 		}
@@ -320,7 +320,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public void aprovarMaterial() {
 		if(inventarioMaterial.getQuantidadeAprovada().longValue() < 0) {
-			displayErrorMessageToUser("A quantidade aprovada não pode ser menor que zero.");
+			displayErrorMessageToUser("A quantidade aprovada n‹o pode ser menor que zero.");
 			return;
 		}
 		inventarioMaterial.setStatus(InventarioMaterial.STATUS_APROVADO);

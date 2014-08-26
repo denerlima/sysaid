@@ -94,7 +94,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Criado com Sucesso");
 			return "/material/materialList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel criar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
 		return null;
@@ -105,7 +105,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			getMaterialFacade().update(material);
 			displayInfoMessageToUser("Alterado com  Sucesso");
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel alterar. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
 		}
 		return "/material/materialList.xhtml?faces-redirect=true";
@@ -115,7 +115,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		try {			
 			materiais = getMaterialFacade().pesquisarListaMateriaisbyNomeMaterial(material.getMaterial());			
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel achar nennhum material. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhum material. ERRO");
 			e.printStackTrace();
 		}
 		return materiais;
@@ -125,7 +125,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		try {			
 			materiais = getMaterialFacade().pesquisarMaterialByFilter(material);			
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel achar nennhum material. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhum material. ERRO");
 			e.printStackTrace();
 		}
 		return materiais;
@@ -135,11 +135,11 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	public void deleteMaterial() {
 		try {
 			getMaterialFacade().delete(material);
-			displayInfoMessageToUser("Excluído com Sucesso");
+			displayInfoMessageToUser("Exclu’do com Sucesso");
 			loadMateriais();
 			resetMaterial();
 		} catch (Exception e) {
-			displayErrorMessageToUser("Ops, não foi possivel excluir. ERRO");
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
 		}
 	}

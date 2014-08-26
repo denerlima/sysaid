@@ -114,7 +114,7 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 					BigDecimal totalNF =  materialDAO.totalMatNF(ocm.getMaterial());					
 					
 					//[QUANTIDADE SOLICITADA]: é a soma das quantidades do material de todas Ordens de Compra menos a soma de todas as NF de COMPRA,
-					//ou seja, este campo representa tudo o que foi comprado mas ainda não chegou
+					//ou seja, este campo representa tudo o que foi comprado mas ainda n‹o chegou
 					ocm.getMaterial().setQtdSolicitada(totalOC.subtract(totalNF));
 					getDAO().update(ocm.getMaterial());
 				}
