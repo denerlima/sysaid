@@ -152,8 +152,8 @@ public class Inventario extends GenericModelo implements Serializable{
 	
 	public String getStatusLabel() {
 		if(status != null && status == 1) {
-			return "Conclu’do";
+			return "Concluído";
 		}
-		return "N‹o Conclu’do";
+		return "Não Concluído";
 	}
 }
