@@ -60,6 +60,14 @@
 			</p:outputPanel>
 			</center>
 						
+			<p:dialog header="Confirma a Exclusão?" closable="false" widgetVar="dialogTrash" modal="true" height="50" styleClass="ui-dialog-top">
+			  	<center>		
+					<p:commandButton value="Sim" icon="ui-icon-check"  update=":inventarioForm:resultado" actionListener="#{inventarioBean.deleteInventario}" onclick="PF('dialogTrash').hide();" />
+					<p:spacer height="5" />
+					<p:commandButton value="Não" icon="ui-icon-close"  onclick="PF('dialogTrash').hide();"/>
+				</center>
+			</p:dialog>			
+						
 		</h:form>
 				
 	</ui:define>

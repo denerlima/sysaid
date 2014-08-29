@@ -119,27 +119,12 @@
 						<h:outputText value="#{invMat.material.grupo.descricaoLabel}" />							
 					</p:column>
 					<p:column headerText="Estoque Atual">
-						<h:outputText value="#{invMat.material.estoque}" converter="bigDecimalSimplesConverter" />							
+						<h:outputText value="#{invMat.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
 					<p:column headerText="Estoque Inventariado">
-						<ui:fragment rendered="#{invMat.id == null}">
-							<h:inputText id="qtdeInventariada" value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" required="true" label="Retirada" styleClass="qtdeInventariada">
-							</h:inputText>
-							<h:message for="qtdeInventariada" styleClass="msg-error" />
-							<script type="text/javascript">
-								$(function(){
-									$('.qtdeInventariada').forceFloat();
-								});
-							</script>
-						</ui:fragment>
-						<ui:fragment rendered="#{invMat.id != null}">
-							<h:outputText value="#{invMat.quantidadeInventariada}" />
-						</ui:fragment>							
+						<h:outputText value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Estoque Aprovado" rendered="#{inventarioBean.managed}">
-						<h:outputText value="#{invMat.quantidadeAprovada}" converter="bigDecimalSimplesConverter" />
-					</p:column>
-					<p:column headerText="Diferença" rendered="#{inventarioBean.managed}">
+					<p:column headerText="Diferença">
 						<h:outputText value="#{invMat.diferenca}" converter="bigDecimalSimplesConverter" />
 					</p:column>
 					<p:column headerText="Status" rendered="#{inventarioBean.managed}">
@@ -152,7 +137,7 @@
 		                	update=":materialEditModal:materialEditDialogForm"
 		                	oncomplete="$('#materialEditModal').modal('show')" 
 		                	process="@this" 
-		                	rendered="#{invMat.statusNull and inventarioBean.managed}" />
+		                	rendered="#{invMat.statusNull}" />
 		                
 		                <p:commandButton value="Excluir" 
 		                	action="#{inventarioBean.removerMaterial(invMat)}"
@@ -217,7 +202,7 @@
 					Estoque:
 				</div>
 				<div class="col-md-10">
-					<h:outputText value="#{inventarioBean.material.estoque}" />
+					<h:outputText value="#{inventarioBean.inventarioMaterial.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />
 				</div>
 			</div>
 			
@@ -226,23 +211,24 @@
 					Estoque Inventariado:
 				</div>
 				<div class="col-md-10">
-					<h:outputText value="#{inventarioBean.inventarioMaterial.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />
+					<h:inputText id="qtdeEstoqueInventariado" value="#{inventarioBean.inventarioMaterial.quantidadeInventariada}" converter="bigDecimalSimplesConverter" required="true" label="Estoque Inventariado" styleClass="qtdeEstoqueInventariado">
+						<p:ajax event="change" process="@this" update=":materialEditModal:materialEditDialogForm:qtdeDiferenca" />
+					</h:inputText>
+					<h:message for="qtdeEstoqueInventariado" styleClass="msg-error" />
+					<script type="text/javascript">
+						$(function(){
+							$('.qtdeEstoqueInventariado').forceFloat();
+						});
+					</script>
 				</div>
 			</div>
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Estoque Aprovado:
+					Diferença:
 				</div>
 				<div class="col-md-10">
-					<h:inputText id="qtdeAprovada" value="#{inventarioBean.inventarioMaterial.quantidadeAprovada}" converter="bigDecimalSimplesConverter" required="true" label="Retirada" styleClass="qtdeAprovada">
-					</h:inputText>
-					<h:message for="qtdeAprovada" styleClass="msg-error" />
-					<script type="text/javascript">
-						$(function(){
-							$('.qtdeAprovada').forceFloat();
-						});
-					</script>
+					<h:outputText id="qtdeDiferenca" value="#{inventarioBean.inventarioMaterial.diferenca}" converter="bigDecimalSimplesConverter" />
 				</div>
 			</div>
 			
@@ -251,45 +237,64 @@
 					Justificativa do Inventariante:
 				</div>
 				<div class="col-md-10">
-					<h:outputText value="#{inventarioBean.inventario.justificativa}" />
+					<ui:fragment rendered="#{not inventarioBean.inventarioMaterial.managed}">
+						<h:inputTextarea id="justificavaInventariante" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Aprovador"
+							disabled="#{inventarioBean.inventarioMaterial.id != null}" />
+						<h:message for="justificavaInventariante" styleClass="msg-error" />
+					</ui:fragment>
+					<ui:fragment rendered="#{inventarioBean.inventarioMaterial.managed}">
+						<h:outputText value="#{inventarioBean.inventarioMaterial.justificativa}" />
+					</ui:fragment>
 				</div>
 			</div>
 			
-			<div class="row form-row">
-				<div class="col-md-2">
-					Justificativa do Aprovador:
+			<ui:fragment rendered="#{inventarioBean.inventarioMaterial.managed}">
+				<div class="row form-row">
+					<div class="col-md-2">
+						Justificativa do Aprovador:
+					</div>
+					<div class="col-md-10">
+						<h:inputTextarea id="justificavaAprovador" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Aprovador"
+							disabled="#{inventarioBean.inventarioMaterial.id == null}" />
+						<h:message for="justificavaAprovador" styleClass="msg-error" />
+					</div>
 				</div>
-				<div class="col-md-10">
-					<h:inputTextarea id="justificavaAprovador" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Aprovador" />
-					<h:message for="justificavaAprovador" styleClass="msg-error" />
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Usuário Logado:
+					</div>
+					<div class="col-md-10">
+						<h:selectOneMenu id="usuario" value="#{inventarioBean.inventarioMaterial.usuario}" converter="objectConverter" required="true" label="Usuário Logado" styleClass="input-sm">
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
+						</h:selectOneMenu>	
+						<h:message for="usuario" styleClass="msg-error" />
+					</div>
 				</div>
-			</div>
-			
-			<div class="row form-row">
-				<div class="col-md-2">
-					Usuário Logado:
-				</div>
-				<div class="col-md-10">
-					<h:selectOneMenu id="usuario" value="#{inventarioBean.inventarioMaterial.usuario}" converter="objectConverter" required="true" label="Usuário Logado" styleClass="input-sm">
-						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
-					</h:selectOneMenu>	
-					<h:message for="usuario" styleClass="msg-error" />
-				</div>
-			</div>
+			</ui:fragment>
 				
 			<div class="buttons">
+				
+				<p:commandButton value="OK"
+					action="#{inventarioBean.okMaterial}"
+					update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
+					oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
+					rendered="#{not inventarioBean.inventarioMaterial.managed}"
+					/>		
 								
 				<p:commandButton value="Aprovar"
 					action="#{inventarioBean.aprovarMaterial}"
 					update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
 					oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
+					rendered="#{inventarioBean.inventarioMaterial.managed}"
 					/>
 					
 				<p:commandButton value="Rejeitar"
 					action="#{inventarioBean.rejeitarMaterial}"
 					update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
 					oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
+					rendered="#{inventarioBean.inventarioMaterial.managed}"
 					/>		
 				
 			</div>		

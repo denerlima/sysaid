@@ -1,6 +1,7 @@
 package model.facade;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +43,6 @@ public class InventarioFacade extends GenericFacade<Inventario> implements Seria
 	public void concluir(Inventario entity) {
 		try {
 			getDAO().beginTransaction();
-			definirQuantidades(entity);
 			entity.setStatus(Inventario.STATUS_CONCLUIDO);
 			getDAO().update(entity);
 			getDAO().commit();
@@ -51,13 +51,20 @@ public class InventarioFacade extends GenericFacade<Inventario> implements Seria
 		}
 	}
 	
-	private void definirQuantidades(Inventario inventario) {
-		for (InventarioMaterial invMat : inventario.getMateriais()) {
-			if(invMat.isAprovado()) {
-				invMat.setQuantidadeEstoque(invMat.getMaterial().getEstoque());
-				invMat.getMaterial().setEstoque(invMat.getQuantidadeAprovada());
-				materialDAO.update(invMat.getMaterial());
-			}
+	public void aprovarInventario(Inventario inventario, InventarioMaterial inventarioMaterial) {
+		try {
+			getDAO().beginTransaction();
+			inventarioMaterial.setQuantidadeEstoque(inventarioMaterial.getMaterial().getEstoque());
+			BigDecimal diferenca = inventarioMaterial.getDiferenca();
+			//if(diferenca.longValue() < 0) {
+			//	diferenca = diferenca.multiply(new BigDecimal(-1));
+			//}
+			inventarioMaterial.getMaterial().setEstoque(inventarioMaterial.getMaterial().getEstoque().subtract(diferenca));
+			materialDAO.update(inventarioMaterial.getMaterial());
+			getDAO().update(inventario);
+			getDAO().commit();
+		} catch (Exception e) {
+			getDAO().rollback();
 		}
 	}
 	

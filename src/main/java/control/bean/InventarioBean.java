@@ -2,7 +2,6 @@ package control.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -118,8 +117,8 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	public String concluirInventario() {
 		try {
 			for(InventarioMaterial im : inventario.getMateriais()) {
-				if(im.isStatusNull()) {
-					displayErrorMessageToUser("Para concluir todos os materiais devem ser aprovados ou rejeitados.");
+				if(im.getDiferenca().longValue() != 0 && im.isStatusNull()) {
+					displayErrorMessageToUser("Para concluir todos os materiais com diferença devem ser aprovados ou rejeitados.");
 					return null;
 				}
 			}
@@ -134,6 +133,12 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public void deleteInventario() {
 		try {
+			for(InventarioMaterial invMat : inventario.getMateriais()) {
+				if(!invMat.isStatusNull()) {
+					displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir, existem materiais que já foram aprovados/rejeitados.");
+					return;
+				}
+			}
 			getInventarioFacade().delete(inventario);
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadInventarios();
@@ -182,7 +187,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 				sb.append(";");
 				sb.append(im.getMaterial().getUnidadeMedida().getUnidadeEntrada().getDescricao());
 				sb.append(";");
-				sb.append(im.getMaterial().getEstoque());
+				sb.append(im.getQuantidadeEstoque());
 				sb.append(" ;");
 				sb.append(" ;");
 				sb.append("\n");
@@ -318,20 +323,27 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		setInventarioMaterial(im);
 	}
 	
+	public void okMaterial() {
+		RequestContext.getCurrentInstance().addCallbackParam("success", true);
+	}
+	
 	public void aprovarMaterial() {
-		if(inventarioMaterial.getQuantidadeAprovada().longValue() < 0) {
+		if(inventarioMaterial.getQuantidadeInventariada().longValue() < 0) {
 			displayErrorMessageToUser("A quantidade aprovada n‹o pode ser menor que zero.");
 			return;
 		}
 		inventarioMaterial.setStatus(InventarioMaterial.STATUS_APROVADO);
+		inventarioFacade.aprovarInventario(getInventario(), getInventarioMaterial());
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 	
 	public void rejeitarMaterial() {
 		inventarioMaterial.setStatus(InventarioMaterial.STATUS_REJEITADO);
-		inventarioMaterial.setQuantidadeAprovada(new BigDecimal(0));
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 
+	public void calcularDiferenca() {
+		//
+	}
 	
 }

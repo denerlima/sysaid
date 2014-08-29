@@ -47,8 +47,8 @@ public class InventarioMaterial implements Serializable {
 	@Column(name="quantidade_inventariada")
 	private BigDecimal quantidadeInventariada = new BigDecimal(0);
 	
-	@Column(name="quantidade_aprovada")
-	private BigDecimal quantidadeAprovada = new BigDecimal(0);
+	@Column(name="justificativa_inventariante", length=1000)
+	private String justificativaInventariante;
 	
 	@Column(length=1000)
 	private String justificativa;
@@ -115,14 +115,6 @@ public class InventarioMaterial implements Serializable {
 		this.quantidadeInventariada = quantidadeInventariada;
 	}
 
-	public BigDecimal getQuantidadeAprovada() {
-		return quantidadeAprovada;
-	}
-
-	public void setQuantidadeAprovada(BigDecimal quantidadeAprovada) {
-		this.quantidadeAprovada = quantidadeAprovada;
-	}
-
 	public String getJustificativa() {
 		return justificativa;
 	}
@@ -160,6 +152,10 @@ public class InventarioMaterial implements Serializable {
 	 * Regras
 	 */
 	
+	public boolean isManaged() {
+		return id != null;
+	}
+	
 	public String getStatusLabel() {
 		if(status == null) {
 			return ""; 
@@ -185,7 +181,7 @@ public class InventarioMaterial implements Serializable {
 	}
 
 	public BigDecimal getDiferenca() {
-		return getQuantidadeInventariada().subtract(getQuantidadeAprovada());
+		return getQuantidadeEstoque().subtract(getQuantidadeInventariada());
 	}
 	
 }
