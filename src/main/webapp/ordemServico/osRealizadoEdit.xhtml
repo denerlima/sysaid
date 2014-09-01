@@ -26,12 +26,11 @@
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 					<br />
-					<p:dataTable var="_realizado" value="#{ordemServicoBean.realizados}" 
+					<p:dataTable var="_ordemServicoMaterial" value="#{ordemServicoBean.ordemServico.materiais}" 
 						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
 						
 						<p:columnGroup type="header">
 				            <p:row>
-				                <p:column rowspan="2" headerText="Data" />
 				                <p:column rowspan="2" headerText="Material" />
 				                <p:column rowspan="2" headerText="Unidade de Medida" />
 				                <p:column colspan="2" headerText="Quantidade" />
@@ -43,27 +42,22 @@
 				        </p:columnGroup>
 						
 						<p:column>
-							<p:calendar id="data" pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true" value="#{_realizado.data}" size="10" navigator="true" required="true" label="Data" />
-							<h:message for="data" styleClass="msg-error" />						
+							<h:outputText value="#{_ordemServicoMaterial.material.materialLabel}" />							
 						</p:column>
 						<p:column>
-							<h:outputText value="#{_realizado.ordemServicoMaterial.material.materialLabel}" />							
+							<h:outputText value="#{_ordemServicoMaterial.unidadeMedidaSaida.unidade.descricao}" />							
 						</p:column>
 						<p:column>
-							<h:outputText value="#{_realizado.ordemServicoMaterial.unidadeMedidaSaida.unidade.descricao}" />							
+							<h:outputText value="#{_ordemServicoMaterial.quantidadeRetirada}" />							
 						</p:column>
 						<p:column>
-							<h:outputText value="#{_realizado.ordemServicoMaterial.quantidadeRetirada}" />							
-						</p:column>
-						<p:column>
-							<h:inputText id="qtde" value="#{_realizado.quantidade}" converter="bigDecimalSimplesConverter" required="true" label="Retirada" styleClass="retirada-#{_idx}">
-								<p:ajax event="change" listener="#{ordemServicoBean.calcularRealizado(_realizado)}" process="@this" 
-										update=":osMaterialEditForm:resultado" />
+							<h:inputText id="qtde" value="#{_ordemServicoMaterial.quantidadeUtilizada}" converter="bigDecimalSimplesConverter" required="true" label="Utilizada" styleClass="utilizada-#{_idx}">
+								<p:ajax event="change" process="@this" update=":osMaterialEditForm:resultado" />
 							</h:inputText>
 							<h:message for="qtde" styleClass="msg-error" />
 							<script type="text/javascript">
 								$(function(){
-									$('.retirada-#{_idx}').forceFloat();
+									$('.utilizada-#{_idx}').forceFloat();
 								});
 							</script>					
 						</p:column>

@@ -1,6 +1,7 @@
 package model.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,6 +32,9 @@ public class OrdemServicoMaterial {
 	
 	@Column
 	private int ativo = 1;
+	
+	@Column(nullable=false)
+	private Date data;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id_ordem_servico", referencedColumnName="id")
@@ -74,9 +78,6 @@ public class OrdemServicoMaterial {
 	@Where(clause="tipo = 2")
 	private Set<OrdemServicoMaterialHistorico> devolucoes = new HashSet<OrdemServicoMaterialHistorico>();
 	
-	@OneToMany(mappedBy="ordemServicoMaterial", cascade=CascadeType.ALL)
-	@Where(clause="tipo = 3")
-	private Set<OrdemServicoMaterialHistorico> realizados = new HashSet<OrdemServicoMaterialHistorico>();
 	
 	/*
 	 * Getters and Setters
@@ -96,6 +97,14 @@ public class OrdemServicoMaterial {
 
 	public void setAtivo(int ativo) {
 		this.ativo = ativo;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	public OrdemServico getOrdemServico() {
@@ -184,14 +193,6 @@ public class OrdemServicoMaterial {
 
 	public void setDevolucoes(Set<OrdemServicoMaterialHistorico> devolucoes) {
 		this.devolucoes = devolucoes;
-	}
-
-	public Set<OrdemServicoMaterialHistorico> getRealizados() {
-		return realizados;
-	}
-
-	public void setRealizados(Set<OrdemServicoMaterialHistorico> realizados) {
-		this.realizados = realizados;
 	}
 
 	public Set<OrdemServicoMaterialHistorico> getEntregas() {

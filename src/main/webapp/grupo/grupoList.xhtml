@@ -24,7 +24,7 @@
 					<p:dataTable var="_grupo" value="#{grupoBean.allGrupos}" emptyMessage="Não existem itens nesta lista."
 						rows="10" paginator="true" paginatorPosition="bottom" style="width: 60%;" 
 						sortBy="#{_grupo.descricao}" sortOrder="ASCENDING">
-						<p:column headerText="Grupo" sortBy="#{_grupo.descricao}">
+						<p:column headerText="Grupo" sortBy="#{_grupo.descricao}" filterBy="#{_grupo.descricao}" filterMatchMode="contains">
 							<h:outputText value="#{_grupo.descricao}" />							
 						</p:column>
 						<p:column headerText="Grupo Pai" sortBy="#{_grupo.grupoPai.descricao}">

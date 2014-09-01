@@ -49,6 +49,7 @@
 						
 						<p:columnGroup type="header">
 				            <p:row>
+				                <p:column rowspan="2" headerText="Data" />
 				                <p:column rowspan="2" headerText="Material" />
 				                <p:column rowspan="2" headerText="Unidade de Medida Saída" />
 				                <p:column colspan="4" headerText="Quantidade" />
@@ -63,6 +64,11 @@
 				            </p:row>
 				        </p:columnGroup>
 						
+						<p:column>
+							<h:outputText value="#{_mat.data}">
+								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+							</h:outputText>
+						</p:column>
 						<p:column>
 							<h:outputText value="#{_mat.material.materialLabel}" />
 						</p:column>
@@ -85,7 +91,11 @@
 							<h:outputText value="#{_mat.material.estoque}" />
 						</p:column>
 						<p:column>
-							
+							<p:commandButton value="Movimentação" icon="ui-icon-search"
+								update=":movimentacaoModal:movimentacaoDialogForm"
+								oncomplete="$('#movimentacaoModal').modal('show');">
+								<f:setPropertyActionListener target="#{ordemServicoBean.ordemServicoMaterial}" value="#{_mat}" />
+							</p:commandButton>
 						</p:column>
 						
 					</p:dataTable>
@@ -93,6 +103,71 @@
 			</center>
 						
 		</h:form>
+		
+		<cp:bootstrapModal id="movimentacaoModal" title="Movimentação do Material" modalId="movimentacaoModal">      
+			<h:form id="movimentacaoDialogForm">
+			
+				<b>Baixas de Pendências:</b>
+				<p:dataTable var="_pendencia" value="#{ordemServicoBean.ordemServicoMaterial.baixasPendencias}" 
+						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
+						
+					<p:columnGroup type="header">
+			            <p:row>
+			                <p:column rowspan="2" headerText="Data" />
+			                <p:column rowspan="2" headerText="Material" />
+			                <p:column colspan="2" headerText="Quantidade" />
+			                <p:column rowspan="2" headerText="Unidade de Medida" />
+			            </p:row>
+			            <p:row>
+			            	<p:column headerText="Retirada" />
+			                <p:column headerText="Pendente" />
+			            </p:row>
+			        </p:columnGroup>
+					
+					<p:column>
+						<h:outputText value="#{_pendencia.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>						
+					</p:column>
+					<p:column>
+						<h:outputText value="#{_pendencia.ordemServicoMaterial.material.materialLabel}" />							
+					</p:column>
+					<p:column>
+						<h:outputText id="qtde" value="#{_pendencia.quantidade}" converter="bigDecimalSimplesConverter" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{_pendencia.ordemServicoMaterial.quantidadePendente}" />							
+					</p:column>
+					<p:column>
+						<h:outputText value="#{_pendencia.ordemServicoMaterial.unidadeMedidaSaida.unidade.descricao}" />							
+					</p:column>
+				</p:dataTable>
+			
+				<br />
+				<br />
+				<b>Devoluções:</b>
+				<p:dataTable var="_devolucao" value="#{ordemServicoBean.devolucoes}" 
+						rowIndexVar="_idx" emptyMessage="Não existem itens nesta lista.">
+					
+					<p:column headerText="Data">
+						<h:outputText value="#{_devolucao.data}" >
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>					
+					</p:column>
+					<p:column headerText="Material">
+						<h:outputText value="#{_devolucao.ordemServicoMaterial.material.materialLabel}" />							
+					</p:column>
+					<p:column headerText="Quantidade devolvida">
+						<h:outputText id="quantidade" value="#{_devolucao.quantidade}" converter="bigDecimalSimplesConverter" />
+					</p:column>
+					<p:column headerText="Unidade de Medida">
+						<h:outputText value="#{_devolucao.ordemServicoMaterial.unidadeMedidaSaida.unidade.descricao}" />							
+					</p:column>
+				</p:dataTable>
+					
+			</h:form>
+			
+		</cp:bootstrapModal>
 		
 	</ui:define>
 </ui:composition>

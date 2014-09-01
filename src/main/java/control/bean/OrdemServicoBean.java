@@ -35,7 +35,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	private List<OrdemServicoMaterial> ordemServicoMateriais;
 	private List<OrdemServicoMaterialHistorico> pendencias;
 	private List<OrdemServicoMaterialHistorico> devolucoes;
-	private List<OrdemServicoMaterialHistorico> realizados;
+	private OrdemServicoMaterial ordemServicoMaterial;
 	
 	@Inject
 	private OrdemServicoFacade ordemServicoFacade;
@@ -161,20 +161,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			return;
 		}
 		initLoad(id);
-		realizados = new ArrayList<OrdemServicoMaterialHistorico>();
-		for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
-			//if(osm.getQuantidadePendente().longValue() > 0) {
-				OrdemServicoMaterialHistorico osmh = new OrdemServicoMaterialHistorico();
-				osmh.setOrdemServicoMaterial(osm);
-				osmh.setData(new Date());
-				osmh.setTipo(3);
-				osmh.setQuantidadeAnterior(osm.getQuantidadeUtilizada());
-				osm.getDevolucoes().add(osmh);
-				realizados.add(osmh);
-			//}
-		}
 	}
-	
 	
 	public void createOrdemServico() {
 		try {
@@ -262,7 +249,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	
 	public String updateRealizados() {
 		try {
-			getOrdemServicoFacade().updateRealizados(ordemServico, realizados);
+			getOrdemServicoFacade().updateRealizados(ordemServico);
 			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
 			return redirectRealizadoList();
 		} catch (Exception e) {
@@ -304,6 +291,14 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		return materiais;
 	}
 
+	public OrdemServicoMaterial getOrdemServicoMaterial() {
+		return ordemServicoMaterial;
+	}
+
+	public void setOrdemServicoMaterial(OrdemServicoMaterial ordemServicoMaterial) {
+		this.ordemServicoMaterial = ordemServicoMaterial;
+	}
+
 	public List<Material> completeMaterial(String name) {
 		List<Material> queryResult = new ArrayList<Material>();
 		if (materiais == null) {
@@ -323,6 +318,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			return;
 		}
 		OrdemServicoMaterial osMat = new OrdemServicoMaterial();
+		osMat.setData(new Date());
 		osMat.setOrdemServico(ordemServico);
 		osMat.setMaterial(materialFacade.find(material.getId()));
 		for(UnidadeMedidaSaida ums : material.getUnidadeMedida().getSaidas()) {
@@ -423,16 +419,8 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		calcularMaoDeObra(osmo);
 	}
 	
-	public void calcularRealizado(OrdemServicoMaterialHistorico osmh) {
-		
-	}
-	
 	public List<OrdemServicoMaterialHistorico> getDevolucoes() {
 		return devolucoes;
-	}
-
-	public List<OrdemServicoMaterialHistorico> getRealizados() {
-		return realizados;
 	}
 
 	public List<OrdemServicoMaterial> getOrdemServicoMateriais() {

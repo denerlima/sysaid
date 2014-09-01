@@ -103,12 +103,11 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 		}
 	}
 	
-	public void updateRealizados(OrdemServico ordemServico, List<OrdemServicoMaterialHistorico> realizados) throws Exception {
+	public void updateRealizados(OrdemServico ordemServico) throws Exception {
 		try {
 			getDAO().beginTransaction();
-			for(OrdemServicoMaterialHistorico osmh : realizados) {
-				osmh.getOrdemServicoMaterial().setQuantidadeUtilizada(osmh.getOrdemServicoMaterial().getQuantidadeUtilizada().add(osmh.getQuantidade()));
-				osmh.getOrdemServicoMaterial().setPrecoUnitario(osmh.getOrdemServicoMaterial().getMaterial().getPrecoUnitario());
+			for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
+				osm.setPrecoUnitario(osm.getMaterial().getPrecoUnitario());
 			}
 			getDAO().update(ordemServico);
 			getDAO().commit();
