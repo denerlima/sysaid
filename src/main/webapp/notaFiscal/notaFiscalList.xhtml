@@ -26,10 +26,10 @@
 				<p:dataTable var="nf" value="#{notaFiscalBean.allNotasFiscais}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{nf.nrNotaFiscal}" sortOrder="ASCENDING">
-					<p:column headerText="Nº da Nota Fiscal" sortBy="#{nf.nrNotaFiscal}">
+					<p:column headerText="Nº da Nota Fiscal" sortBy="#{nf.nrNotaFiscal}" filterBy="#{nf.nrNotaFiscal}" filterMatchMode="contains">
 						<h:outputText value="#{nf.nrNotaFiscal}" />							
 					</p:column>
-					<p:column headerText="Data da emissão" sortBy="#{nf.dataEmissao}">
+					<p:column headerText="Data da emissão" sortBy="#{nf.dataEmissao}" filterBy="#{nf.dataEmissao}" filterMatchMode="contains">
 						<h:outputText value="#{nf.dataEmissao}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
@@ -39,7 +39,7 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Fornecedor" sortBy="#{nf.fornecedor.nome}">
+					<p:column headerText="Fornecedor" sortBy="#{nf.fornecedor.nome}" filterBy="#{nf.fornecedor.nome}" filterMatchMode="contains">
 						<h:outputText value="#{nf.fornecedor.nome}" />	
 					</p:column>
 					<p:column headerText="Acréscimos" sortBy="#{nf.acrescimos}">

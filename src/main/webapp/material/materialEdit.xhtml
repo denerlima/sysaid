@@ -94,10 +94,13 @@
 					Grupo:		
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="grupo" value="#{materialBean.material.grupo}" converter="objectConverter" label="Grupo" styleClass="input-sm">
-						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItems value="#{materialBean.allGrupos}" var="grupo" itemLabel="#{grupo.descricaoLabel}" itemValue="#{grupo}" />		
-					</h:selectOneMenu>
+					<p:tree value="#{materialBean.root}" var="node" dynamic="false" 
+						selectionMode="single"
+                		selection="#{materialBean.selectedNode}">
+				        <p:treeNode>
+				            <h:outputText value="#{node.descricao}" />
+				        </p:treeNode>
+				    </p:tree>
 					<h:message for="grupo" styleClass="msg-error" />
 				</div>
 			</div>

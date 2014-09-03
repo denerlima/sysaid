@@ -57,7 +57,9 @@ public class OrdemServicoDAO extends GenericDAO<OrdemServico> {
 			}
 
 			total = (BigDecimal) query.getSingleResult();
-
+			if(total == null) {
+				total = new BigDecimal(0);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

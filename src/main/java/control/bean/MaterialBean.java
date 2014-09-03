@@ -22,6 +22,8 @@ import model.facade.TipoMaterialFacade;
 import model.facade.UnidadeMedidaFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.model.DefaultTreeNode;
+import org.primefaces.model.TreeNode;
 
 import util.Component;
 import util.HibernateUtil;
@@ -43,6 +45,9 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	private List<Grupo> grupos;
 	private List<TipoMaterial> tiposMateriais;
 	private List<UnidadeMedida> unidadesMedidas;
+	
+	private TreeNode root;
+	private TreeNode selectedNode;
 	
 	public MaterialFacade getMaterialFacade() {
 		return materialFacade;
@@ -83,9 +88,13 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			material.setEstoqueCalculado(new BigDecimal(0));
 			material.setEstoque(new BigDecimal(0));
 			material.setQtdSolicitada(new BigDecimal(0));
+			material.setAjuste(new BigDecimal(0));
+			material.setEstoqueInformado(new BigDecimal(0));
 		} else {
 			material = getMaterialFacade().find(id);
 		}
+		initRoot();
+		//root.getChildren().get(0).setSelected(true);
 	}
 	
 	public String createMaterial() {
@@ -202,5 +211,48 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	public boolean isManaged() {
 		return material != null && material.getId() != null;
 	}
+
+	public TreeNode getRoot() {
+		return root;
+	}
 	
+	public void initRoot() {
+    	root = new DefaultTreeNode("Grupos", null);
+    	GrupoFacade grupoFacade = (GrupoFacade) Component.getInstance(GrupoFacade.class);
+    	for(Grupo g : grupoFacade.listGrupoRoot()) {
+    		TreeNode node = new DefaultTreeNode(g, root);
+    		recursiveNoteSelectedAndExpanded(node, g);
+    		recursiveNode(node, g);
+    	}
+	}
+	
+	public void recursiveNode(TreeNode root, Grupo g) {
+		GrupoFacade grupoFacade = (GrupoFacade) Component.getInstance(GrupoFacade.class);
+		for(Grupo subGrupo : grupoFacade.listSubGrupo(g)) {
+			TreeNode node = new DefaultTreeNode(subGrupo, root);
+			recursiveNoteSelectedAndExpanded(node, subGrupo);
+    		recursiveNode(node, subGrupo);
+		}
+	}
+	
+	public void recursiveNoteSelectedAndExpanded(TreeNode node, Grupo g) {
+		if(material.getGrupo() != null && material.getGrupo().getId().intValue() == g.getId().intValue()) {
+			node.setSelected(true);
+			TreeNode parent = node.getParent();
+			while(!parent.getData().equals("Grupos")) {
+	        	parent.setExpanded(true);
+	        	parent = parent.getParent();
+	        }
+		}
+	}
+	
+	public TreeNode getSelectedNode() {
+        return selectedNode;
+    }
+ 
+    public void setSelectedNode(TreeNode selectedNode) {
+        this.selectedNode = selectedNode;
+        material.setGrupo((Grupo) selectedNode.getData());
+    }
+
 }
