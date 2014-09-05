@@ -21,21 +21,21 @@
 				<p:dataTable var="inv" value="#{inventarioBean.allInventarios}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{inv.id}" sortOrder="DESCENDING">
-					<p:column headerText="Nº de Inventário" sortBy="#{inv.id}">
+					<p:column headerText="Nº de Inventário" sortBy="#{inv.id}" filterBy="#{inv.id}" filterMatchMode="contains">
 						<h:outputText value="#{inv.id}" />							
 					</p:column>
-					<p:column headerText="Data de inventário" sortBy="#{inv.dataInventario}">
+					<p:column headerText="Data de inventário" sortBy="#{inv.dataInventario}" filterBy="#{inv.dataInventario}" filterMatchMode="contains">
 						<h:outputText value="#{inv.dataInventario}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Atendente" sortBy="#{inv.atendente.nomeCompleto}">
+					<p:column headerText="Atendente" sortBy="#{inv.atendente.nomeCompleto}" filterBy="#{inv.atendente.nomeCompleto}" filterMatchMode="contains">
 						<h:outputText value="#{inv.atendente.nomeCompleto}" />							
 					</p:column>
-					<p:column headerText="Justificativa">
+					<p:column headerText="Justificativa" filterBy="#{inv.justificativa}" filterMatchMode="contains">
 						<h:outputText value="#{inv.justificativa}" />							
 					</p:column>
-					<p:column headerText="Status" sortBy="#{inv.statusLabel}">
+					<p:column headerText="Status" sortBy="#{inv.statusLabel}" filterBy="#{inv.statusLabel}" filterMatchMode="contains">
 						<h:outputText value="#{inv.statusLabel}" />							
 					</p:column>							
 					<p:column headerText="Ações" style="width:280px">

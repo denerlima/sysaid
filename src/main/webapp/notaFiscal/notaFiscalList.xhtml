@@ -34,7 +34,7 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Data da entrega" sortBy="#{nf.dataEntrega}">
+					<p:column headerText="Data da entrega" sortBy="#{nf.dataEntrega}" filterBy="#{nf.dataEntrega}" filterMatchMode="contains">
 						<h:outputText value="#{nf.dataEntrega}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							

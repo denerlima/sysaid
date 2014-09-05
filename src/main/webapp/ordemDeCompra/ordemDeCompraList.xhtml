@@ -26,23 +26,23 @@
 				<p:dataTable var="oc" value="#{ordemDeCompraBean.allOrdensDeCompra}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{oc.id}" sortOrder="ASCENDING">
-					<p:column headerText="Nº da Ordem de Compra" sortBy="#{oc.id}">
+					<p:column headerText="Nº da Ordem de Compra" sortBy="#{oc.id}" filterBy="#{oc.id}" filterMatchMode="contains">
 						<h:outputText value="#{oc.id}" />							
 					</p:column>
-					<p:column headerText="Data da autorização" sortBy="#{oc.dataAutorizacao}">
+					<p:column headerText="Data da autorização" sortBy="#{oc.dataAutorizacao}" filterBy="#{oc.dataAutorizacao}" filterMatchMode="contains">
 						<h:outputText value="#{oc.dataAutorizacao}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Data da emissão" sortBy="#{oc.dataEmissao}">
+					<p:column headerText="Data da emissão" sortBy="#{oc.dataEmissao}" filterBy="#{oc.dataEmissao}" filterMatchMode="contains">
 						<h:outputText value="#{oc.dataEmissao}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Autorizador" sortBy="#{oc.autorizador.nomeCompleto}">
+					<p:column headerText="Autorizador" sortBy="#{oc.autorizador.nomeCompleto}" filterBy="#{oc.autorizador.nomeCompleto}" filterMatchMode="contains">
 						<h:outputText value="#{oc.autorizador.nomeCompleto}" />							
 					</p:column>
-					<p:column headerText="Contratado" sortBy="#{oc.contratado.nome}">
+					<p:column headerText="Contratado" sortBy="#{oc.contratado.nome}" filterBy="#{oc.contratado.nome}" filterMatchMode="contains">
 						<h:outputText value="#{oc.contratado.nome}" />							
 					</p:column>				
 										
