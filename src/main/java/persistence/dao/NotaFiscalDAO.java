@@ -59,7 +59,7 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 				sql.append(" AND nf.fornecedor.id = :fornecedor");
 			}
 			if (mat.getAplicacao() != null) {
-				sql.append(" AND nfm.ordemDeCompraMaterial.material.aplicacao = :aplicacao");
+				sql.append(" AND nfm.ordemDeCompraMaterial.material.aplicacao.id = :idAplicacao");
 			}			
 			if (dtEmissaoInicial != null) {
 				sql.append(" AND nf.dataEmissao >= to_date('"+ DataUtil.formataData(dtEmissaoInicial)+ "','dd/MM/yy')");
@@ -101,7 +101,7 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 				query.setParameter("fornecedor", nf.getFornecedor().getId());
 			}		
 			if (mat.getAplicacao() != null) {
-				query.setParameter("aplicacao", mat.getAplicacao().getId());				
+				query.setParameter("idAplicacao", mat.getAplicacao().getId());				
 			}
 			if (nf.getAcrescimos() != null) {
 				query.setParameter("percentualDesconto", nf.getAcrescimos());				

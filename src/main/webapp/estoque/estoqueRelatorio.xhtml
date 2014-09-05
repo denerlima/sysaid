@@ -61,11 +61,6 @@
 			
 			<p:outputPanel id="export" layout="block" rendered="#{not empty materialBean.materiais}">
 			 		Exportar Relatório : 
-			 		
-		   <!--  <h:commandLink>
-		         	<p:graphicImage name="/img/csv.png" width="24"/>
-		            <p:dataExporter type="csv" target="dtResultado" fileName="relatorioEstoque" />
-		         </h:commandLink>  -->	
 			     <h:commandLink>
 		         	<p:graphicImage name="/img/excel.png" width="24"/>
 		            <p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />

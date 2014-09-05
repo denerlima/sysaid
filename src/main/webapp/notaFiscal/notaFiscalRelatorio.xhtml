@@ -63,7 +63,7 @@
 						<h:outputText value="Aplicação:" />	
 					</div>
 					<div class="col-md-3">
-						<h:selectOneMenu converter="objectConverter" id="aplicacao" value="#{materialBean.material.aplicacao}" label="Aplicação" styleClass="input-sm">
+						<h:selectOneMenu converter="objectConverter" id="aplicacao" value="#{notaFiscalBean.material.aplicacao}" label="Aplicação" styleClass="input-sm">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{materialBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
 						</h:selectOneMenu>
@@ -176,16 +176,16 @@
 					</p:dataTable>
 				</p:outputPanel>
 
-				<p:outputPanel id="export" layout="block" rendered="#{not empty inventarioBean.inventariosMateriais}">
+				<p:outputPanel id="export" layout="block" rendered="#{not empty notaFiscalBean.notasFiscaisMateriais}">
 			 		Exportar Relatório:  
 					<h:commandLink>
 						<p:graphicImage name="/img/excel.png" width="24" />
-						<p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />
+						<p:dataExporter type="xls" target="dtResultado" fileName="relatorioNotaFiscal" />
 					</h:commandLink>
 
 					<h:commandLink>
 						<p:graphicImage name="/img/pdf.png" width="24" />
-						<p:dataExporter type="pdf" target="dtResultado" fileName="relatorioEstoque" />
+						<p:dataExporter type="pdf" target="dtResultado" fileName="relatorioNotaFiscal" />
 					</h:commandLink>
 				</p:outputPanel>
 
