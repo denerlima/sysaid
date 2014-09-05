@@ -180,18 +180,16 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		sb.append("Justificativa;");
 		sb.append("\n");
 		for (InventarioMaterial im : inventario.getMateriais()) {
-			if(im.isSelecionado()){
-				sb.append(im.getMaterial().getMaterialLabel());
-				sb.append(";");
-				sb.append(im.getMaterial().getGrupo().getDescricaoLabel());
-				sb.append(";");
-				sb.append(im.getMaterial().getUnidadeMedida().getUnidadeEntrada().getDescricao());
-				sb.append(";");
-				sb.append(im.getQuantidadeEstoque());
-				sb.append(" ;");
-				sb.append(" ;");
-				sb.append("\n");
-			}
+			sb.append(im.getMaterial().getMaterialLabel());
+			sb.append(";");
+			sb.append(im.getMaterial().getGrupo().getDescricaoLabel());
+			sb.append(";");
+			sb.append(im.getMaterial().getUnidadeMedida().getUnidadeEntrada().getDescricao());
+			sb.append(";");
+			sb.append(im.getQuantidadeEstoque());
+			sb.append(" ;");
+			sb.append(" ;");
+			sb.append("\n");
 		}
 		geraExtractCSV(sb.toString(), "Inventário-" + inventario.getId());
 	}

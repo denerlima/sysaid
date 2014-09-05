@@ -16,19 +16,18 @@
 			</center>
 			<p:spacer height="10" />
 
-			
 				<div class="row form-row">
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<h:outputText value="Material:" />
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<p:autoComplete id="materialAutocomplete" minQueryLength="3"
 							maxResults="10" value="#{inventarioBean.material}" converter="objectConverter"
 							label="Material" var="mat" itemLabel="#{mat.material}" itemValue="#{mat}"
 							completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 					</div>
-					<div class="col-md-2">Tipo Material:</div>
-					<div class="col-md-2">
+					<div class="col-md-3">Tipo Material:</div>
+					<div class="col-md-3">
 						<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{inventarioBean.material.tipoMaterial}" required="false" label="Tipo Material">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
@@ -38,37 +37,36 @@
 				</div>
 				
 				<div class="row form-row">
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<h:outputText value="Data Inicial:" />
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<p:calendar pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true"
 							value="#{inventarioBean.dataInicialInventario}" size="10" navigator="true" />
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<h:outputText value="Data Final:" />
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<p:calendar pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true"
 							value="#{inventarioBean.dataFinalInventario}" size="10" navigator="true" />
 					</div>
 				</div>
 
 				<div class="row form-row">
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<h:outputText value="Atendente:" />
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<h:selectOneMenu converter="objectConverter" id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
 						</h:selectOneMenu>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-6">
 						<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{inventarioBean.pesquisarInventarioByFilter}" update=":inventarioForm" />
 					</div>
-				</div>
-			
+				</div>			
 
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
@@ -110,12 +108,12 @@
 			 		Exportar Relatório:  
 					<h:commandLink>
 						<p:graphicImage name="/img/excel.png" width="24" />
-						<p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />
+						<p:dataExporter type="xls" target="dtResultado" fileName="relatorioInventario" />
 					</h:commandLink>
 
 					<h:commandLink>
 						<p:graphicImage name="/img/pdf.png" width="24" />
-						<p:dataExporter type="pdf" target="dtResultado" fileName="relatorioEstoque" />
+						<p:dataExporter type="pdf" target="dtResultado" fileName="relatorioInventario" />
 					</h:commandLink>
 				</p:outputPanel>
 

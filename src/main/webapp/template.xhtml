@@ -5,7 +5,10 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
 <h:head>
 
 	<title>#{empty pageTitle ? 'SysAid' : pageTitle}</title>
@@ -58,6 +61,14 @@
 	</script>
 	
 	<ui:insert name="head" />
+		
+	<o:conditionalComment if="lt IE 9">
+	   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	</o:conditionalComment>
+	
+	<o:conditionalComment if="lt IE 9">
+    	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	</o:conditionalComment>
 	
 </h:head>
 <h:body>

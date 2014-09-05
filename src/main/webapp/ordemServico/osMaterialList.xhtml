@@ -38,29 +38,30 @@
 				process="@this"
 				style="margin-left: 5px;" />
 			
-			<p:commandButton value="Imprimir" icon="ui-icon-plus" 
-				type="button"
-				style="margin-left: 5px;" />
-			
+			<p:commandButton value="Imprimir" icon="ui-icon-plus"
+				style="margin-left: 5px;" ajax="false">
+				<p:dataExporter type="pdf" target="tableMaterial" fileName="MaterialExport" />
+			</p:commandButton>
+				
 			<center>
 				<br />
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
-					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" emptyMessage="Não existem itens nesta lista.">
+					<p:dataTable id="tableMaterial" var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" emptyMessage="Não existem itens nesta lista.">
 						
 						<p:columnGroup type="header">
 				            <p:row>
-				                <p:column rowspan="2" headerText="Data" />
-				                <p:column rowspan="2" headerText="Material" />
-				                <p:column rowspan="2" headerText="Unidade de Medida Saída" />
-				                <p:column colspan="4" headerText="Quantidade" />
-				                <p:column rowspan="2" headerText="Em Estoque" />
-				                <p:column rowspan="2" headerText="Ações" />
+				                <p:column rowspan="2" headerText="Data" style="white-space:normal;" />
+				                <p:column rowspan="2" headerText="Material" style="white-space:normal;" />
+				                <p:column rowspan="2" headerText="Unidade de Medida Saída" style="white-space:normal;" />
+				                <p:column colspan="4" headerText="Quantidade" style="white-space:normal;" />
+				                <p:column rowspan="2" headerText="Em Estoque" style="white-space:normal;" />
+				                <p:column rowspan="2" headerText="Ações" exportable="false" style="white-space:normal;" />
 				            </p:row>
 				            <p:row>
-				                <p:column headerText="Solicitada" />
-				                <p:column headerText="Entregue" />
-				                <p:column headerText="Pendente" />
-				                <p:column headerText="Devolvida" />
+				                <p:column headerText="Solicitada" style="white-space:normal;" />
+				                <p:column headerText="Entregue" style="white-space:normal;" />
+				                <p:column headerText="Pendente" style="white-space:normal;" />
+				                <p:column headerText="Devolvida" style="white-space:normal;" />
 				            </p:row>
 				        </p:columnGroup>
 						
@@ -90,7 +91,7 @@
 						<p:column>
 							<h:outputText value="#{_mat.material.estoque}" />
 						</p:column>
-						<p:column>
+						<p:column exportable="false">
 							<p:commandButton value="Movimentação" icon="ui-icon-search"
 								update=":movimentacaoModal:movimentacaoDialogForm"
 								oncomplete="$('#movimentacaoModal').modal('show');">

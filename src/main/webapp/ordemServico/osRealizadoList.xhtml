@@ -28,14 +28,15 @@
 				action="#{ordemServicoBean.redirectRealizado}" 
 				process="@this" />
 			
-			<p:commandButton value="Imprimir" icon="ui-icon-plus" 
-				type="button"
-				style="margin-left: 5px;" />
+			<p:commandButton value="Imprimir" icon="ui-icon-plus"
+				style="margin-left: 5px;" ajax="false">
+				<p:dataExporter type="pdf" target="tableMaterial" fileName="MaterialExport" />
+			</p:commandButton>
 			
 			<center>
 				<br />
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
-					<p:dataTable var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" emptyMessage="Não existem itens nesta lista.">
+					<p:dataTable id="tableMaterial" var="_mat" value="#{ordemServicoBean.ordemServico.materiais}" emptyMessage="Não existem itens nesta lista.">
 						
 						<p:columnGroup type="header">
 				            <p:row>
@@ -44,7 +45,6 @@
 				                <p:column colspan="2" headerText="Quantidade" />
 				                <p:column rowspan="2" headerText="Valor Unitário" />
 				                <p:column rowspan="2" headerText="Valor Total" />
-				                <p:column rowspan="2" headerText="Ações" />
 				            </p:row>
 				            <p:row>
 				                <p:column headerText="Retirada" />
@@ -69,15 +69,11 @@
 						<p:column>
 							<h:outputText value="#{_mat.precoTotal}" converter="bigDecimalConverter" />
 						</p:column>
-						<p:column>
-							
-						</p:column>
 						
 						<p:columnGroup type="footer">
 				            <p:row>
 				                <p:column colspan="5" style="text-align:right" footerText="Custo Total:" />
 				                <p:column footerText="#{ordemServicoBean.custoTotalRealizado}" />
-				                <p:column footerText="" />
 				            </p:row>
 				        </p:columnGroup>
 						
