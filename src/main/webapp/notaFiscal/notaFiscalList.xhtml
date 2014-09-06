@@ -56,12 +56,6 @@
 						
 						<ui:fragment rendered="#{nf.ativo == 1}">
 							<p:commandButton value="Editar" icon="ui-icon-pencil" action="#{notaFiscalBean.edit(nf.id)}" />
-									
-							<p:commandButton value="Excluir" icon="ui-icon-trash" onclick="PF('dialogTrash').show();" 
-								rendered="false"
-								style="margin-left:5px">
-								<f:setPropertyActionListener target="#{notaFiscalBean.notaFiscal}" value="#{nf}" />
-							</p:commandButton>
 							
 							<p:commandButton value="Cancelar" icon="ui-icon-cancel" 
 								update=":notaFiscalCancelamentoModal:notaFiscalCancelamentoForm"

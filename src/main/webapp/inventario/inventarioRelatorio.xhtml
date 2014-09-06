@@ -17,17 +17,17 @@
 			<p:spacer height="10" />
 
 				<div class="row form-row">
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<h:outputText value="Material:" />
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<p:autoComplete id="materialAutocomplete" minQueryLength="3"
 							maxResults="10" value="#{inventarioBean.material}" converter="objectConverter"
 							label="Material" var="mat" itemLabel="#{mat.material}" itemValue="#{mat}"
 							completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 					</div>
-					<div class="col-md-3">Tipo Material:</div>
-					<div class="col-md-3">
+					<div class="col-md-2">Tipo Material:</div>
+					<div class="col-md-4">
 						<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{inventarioBean.material.tipoMaterial}" required="false" label="Tipo Material">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
@@ -37,28 +37,28 @@
 				</div>
 				
 				<div class="row form-row">
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<h:outputText value="Data Inicial:" />
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<p:calendar pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true"
 							value="#{inventarioBean.dataInicialInventario}" size="10" navigator="true" />
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<h:outputText value="Data Final:" />
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-4">
 						<p:calendar pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true"
 							value="#{inventarioBean.dataFinalInventario}" size="10" navigator="true" />
 					</div>
 				</div>
 
 				<div class="row form-row">
-					<div class="col-md-3">
+					<div class="col-md-2">
 						<h:outputText value="Atendente:" />
 					</div>
-					<div class="col-md-3">
-						<h:selectOneMenu converter="objectConverter" id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}">
+					<div class="col-md-4">
+						<h:selectOneMenu converter="objectConverter" id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}" styleClass="input-sm" style="max-width: 90%;">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
 						</h:selectOneMenu>

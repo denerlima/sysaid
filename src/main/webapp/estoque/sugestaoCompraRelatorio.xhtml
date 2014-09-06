@@ -16,24 +16,28 @@
 			<p:spacer height="10" />		
 			
 			<div class="row form-row">
-				<div class="col-md-1">
+				<div class="col-md-2">
 					<h:outputText value="Material:" />
 				</div>
-				<div class="col-md-3">
-						<h:inputText id="material" size="50" value="#{materialBean.material.material}" />
+				<div class="col-md-4">
+						<h:inputText id="material" value="#{materialBean.material.material}" style="width: 70%;" />
 				</div>
-				<div class="col-md-1">Tipo Material:</div>
-				<div class="col-md-2">
-					<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="false" label="Tipo Material">
+				<div class="col-md-2">Tipo Material:</div>
+				<div class="col-md-4">
+					<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="false" label="Tipo Material" styleClass="input-sm" style="max-width: 90%;">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 					</h:selectOneMenu>
 					<h:message for="tipoMaterial" styleClass="msg-error" />
 				</div>
-				<p:commandButton value="Pesquisar" icon="ui-icon-search"
-								action="#{materialBean.pesquisarMaterialByFilter}" update=":sugestaoCompraForm" style="margin-left: 5px;" />
 			</div>
 			
+			<div class="row form-row">
+				<div class="col-md-12" style="text-align: center;">
+					<p:commandButton value="Pesquisar" icon="ui-icon-search"
+								action="#{materialBean.pesquisarMaterialByFilter}" update=":sugestaoCompraForm" style="margin-left: 5px;" />
+				</div>
+			</div>
 			
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">

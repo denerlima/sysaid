@@ -59,20 +59,7 @@
 								});
 							</script>
 						</p:column>
-						
-						<p:column headerText="Valor Unitário">
-							<h:inputText id="valorUnitario" value="#{_maoDeObra.valorUnitario}" converter="bigDecimalConverter" styleClass="valorUnitario-#{_idx}" required="true" label="Valor Unitário">
-								<p:ajax event="change" listener="#{ordemServicoBean.calcularMaoDeObra(_maoDeObra)}" process="@this" 
-										update=":osMaoDeObraForm:resultado" />
-							</h:inputText>
-							<h:message for="valorUnitario" styleClass="msg-error" />
-							<script type="text/javascript">
-								$(function(){
-									$('.valorUnitario-#{_idx}').forceMoney();
-								});
-							</script>
-						</p:column>
-						
+
 						<p:column headerText="Período">
 							<h:inputText id="periodo" value="#{_maoDeObra.periodo}" converter="bigDecimalSimplesConverter" styleClass="periodo-#{_idx}" required="true" label="Período">
 								<p:ajax event="change" listener="#{ordemServicoBean.calcularMaoDeObra(_maoDeObra)}" process="@this" 
@@ -93,6 +80,19 @@
 								<f:selectItem itemValue="1" itemLabel="Hora" />
 								<f:selectItem itemValue="2" itemLabel="Dia" />
 							</h:selectOneMenu>
+						</p:column>
+						
+						<p:column headerText="Valor Unitário">
+							<h:inputText id="valorUnitario" value="#{_maoDeObra.valorUnitario}" converter="bigDecimalConverter" styleClass="valorUnitario-#{_idx}" required="true" label="Valor Unitário">
+								<p:ajax event="change" listener="#{ordemServicoBean.calcularMaoDeObra(_maoDeObra)}" process="@this" 
+										update=":osMaoDeObraForm:resultado" />
+							</h:inputText>
+							<h:message for="valorUnitario" styleClass="msg-error" />
+							<script type="text/javascript">
+								$(function(){
+									$('.valorUnitario-#{_idx}').forceMoney();
+								});
+							</script>
 						</p:column>
 						
 						<p:column headerText="Valor Total">

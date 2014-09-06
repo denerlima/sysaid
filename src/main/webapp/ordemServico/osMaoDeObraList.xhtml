@@ -42,17 +42,42 @@
 							<h:outputText value="#{_mao.periodo}" />
 						</p:column>
 						<p:column headerText="Unidade de Medida">
-							<h:outputText value="#{_mao.unidadeMedida}" />
+							<h:outputText value="#{_mao.unidadeMedidaLabel}" />
 						</p:column>
 						<p:column headerText="Valor Unitário">
-							<h:outputText value="#{_mao.valorUnitario}" />
+							<h:outputText value="#{_mao.valorUnitario}" converter="bigDecimalConverter" />
 						</p:column>
 						<p:column headerText="Valor Total">
-							<h:outputText value="#{_mao.total}" />
+							<h:outputText value="#{_mao.total}" converter="bigDecimalConverter" />
 						</p:column>
+						<p:column headerText="Ações">
+							<p:commandButton value="Excluir" icon="ui-icon-trash" onclick="PF('dialogTrash').show();" 
+								style="margin-left:5px">
+								<f:setPropertyActionListener target="#{ordemServicoBean.ordemServicoMaoDeObra}" value="#{_mao}" />
+							</p:commandButton>
+						</p:column>
+						<p:columnGroup type="footer" rendered="#{not empty ordemServicoBean.ordemServico.maosDeObras}">
+				            <p:row>
+				                <p:column colspan="5" style="text-align: right;" footerText="Total de Mão de Obra:" />
+				                <p:column style="text-align: left;" footerText="#{ordemServicoBean.custoTotalMaoDeObra}" />
+				                <p:column footerText="" />
+				            </p:row>
+				        </p:columnGroup>
 					</p:dataTable>
 				</p:outputPanel>
 			</center>
+							
+			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50" styleClass="ui-dialog-top">
+			  	<center>		
+					<p:commandButton value="Sim" icon="ui-icon-check"   
+						action="#{ordemServicoBean.deleteMaoDeObra}"
+						update=":osMaterialForm:resultado" 
+						onclick="PF('dialogTrash').hide();" />
+					<p:spacer height="5" />
+					<p:commandButton value="Não" icon="ui-icon-close"
+						onclick="PF('dialogTrash').hide();"/>
+				</center>
+			</p:dialog>
 						
 		</h:form>
 		

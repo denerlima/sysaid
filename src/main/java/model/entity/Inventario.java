@@ -43,7 +43,7 @@ public class Inventario extends GenericModelo implements Serializable{
 	private String justificativa;
 	
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="inventario", cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="inventario", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<InventarioMaterial> materiais;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

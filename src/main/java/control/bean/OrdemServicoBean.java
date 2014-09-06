@@ -36,6 +36,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	private List<OrdemServicoMaterialHistorico> pendencias;
 	private List<OrdemServicoMaterialHistorico> devolucoes;
 	private OrdemServicoMaterial ordemServicoMaterial;
+	private OrdemServicoMaoDeObra ordemServicoMaoDeObra;
 	
 	@Inject
 	private OrdemServicoFacade ordemServicoFacade;
@@ -161,6 +162,11 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			return;
 		}
 		initLoad(id);
+		for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
+			if(osm.getQuantidadeUtilizada().longValue() == 0l) {
+				osm.setQuantidadeUtilizada(osm.getQuantidadeRetirada());
+			}
+		}
 	}
 	
 	public void createOrdemServico() {
@@ -180,6 +186,17 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensServicos();
 			resetOrdemServico();
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteMaoDeObra() {
+		try {
+			getOrdemServico().getMaosDeObras().remove(getOrdemServicoMaoDeObra());
+			getOrdemServicoFacade().update(ordemServico);
+			displayInfoMessageToUser("Excluído com Sucesso");
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
@@ -289,6 +306,14 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 
 	public List<Material> getMateriais() {
 		return materiais;
+	}
+
+	public OrdemServicoMaoDeObra getOrdemServicoMaoDeObra() {
+		return ordemServicoMaoDeObra;
+	}
+
+	public void setOrdemServicoMaoDeObra(OrdemServicoMaoDeObra ordemServicoMaoDeObra) {
+		this.ordemServicoMaoDeObra = ordemServicoMaoDeObra;
 	}
 
 	public OrdemServicoMaterial getOrdemServicoMaterial() {
@@ -405,7 +430,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	}
 	
 	public void calcularMaoDeObra(OrdemServicoMaoDeObra osmo) {
-		BigDecimal total = osmo.getQuantidade().multiply(osmo.getValorUnitario());
+		BigDecimal total = osmo.getQuantidade().multiply(osmo.getPeriodo()).multiply(osmo.getValorUnitario());
 		osmo.setTotal(total);
 	}
 	
@@ -431,6 +456,31 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		BigDecimal custo = new BigDecimal(0);
 		for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
 			custo = custo.add(osm.getPrecoTotal());
+		}
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(custo.toString()));
+	}
+	
+	public String getCustoTotalMaoDeObra() {
+		BigDecimal custo = new BigDecimal(0);
+		for(OrdemServicoMaoDeObra osmo : ordemServico.getMaosDeObras()) {
+			custo = custo.add(osmo.getTotal());
+		}
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(custo.toString()));
+	}
+	
+	public String getCustoTotalOrdemDeServico() {
+		BigDecimal custo = new BigDecimal(0);
+		for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
+			custo = custo.add(osm.getPrecoTotal());
+		}
+		for(OrdemServicoMaoDeObra osmo : ordemServico.getMaosDeObras()) {
+			custo = custo.add(osmo.getTotal());
 		}
 		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
 		nf.setMinimumFractionDigits(2);

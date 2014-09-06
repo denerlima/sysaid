@@ -124,5 +124,16 @@ public class OrdemServicoMaoDeObra {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
+	
+	public String getUnidadeMedidaLabel() {
+		if(getUnidadeMedida() == null) {
+			return "";
+		}
+		if(getUnidadeMedida().intValue() == 1) {
+			return "Hora";
+		} else {
+			return "Dia";
+		}
+	}
 
 }

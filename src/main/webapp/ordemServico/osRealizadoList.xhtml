@@ -72,8 +72,16 @@
 						
 						<p:columnGroup type="footer">
 				            <p:row>
-				                <p:column colspan="5" style="text-align:right" footerText="Custo Total:" />
-				                <p:column footerText="#{ordemServicoBean.custoTotalRealizado}" />
+				                <p:column colspan="5" style="text-align: right;" footerText="Custo Total:" />
+				                <p:column style="text-align: left;" footerText="#{ordemServicoBean.custoTotalRealizado}" />
+				            </p:row>
+				            <p:row>
+				                <p:column colspan="5" style="text-align: right;" footerText="Custo total de Mão de Obra:" />
+				                <p:column style="text-align: left;" footerText="#{ordemServicoBean.custoTotalMaoDeObra}" />
+				            </p:row>
+				            <p:row>
+				                <p:column colspan="5" style="text-align: right;" footerText="Custo total da Ordem de Serviço:" />
+				                <p:column style="text-align: left;" footerText="#{ordemServicoBean.custoTotalOrdemDeServico}" />
 				            </p:row>
 				        </p:columnGroup>
 						

@@ -30,7 +30,7 @@ public class OrdemServico extends GenericModelo implements Serializable{
 	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL)
 	private Set<OrdemServicoMaterial> materiais = new HashSet<OrdemServicoMaterial>();
 	
-	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Set<OrdemServicoMaoDeObra> maosDeObras = new HashSet<OrdemServicoMaoDeObra>();
 	
 	/*
