@@ -40,10 +40,12 @@ public class NotaFiscalFacade extends GenericFacade<NotaFiscal> implements Seria
 				BigDecimal estoque = mat.getEstoque();
 				mat.setEstoque(estoque.add(nfm.getQuantidade()));
 				mat.setPrecoUnitario(nfm.getPrecoUnitario());
-				List<OrdemDeCompraMaterial> lista = new ArrayList<OrdemDeCompraMaterial>();
-				lista.add(nfm.getOrdemDeCompraMaterial());
-				materialFacade.atualizaQuantidadeSolicitadaOC(lista);
-				materialDAO.save(mat);
+				
+				BigDecimal totalOC =  materialDAO.totalMatOC(mat);
+				BigDecimal totalNF =  materialDAO.totalMatNF(mat);	
+				totalNF = totalNF.add(nfm.getQuantidade());
+				mat.setQtdSolicitada(totalOC.subtract(totalNF));
+				materialDAO.save(mat);							
 			}
 			getDAO().save(notaFiscal);
 			getDAO().commit();
