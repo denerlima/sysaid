@@ -93,25 +93,25 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 
 	public String createOrdemDeCompra() {
 		try {
-			getOrdemDeCompraFacade().create(ordemDeCompra);
-			materialFacade.atualizaQuantidadeSolicitadaOC(ordemDeCompra.getMateriais());
+			getOrdemDeCompraFacade().create(ordemDeCompra);			
 			displayInfoMessageToUser("Criado com Sucesso. Número da Ordem de Compra: "+ordemDeCompra.getId());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
+		atualizaQtdeOrdemDeCompra();
 		return "/ordemDeCompra/ordemDeCompraList.xhtml?faces-redirect=true";
 	}
 	
 	public String updateOrdemDeCompra() {
 		try {
-			getOrdemDeCompraFacade().update(ordemDeCompra);
-			materialFacade.atualizaQuantidadeSolicitadaOC(ordemDeCompra.getMateriais());
+			getOrdemDeCompraFacade().update(ordemDeCompra);			
 			displayInfoMessageToUser("Alterado com  Sucesso");
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
 		}
+		atualizaQtdeOrdemDeCompra();
 		return "/ordemDeCompra/ordemDeCompraList.xhtml?faces-redirect=true";
 	}
 	
@@ -121,14 +121,14 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 				displayErrorMessageToUser("n‹o é possível excluir a Ordem de Compra, pois está incluída em uma Nota Fiscal.");
 				return;
 			}
-			getOrdemDeCompraFacade().delete(ordemDeCompra);
-			materialFacade.atualizaQuantidadeSolicitadaOC(ordemDeCompra.getMateriais());
+			getOrdemDeCompraFacade().delete(ordemDeCompra);			
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensDeCompra();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
 		}
+		atualizaQtdeOrdemDeCompra();
 	}
 
 	public void cancelarOrdemDeCompra() {
@@ -142,6 +142,15 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel cancelar. ERRO");
 			e.printStackTrace();
 		}
+	}
+	
+	public void atualizaQtdeOrdemDeCompra() {
+		try {
+			materialFacade.atualizaQuantidadeSolicitadaOC(ordemDeCompra.getMateriais());			
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
+			e.printStackTrace();
+		}		
 	}
 	
 	public List<OrdemDeCompra> getAllOrdensDeCompra() {
