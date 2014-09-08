@@ -1,5 +1,6 @@
 package model.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -16,7 +17,9 @@ import javax.persistence.Table;
 @Entity
 @SequenceGenerator(name = "ordemServicoMaoObraSequence", sequenceName = "MF_OS_MAO_OBRA_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_ORDEMSERVICO_MF_MAOOBRA")
-public class OrdemServicoMaoDeObra {
+public class OrdemServicoMaoDeObra implements Serializable {
+
+	private static final long serialVersionUID = 1075211946971386800L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ordemServicoMaoObraSequence")

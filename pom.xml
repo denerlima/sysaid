@@ -138,6 +138,18 @@
     		<version>2.2.3.Final</version>
 		</dependency>
 
+		<dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-pdf</artifactId>
+            <version>9.0.6</version>
+        </dependency>
+        <!--  
+        <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>itext</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+		-->
 	</dependencies>
 	<build>
 		<finalName>sysaid</finalName>

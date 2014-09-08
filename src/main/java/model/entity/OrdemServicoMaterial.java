@@ -1,5 +1,6 @@
 package model.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -23,7 +24,9 @@ import org.hibernate.annotations.Where;
 @Entity
 @SequenceGenerator(name = "ordemServicoMaterialSequence", sequenceName = "MF_ORDEMSERVICO_MAT_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_ORDEMSERVICO_MF_MATERIAL")
-public class OrdemServicoMaterial {
+public class OrdemServicoMaterial implements Serializable {
+
+	private static final long serialVersionUID = 2957052398931337272L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ordemServicoMaterialSequence")
