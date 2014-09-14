@@ -19,7 +19,7 @@
 				<div class="col-md-8">
 					<h:selectOneMenu id="entrada" value="#{unidadeMedidaBean.unidadeMedida.unidadeEntrada}" required="true" label="Unidade Entrada" converter="objectConverter">
 						<p:ajax event="change" process="@this" />
-						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{unidadeMedidaBean.unidades}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
 					</h:selectOneMenu>
 					<p:commandLink value="Nova Unidade"
@@ -45,11 +45,12 @@
 			<div class="row">
 				<div class="col-md-12">
 					<p:dataTable id="tableSaidas" value="#{unidadeMedidaBean.unidadeMedida.saidas}" var="_saida"
-						emptyMessage="Não existem itens nesta lista." style="margin-top: 5px;">
+						emptyMessage="Não existem itens nesta lista." style="margin-top: 5px;"
+						rowIndexVar="_idx">
 						<p:column headerText="">
 							<h:selectOneMenu id="unidadeSaida" value="#{_saida.unidade}" required="true" label="Unidade Saída" converter="objectConverter">
 								<p:ajax event="change" process="@this" />
-								<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+								<f:selectItem itemValue="" itemLabel="Selecione" />
 								<f:selectItems value="#{unidadeMedidaBean.unidades}" var="uni" itemLabel="#{uni.descricao}" itemValue="#{uni}" />									
 							</h:selectOneMenu>
 							<p:commandLink value="Nova Unidade"
@@ -61,10 +62,15 @@
 							<h:message for="unidadeSaida" styleClass="msg-error" />				
 						</p:column>
 						<p:column headerText="Fator de Conversão">
-							<h:inputText id="fatorConversao" value="#{_saida.fatorConversao}" required="true" label="Fator de Conversão">
+							<h:inputText id="fatorConversao" value="#{_saida.fatorConversao}" required="true" label="Fator de Conversão" converter="bigDecimalSimplesConverter" styleClass="fatorConversao-#{_idx}">
 								<p:ajax event="change" process="@this" />
 							</h:inputText>
 							<h:message for="fatorConversao" styleClass="msg-error" />
+							<script type="text/javascript">
+								$(function(){
+									$('.fatorConversao-#{_idx}').forceFloat();
+								});
+							</script>
 						</p:column>
 						<p:column headerText="Ações">
 							<p:commandButton value="Excluir" 

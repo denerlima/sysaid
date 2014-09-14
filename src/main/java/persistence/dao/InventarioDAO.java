@@ -47,12 +47,17 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 			if (inv.getAtendente() != null) {
 				sql.append(" AND inv.atendente.userName = :atendente");
 			}
+			if (inv.getId() != null) {
+				sql.append(" AND inv.id = :id");
+			}
+			if (inv.getAprovador() != null) {
+				sql.append(" AND invm.usuario.userName = :aprovador");
+			}
 			
 			sql.append(" ORDER BY inv.id");
 
 			Query query = getEntityManager().createQuery(sql.toString());
 
-			
 			if (mat.getMaterial() != null) {
 				query.setParameter("idMat", mat.getId());
 			}
@@ -62,7 +67,13 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 			if (inv.getAtendente() != null) {
 				query.setParameter("atendente", inv.getAtendente().getUserName());
 			}
-
+			if (inv.getId() != null) {
+				query.setParameter("id", inv.getId());
+			}
+			if (inv.getAprovador() != null) {
+				query.setParameter("aprovador", inv.getAprovador().getUserName());
+			}	
+			
 			lista = query.getResultList(); 
 		
 		} catch (Exception e) {

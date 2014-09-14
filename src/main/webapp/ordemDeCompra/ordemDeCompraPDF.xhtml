@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
+	
+	<f:metadata>
+		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
+		<f:event type="preRenderView" listener="#{ordemDeCompraBean.initLoad(_id)}"/>
+	</f:metadata>
+	
+	<html>
+	<h:head>
+		<title>SysAid</title>
+		
+		<style type="text/css">
+	 
+		 	body {
+		 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+				font-size: 10px;
+				line-height: 1.428571429;
+				color: #333;
+				background-color: #fff;
+		 	}
+		 
+			.ui-datatable table {
+	            border-collapse: collapse;
+	            width: 100%;
+	            table-layout: fixed;
+	        }
+	
+	        .ui-datatable .ui-datatable-header, .ui-datatable .ui-datatable-footer {
+	            text-align: center;
+	            padding: 4px 10px;
+	        }
+	
+	        .ui-datatable .ui-datatable-header {
+	            border-bottom: 0px none;
+	        }
+	
+	        .ui-datatable .ui-datatable-footer {
+	            border-top: 0px none;
+	        }
+	
+	        .ui-datatable thead th, .ui-datatable tfoot td {
+	            text-align: center;
+	        }
+	
+	        .ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+	            padding: 4px 10px;
+	            overflow: hidden;
+	            border-width: 1px;
+	            border-style: solid;
+	        }
+
+			.ui-datatable thead th, .ui-datatable tfoot td {
+				background: #f9f9fc;
+			}
+				
+			.ui-datatable tbody td {
+				text-align: left;
+			}
+
+		</style>
+		
+	</h:head>
+	<body>
+
+		<h:form id="ordemDeCompraForm">
+			<center><h2>Ordem de Compra N. <h:outputText value="#{ordemDeCompraBean.ordemDeCompra.id}" /></h2></center>
+			<br />					
+			
+			<table>
+				<tr>
+					<td>
+						<h:outputText value="Data de Emissão:" />
+					</td>
+					<td>
+						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.dataEmissao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
+					</td>
+					<td>
+						<h:outputText value="Data de Autorização:" />
+					</td>
+					<td>
+						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.dataAutorizacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Autorizador:" />
+					</td>
+					<td>
+						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.autorizador.nomeCompleto}" />
+					</td>
+					<td>
+						<h:outputText value="Contratado:" />
+					</td>
+					<td>
+						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.contratado.nome}" />
+					</td>
+				</tr>
+			</table>
+			
+		    <div>
+	        	<br />			
+				<h4>Materiais do Ordem De Compra</h4>
+				<p:dataTable id="tabelaMaterial" var="_mat" value="#{ordemDeCompraBean.ordemDeCompra.materiais}" emptyMessage="Não existem itens nesta lista." rowIndexVar="_idx">
+					<p:column headerText="Material">
+						<h:outputText value="#{_mat.material.materialLabel}" />							
+					</p:column>
+					<p:column headerText="Unidade de Medida Entrada">
+						<h:outputText value="#{_mat.material.unidadeMedida.unidadeEntrada.descricao}" />							
+					</p:column>
+					<p:column headerText="Quantidade">
+						<h:inputText value="#{_mat.quantidadeAutorizada}" converter="bigDecimalSimplesConverter" styleClass="quantidade_#{_idx}" />
+						<script type="text/javascript">
+							$(function(){
+								$('.quantidade_#{_idx}').forceFloat();
+							});
+						</script>						
+					</p:column>
+				</p:dataTable>
+	     	</div>
+	     			
+		</h:form>
+		
+	</body>
+	</html>
+	
+</ui:composition>

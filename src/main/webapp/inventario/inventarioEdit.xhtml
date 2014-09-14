@@ -14,7 +14,9 @@
 	
 	<f:metadata>
 		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
-		<f:event type="preRenderView" listener="#{inventarioBean.initLoad(_id)}"/>
+		<f:viewParam name="tipo" value="#{_tipo}" />
+		<f:viewParam name="user" value="#{_usuario}" />
+		<f:event type="preRenderView" listener="#{inventarioBean.initLoad(_id, _tipo, _usuario)}"/>
 	</f:metadata>
 	
 	<ui:define name="body">
@@ -30,7 +32,7 @@
 						<h:outputText value="Nº de Inventário:" />
 					</div>
 					<div class="col-md-10">
-						<h:outputText value="#{inventarioBean.inventario.id}"  label="Numero de Inventário" />	
+						<h:outputText value="#{inventarioBean.inventario.id}"  label="Número de Inventário" />	
 					</div>
 				</div>
 				
@@ -47,10 +49,11 @@
 				
 				<div class="row form-row">
 					<div class="col-md-2">
-						Atendente: <span class="required">*</span>
+						Inventariante: <span class="required">*</span>
 					</div>
 					<div class="col-md-10">
-						<h:selectOneMenu id="atendente" value="#{inventarioBean.inventario.atendente}" converter="objectConverter" required="true" label="Atendente" styleClass="input-sm">
+						<h:selectOneMenu id="atendente" value="#{inventarioBean.inventario.atendente}" converter="objectConverter" required="true" label="Inventariante" styleClass="input-sm"
+							disabled="#{inventarioBean.inventarianteDisabled}">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
 						</h:selectOneMenu>	
@@ -94,7 +97,7 @@
 			        <p:commandButton value="Concluir" icon="ui-icon-disk"
 			     		action="#{inventarioBean.concluirInventario}" 
 			     		update=":materialEditModal:materialEditDialogForm"
-			     		rendered="#{inventarioBean.managed}"
+			     		rendered="#{inventarioBean.managed and inventarioBean.aprovador}"
 			     		style="margin-left: 5px;" />
 			        	
 			      	<p:commandButton value="Excluir Selecionados" icon="ui-icon-circle-close" action="#{inventarioBean.removerSelecionados}" 
@@ -160,7 +163,7 @@
      		update=":inventarioEditForm"
      		rendered="#{inventarioBean.managed}" />
 
-     	<p:commandButton action="inventarioList.xhtml?faces-redirect=true" value="Cancelar" process="@this" />
+     	<p:commandButton action="#{inventarioBean.redirectList}" value="Cancelar" process="@this" />
      			
 	</h:form>
 	
@@ -208,7 +211,7 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Estoque Inventariado:
+					Estoque Inventariado: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
 					<h:inputText id="qtdeEstoqueInventariado" value="#{inventarioBean.inventarioMaterial.quantidadeInventariada}" converter="bigDecimalSimplesConverter" required="true" label="Estoque Inventariado" styleClass="qtdeEstoqueInventariado">
@@ -234,38 +237,37 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					Justificativa do Inventariante:
+					Justificativa do Inventariante: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<ui:fragment rendered="#{not inventarioBean.inventarioMaterial.managed}">
-						<h:inputTextarea id="justificavaInventariante" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Aprovador"
-							disabled="#{inventarioBean.inventarioMaterial.id != null}" />
+					<ui:fragment rendered="#{inventarioBean.inventariante}">
+						<h:inputTextarea id="justificavaInventariante" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Inventariante" />
 						<h:message for="justificavaInventariante" styleClass="msg-error" />
 					</ui:fragment>
-					<ui:fragment rendered="#{inventarioBean.inventarioMaterial.managed}">
+					<ui:fragment rendered="#{inventarioBean.aprovador}">
 						<h:outputText value="#{inventarioBean.inventarioMaterial.justificativa}" />
 					</ui:fragment>
 				</div>
 			</div>
 			
-			<ui:fragment rendered="#{inventarioBean.inventarioMaterial.managed}">
+			<ui:fragment rendered="#{inventarioBean.aprovador}">
 				<div class="row form-row">
 					<div class="col-md-2">
-						Justificativa do Aprovador:
+						Justificativa do Aprovador: <span class="required">*</span>
 					</div>
 					<div class="col-md-10">
-						<h:inputTextarea id="justificavaAprovador" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Aprovador"
-							disabled="#{inventarioBean.inventarioMaterial.id == null}" />
+						<h:inputTextarea id="justificavaAprovador" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Aprovador" />
 						<h:message for="justificavaAprovador" styleClass="msg-error" />
 					</div>
 				</div>
 				
 				<div class="row form-row">
 					<div class="col-md-2">
-						Usuário Logado:
+						Aprovador:
 					</div>
 					<div class="col-md-10">
-						<h:selectOneMenu id="usuario" value="#{inventarioBean.inventarioMaterial.usuario}" converter="objectConverter" required="true" label="Usuário Logado" styleClass="input-sm">
+						<h:selectOneMenu id="usuario" value="#{inventarioBean.inventarioMaterial.usuario}" converter="objectConverter" required="true" label="Usuário Logado" styleClass="input-sm"
+							disabled="#{inventarioBean.aprovadorDisabled}">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
 						</h:selectOneMenu>	
@@ -280,21 +282,21 @@
 					action="#{inventarioBean.okMaterial}"
 					update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
 					oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
-					rendered="#{not inventarioBean.inventarioMaterial.managed}"
+					rendered="#{inventarioBean.inventariante}"
 					/>		
 								
 				<p:commandButton value="Aprovar"
 					action="#{inventarioBean.aprovarMaterial}"
 					update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
 					oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
-					rendered="#{inventarioBean.inventarioMaterial.managed}"
+					rendered="#{inventarioBean.aprovador}"
 					/>
 					
 				<p:commandButton value="Rejeitar"
 					action="#{inventarioBean.rejeitarMaterial}"
 					update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
 					oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
-					rendered="#{inventarioBean.inventarioMaterial.managed}"
+					rendered="#{inventarioBean.aprovador}"
 					/>		
 				
 			</div>		

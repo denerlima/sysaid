@@ -55,7 +55,13 @@
 
 				<div class="row form-row">
 					<div class="col-md-2">
-						<h:outputText value="Atendente:" />
+						<h:outputText value="Nº de inventário" />
+					</div>
+					<div class="col-md-4">
+						<h:inputText value="#{inventarioBean.inventario.id}" />
+					</div>
+					<div class="col-md-2">
+						<h:outputText value="Inventariante:" />
 					</div>
 					<div class="col-md-4">
 						<h:selectOneMenu converter="objectConverter" id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}" styleClass="input-sm" style="max-width: 90%;">
@@ -63,10 +69,25 @@
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
 						</h:selectOneMenu>
 					</div>
-					<div class="col-md-6">
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						<h:outputText value="Aprovador:" />
+					</div>
+					<div class="col-md-4">
+						<h:selectOneMenu converter="objectConverter" id="cbAprovador" immediate="true" value="#{inventarioBean.inventario.aprovador}" styleClass="input-sm" style="max-width: 90%;">
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-12" style="text-align: center;">
 						<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{inventarioBean.pesquisarInventarioByFilter}" update=":inventarioForm" />
 					</div>
-				</div>			
+				</div>		
 
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">

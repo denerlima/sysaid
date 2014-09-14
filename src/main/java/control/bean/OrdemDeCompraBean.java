@@ -53,6 +53,10 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		return "/ordemDeCompra/ordemDeCompraEdit.xhtml?faces-redirect=true&id="+id;
 	}
 	
+	public String print(Integer id) {
+		return "/ordemDeCompra/ordemDeCompraPDF.xhtml?faces-redirect=true&id="+id;
+	}
+	
 	public void initLoad(Integer id) {
 		if(ordemDeCompra != null) {
 			return;

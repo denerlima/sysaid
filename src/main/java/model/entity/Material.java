@@ -261,8 +261,6 @@ public class Material extends GenericModelo implements Serializable{
 								
 			}
 		}
-		
-		
 		return new BigDecimal(0);
 	}
 

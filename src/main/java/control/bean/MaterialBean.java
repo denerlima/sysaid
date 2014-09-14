@@ -252,7 +252,9 @@ public class MaterialBean extends AbstractBean implements Serializable {
  
     public void setSelectedNode(TreeNode selectedNode) {
         this.selectedNode = selectedNode;
-        material.setGrupo((Grupo) selectedNode.getData());
+        if(selectedNode != null) {
+        	material.setGrupo((Grupo) selectedNode.getData());
+        }
     }
 
 }

@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @SequenceGenerator(name = "inventarioSequence", sequenceName = "MF_INVENTARIO_ID_SEQ", allocationSize = 1)
@@ -35,13 +36,15 @@ public class Inventario extends GenericModelo implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventarioSequence")
 	@Column
 	private Integer id;	
+	
+	@Column
 	private int ativo = 1;
-	private Long numeroInventario;
+	
+	@Column
 	private Date dataInventario;
 	
 	@Column(length=1000)
 	private String justificativa;
-	
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="inventario", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<InventarioMaterial> materiais;
@@ -52,6 +55,9 @@ public class Inventario extends GenericModelo implements Serializable{
 	
 	@Column
 	private Integer status;
+	
+	@Transient
+	private Usuario aprovador;
 	
 	/*
 	 * Métodos Getters and Setters
@@ -65,14 +71,6 @@ public class Inventario extends GenericModelo implements Serializable{
 		this.id = id;
 	}
 			
-	public Long getNumeroInventario() {
-		return numeroInventario;
-	}
-
-	public void setNumeroInventario(Long numeroInventario) {
-		this.numeroInventario = numeroInventario;
-	}
-
 	public Date getDataInventario() {
 		return dataInventario;
 	}
@@ -119,6 +117,14 @@ public class Inventario extends GenericModelo implements Serializable{
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public Usuario getAprovador() {
+		return aprovador;
+	}
+
+	public void setAprovador(Usuario aprovador) {
+		this.aprovador = aprovador;
 	}
 
 	@Override

@@ -31,6 +31,8 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	private List<Inventario> inventarios;
 	private List<InventarioMaterial> inventariosMateriais;
 	private InventarioMaterial inventarioMaterial;
+	private String tipoUsuario;
+	private String usuario;
 	
 	@Inject
 	private InventarioFacade inventarioFacade;
@@ -52,18 +54,22 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	}
 	
 	public String novo() {
-		return "/inventario/inventarioEdit.xhtml?faces-redirect=true";
+		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&tipo=i&user="+usuario;
 	}
 	
 	public String edit(Integer id) {
-		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&id="+id;
+		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&id="+id+"&tipo="+tipoUsuario+"&user="+usuario;
 	}
 	
 	public String view(Integer id) {
-		return "/inventario/inventarioView.xhtml?faces-redirect=true&id="+id;
+		return "/inventario/inventarioView.xhtml?faces-redirect=true&id="+id+"&tipo="+tipoUsuario+"&user="+usuario;
 	}
 	
-	public void initLoad(Integer id) {
+	public String redirectList() {
+		return "/inventario/inventarioList.xhtml?faces-redirect=true&tipo="+tipoUsuario+"&user="+usuario;
+	}
+	
+	public void initLoad(Integer id, String tipo, String user) {
 		if(inventario != null) {
 			return;
 		}
@@ -73,6 +79,27 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		} else {
 			inventario = getInventarioFacade().find(id);
 		}
+		tipoUsuario = tipo;
+		usuario = user;
+		if(user != null && user.trim().length() > 0) {
+			if(isInventariante()) {
+				getInventario().setAtendente(usuarioFacade.find(user));
+			}
+		} 
+	}
+	
+	public void initView(Integer id, String tipo, String user) {
+		if(inventario != null) {
+			return;
+		}
+		inventario = getInventarioFacade().find(id);
+		tipoUsuario = tipo;
+		usuario = user;
+	}
+	
+	public void initList(String tipo, String user) {
+		tipoUsuario = tipo;
+		usuario = user;
 	}
 	
 	public String createInventario() {
@@ -87,7 +114,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
 		}
-		return "/inventario/inventarioList.xhtml?faces-redirect=true";
+		return redirectList();
 	}
 	
 	public List<Material> completeMaterial(String name) {
@@ -111,7 +138,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
 		}
-		return "/inventario/inventarioList.xhtml?faces-redirect=true";
+		return redirectList();
 	}
 	
 	public String concluirInventario() {
@@ -128,7 +155,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
 		}
-		return "/inventario/inventarioList.xhtml?faces-redirect=true";
+		return redirectList();
 	}
 	
 	public void deleteInventario() {
@@ -319,6 +346,9 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	public void editarMaterial(InventarioMaterial im) {
 		setInventarioMaterial(im);
+		if(usuario != null && usuario.trim().length() > 0 && isAprovador()) {
+			im.setUsuario(usuarioFacade.find(usuario));
+		}
 	}
 	
 	public void okMaterial() {
@@ -342,6 +372,38 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	public void calcularDiferenca() {
 		//
+	}
+
+	public String getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(String tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+	
+	public boolean isAprovador() {
+		return this.tipoUsuario.equals("a");
+	}
+	
+	public boolean isInventariante() {
+		return this.tipoUsuario.equals("i");
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public boolean isInventarianteDisabled() {
+		return usuario != null && usuario.trim().length() > 0 || isAprovador();
+	}
+
+	public boolean isAprovadorDisabled() {
+		return usuario != null && usuario.trim().length() > 0 && isAprovador();
 	}
 	
 }

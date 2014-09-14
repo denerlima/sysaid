@@ -12,13 +12,15 @@
 	
 	<f:metadata>
 		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
-		<f:event type="preRenderView" listener="#{inventarioBean.initLoad(_id)}"/>
+		<f:viewParam name="tipo" value="#{_tipo}" />
+		<f:viewParam name="user" value="#{_usuario}" />
+		<f:event type="preRenderView" listener="#{inventarioBean.initLoad(_id, _tipo, _usuario)}"/>
 	</f:metadata>
 	
 	<ui:define name="body">
 	
 	<h:form id="inventarioEditForm">
-		<center><h2>Cadastro de Inventário</h2></center>
+		<center><h2>Visualização de Inventário</h2></center>
 		<br />					
 	    <p:tabView  id="tabView">
 	        <p:tab title="Dados Gerais">
@@ -45,7 +47,7 @@
 				
 				<div class="row form-row">
 					<div class="col-md-2">
-						<h:outputText value="Atendente:" />
+						<h:outputText value="Inventariante:" />
 					</div>
 					<div class="col-md-10">
 						<h:outputText id="atendente" value="#{inventarioBean.inventario.atendente.nomeCompleto}" />
@@ -93,7 +95,7 @@
 	        </p:tab>
      	</p:tabView>
      
-     	<p:commandButton action="inventarioList.xhtml?faces-redirect=true" value="Voltar" process="@this" />
+     	<p:commandButton action="#{inventarioBean.redirectList}" value="Voltar" process="@this" />
      			
 	</h:form>
 

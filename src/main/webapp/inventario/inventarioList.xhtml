@@ -9,12 +9,19 @@
 	
 	<ui:param name="pageTitle" value="Lista de Inventário" />
 	
+	<f:metadata>
+		<f:viewParam name="tipo" value="#{_tipo}" />
+		<f:viewParam name="user" value="#{_usuario}" />
+		<f:event type="preRenderView" listener="#{inventarioBean.initList(_tipo, _usuario)}"/>
+	</f:metadata>
+	
 	<ui:define name="body">
 
 		<h:form id="inventarioForm" prependId="false">		
 			<center><h2>Lista de Inventário</h2></center>
 			<br />
-			<p:commandButton value="Novo Inventário" icon="ui-icon-plus" action="#{inventarioBean.novo}" ajax="false" />	
+			<p:commandButton value="Novo Inventário" icon="ui-icon-plus" action="#{inventarioBean.novo}" ajax="false"
+				rendered="#{inventarioBean.inventariante}" />	
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:99%; overflow:auto">
 				<p:spacer width="100" height="30" />
@@ -29,7 +36,7 @@
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Atendente" sortBy="#{inv.atendente.nomeCompleto}" filterBy="#{inv.atendente.nomeCompleto}" filterMatchMode="contains">
+					<p:column headerText="Inventariante" sortBy="#{inv.atendente.nomeCompleto}" filterBy="#{inv.atendente.nomeCompleto}" filterMatchMode="contains">
 						<h:outputText value="#{inv.atendente.nomeCompleto}" />							
 					</p:column>
 					<p:column headerText="Justificativa" filterBy="#{inv.justificativa}" filterMatchMode="contains">

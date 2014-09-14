@@ -46,30 +46,31 @@
                     paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" 
                     currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "					
-					emptyMessage="Não existem itens nesta lista.">
+					emptyMessage="Não existem itens nesta lista."
+					sortBy="#{mat.material}" sortOrder="ASCENDING">
 
-					<p:column headerText="Material">
+					<p:column headerText="Material" sortBy="#{mat.material}">
 						<h:outputText value="#{mat.material}" />							
 					</p:column>
-					<p:column headerText="Tipo Material">
+					<p:column headerText="Tipo Material" sortBy="#{mat.tipoMaterial.descricao}">
 						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
 					</p:column>
-					<p:column headerText="Unidade de Medida Entrada">
+					<p:column headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}">
 						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column headerText="Estoque">
+					<p:column headerText="Estoque" sortBy="#{mat.estoque}">
 						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
-					<p:column headerText="Estoque Minimo Calculado">
+					<p:column headerText="Estoque Minimo Calculado" sortBy="#{mat.estoqueCalculado}">
 						<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Estoque Minimo Informado">
+					<p:column headerText="Estoque Minimo Informado" sortBy="#{mat.estoqueInformado}">
 						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Quantidade Solicitada">
+					<p:column headerText="Quantidade Solicitada" sortBy="#{mat.qtdSolicitada}">
 						<h:outputText value="#{mat.qtdSolicitada}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Sugestão de Compra">
+					<p:column headerText="Sugestão de Compra" sortBy="#{mat.sugestaoCompra}">
 						<h:outputText value="#{mat.sugestaoCompra}" converter="bigDecimalSimplesConverter" />						
 					</p:column>
 					
