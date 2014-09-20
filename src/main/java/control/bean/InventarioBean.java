@@ -351,6 +351,10 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		}
 	}
 	
+	public void visualizarMaterial(InventarioMaterial im) {
+		setInventarioMaterial(im);
+	}
+	
 	public void okMaterial() {
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}

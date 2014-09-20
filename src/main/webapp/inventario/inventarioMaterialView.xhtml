@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property">	
+	
+	<cp:bootstrapModal id="materialViewModal" title="Visualizar Material" modalId="materialViewModal">      
+		
+		<h:form id="materialViewDialogForm">
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Material:
+				</div>
+				<div class="col-md-10">
+					<h:outputText value="#{inventarioBean.inventarioMaterial.material.materialLabel}" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Unidade Medida Entrada:
+				</div>
+				<div class="col-md-10">
+					<h:outputText value="#{inventarioBean.inventarioMaterial.material.unidadeMedida.unidadeEntrada.descricao}" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Grupo:
+				</div>
+				<div class="col-md-10">
+					<h:outputText value="#{inventarioBean.inventarioMaterial.material.grupo.descricaoLabel}" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Estoque:
+				</div>
+				<div class="col-md-10">
+					<h:outputText value="#{inventarioBean.inventarioMaterial.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Estoque Inventariado:
+				</div>
+				<div class="col-md-10">
+					<h:outputText id="qtdeEstoqueInventariado" value="#{inventarioBean.inventarioMaterial.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Diferença:
+				</div>
+				<div class="col-md-10">
+					<h:outputText id="qtdeDiferenca" value="#{inventarioBean.inventarioMaterial.diferenca}" converter="bigDecimalSimplesConverter" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Justificativa do Inventariante:
+				</div>
+				<div class="col-md-10">
+					<h:outputText value="#{inventarioBean.inventarioMaterial.justificativaInventariante}" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Justificativa do Aprovador:
+				</div>
+				<div class="col-md-10">
+					<h:outputText id="justificavaAprovador" value="#{inventarioBean.inventarioMaterial.justificativa}" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Aprovador:
+				</div>
+				<div class="col-md-10">
+					<h:outputText id="usuario" value="#{inventarioBean.inventarioMaterial.usuario.nomeCompleto}" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					Status:
+				</div>
+				<div class="col-md-10">
+					<h:outputText value="#{inventarioBean.inventarioMaterial.statusLabel}" />
+				</div>
+			</div>
+				
+			<div class="buttons">
+				
+				
+				
+			</div>		
+				
+		</h:form>
+	</cp:bootstrapModal>
+	
+</f:view>

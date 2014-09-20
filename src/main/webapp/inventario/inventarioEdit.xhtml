@@ -133,20 +133,28 @@
 					<p:column headerText="Status" rendered="#{inventarioBean.managed}">
 						<h:outputText value="#{invMat.statusLabel}" />
 					</p:column>
-					<p:column headerText="Ações">
+					<p:column headerText="Ações" style="width: 240px;">
 		                
 		                <p:commandButton value="Editar" 
 		                	action="#{inventarioBean.editarMaterial(invMat)}"
 		                	update=":materialEditModal:materialEditDialogForm"
 		                	oncomplete="$('#materialEditModal').modal('show')" 
 		                	process="@this" 
-		                	rendered="#{invMat.statusNull}" />
+		                	rendered="#{invMat.statusNull}"
+		                	style="margin-right: 4px;" />
 		                
 		                <p:commandButton value="Excluir" 
 		                	action="#{inventarioBean.removerMaterial(invMat)}"
 		                	update=":inventarioEditForm:tabView:tabelaMaterial" 
 		                	process="@this" 
-		                	rendered="#{invMat.statusNull}" />
+		                	rendered="#{invMat.statusNull}"
+		                	style="margin-right: 4px;" />
+		                	
+		                <p:commandButton value="Visualizar" 
+		                	action="#{inventarioBean.visualizarMaterial(invMat)}"
+		                	update=":materialViewModal:materialViewDialogForm"
+		                	oncomplete="$('#materialViewModal').modal('show')" 
+		                	process="@this" />	
 		                	
 					</p:column>
 				</p:dataTable>
@@ -241,7 +249,7 @@
 				</div>
 				<div class="col-md-10">
 					<ui:fragment rendered="#{inventarioBean.inventariante}">
-						<h:inputTextarea id="justificavaInventariante" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Inventariante" />
+						<h:inputTextarea id="justificavaInventariante" value="#{inventarioBean.inventarioMaterial.justificativaInventariante}" rows="2" cols="70" required="true" label="Justificativa do Inventariante" />
 						<h:message for="justificavaInventariante" styleClass="msg-error" />
 					</ui:fragment>
 					<ui:fragment rendered="#{inventarioBean.aprovador}">
@@ -304,6 +312,7 @@
 		</h:form>
 	</cp:bootstrapModal>
 	
+	
 	<script type="text/javascript">
 	   function oncompleteBtnAprovar(xhr, status, args) {
 	      if (args.success) {
@@ -318,6 +327,8 @@
 	   }
 	   
 	</script>
+	
+	<ui:include src="/inventario/inventarioMaterialView.xhtml" />	
 	
 	</ui:define>
 </ui:composition>

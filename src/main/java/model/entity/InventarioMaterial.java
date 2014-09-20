@@ -123,6 +123,14 @@ public class InventarioMaterial implements Serializable {
 		this.justificativa = justificativa;
 	}
 	
+	public String getJustificativaInventariante() {
+		return justificativaInventariante;
+	}
+
+	public void setJustificativaInventariante(String justificativaInventariante) {
+		this.justificativaInventariante = justificativaInventariante;
+	}
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
