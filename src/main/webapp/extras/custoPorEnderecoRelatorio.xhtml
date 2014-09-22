@@ -31,6 +31,11 @@
 				<div class="col-md-4">
 					<h:selectOneMenu id="nivelDetalhe" value="#{relatorioExtraBean.custoPorEnderecoFilter.nivelDetalhe}" styleClass="input-sm" style="max-width: 90%;">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItem itemValue="1" itemLabel="Consolidado por Agrupador" />
+						<f:selectItem itemValue="2" itemLabel="Consolidado por Endereço" />
+						<f:selectItem itemValue="3" itemLabel="Consolidado por Complemento de endereço" />
+						<f:selectItem itemValue="4" itemLabel="Consolidado por Demandante" />
+						<f:selectItem itemValue="5" itemLabel="Consolidado por Ordem de Serviço" />
 					</h:selectOneMenu>
 				</div>
 				<div class="col-md-2">

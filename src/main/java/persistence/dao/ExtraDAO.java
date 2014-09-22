@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import util.DataUtil;
 import model.entity.vo.CustoPorEnderecoFilterVO;
 import model.entity.vo.CustoPorEnderecoVO;
 import model.entity.vo.ItemVO;
@@ -29,7 +30,7 @@ public class ExtraDAO implements Serializable {
 		Query query = em.createNativeQuery(sql);
 		List<Object[]> retorno = query.getResultList();
 		for(Object[] obj : retorno) {
-			lista.add(new ItemVO(obj[0].toString(), obj[0].toString()));
+			lista.add(new ItemVO((String) obj[0], (String) obj[0]));
 		}
 		return lista;
 	}
@@ -41,7 +42,7 @@ public class ExtraDAO implements Serializable {
 		Query query = em.createNativeQuery(sql);
 		List<Object[]> retorno = query.getResultList();
 		for(Object[] obj : retorno) {
-			lista.add(new ItemVO(obj[0].toString(), obj[1].toString()));
+			lista.add(new ItemVO((String) obj[1], (String) obj[1]));
 		}
 		return lista;
 	}
@@ -49,11 +50,11 @@ public class ExtraDAO implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<ItemVO> consultarEnderecos() {
 		ArrayList<ItemVO> lista = new ArrayList<ItemVO>();
- 		String sql = "Select cv.ACCOUNT_ID, cv.LIST_NAME FROM CUST_VALUES cv";
+ 		String sql = "Select cv.VALUE_CAPTION, cv.LIST_NAME FROM CUST_VALUES cv WHERE LIST_NAME = 'location'";
 		Query query = em.createNativeQuery(sql);
 		List<Object[]> retorno = query.getResultList();
 		for(Object[] obj : retorno) {
-			lista.add(new ItemVO(obj[0].toString(), obj[0].toString()));
+			lista.add(new ItemVO((String) obj[0], (String) obj[0]));
 		}
 		return lista;
 	}
@@ -61,37 +62,58 @@ public class ExtraDAO implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<CustoPorEnderecoVO> consultarCustoPorEndereco(CustoPorEnderecoFilterVO filterVO) {
 		ArrayList<CustoPorEnderecoVO> lista = new ArrayList<CustoPorEnderecoVO>();
- 		String sql = ""+
- 		"SELECT "+
- 		"	EH.AGRUPADOR AS AGRUPADOR, "+
- 		"	CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, "+
- 		"	OM.ID_ORDEM_SERVICO AS OS, "+
- 		"	SR.SR_CUST_NUMBERMAINOSI AS OS_PAI, "+
- 		"	TO_CHAR(SR.insert_time, 'DD/MM/YYYY') AS DATA, "+
- 		"	SU.CALCULATED_USER_NAME, "+
- 		"	SR.SR_CUST_TXTCOMPLEMENTO AS COMP_END, "+
- 		"	SUM((OM.PRECO_UNITARIO * OM.QUANTIDADE_UTILIZADA)) AS MATERIAL, "+
- 		"	SUM(OMO.TOTAL) AS MAO_OBRA, "+
- 		"	SUM(((OM.PRECO_UNITARIO * OM.QUANTIDADE_UTILIZADA) + OMO.TOTAL)) AS TOTAL "+
- 		"FROM mf_ordemservico_mf_material OM "+
-	 	"	INNER JOIN mf_ordemservico O "+
-	 	"	  ON om.id_ordem_servico = O.ID "+
-	 	"	INNER JOIN mf_ordemservico_mf_maoobra OMO "+
-	 	"	  ON om.id_ordem_servico = OMO.id_ordem_servico "+
-	 	"	INNER JOIN SERVICE_REQ SR "+
-	 	"	  ON om.id_ordem_servico = SR.ID "+
-	 	"	INNER JOIN SYSAID_USER SU "+
-	 	"	  ON SR.REQUEST_USER = SU.USER_NAME "+
-	 	"	INNER JOIN CUST_VALUES CV "+
-	 	"	  ON SR.LOCATION  = CV.VALUE_KEY "+
-	 	"	  AND CV.LIST_NAME = 'location' "+
-	 	"	INNER JOIN mf_endereco_hierarquia EH "+
-	 	"	  ON EH.VALUE_KEY  = CV.VALUE_KEY "+
-	 	//"	--WHERE SR.insert_time between $P{fromDate} and $P{toDate} "+
- 		"GROUP BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO , SR.SR_CUST_NUMBERMAINOSI, SR.insert_time "+
- 		"ORDER BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO ";
+		StringBuffer sql = new StringBuffer();
+		sql.append(
+	 		"SELECT "+
+	 		"	EH.AGRUPADOR AS AGRUPADOR, "+
+	 		"	CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, "+
+	 		"	OM.ID_ORDEM_SERVICO AS OS, "+
+	 		"	SR.SR_CUST_NUMBERMAINOSI AS OS_PAI, "+
+	 		"	TO_CHAR(SR.insert_time, 'DD/MM/YYYY') AS DATA, "+
+	 		"	SU.CALCULATED_USER_NAME, "+
+	 		"	SR.SR_CUST_TXTCOMPLEMENTO AS COMP_END, "+
+	 		"	SUM((OM.PRECO_UNITARIO * OM.QUANTIDADE_UTILIZADA)) AS MATERIAL, "+
+	 		"	SUM(OMO.TOTAL) AS MAO_OBRA, "+
+	 		"	SUM(((OM.PRECO_UNITARIO * OM.QUANTIDADE_UTILIZADA) + OMO.TOTAL)) AS TOTAL "+
+	 		"FROM mf_ordemservico_mf_material OM "+
+		 	"	INNER JOIN mf_ordemservico O "+
+		 	"	  ON om.id_ordem_servico = O.ID "+
+		 	"	INNER JOIN mf_ordemservico_mf_maoobra OMO "+
+		 	"	  ON om.id_ordem_servico = OMO.id_ordem_servico "+
+		 	"	INNER JOIN SERVICE_REQ SR "+
+		 	"	  ON om.id_ordem_servico = SR.ID "+
+		 	"	INNER JOIN SYSAID_USER SU "+
+		 	"	  ON SR.REQUEST_USER = SU.USER_NAME "+
+		 	"	INNER JOIN CUST_VALUES CV "+
+		 	"	  ON SR.LOCATION  = CV.VALUE_KEY "+
+		 	"	  AND CV.LIST_NAME = 'location' "+
+		 	"	INNER JOIN mf_endereco_hierarquia EH "+
+		 	"	  ON EH.VALUE_KEY  = CV.VALUE_KEY " +
+		 	"WHERE O.ATIVO = 1 "
+	 	);	 	
+		if (filterVO.getEmissaoInicio() != null) {
+			sql.append(" AND SR.insert_time >= to_date('"+ DataUtil.formataData(filterVO.getEmissaoInicio())+ "','dd/MM/yy')");
+		} 
+		if (filterVO.getEmissaoFim() != null) {
+			sql.append(" AND SR.insert_time <= to_date('"+ DataUtil.formataData(filterVO.getEmissaoFim())+ "','dd/MM/yy')");
+		}
+		if (filterVO.getDemandante() != null) {
+			sql.append(" AND SU.CALCULATED_USER_NAME = '"+filterVO.getDemandante()+"'");
+		}
+		if (filterVO.getAgrupador() != null) {
+			sql.append(" AND EH.AGRUPADOR = '"+filterVO.getAgrupador()+"'");
+		}
+		if (filterVO.getEndereco() != null) {
+			sql.append(" AND UPPER(CV.VALUE_CAPTION) = UPPER('"+filterVO.getEndereco()+"')");
+		}
+		if (filterVO.getComplementoEndereco() != null && filterVO.getComplementoEndereco().trim().length() > 0) {
+			sql.append(" AND SR.SR_CUST_TXTCOMPLEMENTO LIKE '%"+filterVO.getComplementoEndereco()+"%'");
+		}
+		sql.append(
+	 		"GROUP BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO , SR.SR_CUST_NUMBERMAINOSI, SR.insert_time "+
+	 		"ORDER BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO ");
  		
-		Query query = em.createNativeQuery(sql);
+		Query query = em.createNativeQuery(sql.toString());
 		List<Object[]> retorno = query.getResultList();
 		for(Object[] obj : retorno) {
 			CustoPorEnderecoVO custoPorEndereco = new CustoPorEnderecoVO();
