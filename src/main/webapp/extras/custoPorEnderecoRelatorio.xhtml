@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{relatorioExtraBean.initCustoPorEndereco}"/>
+	</f:metadata>
+	
+	<ui:define name="head">
+		<title>Relatório de Custo por Endereço</title>	
+	</ui:define>
+	
+	<ui:define name="body">
+	
+		<center>
+			<h2>Relatório de Inventário</h2>
+		</center>
+	
+		<h:form id="custoPorEnderecoForm">
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nível de Detalhe:" />
+				</div>
+				<div class="col-md-4">
+					<h:selectOneMenu id="nivelDetalhe" value="#{relatorioExtraBean.custoPorEnderecoFilter.nivelDetalhe}" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+					</h:selectOneMenu>
+				</div>
+				<div class="col-md-2">
+					<h:outputText value="Incluir SUB-OS:" />
+				</div>
+				<div class="col-md-4">
+					<h:selectBooleanCheckbox value="#{relatorioExtraBean.custoPorEnderecoFilter.incluirSubOS}" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="OS's emitidas entre:" />
+				</div>
+				<div class="col-md-10">
+					<p:calendar pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true"
+							value="#{relatorioExtraBean.custoPorEnderecoFilter.emissaoInicio}" size="10" navigator="true" />
+					à
+					<p:calendar pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true"
+							value="#{relatorioExtraBean.custoPorEnderecoFilter.emissaoFim}" size="10" navigator="true" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Demandante" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="demandante" value="#{relatorioExtraBean.custoPorEnderecoFilter.demandante}" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.demandantes}" var="_demandante" itemLabel="#{_demandante.label}" itemValue="#{_demandante.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Agrupador:" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="agrupador" value="#{relatorioExtraBean.custoPorEnderecoFilter.agrupador}" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.agrupadores}" var="_agrupador" itemLabel="#{_agrupador.label}" itemValue="#{_agrupador.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+		
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Endereço:" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="endereco" value="#{relatorioExtraBean.custoPorEnderecoFilter.endereco}" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.enderecos}" var="_end" itemLabel="#{_end.label}" itemValue="#{_end.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Complemento do Endereço:" />
+				</div>
+				<div class="col-md-10">
+					<h:inputText value="#{relatorioExtraBean.custoPorEnderecoFilter.complementoEndereco}" style="max-width: 90%;" />
+				</div>
+			</div>
+		
+			<div class="row form-row">
+				<div class="col-md-12" style="text-align: center;">
+					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioExtraBean.consultarCustoPorEndereco}" update=":custoPorEnderecoForm" />
+				</div>
+			</div>
+			
+			<p:outputPanel id="resultado" layout="block" style="text-align: center;">
+				<center>
+				<p:dataTable id="dtResultado" var="_item"
+						value="#{relatorioExtraBean.custosPorEnderecos}" rows="10" paginator="true"
+						paginatorAlwaysVisible="false" paginatorPosition="bottom"
+						currentPageReportTemplate="[Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista."
+						style="width: 99%;">
+					
+					<p:column headerText="Agrupador">
+						<h:outputText value="#{_item.agrupador}" />
+					</p:column>
+					<p:column headerText="Endereço">
+						<h:outputText value="#{_item.endereco}" />
+					</p:column>
+					<p:column headerText="Ordem de Serviço">
+						<h:outputText value="#{_item.ordemServico}" />
+					</p:column>
+					<p:column headerText="Sub-OS">
+						<h:outputText value="#{_item.subOs}" />
+					</p:column>
+					<p:column headerText="Data">
+						<h:outputText value="#{_item.data}" />
+					</p:column>
+					<p:column headerText="Demandante">
+						<h:outputText value="#{_item.demandante}" />
+					</p:column>
+					<p:column headerText="Complemento do Endereço">
+						<h:outputText value="#{_item.complementoEndereco}" />
+					</p:column>
+					<p:column headerText="Custo de Material">
+						<h:outputText value="#{_item.custoMaterial}" converter="bigDecimalConverter" />
+					</p:column>
+					<p:column headerText="Custo de Mão de Obra">
+						<h:outputText value="#{_item.custoMaoDeObra}" converter="bigDecimalConverter" />
+					</p:column>
+					<p:column headerText="Custo Total">
+						<h:outputText value="#{_item.custoTotal}" converter="bigDecimalConverter" />
+					</p:column>
+				</p:dataTable>
+				</center>
+			</p:outputPanel>
+		
+		</h:form>
+	
+	</ui:define>
+	
+</ui:composition>
