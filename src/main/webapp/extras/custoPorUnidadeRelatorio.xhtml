@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{relatorioExtraBean.initCustoPorUnidade}"/>
+	</f:metadata>
+	
+	<ui:define name="head">
+		<title>Relatório de Custo por Unidade</title>	
+	</ui:define>
+	
+	<ui:define name="body">
+	
+		<center>
+			<h2>Relatório de Custo por Unidade</h2>
+		</center>
+	
+		<h:form id="custoPorUnidadeForm">
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Data Emissão:" />
+				</div>
+				<div class="col-md-4">
+					<p:calendar pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true"
+							value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoInicio}" size="10" navigator="true" />
+					à
+					<p:calendar pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true"
+							value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoFim}" size="10" navigator="true" />
+				</div>
+				<div class="col-md-2">
+					<h:outputText value="Imprimir os dados das Ordens de Serviços:" />
+				</div>
+				<div class="col-md-4">
+					<h:selectBooleanCheckbox value="#{relatorioExtraBean.custoPorUnidadeFilter.imprimirOrdemServico}" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Demandante:" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="demandante" value="#{relatorioExtraBean.custoPorUnidadeFilter.demandante}" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.demandantes}" var="_demandante" itemLabel="#{_demandante.label}" itemValue="#{_demandante.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nível 1" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="nivel1" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel1}" styleClass="input-sm" style="max-width: 90%;">
+						<p:ajax event="change" process="@this" listener="#{relatorioExtraBean.changeNivel(1)}" update=":custoPorUnidadeForm:nivel2" />
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.niveis1}" var="_nivel1" itemLabel="#{_nivel1.label}" itemValue="#{_nivel1.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nível 2" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="nivel2" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel2}" styleClass="input-sm" style="max-width: 90%;">
+						<p:ajax event="change" process="@this" listener="#{relatorioExtraBean.changeNivel(2)}" update=":custoPorUnidadeForm:nivel3" />
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.niveis2}" var="_nivel2" itemLabel="#{_nivel2.label}" itemValue="#{_nivel2.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nível 3" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="nivel3" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel3}" styleClass="input-sm" style="max-width: 90%;">
+						<p:ajax event="change" process="@this" listener="#{relatorioExtraBean.changeNivel(3)}" update=":custoPorUnidadeForm:nivel4" />
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.niveis3}" var="_nivel3" itemLabel="#{_nivel3.label}" itemValue="#{_nivel3.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nível 4" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="nivel4" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel4}" styleClass="input-sm" style="max-width: 90%;">
+						<p:ajax event="change" process="@this" listener="#{relatorioExtraBean.changeNivel(4)}" update=":custoPorUnidadeForm:nivel5" />
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.niveis4}" var="_nivel4" itemLabel="#{_nivel4.label}" itemValue="#{_nivel4.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nível 5" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="nivel5" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel5}" styleClass="input-sm" style="max-width: 90%;">
+						<p:ajax event="change" process="@this" listener="#{relatorioExtraBean.changeNivel(5)}" update=":custoPorUnidadeForm:nivel6" />
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.niveis5}" var="_nivel5" itemLabel="#{_nivel5.label}" itemValue="#{_nivel5.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nível 6" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="nivel6" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel6}" styleClass="input-sm" style="max-width: 90%;">
+						<p:ajax event="change" process="@this" listener="#{relatorioExtraBean.changeNivel(6)}" update=":custoPorUnidadeForm:nivel7" />
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.niveis6}" var="_nivel6" itemLabel="#{_nivel6.label}" itemValue="#{_nivel6.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>	
+		
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nível 7" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="nivel7" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel7}" styleClass="input-sm" style="max-width: 90%;">
+						<p:ajax event="change" process="@this" listener="#{relatorioExtraBean.changeNivel(7)}" update=":custoPorUnidadeForm:nivel8" />
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.niveis7}" var="_nivel7" itemLabel="#{_nivel7.label}" itemValue="#{_nivel7.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nível 8" />
+				</div>
+				<div class="col-md-10">
+					<h:selectOneMenu id="nivel8" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel8}" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{relatorioExtraBean.niveis8}" var="_nivel8" itemLabel="#{_nivel8.label}" itemValue="#{_nivel8.valor}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+		
+			<div class="row form-row">
+				<div class="col-md-12" style="text-align: center;">
+					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioExtraBean.consultarCustoPorUnidade}" update=":custoPorUnidadeForm" />
+				</div>
+			</div>
+			
+			<p:outputPanel id="resultado" layout="block" style="text-align: center;">
+				<center>
+				<p:dataTable id="dtResultado" var="_item"
+						value="#{relatorioExtraBean.custosPorUnidades}" 
+						emptyMessage="Não existem itens nesta lista."
+						style="width: 99%;">
+					
+					<p:column headerText="Sigla">
+						<h:outputText value="#{_item.sigla}" />
+					</p:column>
+					<p:column headerText="Nome da Unidade">
+						<h:outputText value="#{_item.nomeUnidade}" />
+					</p:column>
+					<p:column headerText="Valor de Material">
+						<h:outputText value="#{_item.custoMaterial}" converter="bigDecimalConverter" />
+					</p:column>
+					<p:column headerText="Valor de Mão de Obra">
+						<h:outputText value="#{_item.custoMaoDeObra}" converter="bigDecimalConverter" />
+					</p:column>
+					<p:column headerText="Custo Total">
+						<h:outputText value="#{_item.custoTotal}" converter="bigDecimalConverter" />
+					</p:column>
+					<p:column headerText="OS Principal">
+						<h:outputText value="#{_item.osPrincipal}" />
+					</p:column>
+					<p:column headerText="OS">
+						<h:outputText value="#{_item.ordemServico}" />
+					</p:column>
+					<p:column headerText="Data">
+						<h:outputText value="#{_item.data}" />
+					</p:column>
+					<p:column headerText="Demandante">
+						<h:outputText value="#{_item.demandante}" />
+					</p:column>
+					
+				</p:dataTable>
+				</center>
+			</p:outputPanel>
+		
+		</h:form>
+	
+	</ui:define>
+	
+</ui:composition>

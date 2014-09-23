@@ -8,6 +8,8 @@ import javax.inject.Named;
 
 import model.entity.vo.CustoPorEnderecoFilterVO;
 import model.entity.vo.CustoPorEnderecoVO;
+import model.entity.vo.CustoPorUnidadeFilterVO;
+import model.entity.vo.CustoPorUnidadeVO;
 import model.entity.vo.ItemVO;
 import persistence.dao.ExtraDAO;
 
@@ -31,8 +33,16 @@ public class ExtraFacade implements Serializable {
 		return extraDAO.consultarEnderecos();
 	}
 	
+	public List<ItemVO> consultarNiveis(Integer nivel, String valorNivel) {
+		return extraDAO.consultarNiveis(nivel, valorNivel);
+	}
+	
 	public List<CustoPorEnderecoVO> consultarCustoPorEndereco(CustoPorEnderecoFilterVO filterVO) {
 		return extraDAO.consultarCustoPorEndereco(filterVO);
+	}
+	
+	public List<CustoPorUnidadeVO> consultarCustoPorUnidade(CustoPorUnidadeFilterVO filterVO) {
+		return extraDAO.consultarCustoPorUnidade(filterVO);
 	}
 	
 }
