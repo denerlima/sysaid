@@ -45,6 +45,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	private List<Grupo> grupos;
 	private List<TipoMaterial> tiposMateriais;
 	private List<UnidadeMedida> unidadesMedidas;
+	private Boolean isValoresPositivos = true;
 	
 	private TreeNode root;
 	private TreeNode selectedNode;
@@ -131,8 +132,19 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	}
 	
 	public List<Material> pesquisarMaterialByFilter() {
-		try {			
-			materiais = getMaterialFacade().pesquisarMaterialByFilter(material);			
+		try {
+			materiais = getMaterialFacade().pesquisarMaterialByFilter(material);
+			
+			if (isValoresPositivos) {				
+				List<Material> result = new ArrayList<Material>(); 
+				for (Material material : materiais) {
+					if (material.getSugestaoCompra().compareTo(new BigDecimal(0)) > 0) {
+						result.add(material);						
+					}					
+				}
+				materiais = result;					
+			}
+					
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhum material. ERRO");
 			e.printStackTrace();
@@ -246,6 +258,14 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		}
 	}
 	
+	public Boolean getIsValoresPositivos() {
+		return isValoresPositivos;
+	}
+
+	public void setIsValoresPositivos(Boolean isValoresPositivos) {
+		this.isValoresPositivos = isValoresPositivos;
+	}
+
 	public TreeNode getSelectedNode() {
         return selectedNode;
     }

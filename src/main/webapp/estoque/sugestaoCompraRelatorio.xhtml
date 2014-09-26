@@ -16,20 +16,27 @@
 			<p:spacer height="10" />		
 			
 			<div class="row form-row">
-				<div class="col-md-2">
+				<div class="col-md-1">
 					<h:outputText value="Material:" />
 				</div>
 				<div class="col-md-4">
 						<h:inputText id="material" value="#{materialBean.material.material}" style="width: 70%;" />
 				</div>
 				<div class="col-md-2">Tipo Material:</div>
-				<div class="col-md-4">
+				<div class="col-md-2">
 					<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{materialBean.material.tipoMaterial}" required="false" label="Tipo Material" styleClass="input-sm" style="max-width: 90%;">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
 						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 					</h:selectOneMenu>
 					<h:message for="tipoMaterial" styleClass="msg-error" />
+				</div>				
+				<div class="col-md-2">
+					<h:outputText value="Filtrar somente quantidades maiores que zero" />
 				</div>
+				<div class="col-md-1">
+				 	<p:selectBooleanCheckbox value="#{materialBean.isValoresPositivos}" />						
+				</div>						
+				
 			</div>
 			
 			<div class="row form-row">
