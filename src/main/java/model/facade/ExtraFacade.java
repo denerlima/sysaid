@@ -25,6 +25,10 @@ public class ExtraFacade implements Serializable {
 		return extraDAO.consultarDemandantes();
 	}
 	
+	public List<ItemVO> consultarDemandantesCustoPorUnidade() {
+		return extraDAO.consultarDemandantesCustoPorUnidade();
+	}
+	
 	public List<ItemVO> consultarAgrupadores() {
 		return extraDAO.consultarAgrupadores();
 	}

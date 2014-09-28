@@ -40,6 +40,19 @@ public class ExtraDAO implements Serializable {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<ItemVO> consultarDemandantesCustoPorUnidade() {
+		ArrayList<ItemVO> lista = new ArrayList<ItemVO>();
+ 		String sql = "SELECT DISTINCT DEMANDANTE_ID, DEMANDANTE FROM MF_CUSTO_POR_UNIDADE ORDER BY DEMANDANTE ASC";
+		Query query = em.createNativeQuery(sql);
+		List<Object[]> retorno = query.getResultList();
+		for(Object[] obj : retorno) {
+			lista.add(new ItemVO(obj[0].toString(), (String) obj[1]));
+		}
+		return lista;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
 	public List<ItemVO> consultarAgrupadores() {
 		ArrayList<ItemVO> lista = new ArrayList<ItemVO>();
  		String sql = "Select eh.VALUE_KEY, eh.AGRUPADOR FROM MF_ENDERECO_HIERARQUIA eh";
@@ -67,7 +80,7 @@ public class ExtraDAO implements Serializable {
 	public List<ItemVO> consultarNiveis(Integer nivel, String valorNivel) {
 		ArrayList<ItemVO> lista = new ArrayList<ItemVO>();
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT COD_ESTRUTURAL, NOM_UNID_PR FROM MF_TAB0025_NIVEL"+nivel);
+		sql.append("SELECT COD_ESTRUTURAL, NOM_UNID_PR_ABREV FROM MF_TAB0025_NIVEL"+nivel);
 		sql.append(" WHERE cod_estrutural like '"+substituirNivel(nivel, valorNivel)+"'");
  		sql.append(" ORDER BY COD_ESTRUTURAL");
 		Query query = em.createNativeQuery(sql.toString());
@@ -177,7 +190,10 @@ public class ExtraDAO implements Serializable {
 	 		"	CPU.DEMANDANTE "+
 	 		"FROM MF_CUSTO_POR_UNIDADE CPU "+
 		 	"WHERE 1 = 1 "
-	 	);	
+	 	);
+		if (filterVO.getDemandante() != null && !filterVO.getDemandante().isEmpty()) {
+			sql.append(" AND CPU.DEMANDANTE_ID = "+filterVO.getDemandante()+" ");
+		}
 		if (filterVO.getEmissaoInicio() != null) {
 			sql.append(" AND CPU.DATA >= to_date('"+ DataUtil.formataData(filterVO.getEmissaoInicio())+ "','dd/MM/yy')");
 		} 
@@ -194,10 +210,12 @@ public class ExtraDAO implements Serializable {
 			custoPorUnidade.setCustoMaterial((BigDecimal) obj[2]);
 			custoPorUnidade.setCustoMaoDeObra((BigDecimal) obj[3]);
 			custoPorUnidade.setCustoTotal((BigDecimal) obj[4]);
-			custoPorUnidade.setOsPrincipal((BigDecimal) obj[5]);
-			custoPorUnidade.setOrdemServico((BigDecimal) obj[6]);
-			custoPorUnidade.setData((Date) obj[7]);
-			custoPorUnidade.setDemandante((String) obj[8]);
+			if(filterVO.isImprimirOrdemServico()) {
+				custoPorUnidade.setOsPrincipal((BigDecimal) obj[5]);
+				custoPorUnidade.setOrdemServico((BigDecimal) obj[6]);
+				custoPorUnidade.setData((Date) obj[7]);
+				custoPorUnidade.setDemandante((String) obj[8]);
+			}
 			lista.add(custoPorUnidade);
 		}
 		return lista;
@@ -205,28 +223,28 @@ public class ExtraDAO implements Serializable {
 	
 	public String clausulaNivel(CustoPorUnidadeFilterVO filterVO) {
 		String nivel = null;
-		if(filterVO.getNivel8() != null) {
+		if(filterVO.getNivel8() != null && !filterVO.getNivel8().isEmpty()) {
 			nivel = substituirNivelRecursivo(8, filterVO.getNivel8()); 
 		}
-		else if(filterVO.getNivel7() != null) {
+		else if(filterVO.getNivel7() != null && !filterVO.getNivel7().isEmpty()) {
 			nivel = substituirNivelRecursivo(7, filterVO.getNivel7()); 
 		}
-		else if(filterVO.getNivel6() != null) {
+		else if(filterVO.getNivel6() != null && !filterVO.getNivel6().isEmpty()) {
 			nivel = substituirNivelRecursivo(6, filterVO.getNivel6()); 
 		}
-		else if(filterVO.getNivel5() != null) {
+		else if(filterVO.getNivel5() != null && !filterVO.getNivel5().isEmpty()) {
 			nivel = substituirNivelRecursivo(5, filterVO.getNivel5()); 
 		}
-		else if(filterVO.getNivel4() != null) {
+		else if(filterVO.getNivel4() != null && !filterVO.getNivel4().isEmpty()) {
 			nivel = substituirNivelRecursivo(4, filterVO.getNivel4()); 
 		}
-		else if(filterVO.getNivel3() != null) {
+		else if(filterVO.getNivel3() != null && !filterVO.getNivel3().isEmpty()) {
 			nivel = substituirNivelRecursivo(3, filterVO.getNivel3()); 
 		}
-		else if(filterVO.getNivel2() != null) {
+		else if(filterVO.getNivel2() != null && !filterVO.getNivel2().isEmpty()) {
 			nivel = substituirNivelRecursivo(2, filterVO.getNivel2()); 
 		}
-		else if(filterVO.getNivel1() != null) {
+		else if(filterVO.getNivel1() != null && !filterVO.getNivel1().isEmpty()) {
 			nivel = substituirNivelRecursivo(1, filterVO.getNivel1()); 
 		}
 		if(nivel != null) {

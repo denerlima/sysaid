@@ -132,7 +132,9 @@
 						<h:outputText value="#{_item.subOs}" />
 					</p:column>
 					<p:column headerText="Data">
-						<h:outputText value="#{_item.data}" />
+						<h:outputText value="#{_item.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
 					</p:column>
 					<p:column headerText="Demandante">
 						<h:outputText value="#{_item.demandante}" />

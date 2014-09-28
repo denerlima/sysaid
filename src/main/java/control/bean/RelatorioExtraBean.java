@@ -1,11 +1,16 @@
 package control.bean;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 
 import model.entity.vo.CustoPorEnderecoFilterVO;
 import model.entity.vo.CustoPorEnderecoVO;
@@ -15,6 +20,8 @@ import model.entity.vo.ItemVO;
 import model.facade.ExtraFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+
+import util.DataUtil;
 
 @Named
 @ViewScoped
@@ -54,6 +61,7 @@ public class RelatorioExtraBean implements Serializable {
 	public void initCustoPorUnidade() {
 		if(custoPorUnidadeFilter == null) {
 			custoPorUnidadeFilter = new CustoPorUnidadeFilterVO();
+			demandantes = extraFacade.consultarDemandantesCustoPorUnidade();
 			niveis1 = extraFacade.consultarNiveis(1, "00.00.00.00.00.00.00.00");
 			niveis2 = new ArrayList<ItemVO>();
 			niveis3 = new ArrayList<ItemVO>();
@@ -62,6 +70,27 @@ public class RelatorioExtraBean implements Serializable {
 			niveis6 = new ArrayList<ItemVO>();
 			niveis7 = new ArrayList<ItemVO>();
 			niveis8 = new ArrayList<ItemVO>();
+		}
+	}
+	
+	public void initCustoPorUnidadePDF() throws Exception {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		request.getParameter("RenderOutputType");
+		if(custoPorUnidadeFilter == null) {
+			custoPorUnidadeFilter = new CustoPorUnidadeFilterVO();
+			custoPorUnidadeFilter.setEmissaoInicio(DataUtil.converterStringParaDate(request.getParameter("emissaoInicio")));
+			custoPorUnidadeFilter.setEmissaoFim(DataUtil.converterStringParaDate(request.getParameter("emissaoFim")));
+			custoPorUnidadeFilter.setImprimirOrdemServico(new Boolean(request.getParameter("imprimirOrdemServico")));
+			custoPorUnidadeFilter.setDemandante(request.getParameter("demandante"));
+			custoPorUnidadeFilter.setNivel1(request.getParameter("nivel1"));
+			custoPorUnidadeFilter.setNivel2(request.getParameter("nivel2"));
+			custoPorUnidadeFilter.setNivel3(request.getParameter("nivel3"));
+			custoPorUnidadeFilter.setNivel4(request.getParameter("nivel4"));
+			custoPorUnidadeFilter.setNivel5(request.getParameter("nivel5"));
+			custoPorUnidadeFilter.setNivel6(request.getParameter("nivel6"));
+			custoPorUnidadeFilter.setNivel7(request.getParameter("nivel7"));
+			custoPorUnidadeFilter.setNivel8(request.getParameter("nivel8"));
+			consultarCustoPorUnidade();
 		}
 	}
 	
@@ -220,6 +249,60 @@ public class RelatorioExtraBean implements Serializable {
 
 	public void setNiveis8(List<ItemVO> niveis8) {
 		this.niveis8 = niveis8;
+	}
+	
+	public String getTotalMaterialCustoPorUnidade() {
+		BigDecimal custo = new BigDecimal(0);
+		for(CustoPorUnidadeVO cu : custosPorUnidades) {
+			custo = custo.add(cu.getCustoMaterial());
+		}
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(custo.toString()));
+	}
+	
+	public String getTotalMaoDeObraCustoPorUnidade() {
+		BigDecimal custo = new BigDecimal(0);
+		for(CustoPorUnidadeVO cu : custosPorUnidades) {
+			custo = custo.add(cu.getCustoMaoDeObra());
+		}
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(custo.toString()));
+	}
+	
+	public String getTotalCustoPorUnidade() {
+		BigDecimal custo = new BigDecimal(0);
+		for(CustoPorUnidadeVO cu : custosPorUnidades) {
+			custo = custo.add(cu.getCustoMaterial());
+		}
+		for(CustoPorUnidadeVO cu : custosPorUnidades) {
+			custo = custo.add(cu.getCustoMaoDeObra());
+		}
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(custo.toString()));
+	}
+	
+	public String getParametrosUrlImprimirCustoPorUnidade() {
+		StringBuffer parametros = new StringBuffer();
+		parametros.append("/extras/custoPorUnidadeRelatorioPDF.xhtml?faces-redirect=true&RenderOutputType=pdf");
+		parametros.append("&emissaoInicio="+DataUtil.converterDateParaString(custoPorUnidadeFilter.getEmissaoInicio()));
+		parametros.append("&emissaoFim="+DataUtil.converterDateParaString(custoPorUnidadeFilter.getEmissaoFim()));
+		parametros.append("&imprimirOrdemServico="+custoPorUnidadeFilter.isImprimirOrdemServico());
+		parametros.append("&demandante="+custoPorUnidadeFilter.getDemandante());
+		parametros.append("&nivel1="+custoPorUnidadeFilter.getNivel1());
+		parametros.append("&nivel2="+custoPorUnidadeFilter.getNivel2());
+		parametros.append("&nivel3="+custoPorUnidadeFilter.getNivel3());
+		parametros.append("&nivel4="+custoPorUnidadeFilter.getNivel4());
+		parametros.append("&nivel5="+custoPorUnidadeFilter.getNivel5());
+		parametros.append("&nivel6="+custoPorUnidadeFilter.getNivel6());
+		parametros.append("&nivel7="+custoPorUnidadeFilter.getNivel7());
+		parametros.append("&nivel8="+custoPorUnidadeFilter.getNivel8());
+		return parametros.toString().replace("=null", "=");
 	}
 	
 }

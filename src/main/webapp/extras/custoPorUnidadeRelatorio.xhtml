@@ -13,7 +13,8 @@
 	</f:metadata>
 	
 	<ui:define name="head">
-		<title>Relatório de Custo por Unidade</title>	
+		<title>Relatório de Custo por Unidade</title>
+		
 	</ui:define>
 	
 	<ui:define name="body">
@@ -161,6 +162,11 @@
 			<div class="row form-row">
 				<div class="col-md-12" style="text-align: center;">
 					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioExtraBean.consultarCustoPorUnidade}" update=":custoPorUnidadeForm" />
+					
+					<p:commandButton value="Imprimir" icon="ui-icon-plus"
+						onclick="openPdf(); return false"
+						style="margin-left: 3px;"
+						ajax="false" />
 				</div>
 			</div>
 			
@@ -177,13 +183,13 @@
 					<p:column headerText="Nome da Unidade">
 						<h:outputText value="#{_item.nomeUnidade}" />
 					</p:column>
-					<p:column headerText="Valor de Material">
+					<p:column headerText="Valor de Material" style="text-align: right;">
 						<h:outputText value="#{_item.custoMaterial}" converter="bigDecimalConverter" />
 					</p:column>
-					<p:column headerText="Valor de Mão de Obra">
+					<p:column headerText="Valor de Mão de Obra" style="text-align: right;">
 						<h:outputText value="#{_item.custoMaoDeObra}" converter="bigDecimalConverter" />
 					</p:column>
-					<p:column headerText="Custo Total">
+					<p:column headerText="Custo Total" style="text-align: right;">
 						<h:outputText value="#{_item.custoTotal}" converter="bigDecimalConverter" />
 					</p:column>
 					<p:column headerText="OS Principal">
@@ -193,14 +199,33 @@
 						<h:outputText value="#{_item.ordemServico}" />
 					</p:column>
 					<p:column headerText="Data">
-						<h:outputText value="#{_item.data}" />
+						<h:outputText value="#{_item.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
 					</p:column>
 					<p:column headerText="Demandante">
 						<h:outputText value="#{_item.demandante}" />
 					</p:column>
-					
+					<p:columnGroup type="footer" rendered="#{not empty relatorioExtraBean.custosPorUnidades}">
+			            <p:row>
+			                <p:column colspan="2" style="text-align: right;" footerText="Custo Total:" />
+			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaterialCustoPorUnidade}" />
+			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaoDeObraCustoPorUnidade}" />
+			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalCustoPorUnidade}" />
+			                <p:column colspan="4" footerText="" />
+			            </p:row>
+			        </p:columnGroup>
 				</p:dataTable>
 				</center>
+				
+				<script type="text/javascript">
+			
+					function openPdf() {
+						window.open("#{request.contextPath}#{relatorioExtraBean.parametrosUrlImprimirCustoPorUnidade}",'_blank');
+					}
+				
+				</script>
+				
 			</p:outputPanel>
 		
 		</h:form>
