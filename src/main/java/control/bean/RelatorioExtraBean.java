@@ -81,15 +81,15 @@ public class RelatorioExtraBean implements Serializable {
 			custoPorUnidadeFilter.setEmissaoInicio(DataUtil.converterStringParaDate(request.getParameter("emissaoInicio")));
 			custoPorUnidadeFilter.setEmissaoFim(DataUtil.converterStringParaDate(request.getParameter("emissaoFim")));
 			custoPorUnidadeFilter.setImprimirOrdemServico(new Boolean(request.getParameter("imprimirOrdemServico")));
-			custoPorUnidadeFilter.setDemandante(request.getParameter("demandante"));
-			custoPorUnidadeFilter.setNivel1(request.getParameter("nivel1"));
-			custoPorUnidadeFilter.setNivel2(request.getParameter("nivel2"));
-			custoPorUnidadeFilter.setNivel3(request.getParameter("nivel3"));
-			custoPorUnidadeFilter.setNivel4(request.getParameter("nivel4"));
-			custoPorUnidadeFilter.setNivel5(request.getParameter("nivel5"));
-			custoPorUnidadeFilter.setNivel6(request.getParameter("nivel6"));
-			custoPorUnidadeFilter.setNivel7(request.getParameter("nivel7"));
-			custoPorUnidadeFilter.setNivel8(request.getParameter("nivel8"));
+			custoPorUnidadeFilter.setDemandante(extraFacade.capturarDemandanteCustoPorUnidade(request.getParameter("demandante")));
+			custoPorUnidadeFilter.setNivel1(extraFacade.capturarNivel(1, request.getParameter("nivel1")));
+			custoPorUnidadeFilter.setNivel2(extraFacade.capturarNivel(2, request.getParameter("nivel2")));
+			custoPorUnidadeFilter.setNivel3(extraFacade.capturarNivel(3, request.getParameter("nivel3")));
+			custoPorUnidadeFilter.setNivel4(extraFacade.capturarNivel(4, request.getParameter("nivel4")));
+			custoPorUnidadeFilter.setNivel5(extraFacade.capturarNivel(5, request.getParameter("nivel5")));
+			custoPorUnidadeFilter.setNivel6(extraFacade.capturarNivel(6, request.getParameter("nivel6")));
+			custoPorUnidadeFilter.setNivel7(extraFacade.capturarNivel(7, request.getParameter("nivel7")));
+			custoPorUnidadeFilter.setNivel8(extraFacade.capturarNivel(8, request.getParameter("nivel8")));
 			consultarCustoPorUnidade();
 		}
 	}
@@ -105,25 +105,25 @@ public class RelatorioExtraBean implements Serializable {
 	public void changeNivel(Integer nivel) {
 		switch (nivel) {
 		case 1:
-			niveis2 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel1());
+			niveis2 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel1().getValor());
 			break;
 		case 2:
-			niveis3 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel2());		
+			niveis3 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel2().getValor());		
 			break;
 		case 3:
-			niveis4 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel3());
+			niveis4 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel3().getValor());
 			break;
 		case 4:
-			niveis5 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel4());
+			niveis5 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel4().getValor());
 			break;
 		case 5:
-			niveis6 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel5());
+			niveis6 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel5().getValor());
 			break;
 		case 6:
-			niveis7 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel6());
+			niveis7 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel6().getValor());
 			break;
 		case 7:
-			niveis8 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel7());
+			niveis8 = extraFacade.consultarNiveis(nivel+1, custoPorUnidadeFilter.getNivel7().getValor());
 			break;
 		default:
 			break;
@@ -293,16 +293,16 @@ public class RelatorioExtraBean implements Serializable {
 		parametros.append("&emissaoInicio="+DataUtil.converterDateParaString(custoPorUnidadeFilter.getEmissaoInicio()));
 		parametros.append("&emissaoFim="+DataUtil.converterDateParaString(custoPorUnidadeFilter.getEmissaoFim()));
 		parametros.append("&imprimirOrdemServico="+custoPorUnidadeFilter.isImprimirOrdemServico());
-		parametros.append("&demandante="+custoPorUnidadeFilter.getDemandante());
-		parametros.append("&nivel1="+custoPorUnidadeFilter.getNivel1());
-		parametros.append("&nivel2="+custoPorUnidadeFilter.getNivel2());
-		parametros.append("&nivel3="+custoPorUnidadeFilter.getNivel3());
-		parametros.append("&nivel4="+custoPorUnidadeFilter.getNivel4());
-		parametros.append("&nivel5="+custoPorUnidadeFilter.getNivel5());
-		parametros.append("&nivel6="+custoPorUnidadeFilter.getNivel6());
-		parametros.append("&nivel7="+custoPorUnidadeFilter.getNivel7());
-		parametros.append("&nivel8="+custoPorUnidadeFilter.getNivel8());
-		return parametros.toString().replace("=null", "=");
+		parametros.append("&demandante="+ItemVO.getValorItem(custoPorUnidadeFilter.getDemandante()));
+		parametros.append("&nivel1="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel1()));
+		parametros.append("&nivel2="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel2()));
+		parametros.append("&nivel3="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel3()));
+		parametros.append("&nivel4="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel4()));
+		parametros.append("&nivel5="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel5()));
+		parametros.append("&nivel6="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel6()));
+		parametros.append("&nivel7="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel7()));
+		parametros.append("&nivel8="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel8()));
+		return parametros.toString().replace("null", "");
 	}
 	
 }

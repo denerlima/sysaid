@@ -1,9 +1,12 @@
 package model.entity.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class CustoPorEnderecoVO {
+public class CustoPorEnderecoVO implements Serializable {
 
+	private static final long serialVersionUID = -1885390899275545678L;
+	
 	private String agrupador;
 	private String endereco;
 	private BigDecimal ordemServico;
