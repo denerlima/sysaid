@@ -26,4 +26,10 @@ public class ItemVO {
 		this.label = label;
 	}
 	
+	public static String getValorItem(ItemVO item) {
+		if(item == null) {
+			return null;
+		}
+		return item.getValor(); 
+	}
 }

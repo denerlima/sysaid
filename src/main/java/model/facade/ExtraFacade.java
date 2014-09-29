@@ -29,6 +29,13 @@ public class ExtraFacade implements Serializable {
 		return extraDAO.consultarDemandantesCustoPorUnidade();
 	}
 	
+	public ItemVO capturarDemandanteCustoPorUnidade(String demandanteId) {
+		if(demandanteId == null || demandanteId.isEmpty()) {
+			return null;
+		}
+		return extraDAO.capturarDemandanteCustoPorUnidade(demandanteId);
+	}
+	
 	public List<ItemVO> consultarAgrupadores() {
 		return extraDAO.consultarAgrupadores();
 	}
@@ -39,6 +46,13 @@ public class ExtraFacade implements Serializable {
 	
 	public List<ItemVO> consultarNiveis(Integer nivel, String valorNivel) {
 		return extraDAO.consultarNiveis(nivel, valorNivel);
+	}
+	
+	public ItemVO capturarNivel(Integer nivel, String valorNivel) {
+		if(valorNivel == null || valorNivel.isEmpty()) {
+			return null;
+		}
+		return extraDAO.capturarNivel(nivel, valorNivel);
 	}
 	
 	public List<CustoPorEnderecoVO> consultarCustoPorEndereco(CustoPorEnderecoFilterVO filterVO) {

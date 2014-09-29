@@ -1,10 +1,14 @@
 package model.entity.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class CustoPorUnidadeVO {
+public class CustoPorUnidadeVO implements Serializable  {
 
+	private static final long serialVersionUID = -7970789801807471057L;
+	
+	private String codEstrutural;
 	private String sigla;
 	private String nomeUnidade;
 	private BigDecimal custoMaterial;
@@ -85,6 +89,14 @@ public class CustoPorUnidadeVO {
 	
 	public void setDemandante(String demandante) {
 		this.demandante = demandante;
+	}
+
+	public String getCodEstrutural() {
+		return codEstrutural;
+	}
+
+	public void setCodEstrutural(String codEstrutural) {
+		this.codEstrutural = codEstrutural;
 	}
 	
 }

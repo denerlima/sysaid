@@ -75,7 +75,96 @@
 	
 		<h:form id="custoPorUnidadeForm">
 			
-			
+			<table>
+				<tr>
+					<td>
+						<h:outputText value="Data Emissão:" />
+					</td>
+					<td colspan="3">
+						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoInicio}" />
+						à
+						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoFim}" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<h:outputText value="Imprimir os dados das Ordens de Serviços: " />
+						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.imprimirOrdemServico ? 'Sim' : 'Não'}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Demandante:" />
+					</td>
+					<td colspan="3">
+						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.demandante.label}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Nível 1" />
+					</td>
+					<td colspan="3">
+						<h:outputText id="nivel1" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel1.label}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Nível 2" />
+					</td>
+					<td colspan="3">
+						<h:outputText id="nivel2" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel2.label}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Nível 3" />
+					</td>
+					<td colspan="3">
+						<h:outputText id="nivel3" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel3.label}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Nível 4" />
+					</td>
+					<td colspan="3">
+						<h:outputText id="nivel4" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel4.label}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Nível 5" />
+					</td>
+					<td colspan="3">
+						<h:outputText id="nivel5" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel5.label}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Nível 6" />
+					</td>
+					<td colspan="3">
+						<h:outputText id="nivel6" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel6.label}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Nível 7" />
+					</td>
+					<td colspan="3">
+						<h:outputText id="nivel7" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel7.label}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="Nível 8" />
+					</td>
+					<td colspan="3">
+						<h:outputText id="nivel8" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel8.label}" />
+					</td>
+				</tr>
+			</table>
 			
 			<p:outputPanel id="resultado" layout="block" style="text-align: center;">
 				<center>

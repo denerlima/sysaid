@@ -1,9 +1,12 @@
 package model.entity.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class CustoPorEnderecoFilterVO {
+public class CustoPorEnderecoFilterVO implements Serializable {
 
+	private static final long serialVersionUID = -4485228963879083271L;
+	
 	private String nivelDetalhe;
 	private boolean incluirSubOS;
 	private Date emissaoInicio;
