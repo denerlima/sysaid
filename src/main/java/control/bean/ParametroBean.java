@@ -21,7 +21,6 @@ public class ParametroBean extends AbstractBean implements Serializable {
 	
 	@Inject
 	private ParametroFacade parametroFacade;
-
 	
 	public ParametroFacade getParametroFacade() {
 		return parametroFacade;
@@ -76,7 +75,6 @@ public class ParametroBean extends AbstractBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
 
 	public void resetParametro() {
 		parametro = new Parametro();

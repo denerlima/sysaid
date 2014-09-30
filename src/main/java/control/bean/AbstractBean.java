@@ -6,13 +6,23 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.entity.Usuario;
+import model.facade.UsuarioFacade;
+
+import org.apache.commons.codec.binary.Base64;
 import org.primefaces.context.RequestContext;
 
 import util.JSFMessageUtil;
 
 public class AbstractBean {
+	
+	@Inject
+	private UsuarioFacade usuarioFacade;
 
 	public AbstractBean() {
 		super();
@@ -48,6 +58,61 @@ public class AbstractBean {
 			outputStream.write(buffer, 0, value);
 		}
 		FacesContext.getCurrentInstance().responseComplete();
+	}
+	
+	public void gravarCookie() {
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+			Cookie ck = new Cookie("communityUserName", "BASE64c3lzdGVt");
+			ck.setMaxAge(-1); // tempo de vida
+			((HttpServletResponse) context.getExternalContext().getResponse()).addCookie(ck);
+			System.out.println("Cookie salvo...");
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+	}
+
+	public  Usuario getUsuarioLogadoCookie() {
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();	
+
+			Cookie[] cookies = request.getCookies();
+			Usuario user = new Usuario();
+			
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().trim().equalsIgnoreCase("communityUserName")) {					
+								
+					String decoded = new String(Base64.decodeBase64(cookie.getValue().substring(6)));					
+					user = usuarioFacade.find(decoded);					
+					return user;					
+				}
+			}
+
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	public  String getDecodedUsuarioCookie() {
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+			Cookie[] cookies = request.getCookies();
+			
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().trim().equalsIgnoreCase("communityUserName")) {								
+					String decoded = new String(Base64.decodeBase64(cookie.getValue().substring(6)));					
+					return decoded;					
+				}
+			}
+
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+		return null;
 	}
 	
 }

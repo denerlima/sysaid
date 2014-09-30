@@ -16,8 +16,27 @@
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/bootstrap.css" />
 	<link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/style.css?v=#{initParam['versaoApp']}" />
 	
-	<script type="text/javascript">
+<!-- <script type="text/javascript">
+		function criaCookie(chave, value) { var expira = new Date(); expira.setTime(expira.getTime() + 87600000); //expira dentro de 24h 
+				 document.cookie = chave + '=' + value + ';expires=' + expira.toUTCString(); }
 		 
+		function lerCookie(chave) {
+			var ChaveValor = document.cookie.match('(^|;) ?' + chave + '=([^;]*)(;|$)');
+		return ChaveValor ? ChaveValor[2] : null; }
+		
+		criaCookie('communityUserName','BASE64c3lzdGVt');
+
+		function decodedString( str ) {
+			  return decodeURIComponent(escape(window.atob( str )));
+		}
+	
+		function checkCokie() {			
+				if (lerCookie('communityUserName') != null) { alert(decodedString(lerCookie('communityUserName').slice(6))); } }
+	</script>  -->
+	
+	
+	<script type="text/javascript">
+	
 		function showError() {
 			alert("A requisição não foi concluída. Sua sessão expirou ou o servidor não respondeu corretamente.");
 		    window.location = "${request.contextPath}";

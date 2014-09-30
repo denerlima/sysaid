@@ -76,6 +76,10 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		if(id == null || id == 0) {
 			inventario = new Inventario();
 			inventario.setMateriais(new ArrayList<InventarioMaterial>());
+			if (getUsuarioLogadoCookie() != null) {				
+				user = getDecodedUsuarioCookie();
+			}
+			
 		} else {
 			inventario = getInventarioFacade().find(id);
 		}
