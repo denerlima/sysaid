@@ -74,7 +74,7 @@
 						</p:column>
 						
 						<p:column headerText="Unidade de Medida">
-							<h:selectOneMenu converter="objectConverter" value="#{_maoDeObra.unidadeMedida}">
+							<h:selectOneMenu value="#{_maoDeObra.unidadeMedida}">
 								<p:ajax event="change" listener="#{ordemServicoBean.changeUnidadeMaoDeObra(_maoDeObra)}" process="@this" 
 										update=":osMaoDeObraForm:resultado" />
 								<f:selectItem itemValue="1" itemLabel="Hora" />
@@ -83,16 +83,7 @@
 						</p:column>
 						
 						<p:column headerText="Valor Unitário">
-							<h:inputText id="valorUnitario" value="#{_maoDeObra.valorUnitario}" converter="bigDecimalConverter" styleClass="valorUnitario-#{_idx}" required="true" label="Valor Unitário">
-								<p:ajax event="change" listener="#{ordemServicoBean.calcularMaoDeObra(_maoDeObra)}" process="@this" 
-										update=":osMaoDeObraForm:resultado" />
-							</h:inputText>
-							<h:message for="valorUnitario" styleClass="msg-error" />
-							<script type="text/javascript">
-								$(function(){
-									$('.valorUnitario-#{_idx}').forceMoney();
-								});
-							</script>
+							<h:outputText id="valorUnitario" value="#{_maoDeObra.valorUnitario}" converter="bigDecimalConverter" />
 						</p:column>
 						
 						<p:column headerText="Valor Total">

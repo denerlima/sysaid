@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -23,6 +24,8 @@ import model.facade.MaterialFacade;
 import model.facade.OrdemServicoFacade;
 
 import org.omnifaces.cdi.ViewScoped;
+
+import util.FaceletRenderer;
 
 @Named
 @ViewScoped
@@ -273,6 +276,12 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel baixar pendências. ERRO");
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	public String imprimirRealizado() {
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/ordemServico/osRealizadoPDF.xhtml");
 		return null;
 	}
 	

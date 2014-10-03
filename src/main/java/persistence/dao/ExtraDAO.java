@@ -97,7 +97,8 @@ public class ExtraDAO implements Serializable {
 		Query query = em.createNativeQuery(sql.toString());
 		List<Object[]> retorno = query.getResultList();
 		for(Object[] obj : retorno) {
-			lista.add(new ItemVO((String) obj[0], (String) obj[1]));
+			//lista.add(new ItemVO((String) obj[0], (String) obj[1]));
+			lista.add(new ItemVO((String) obj[0], (String) obj[0] + " - "+ (String) obj[1]));
 		}
 		return lista;
 	}

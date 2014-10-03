@@ -15,8 +15,7 @@
 	<f:metadata>
 		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
 		<f:viewParam name="tipo" value="#{_tipo}" />
-		<f:viewParam name="user" value="#{_usuario}" />
-		<f:event type="preRenderView" listener="#{inventarioBean.initLoad(_id, _tipo, _usuario)}"/>
+		<f:event type="preRenderView" listener="#{inventarioBean.initLoad(_id, _tipo)}"/>
 	</f:metadata>
 	
 	<ui:define name="body">
@@ -41,7 +40,7 @@
 						Data de Inventário: <span class="required">*</span>
 					</div>
 					<div class="col-md-10">
-						<p:calendar id="dataInventario" pattern="dd/MM/yy" locale="pt_BR" showButtonPanel="true" value="#{inventarioBean.inventario.dataInventario}" size="10" navigator="true"
+						<p:calendar id="dataInventario" pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true" value="#{inventarioBean.inventario.dataInventario}" size="10" navigator="true"
 							required="true" label="Data de Inventário"  />
 						<h:message for="dataInventario" styleClass="msg-error" />		
 					</div>

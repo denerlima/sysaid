@@ -16,18 +16,7 @@
 		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
 	</f:metadata>
 	
-	<ui:define name="head">
-	
-		<script type="text/javascript">
-			
-			function openPdf() {
-				window.open("#{request.contextPath}/ordemServico/osRealizadoPDF.xhtml?faces-redirect=true&amp;os=#{ordemServicoBean.ordemServico.id}&amp;RenderOutputType=pdf",'_blank');
-			}
-		
-		</script>
-		
-	</ui:define>
-	
+
 	<ui:define name="body">
 
 		<center><h2>Lista de Realizados da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
@@ -39,10 +28,9 @@
 				action="#{ordemServicoBean.redirectRealizado}" 
 				process="@this" />
 			
-			<p:commandButton value="Imprimir" icon="ui-icon-plus"
-				onclick="openPdf(); return false"
-				style="margin-left: 3px;"
-				ajax="false" />
+			<p:commandLink action="#{ordemServicoBean.imprimirRealizado}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank">
+						<h:graphicImage value="/resources/img/btn-print.png" />
+					</p:commandLink>
 			
 			<center>
 				<br />

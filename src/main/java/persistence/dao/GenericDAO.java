@@ -72,7 +72,7 @@ public abstract class GenericDAO<T> implements Serializable {
 	}
 	
 	public T find(Integer entityID) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> c = cb.createQuery(entityClass);
         Root<T> rootCriteria = c.from(entityClass);
         Predicate clauseId = cb.equal(rootCriteria.get("id"), cb.parameter(Integer.class, "id"));
@@ -82,7 +82,7 @@ public abstract class GenericDAO<T> implements Serializable {
         } else {
         	c.where(clauseId);
         }
-        TypedQuery<T> q = em.createQuery(c);
+        TypedQuery<T> q = getEntityManager().createQuery(c);
         q.setParameter("id", entityID);
         return (T) q.getSingleResult();
 	}
@@ -92,14 +92,14 @@ public abstract class GenericDAO<T> implements Serializable {
 	}
 
 	public List<T> findAll() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> c = cb.createQuery(entityClass);
         Root<T> rootCriteria = c.from(entityClass);
         Predicate clause = clausulaWhere(cb, rootCriteria);
         if(clause != null) {
         	c.where(clause);
         }
-        TypedQuery<T> q = em.createQuery(c);
+        TypedQuery<T> q = getEntityManager().createQuery(c);
         return q.getResultList();
 	}
 
@@ -167,7 +167,7 @@ public abstract class GenericDAO<T> implements Serializable {
 			}
 		}
 		*/
-		System.out.println(em.toString());
+		//System.out.println(em.toString());
 		return em;
 	}
 	

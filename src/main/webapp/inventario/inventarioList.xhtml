@@ -11,8 +11,7 @@
 	
 	<f:metadata>
 		<f:viewParam name="tipo" value="#{_tipo}" />
-		<f:viewParam name="user" value="#{_usuario}" />
-		<f:event type="preRenderView" listener="#{inventarioBean.initList(_tipo, _usuario)}"/>
+		<f:event type="preRenderView" listener="#{inventarioBean.initList(_tipo)}"/>
 	</f:metadata>
 	
 	<ui:define name="body">

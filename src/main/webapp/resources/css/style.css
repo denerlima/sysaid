@@ -47,3 +47,7 @@
 .ui-dialog-top {
 	top: 30px !important;
 }
+
+.ui-datatable tbody td.coluna-direita {
+	text-align: right;
+}

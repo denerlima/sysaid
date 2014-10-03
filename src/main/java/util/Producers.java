@@ -10,9 +10,6 @@ import org.omnifaces.cdi.ViewScoped;
 
 public class Producers {
 	
-	//@PersistenceUnit(unitName="sysaid")
-    //private EntityManagerFactory entityManagerFactory;
-	
 	private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("sysaid");
 	
 	@Produces
@@ -26,5 +23,5 @@ public class Producers {
             entityManager.close();
         }
 	}
-
+	
 }

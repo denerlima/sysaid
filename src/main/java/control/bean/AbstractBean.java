@@ -60,13 +60,32 @@ public class AbstractBean {
 		FacesContext.getCurrentInstance().responseComplete();
 	}
 	
-	public void gravarCookie() {
+	public void gravarCookie(String username) {
 		try {
+			username = Base64.encodeBase64String(username.getBytes());
 			FacesContext context = FacesContext.getCurrentInstance();
-			Cookie ck = new Cookie("communityUserName", "BASE64c3lzdGVt");
+			//Cookie ck = new Cookie("communityUserName", "BASE64c3lzdGVt");
+			Cookie ck = new Cookie("communityUserName", "BASE64"+username);
 			ck.setMaxAge(-1); // tempo de vida
 			((HttpServletResponse) context.getExternalContext().getResponse()).addCookie(ck);
 			System.out.println("Cookie salvo...");
+		} catch (Exception x) {
+			x.printStackTrace();
+		}
+	}
+	
+	public void removerCookie() {
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().trim().equalsIgnoreCase("communityUserName")) {
+					Cookie ck = new Cookie("communityUserName", "xx");
+					ck.setMaxAge(0); // tempo de vida
+					((HttpServletResponse) context.getExternalContext().getResponse()).addCookie(ck);
+				}
+			}
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
@@ -82,10 +101,11 @@ public class AbstractBean {
 			
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().trim().equalsIgnoreCase("communityUserName")) {					
-								
-					String decoded = new String(Base64.decodeBase64(cookie.getValue().substring(6)));					
-					user = usuarioFacade.find(decoded);					
-					return user;					
+					if(cookie.getValue().length() > 6) {
+						String decoded = new String(Base64.decodeBase64(cookie.getValue().substring(6)));					
+						user = usuarioFacade.find(decoded);					
+						return user;
+					}
 				}
 			}
 

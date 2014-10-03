@@ -10,7 +10,6 @@ import java.util.Locale;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import model.entity.vo.CustoPorEnderecoFilterVO;
 import model.entity.vo.CustoPorEnderecoVO;
@@ -21,11 +20,11 @@ import model.facade.ExtraFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 
-import util.DataUtil;
+import util.FaceletRenderer;
 
 @Named
 @ViewScoped
-public class RelatorioExtraBean implements Serializable {
+public class RelatorioExtraBean extends AbstractBean implements Serializable {
 
 	private static final long serialVersionUID = 5450418928675700315L;
 
@@ -73,33 +72,24 @@ public class RelatorioExtraBean implements Serializable {
 		}
 	}
 	
-	public void initCustoPorUnidadePDF() throws Exception {
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		request.getParameter("RenderOutputType");
-		if(custoPorUnidadeFilter == null) {
-			custoPorUnidadeFilter = new CustoPorUnidadeFilterVO();
-			custoPorUnidadeFilter.setEmissaoInicio(DataUtil.converterStringParaDate(request.getParameter("emissaoInicio")));
-			custoPorUnidadeFilter.setEmissaoFim(DataUtil.converterStringParaDate(request.getParameter("emissaoFim")));
-			custoPorUnidadeFilter.setImprimirOrdemServico(new Boolean(request.getParameter("imprimirOrdemServico")));
-			custoPorUnidadeFilter.setDemandante(extraFacade.capturarDemandanteCustoPorUnidade(request.getParameter("demandante")));
-			custoPorUnidadeFilter.setNivel1(extraFacade.capturarNivel(1, request.getParameter("nivel1")));
-			custoPorUnidadeFilter.setNivel2(extraFacade.capturarNivel(2, request.getParameter("nivel2")));
-			custoPorUnidadeFilter.setNivel3(extraFacade.capturarNivel(3, request.getParameter("nivel3")));
-			custoPorUnidadeFilter.setNivel4(extraFacade.capturarNivel(4, request.getParameter("nivel4")));
-			custoPorUnidadeFilter.setNivel5(extraFacade.capturarNivel(5, request.getParameter("nivel5")));
-			custoPorUnidadeFilter.setNivel6(extraFacade.capturarNivel(6, request.getParameter("nivel6")));
-			custoPorUnidadeFilter.setNivel7(extraFacade.capturarNivel(7, request.getParameter("nivel7")));
-			custoPorUnidadeFilter.setNivel8(extraFacade.capturarNivel(8, request.getParameter("nivel8")));
-			consultarCustoPorUnidade();
+	public void consultarCustoPorEndereco() {
+		try {
+			custosPorEnderecos = extraFacade.consultarCustoPorEndereco(custoPorEnderecoFilter);
+		} catch (Exception e) {
+			e.printStackTrace();
+			displayErrorMessageToUser("Erro: " + e.getMessage());
+			custosPorEnderecos = new ArrayList<CustoPorEnderecoVO>();
 		}
 	}
 	
-	public void consultarCustoPorEndereco() {
-		custosPorEnderecos = extraFacade.consultarCustoPorEndereco(custoPorEnderecoFilter);
-	}
-	
 	public void consultarCustoPorUnidade() {
-		custosPorUnidades = extraFacade.consultarCustoPorUnidade(custoPorUnidadeFilter);
+		try {
+			custosPorUnidades = extraFacade.consultarCustoPorUnidade(custoPorUnidadeFilter);
+		} catch (Exception e) {
+			e.printStackTrace();
+			displayErrorMessageToUser("Erro: " + e.getMessage());
+			custosPorUnidades = new ArrayList<CustoPorUnidadeVO>();
+		}
 	}
 	
 	public void changeNivel(Integer nivel) {
@@ -287,22 +277,12 @@ public class RelatorioExtraBean implements Serializable {
 		return nf.format(Double.valueOf(custo.toString()));
 	}
 	
-	public String getParametrosUrlImprimirCustoPorUnidade() {
-		StringBuffer parametros = new StringBuffer();
-		parametros.append("/extras/custoPorUnidadeRelatorioPDF.xhtml?faces-redirect=true&RenderOutputType=pdf");
-		parametros.append("&emissaoInicio="+DataUtil.converterDateParaString(custoPorUnidadeFilter.getEmissaoInicio()));
-		parametros.append("&emissaoFim="+DataUtil.converterDateParaString(custoPorUnidadeFilter.getEmissaoFim()));
-		parametros.append("&imprimirOrdemServico="+custoPorUnidadeFilter.isImprimirOrdemServico());
-		parametros.append("&demandante="+ItemVO.getValorItem(custoPorUnidadeFilter.getDemandante()));
-		parametros.append("&nivel1="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel1()));
-		parametros.append("&nivel2="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel2()));
-		parametros.append("&nivel3="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel3()));
-		parametros.append("&nivel4="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel4()));
-		parametros.append("&nivel5="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel5()));
-		parametros.append("&nivel6="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel6()));
-		parametros.append("&nivel7="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel7()));
-		parametros.append("&nivel8="+ItemVO.getValorItem(custoPorUnidadeFilter.getNivel8()));
-		return parametros.toString().replace("null", "");
+	public String imprimir() {
+		
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/extras/custoPorUnidadeRelatorioPDF.xhtml");
+				
+		return null;
 	}
 	
 }

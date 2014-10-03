@@ -8,11 +8,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
 	
-	<f:metadata>
-		<f:viewParam name="os" value="#{_os}" converter="javax.faces.Integer" />
-		<f:event type="preRenderView" listener="#{ordemServicoBean.initLoad(_os)}"/>
-	</f:metadata>
-	
 	<html>
 	<h:head>
 		<title>SysAid</title>
@@ -72,7 +67,7 @@
 
 		<center><h2>Lista de Realizados da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
 		
-		<h:form id="osMaterialForm">		
+			
 			<p:spacer height="10" />
 			
 			<center>
@@ -160,7 +155,7 @@
 				
 			</center>
 						
-		</h:form>
+		
 		
 	</body>
 	</html>

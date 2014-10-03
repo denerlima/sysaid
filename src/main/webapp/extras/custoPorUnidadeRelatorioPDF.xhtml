@@ -8,9 +8,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
 	
-	<f:metadata>
-		<f:event type="preRenderView" listener="#{relatorioExtraBean.initCustoPorUnidadePDF}"/>
-	</f:metadata>
+	
 	
 	<html>
 	<h:head>
@@ -73,7 +71,7 @@
 			<h2>Relatório de Custo por Unidade</h2>
 		</center>
 	
-		<h:form id="custoPorUnidadeForm">
+		
 			
 			<table>
 				<tr>
@@ -81,9 +79,13 @@
 						<h:outputText value="Data Emissão:" />
 					</td>
 					<td colspan="3">
-						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoInicio}" />
+						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoInicio}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
 						à
-						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoFim}" />
+						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoFim}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
 					</td>
 				</tr>
 				<tr>
@@ -215,7 +217,7 @@
 				</center>
 			</p:outputPanel>
 		
-		</h:form>
+		
 	
 	</body>
 	</html>

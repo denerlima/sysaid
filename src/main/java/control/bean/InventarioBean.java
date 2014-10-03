@@ -54,56 +54,51 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	}
 	
 	public String novo() {
-		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&tipo=i&user="+usuario;
+		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&tipo=i";
 	}
 	
 	public String edit(Integer id) {
-		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&id="+id+"&tipo="+tipoUsuario+"&user="+usuario;
+		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&id="+id+"&tipo="+tipoUsuario;
 	}
 	
 	public String view(Integer id) {
-		return "/inventario/inventarioView.xhtml?faces-redirect=true&id="+id+"&tipo="+tipoUsuario+"&user="+usuario;
+		return "/inventario/inventarioView.xhtml?faces-redirect=true&id="+id+"&tipo="+tipoUsuario;
 	}
 	
 	public String redirectList() {
-		return "/inventario/inventarioList.xhtml?faces-redirect=true&tipo="+tipoUsuario+"&user="+usuario;
+		return "/inventario/inventarioList.xhtml?faces-redirect=true&tipo="+tipoUsuario;
 	}
 	
-	public void initLoad(Integer id, String tipo, String user) {
+	public void initLoad(Integer id, String tipo) {
 		if(inventario != null) {
 			return;
 		}
+		tipoUsuario = tipo;
 		if(id == null || id == 0) {
 			inventario = new Inventario();
 			inventario.setMateriais(new ArrayList<InventarioMaterial>());
-			if (getUsuarioLogadoCookie() != null) {				
-				user = getDecodedUsuarioCookie();
+			usuario = getDecodedUsuarioCookie();
+			if (usuario != null) {				
+				if(isInventariante()) {
+					getInventario().setAtendente(usuarioFacade.find(usuario));
+				}
 			}
-			
 		} else {
 			inventario = getInventarioFacade().find(id);
+			usuario = getDecodedUsuarioCookie();
 		}
-		tipoUsuario = tipo;
-		usuario = user;
-		if(user != null && user.trim().length() > 0) {
-			if(isInventariante()) {
-				getInventario().setAtendente(usuarioFacade.find(user));
-			}
-		} 
 	}
 	
-	public void initView(Integer id, String tipo, String user) {
+	public void initView(Integer id, String tipo) {
 		if(inventario != null) {
 			return;
 		}
 		inventario = getInventarioFacade().find(id);
 		tipoUsuario = tipo;
-		usuario = user;
 	}
 	
-	public void initList(String tipo, String user) {
+	public void initList(String tipo) {
 		tipoUsuario = tipo;
-		usuario = user;
 	}
 	
 	public String createInventario() {
@@ -396,14 +391,6 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public boolean isInventariante() {
 		return this.tipoUsuario.equals("i");
-	}
-
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
 	}
 
 	public boolean isInventarianteDisabled() {

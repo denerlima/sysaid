@@ -41,6 +41,7 @@
 	</context-param>
 	-->
 	
+	<!--  
 	<filter>
 		<filter-name>RendererFilter</filter-name>
 		<filter-class>util.RendererFilter</filter-class>
@@ -50,6 +51,7 @@
 		<filter-name>RendererFilter</filter-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</filter-mapping>
+	-->
 	
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
