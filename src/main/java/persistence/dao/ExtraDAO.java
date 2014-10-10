@@ -66,11 +66,12 @@ public class ExtraDAO implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<ItemVO> consultarAgrupadores() {
 		ArrayList<ItemVO> lista = new ArrayList<ItemVO>();
- 		String sql = "Select eh.VALUE_KEY, eh.AGRUPADOR FROM MF_ENDERECO_HIERARQUIA eh";
+ 		//String sql = "Select distinct eh.VALUE_KEY, eh.AGRUPADOR FROM MF_ENDERECO_HIERARQUIA eh ORDER BY eh.AGRUPADOR";
+		String sql = "Select distinct eh.AGRUPADOR FROM MF_ENDERECO_HIERARQUIA eh ORDER BY eh.AGRUPADOR";
 		Query query = em.createNativeQuery(sql);
-		List<Object[]> retorno = query.getResultList();
-		for(Object[] obj : retorno) {
-			lista.add(new ItemVO((String) obj[1], (String) obj[1]));
+		List<String> retorno = query.getResultList();
+		for(String obj : retorno) {
+			lista.add(new ItemVO(obj, obj));
 		}
 		return lista;
 	}
@@ -181,9 +182,9 @@ public class ExtraDAO implements Serializable {
  		} else {
  			sql.append(" AND SR.SR_CUST_NUMBERMAINOSI = 0 ");
  		}
-		sql.append(
-	 		"GROUP BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO , SR.SR_CUST_NUMBERMAINOSI, SR.insert_time "+
-	 		"ORDER BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO ");
+		//sql.append("GROUP BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO , SR.SR_CUST_NUMBERMAINOSI, SR.insert_time ");
+		sql.append(" GROUP BY EH.AGRUPADOR, CV.VALUE_CAPTION, OM.ID_ORDEM_SERVICO, SR.SR_CUST_NUMBERMAINOSI, SR.INSERT_TIME, SU.CALCULATED_USER_NAME, SR.SR_CUST_TXTCOMPLEMENTO ");
+		sql.append(" ORDER BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO ");
  		
  		Query query = em.createNativeQuery(sql.toString());
 		List<Object[]> retorno = query.getResultList();
