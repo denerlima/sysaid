@@ -277,11 +277,52 @@ public class RelatorioExtraBean extends AbstractBean implements Serializable {
 		return nf.format(Double.valueOf(custo.toString()));
 	}
 	
+	
+	public String getTotalMaterialCustoPorEndereco() {
+		BigDecimal custo = new BigDecimal(0);
+		for(CustoPorEnderecoVO cu : custosPorEnderecos) {
+			custo = custo.add(cu.getCustoMaterial());
+		}
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(custo.toString()));
+	}
+	
+	public String getTotalMaoDeObraCustoPorEndereco() {
+		BigDecimal custo = new BigDecimal(0);
+		for(CustoPorEnderecoVO cu : custosPorEnderecos) {
+			custo = custo.add(cu.getCustoMaoDeObra());
+		}
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(custo.toString()));
+	}
+	
+	public String getTotalCustoPorEndereco() {
+		BigDecimal custo = new BigDecimal(0);
+		for(CustoPorEnderecoVO cu : custosPorEnderecos) {
+			custo = custo.add(cu.getCustoMaterial());
+		}
+		for(CustoPorEnderecoVO cu : custosPorEnderecos) {
+			custo = custo.add(cu.getCustoMaoDeObra());
+		}
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(2);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(custo.toString()));
+	}
+	
 	public String imprimir() {
-		
 		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
 		renderer.renderViewPDF("/extras/custoPorUnidadeRelatorioPDF.xhtml");
-				
+		return null;
+	}
+	
+	public String imprimirCustoPorEndereco() {
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/extras/custoPorEnderecoRelatorioPDF.xhtml");
 		return null;
 	}
 	

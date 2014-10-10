@@ -56,31 +56,31 @@
 						<p:column>
 							<h:outputText value="#{_mat.unidadeMedidaSaida.unidade.descricao}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="coluna-direita">
 							<h:outputText value="#{_mat.quantidadeRetirada}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="coluna-direita">
 							<h:outputText value="#{_mat.quantidadeUtilizada}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="coluna-direita">
 							<h:outputText value="#{_mat.precoUnitario}" converter="bigDecimalConverter" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="coluna-direita">
 							<h:outputText value="#{_mat.precoTotal}" converter="bigDecimalConverter" />
 						</p:column>
 						
 						<p:columnGroup type="footer">
 				            <p:row>
 				                <p:column colspan="5" style="text-align: right;" footerText="Custo Total:" />
-				                <p:column style="text-align: left;" footerText="#{ordemServicoBean.custoTotalRealizado}" />
+				                <p:column style="text-align: right;" footerText="#{ordemServicoBean.custoTotalRealizado}" />
 				            </p:row>
 				            <p:row>
 				                <p:column colspan="5" style="text-align: right;" footerText="Custo total de Mão de Obra:" />
-				                <p:column style="text-align: left;" footerText="#{ordemServicoBean.custoTotalMaoDeObra}" />
+				                <p:column style="text-align: right;" footerText="#{ordemServicoBean.custoTotalMaoDeObra}" />
 				            </p:row>
 				            <p:row>
 				                <p:column colspan="5" style="text-align: right;" footerText="Custo total da Ordem de Serviço:" />
-				                <p:column style="text-align: left;" footerText="#{ordemServicoBean.custoTotalOrdemDeServico}" />
+				                <p:column style="text-align: right;" footerText="#{ordemServicoBean.custoTotalOrdemDeServico}" />
 				            </p:row>
 				        </p:columnGroup>
 						

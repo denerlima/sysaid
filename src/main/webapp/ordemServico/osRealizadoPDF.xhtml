@@ -60,6 +60,10 @@
 				text-align: left;
 			}
 
+			.ui-datatable tbody td.coluna-direita {
+				text-align: right;
+			}
+
 		</style>
 		
 	</h:head>
@@ -95,23 +99,23 @@
 						<p:column>
 							<h:outputText value="#{_mat.unidadeMedidaSaida.unidade.descricao}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="coluna-direita">
 							<h:outputText value="#{_mat.quantidadeRetirada}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="coluna-direita">
 							<h:outputText value="#{_mat.quantidadeUtilizada}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="coluna-direita">
 							<h:outputText value="#{_mat.precoUnitario}" converter="bigDecimalConverter" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="coluna-direita">
 							<h:outputText value="#{_mat.precoTotal}" converter="bigDecimalConverter" />
 						</p:column>
 						
 						<p:columnGroup type="footer">
 				            <p:row>
 				                <p:column colspan="5" style="text-align: right;" footerText="Custo Total:" />
-				                <p:column style="text-align: left;" footerText="#{ordemServicoBean.custoTotalRealizado}" />
+				                <p:column style="text-align: right;" footerText="#{ordemServicoBean.custoTotalRealizado}" />
 				            </p:row>
 				        </p:columnGroup>
 						
@@ -125,25 +129,25 @@
 						<p:column headerText="Mão de Obra">
 							<h:outputText value="#{_mao.maoDeObra.descricao}" />
 						</p:column>
-						<p:column headerText="Quantidade">
+						<p:column headerText="Quantidade" styleClass="coluna-direita">
 							<h:outputText value="#{_mao.quantidade}" />
 						</p:column>
-						<p:column headerText="Período">
+						<p:column headerText="Período" styleClass="coluna-direita">
 							<h:outputText value="#{_mao.periodo}" />
 						</p:column>
 						<p:column headerText="Unidade de Medida">
 							<h:outputText value="#{_mao.unidadeMedidaLabel}" />
 						</p:column>
-						<p:column headerText="Valor Unitário">
+						<p:column headerText="Valor Unitário" styleClass="coluna-direita">
 							<h:outputText value="#{_mao.valorUnitario}" converter="bigDecimalConverter" />
 						</p:column>
-						<p:column headerText="Valor Total">
+						<p:column headerText="Valor Total" styleClass="coluna-direita">
 							<h:outputText value="#{_mao.total}" converter="bigDecimalConverter" />
 						</p:column>
 						<p:columnGroup type="footer" rendered="#{not empty ordemServicoBean.ordemServico.maosDeObras}">
 				            <p:row>
 				                <p:column colspan="5" style="text-align: right;" footerText="Total de Mão de Obra:" />
-				                <p:column style="text-align: left;" footerText="#{ordemServicoBean.custoTotalMaoDeObra}" />
+				                <p:column style="text-align: right;" footerText="#{ordemServicoBean.custoTotalMaoDeObra}" />
 				            </p:row>
 				        </p:columnGroup>
 					</p:dataTable>

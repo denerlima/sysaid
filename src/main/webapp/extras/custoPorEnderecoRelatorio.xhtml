@@ -64,9 +64,9 @@
 					<h:outputText value="Demandante" />
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="demandante" value="#{relatorioExtraBean.custoPorEnderecoFilter.demandante}" styleClass="input-sm" style="max-width: 90%;">
+					<h:selectOneMenu id="demandante" value="#{relatorioExtraBean.custoPorEnderecoFilter.demandante}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItems value="#{relatorioExtraBean.demandantes}" var="_demandante" itemLabel="#{_demandante.label}" itemValue="#{_demandante.valor}" />
+						<f:selectItems value="#{relatorioExtraBean.demandantes}" var="_demandante" itemLabel="#{_demandante.label}" itemValue="#{_demandante}" />
 					</h:selectOneMenu>
 				</div>
 			</div>
@@ -76,9 +76,9 @@
 					<h:outputText value="Agrupador:" />
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="agrupador" value="#{relatorioExtraBean.custoPorEnderecoFilter.agrupador}" styleClass="input-sm" style="max-width: 90%;">
+					<h:selectOneMenu id="agrupador" value="#{relatorioExtraBean.custoPorEnderecoFilter.agrupador}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItems value="#{relatorioExtraBean.agrupadores}" var="_agrupador" itemLabel="#{_agrupador.label}" itemValue="#{_agrupador.valor}" />
+						<f:selectItems value="#{relatorioExtraBean.agrupadores}" var="_agrupador" itemLabel="#{_agrupador.label}" itemValue="#{_agrupador}" />
 					</h:selectOneMenu>
 				</div>
 			</div>
@@ -88,9 +88,9 @@
 					<h:outputText value="Endereço:" />
 				</div>
 				<div class="col-md-10">
-					<h:selectOneMenu id="endereco" value="#{relatorioExtraBean.custoPorEnderecoFilter.endereco}" styleClass="input-sm" style="max-width: 90%;">
+					<h:selectOneMenu id="endereco" value="#{relatorioExtraBean.custoPorEnderecoFilter.endereco}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItems value="#{relatorioExtraBean.enderecos}" var="_end" itemLabel="#{_end.label}" itemValue="#{_end.valor}" />
+						<f:selectItems value="#{relatorioExtraBean.enderecos}" var="_end" itemLabel="#{_end.label}" itemValue="#{_end}" />
 					</h:selectOneMenu>
 				</div>
 			</div>
@@ -107,16 +107,19 @@
 			<div class="row form-row">
 				<div class="col-md-12" style="text-align: center;">
 					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioExtraBean.consultarCustoPorEndereco}" update=":custoPorEnderecoForm" />
+					
+					<p:commandLink action="#{relatorioExtraBean.imprimirCustoPorEndereco}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank">
+						<h:graphicImage value="/resources/img/btn-print.png" />
+					</p:commandLink>
+					
 				</div>
 			</div>
 			
 			<p:outputPanel id="resultado" layout="block" style="text-align: center;">
 				<center>
 				<p:dataTable id="dtResultado" var="_item"
-						value="#{relatorioExtraBean.custosPorEnderecos}" rows="10" paginator="true"
-						paginatorAlwaysVisible="false" paginatorPosition="bottom"
-						currentPageReportTemplate="[Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista."
+						value="#{relatorioExtraBean.custosPorEnderecos}" 
+						emptyMessage="Não existem itens nesta lista."
 						style="width: 99%;">
 					
 					<p:column headerText="Agrupador">
@@ -142,15 +145,23 @@
 					<p:column headerText="Complemento do Endereço">
 						<h:outputText value="#{_item.complementoEndereco}" />
 					</p:column>
-					<p:column headerText="Custo de Material">
+					<p:column headerText="Custo de Material" styleClass="coluna-direita">
 						<h:outputText value="#{_item.custoMaterial}" converter="bigDecimalConverter" />
 					</p:column>
-					<p:column headerText="Custo de Mão de Obra">
+					<p:column headerText="Custo de Mão de Obra" styleClass="coluna-direita">
 						<h:outputText value="#{_item.custoMaoDeObra}" converter="bigDecimalConverter" />
 					</p:column>
-					<p:column headerText="Custo Total">
+					<p:column headerText="Custo Total" styleClass="coluna-direita">
 						<h:outputText value="#{_item.custoTotal}" converter="bigDecimalConverter" />
 					</p:column>
+					<p:columnGroup type="footer" rendered="#{not empty relatorioExtraBean.custosPorEnderecos}">
+			            <p:row>
+			                <p:column colspan="7" style="text-align: right;" footerText="Custo Total:" />
+			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaterialCustoPorEndereco}" />
+			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaoDeObraCustoPorEndereco}" />
+			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalCustoPorEndereco}" />
+			            </p:row>
+			        </p:columnGroup>
 				</p:dataTable>
 				</center>
 			</p:outputPanel>

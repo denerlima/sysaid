@@ -65,19 +65,19 @@
 					<p:column headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}">
 						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column headerText="Estoque" sortBy="#{mat.estoque}">
+					<p:column headerText="Estoque" sortBy="#{mat.estoque}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
-					<p:column headerText="Estoque Minimo Calculado" sortBy="#{mat.estoqueCalculado}">
+					<p:column headerText="Estoque Minimo Calculado" sortBy="#{mat.estoqueCalculado}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Estoque Minimo Informado" sortBy="#{mat.estoqueInformado}">
+					<p:column headerText="Estoque Minimo Informado" sortBy="#{mat.estoqueInformado}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Quantidade Solicitada" sortBy="#{mat.qtdSolicitada}">
+					<p:column headerText="Quantidade Solicitada" sortBy="#{mat.qtdSolicitada}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.qtdSolicitada}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Sugestão de Compra" sortBy="#{mat.sugestaoCompra}">
+					<p:column headerText="Sugestão de Compra" sortBy="#{mat.sugestaoCompra}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.sugestaoCompra}" converter="bigDecimalSimplesConverter" />						
 					</p:column>
 					

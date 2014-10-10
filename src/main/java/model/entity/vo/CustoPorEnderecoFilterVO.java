@@ -7,20 +7,20 @@ public class CustoPorEnderecoFilterVO implements Serializable {
 
 	private static final long serialVersionUID = -4485228963879083271L;
 	
-	private String nivelDetalhe;
+	private Integer nivelDetalhe;
 	private boolean incluirSubOS;
 	private Date emissaoInicio;
 	private Date emissaoFim;
-	private String demandante;
-	private String agrupador;
-	private String endereco;
+	private ItemVO demandante;
+	private ItemVO agrupador;
+	private ItemVO endereco;
 	private String complementoEndereco;
 	
-	public String getNivelDetalhe() {
+	public Integer getNivelDetalhe() {
 		return nivelDetalhe;
 	}
 	
-	public void setNivelDetalhe(String nivelDetalhe) {
+	public void setNivelDetalhe(Integer nivelDetalhe) {
 		this.nivelDetalhe = nivelDetalhe;
 	}
 	
@@ -48,27 +48,27 @@ public class CustoPorEnderecoFilterVO implements Serializable {
 		this.emissaoFim = emissaoFim;
 	}
 	
-	public String getDemandante() {
+	public ItemVO getDemandante() {
 		return demandante;
 	}
 	
-	public void setDemandante(String demandante) {
+	public void setDemandante(ItemVO demandante) {
 		this.demandante = demandante;
 	}
 	
-	public String getAgrupador() {
+	public ItemVO getAgrupador() {
 		return agrupador;
 	}
 	
-	public void setAgrupador(String agrupador) {
+	public void setAgrupador(ItemVO agrupador) {
 		this.agrupador = agrupador;
 	}
 	
-	public String getEndereco() {
+	public ItemVO getEndereco() {
 		return endereco;
 	}
 	
-	public void setEndereco(String endereco) {
+	public void setEndereco(ItemVO endereco) {
 		this.endereco = endereco;
 	}
 	
@@ -78,6 +78,28 @@ public class CustoPorEnderecoFilterVO implements Serializable {
 	
 	public void setComplementoEndereco(String complementoEndereco) {
 		this.complementoEndereco = complementoEndereco;
+	}
+	
+	public String getNivelDetalheLabel() {
+		if(nivelDetalhe == null) {
+			return "";
+		}
+		else if(nivelDetalhe.intValue() == 1) { 
+			return "Consolidado por Agrupador";
+		}
+		else if(nivelDetalhe.intValue() == 2) { 
+			return "Consolidado por Endereço";
+		}
+		else if(nivelDetalhe.intValue() == 3) {
+			return "Consolidado por Complemento de endereço";
+		}
+		else if(nivelDetalhe.intValue() == 4) {
+			return "Consolidado por Demandante";
+		}
+		else if(nivelDetalhe.intValue() == 5) {
+			return "Consolidado por Ordem de Serviço";
+		}
+		return "";
 	}
 	
 }

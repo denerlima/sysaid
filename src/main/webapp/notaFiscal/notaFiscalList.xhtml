@@ -42,13 +42,13 @@
 					<p:column headerText="Fornecedor" sortBy="#{nf.fornecedor.nome}" filterBy="#{nf.fornecedor.nome}" filterMatchMode="contains">
 						<h:outputText value="#{nf.fornecedor.nome}" />	
 					</p:column>
-					<p:column headerText="Acréscimos" sortBy="#{nf.acrescimos}">
+					<p:column headerText="Acréscimos" sortBy="#{nf.acrescimos}" styleClass="coluna-direita">
 						<h:outputText value="#{nf.acrescimos}" converter="bigDecimalConverter" />							
 					</p:column>
-					<p:column headerText="Total dos Produtos" sortBy="#{nf.totalProdutos}">
+					<p:column headerText="Total dos Produtos" sortBy="#{nf.totalProdutos}" styleClass="coluna-direita">
 						<h:outputText value="#{nf.totalProdutos}" converter="bigDecimalConverter" />							
 					</p:column>	
-					<p:column headerText="Total Geral da Nota" sortBy="#{nf.totalGeralNota}">
+					<p:column headerText="Total Geral da Nota" sortBy="#{nf.totalGeralNota}" styleClass="coluna-direita">
 						<h:outputText value="#{nf.totalGeralNota}" converter="bigDecimalConverter" />							
 					</p:column>			
 								

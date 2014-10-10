@@ -75,13 +75,13 @@
 					<p:column headerText="Unidade de Medida Entrada">
 						<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column headerText="Estoque Atual">
+					<p:column headerText="Estoque Atual" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
-					<p:column headerText="Estoque Inventariado">
+					<p:column headerText="Estoque Inventariado" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
-					<p:column headerText="Diferença">
+					<p:column headerText="Diferença" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.diferenca}" converter="bigDecimalSimplesConverter" />
 					</p:column>
 					<p:column headerText="Status">

@@ -56,7 +56,45 @@ public class ExtraFacade implements Serializable {
 	}
 	
 	public List<CustoPorEnderecoVO> consultarCustoPorEndereco(CustoPorEnderecoFilterVO filterVO) {
-		return getExtraDAO().consultarCustoPorEndereco(filterVO);
+		List<CustoPorEnderecoVO> lista = getExtraDAO().consultarCustoPorEndereco(filterVO);
+		if(filterVO.getNivelDetalhe() == null) {
+			return lista;
+		}
+		else if(filterVO.getNivelDetalhe().intValue() == 1) {
+			for(CustoPorEnderecoVO ce : lista) {
+				ce.setEndereco(null);
+				ce.setOrdemServico(null);
+				ce.setSubOs(null);
+				ce.setData(null);
+				ce.setDemandante(null);
+				ce.setComplementoEndereco(null);
+			}
+		}
+		else if(filterVO.getNivelDetalhe().intValue() == 2) {
+			for(CustoPorEnderecoVO ce : lista) {
+				ce.setOrdemServico(null);
+				ce.setSubOs(null);
+				ce.setData(null);
+				ce.setDemandante(null);
+				ce.setComplementoEndereco(null);
+			}
+		}
+		else if(filterVO.getNivelDetalhe().intValue() == 3) {
+			for(CustoPorEnderecoVO ce : lista) {
+				ce.setOrdemServico(null);
+				ce.setSubOs(null);
+				ce.setData(null);
+				ce.setDemandante(null);
+			}
+		}
+		else if(filterVO.getNivelDetalhe().intValue() == 4) {
+			for(CustoPorEnderecoVO ce : lista) {
+				ce.setOrdemServico(null);
+				ce.setSubOs(null);
+				ce.setData(null);
+			}
+		}
+		return lista; 
 	}
 	
 	public List<CustoPorUnidadeVO> consultarCustoPorUnidade(CustoPorUnidadeFilterVO filterVO) {

@@ -30,7 +30,7 @@
 						<p:columnGroup type="header">
 				            <p:row>
 				                <p:column rowspan="2" headerText="Material" sortBy="#{mat.material}" filterBy="#{mat.material}" filterMatchMode="contains" />
-				                <p:column rowspan="2" headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" />
+				                <p:column rowspan="2" headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterMatchMode="contains" />
 				                <p:column colspan="2" headerText="Estoque Mínimo" />
 				                <p:column rowspan="2" headerText="Estoque" sortBy="#{mat.estoque}" />
 				                <p:column rowspan="2" headerText="Tipo Material" sortBy="#{mat.tipoMaterial.descricao}" filterBy="#{mat.tipoMaterial.descricao}" filterMatchMode="contains" />

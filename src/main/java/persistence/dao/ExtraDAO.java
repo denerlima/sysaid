@@ -165,22 +165,27 @@ public class ExtraDAO implements Serializable {
 			sql.append(" AND SR.insert_time <= to_date('"+ DataUtil.formataData(filterVO.getEmissaoFim())+ "','dd/MM/yy')");
 		}
 		if (filterVO.getDemandante() != null) {
-			sql.append(" AND SU.CALCULATED_USER_NAME = '"+filterVO.getDemandante()+"'");
+			sql.append(" AND SU.CALCULATED_USER_NAME = '"+filterVO.getDemandante().getValor()+"'");
 		}
 		if (filterVO.getAgrupador() != null) {
-			sql.append(" AND EH.AGRUPADOR = '"+filterVO.getAgrupador()+"'");
+			sql.append(" AND EH.AGRUPADOR = '"+filterVO.getAgrupador().getValor()+"'");
 		}
 		if (filterVO.getEndereco() != null) {
-			sql.append(" AND UPPER(CV.VALUE_CAPTION) = UPPER('"+filterVO.getEndereco()+"')");
+			sql.append(" AND UPPER(CV.VALUE_CAPTION) = UPPER('"+filterVO.getEndereco().getValor()+"')");
 		}
 		if (filterVO.getComplementoEndereco() != null && filterVO.getComplementoEndereco().trim().length() > 0) {
 			sql.append(" AND SR.SR_CUST_TXTCOMPLEMENTO LIKE '%"+filterVO.getComplementoEndereco()+"%'");
 		}
+		if (filterVO.isIncluirSubOS()) {
+ 			sql.append(" AND SR.SR_CUST_NUMBERMAINOSI != 0 ");
+ 		} else {
+ 			sql.append(" AND SR.SR_CUST_NUMBERMAINOSI = 0 ");
+ 		}
 		sql.append(
 	 		"GROUP BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO , SR.SR_CUST_NUMBERMAINOSI, SR.insert_time "+
 	 		"ORDER BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO ");
  		
-		Query query = em.createNativeQuery(sql.toString());
+ 		Query query = em.createNativeQuery(sql.toString());
 		List<Object[]> retorno = query.getResultList();
 		for(Object[] obj : retorno) {
 			CustoPorEnderecoVO custoPorEndereco = new CustoPorEnderecoVO();
