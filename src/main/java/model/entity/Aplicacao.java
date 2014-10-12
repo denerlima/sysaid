@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -25,13 +28,25 @@ public class Aplicacao extends GenericModelo implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "aplicacaoSequence")
 	@Column
-	private Integer id;	
+	private Integer id;
+	
+	@Column
 	private String descricao;
+	
+	@Column
 	private int ativo = 1;
 	
 	@OneToMany(mappedBy="aplicacao")
 	private List<Material> aplicacao;
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_name_responsavel", referencedColumnName="user_name")
+	private Usuario responsavel;
+	
+	/*
+	 * Métodos Getters and Setters
+	 */
+	
 	public Integer getId() {
 		return id;
 	}
@@ -64,8 +79,14 @@ public class Aplicacao extends GenericModelo implements Serializable{
 		this.ativo = ativo;
 	}
 
-	
-	
+	public Usuario getResponsavel() {
+		return responsavel;
+	}
+
+	public void setResponsavel(Usuario responsavel) {
+		this.responsavel = responsavel;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

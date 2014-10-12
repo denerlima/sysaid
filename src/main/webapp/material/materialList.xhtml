@@ -29,14 +29,14 @@
 						sortBy="#{mat.material}" sortOrder="ASCENDING">
 						<p:columnGroup type="header">
 				            <p:row>
-				                <p:column rowspan="2" headerText="Material" sortBy="#{mat.material}" filterBy="#{mat.material}" filterMatchMode="contains" />
-				                <p:column rowspan="2" headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterMatchMode="contains" />
+				                <p:column rowspan="2" headerText="Material" sortBy="#{mat.material}" filterBy="#{mat.material}" filterFunction="#{filterBean.filterContains}" />
+				                <p:column rowspan="2" headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}" />
 				                <p:column colspan="2" headerText="Estoque Mínimo" />
 				                <p:column rowspan="2" headerText="Estoque" sortBy="#{mat.estoque}" />
-				                <p:column rowspan="2" headerText="Tipo Material" sortBy="#{mat.tipoMaterial.descricao}" filterBy="#{mat.tipoMaterial.descricao}" filterMatchMode="contains" />
-				                <p:column rowspan="2" headerText="Aplicação" sortBy="#{mat.aplicacao.descricao}" filterBy="#{mat.aplicacao.descricao}" filterMatchMode="contains" />
-				                <p:column rowspan="2" headerText="Marca" sortBy="#{mat.marca.descricao}" filterBy="#{mat.marca.descricao}" filterMatchMode="contains" />
-				                <p:column rowspan="2" headerText="Grupo" sortBy="#{mat.grupo.descricao}" filterBy="#{mat.grupo.descricao}" filterMatchMode="contains" />
+				                <p:column rowspan="2" headerText="Tipo Material" sortBy="#{mat.tipoMaterial.descricao}" filterBy="#{mat.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}" />
+				                <p:column rowspan="2" headerText="Aplicação" sortBy="#{mat.aplicacao.descricao}" filterBy="#{mat.aplicacao.descricao}" filterFunction="#{filterBean.filterContains}" />
+				                <p:column rowspan="2" headerText="Marca" sortBy="#{mat.marca.descricao}" filterBy="#{mat.marca.descricao}" filterFunction="#{filterBean.filterContains}" />
+				                <p:column rowspan="2" headerText="Grupo" sortBy="#{mat.grupo.descricao}" filterBy="#{mat.grupo.descricao}" filterFunction="#{filterBean.filterContains}" />
 				                <p:column rowspan="2" headerText="Ações" style="width:185px;" />
 				            </p:row>
 				            <p:row>

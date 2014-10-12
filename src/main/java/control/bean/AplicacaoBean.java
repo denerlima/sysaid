@@ -7,10 +7,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Aplicacao;
+import model.entity.Usuario;
 import model.facade.AplicacaoFacade;
+import model.facade.UsuarioFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.context.RequestContext;
+
+import util.HibernateUtil;
 
 @Named
 @ViewScoped
@@ -19,10 +23,13 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 
 	private Aplicacao aplicacao;	
 	private List<Aplicacao> aplicacoes;
+	private List<Usuario> responsaveis;
 	
 	@Inject
 	private AplicacaoFacade aplicacaoFacade;
 
+	@Inject
+	private UsuarioFacade usuarioFacade;
 	
 	public AplicacaoFacade getAplicacaoFacade() {
 		return aplicacaoFacade;
@@ -101,4 +108,11 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 		return aplicacao != null && aplicacao.getId() != null;
 	}
 
+	public List<Usuario> getResponsaveis(){
+		if(responsaveis == null) {
+			responsaveis = HibernateUtil.unproxy(usuarioFacade.listAll());
+		}
+		return responsaveis;
+	}
+	
 }

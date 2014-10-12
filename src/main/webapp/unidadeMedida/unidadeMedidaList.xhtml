@@ -25,7 +25,7 @@
 				<p:dataTable id="unidadesTable" var="um" value="#{unidadeMedidaBean.allUnidadesMedida}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{um.unidadeEntrada.descricao}" sortOrder="ASCENDING">
-					<p:column headerText="Entrada" sortBy="#{um.unidadeEntrada.descricao}" filterBy="#{um.unidadeEntrada.descricao}" filterMatchMode="contains">
+					<p:column headerText="Entrada" sortBy="#{um.unidadeEntrada.descricao}" filterBy="#{um.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{um.unidadeEntrada.descricao}" />							
 					</p:column>
 					<p:column headerText="Saídas/Fator Conversão">

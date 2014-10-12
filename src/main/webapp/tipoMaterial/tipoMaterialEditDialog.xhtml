@@ -30,7 +30,7 @@
 					oncomplete="oncompleteTipoMaterial(xhr, status, args)"
 					rendered="#{not tipoMaterialBean.managed}" />
 					
-				<p:commandButton action="#{tipoMaterialBean.updateTipoMaterial}" value="Alterar"
+				<p:commandButton action="#{tipoMaterialBean.updateTipoMaterial}" value="Salvar"
 					update=":tipoMaterialDialogForm :tipoMaterialForm"
 					oncomplete="oncompleteTipoMaterial(xhr, status, args)"
 					rendered="#{tipoMaterialBean.managed}" />		

@@ -112,7 +112,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 	    if(root == null) {
 	    	root = new DefaultTreeNode("Grupos", null);
 	    	for(Grupo g : grupoFacade.listGrupoRoot()) {
-	    		TreeNode node = new DefaultTreeNode(g.getDescricaoLabel(), root);
+	    		TreeNode node = new DefaultTreeNode(g.getDescricao(), root);
 	    		recursiveNode(node, g);
 	    	}
 	    }
@@ -121,7 +121,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 	
 	public void recursiveNode(TreeNode root, Grupo g) {
 		for(Grupo subGrupo : grupoFacade.listSubGrupo(g)) {
-			TreeNode node = new DefaultTreeNode(subGrupo.getDescricaoLabel(), root);
+			TreeNode node = new DefaultTreeNode(subGrupo.getDescricao(), root);
     		recursiveNode(node, subGrupo);
 		}
 	}

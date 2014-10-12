@@ -108,17 +108,25 @@
 				<h2>Materiais do Inventario</h2>
 				<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existem itens nesta lista." 
 					sortBy="#{invMat.material.material}" sortOrder="ASCENDING">
-					<p:column headerText="" style="width: 35px;">
+					<p:column style="width: 35px;">
+						<f:facet name="header">
+							<h:selectBooleanCheckbox value="#{inventarioBean.checkTodos}">
+								<p:ajax event="change" listener="#{inventarioBean.marcarOuDesmarcarTodos}" process="@this" update=":inventarioEditForm:tabView:tabelaMaterial" />
+							</h:selectBooleanCheckbox>	
+						</f:facet>
 						<h:selectBooleanCheckbox value="#{invMat.selecionado}" />
 					</p:column>
-					<p:column headerText="Material">
+					<p:column headerText="Material" sortBy="#{invMat.material.materialLabel}" filterBy="#{invMat.material.materialLabel}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{invMat.material.materialLabel}" />							
 					</p:column>
-					<p:column headerText="Unidade de Medida Entrada">
+					<p:column headerText="Unidade de Medida Entrada" sortBy="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column headerText="Grupo">
+					<p:column headerText="Grupo" sortBy="#{invMat.material.grupo.descricaoLabel}" filterBy="#{invMat.material.grupo.descricaoLabel}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{invMat.material.grupo.descricaoLabel}" />							
+					</p:column>
+					<p:column headerText="Aplicação" sortBy="#{invMat.material.aplicacao.descricao}" filterBy="#{invMat.material.aplicacao.descricao}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{invMat.material.aplicacao.descricao}" />							
 					</p:column>
 					<p:column headerText="Estoque Atual">
 						<h:outputText value="#{invMat.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />							
@@ -165,7 +173,7 @@
      		update=":materialEditModal:materialEditDialogForm"
      		rendered="#{not inventarioBean.managed}" />
      	
-     	<p:commandButton value="Alterar"
+     	<p:commandButton value="Salvar"
      		action="#{inventarioBean.updateInventario}" 
      		update=":inventarioEditForm"
      		rendered="#{inventarioBean.managed}" />

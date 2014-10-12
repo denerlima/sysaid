@@ -33,6 +33,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	private InventarioMaterial inventarioMaterial;
 	private String tipoUsuario;
 	private String usuario;
+	private boolean checkTodos;
 	
 	@Inject
 	private InventarioFacade inventarioFacade;
@@ -373,6 +374,12 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
 	}
 
+	public void marcarOuDesmarcarTodos() {
+		for(InventarioMaterial im : inventario.getMateriais()) {
+			im.setSelecionado(checkTodos);
+		}
+	}
+	
 	public void calcularDiferenca() {
 		//
 	}
@@ -399,6 +406,14 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	public boolean isAprovadorDisabled() {
 		return usuario != null && usuario.trim().length() > 0 && isAprovador();
+	}
+
+	public boolean isCheckTodos() {
+		return checkTodos;
+	}
+
+	public void setCheckTodos(boolean checkAll) {
+		this.checkTodos = checkAll;
 	}
 	
 }

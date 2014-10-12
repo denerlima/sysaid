@@ -30,7 +30,7 @@
 					oncomplete="oncompleteMarca(xhr, status, args)"
 					rendered="#{not marcaBean.managed}" />
 					
-				<p:commandButton action="#{marcaBean.updateMarca}" value="Alterar"
+				<p:commandButton action="#{marcaBean.updateMarca}" value="Salvar"
 					update=":marcaDialogForm :marcaForm"
 					oncomplete="oncompleteMarca(xhr, status, args)"
 					rendered="#{marcaBean.managed}" />		

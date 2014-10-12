@@ -23,8 +23,11 @@
 				<p:dataTable var="app" value="#{aplicacaoBean.allAplicacoes}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{app.descricao}" sortOrder="ASCENDING"> 
-					<p:column headerText="Aplicação" sortBy="#{app.descricao}" filterBy="#{app.descricao}" filterMatchMode="contains">
+					<p:column headerText="Aplicação" sortBy="#{app.descricao}" filterBy="#{app.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{app.descricao}" />							
+					</p:column>
+					<p:column headerText="Aprovador do inventário" sortBy="#{app.responsavel.nomeCompleto}" filterBy="#{app.responsavel.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{app.responsavel.nomeCompleto}" />							
 					</p:column>
 					<p:column headerText="Ações" style="width:200px">											
 						<p:commandButton value="Editar" icon="ui-icon-pencil"
@@ -41,7 +44,7 @@
 			</p:outputPanel>
 			</center>
 					
-			<p:dialog header="Confirma a Exclusão ?"  closable="false" widgetVar="dialogTrash" modal="true" height="50" styleClass="ui-dialog-top">
+			<p:dialog header="Confirma a Exclusão?"  closable="false" widgetVar="dialogTrash" modal="true" height="50" styleClass="ui-dialog-top">
 			  <center>		
 				<p:commandButton value="Sim" icon="ui-icon-check"  update=":aplicacaoForm:resultado" actionListener="#{aplicacaoBean.deleteAplicacao()}" onclick="PF('dialogTrash').hide();" />
 				<p:spacer height="5" />

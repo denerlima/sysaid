@@ -26,7 +26,7 @@
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{mao.descricao}" sortOrder="ASCENDING">
 				 
-					<p:column headerText="Mão de Obra" sortBy="#{mao.descricao}" filterBy="#{mao.descricao}" filterMatchMode="contains">
+					<p:column headerText="Mão de Obra" sortBy="#{mao.descricao}" filterBy="#{mao.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mao.descricao}" />							
 					</p:column>
 					<p:column headerText="Valor por Dia" sortBy="#{mao.valordia}">

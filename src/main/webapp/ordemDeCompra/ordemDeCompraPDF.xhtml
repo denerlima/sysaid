@@ -8,11 +8,6 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
 	
-	<f:metadata>
-		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
-		<f:event type="preRenderView" listener="#{ordemDeCompraBean.initLoad(_id)}"/>
-	</f:metadata>
-	
 	<html>
 	<h:head>
 		<title>SysAid</title>
@@ -70,68 +65,72 @@
 	</h:head>
 	<body>
 
-		<h:form id="ordemDeCompraForm">
-			<center><h2>Ordem de Compra N. <h:outputText value="#{ordemDeCompraBean.ordemDeCompra.id}" /></h2></center>
-			<br />					
-			
-			<table>
-				<tr>
-					<td>
-						<h:outputText value="Data de Emissão:" />
-					</td>
-					<td>
-						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.dataEmissao}">
-							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-						</h:outputText>
-					</td>
-					<td>
-						<h:outputText value="Data de Autorização:" />
-					</td>
-					<td>
-						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.dataAutorizacao}">
-							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-						</h:outputText>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h:outputText value="Autorizador:" />
-					</td>
-					<td>
-						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.autorizador.nomeCompleto}" />
-					</td>
-					<td>
-						<h:outputText value="Contratado:" />
-					</td>
-					<td>
-						<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.contratado.nome}" />
-					</td>
-				</tr>
-			</table>
-			
-		    <div>
-	        	<br />			
-				<h4>Materiais do Ordem De Compra</h4>
-				<p:dataTable id="tabelaMaterial" var="_mat" value="#{ordemDeCompraBean.ordemDeCompra.materiais}" emptyMessage="Não existem itens nesta lista." rowIndexVar="_idx">
-					<p:column headerText="Material">
-						<h:outputText value="#{_mat.material.materialLabel}" />							
-					</p:column>
-					<p:column headerText="Unidade de Medida Entrada">
-						<h:outputText value="#{_mat.material.unidadeMedida.unidadeEntrada.descricao}" />							
-					</p:column>
-					<p:column headerText="Quantidade">
-						<h:inputText value="#{_mat.quantidadeAutorizada}" converter="bigDecimalSimplesConverter" styleClass="quantidade_#{_idx}" />
-						<script type="text/javascript">
-							$(function(){
-								$('.quantidade_#{_idx}').forceFloat();
-							});
-						</script>						
-					</p:column>
-				</p:dataTable>
-	     	</div>
-	     			
-		</h:form>
 		
+		<center><h2>Solicitação de Compra N. <h:outputText value="#{ordemDeCompraBean.ordemDeCompra.id}" /></h2></center>
+		<br />					
+		
+		<table>
+			<tr>
+				<td>
+					<h:outputText value="Data de Emissão:" />
+				</td>
+				<td>
+					<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.dataEmissao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+				</td>
+				<td>
+					<h:outputText value="Data de Autorização:" />
+				</td>
+				<td>
+					<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.dataAutorizacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Autorizador:" />
+				</td>
+				<td>
+					<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.autorizador.nomeCompleto}" />
+				</td>
+				<td>
+					<h:outputText value="Contratado:" />
+				</td>
+				<td>
+					<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.contratado.nome}" />
+				</td>
+			</tr>
+		</table>
+		
+	    <div>
+        	<br />			
+			<h4>Materiais do Ordem De Compra</h4>
+			<p:dataTable id="tabelaMaterial" var="_mat" value="#{ordemDeCompraBean.ordemDeCompra.materiais}" emptyMessage="Não existem itens nesta lista." rowIndexVar="_idx">
+				<p:column headerText="Material">
+					<h:outputText value="#{_mat.material.materialLabel}" />							
+				</p:column>
+				<p:column headerText="Unidade de Medida Entrada">
+					<h:outputText value="#{_mat.material.unidadeMedida.unidadeEntrada.descricao}" />							
+				</p:column>
+				<p:column headerText="Quantidade">
+					<h:inputText value="#{_mat.quantidadeAutorizada}" converter="bigDecimalSimplesConverter" styleClass="quantidade_#{_idx}" />
+					<script type="text/javascript">
+						$(function(){
+							$('.quantidade_#{_idx}').forceFloat();
+						});
+					</script>						
+				</p:column>
+			</p:dataTable>
+     	</div>
+     	
+     	<br />
+     	<br />
+     	<center>
+     		Assinatura: ________________________________________________  Data: ___/___/_____
+     	</center>
+	     	
 	</body>
 	</html>
 	

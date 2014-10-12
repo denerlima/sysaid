@@ -27,21 +27,21 @@
 				<p:dataTable var="inv" value="#{inventarioBean.allInventarios}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{inv.id}" sortOrder="DESCENDING">
-					<p:column headerText="Nº de Inventário" sortBy="#{inv.id}" filterBy="#{inv.id}" filterMatchMode="contains">
+					<p:column headerText="Nº de Inventário" sortBy="#{inv.id}" filterBy="#{inv.id}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{inv.id}" />							
 					</p:column>
-					<p:column headerText="Data de inventário" sortBy="#{inv.dataInventario}" filterBy="#{inv.dataInventario}" filterMatchMode="contains">
+					<p:column headerText="Data de inventário" sortBy="#{inv.dataInventario}" filterBy="#{inv.dataInventario}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{inv.dataInventario}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Inventariante" sortBy="#{inv.atendente.nomeCompleto}" filterBy="#{inv.atendente.nomeCompleto}" filterMatchMode="contains">
+					<p:column headerText="Inventariante" sortBy="#{inv.atendente.nomeCompleto}" filterBy="#{inv.atendente.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{inv.atendente.nomeCompleto}" />							
 					</p:column>
-					<p:column headerText="Justificativa" filterBy="#{inv.justificativa}" filterMatchMode="contains">
+					<p:column headerText="Justificativa" filterBy="#{inv.justificativa}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{inv.justificativa}" />							
 					</p:column>
-					<p:column headerText="Status" sortBy="#{inv.statusLabel}" filterBy="#{inv.statusLabel}" filterMatchMode="contains">
+					<p:column headerText="Status" sortBy="#{inv.statusLabel}" filterBy="#{inv.statusLabel}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{inv.statusLabel}" />							
 					</p:column>							
 					<p:column headerText="Ações" style="width:280px">

@@ -13,18 +13,6 @@
 		<title>Lista de Ordem de Compra</title>	
 	</ui:define>
 	
-	<ui:define name="head">
-	
-		<script type="text/javascript">
-			
-			function openPdf(idOC) {
-				window.open("#{request.contextPath}/ordemDeCompra/ordemDeCompraPDF.xhtml?id="+idOC+"&amp;RenderOutputType=pdf",'_blank');
-			}
-		
-		</script>
-		
-	</ui:define>
-	
 	<ui:define name="body">
 
 		<h:form id="ordemDeCompraForm" prependId="false">		
@@ -38,23 +26,23 @@
 				<p:dataTable var="oc" value="#{ordemDeCompraBean.allOrdensDeCompra}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{oc.id}" sortOrder="ASCENDING">
-					<p:column headerText="Nº da Ordem de Compra" sortBy="#{oc.id}" filterBy="#{oc.id}" filterMatchMode="contains">
+					<p:column headerText="Nº da Ordem de Compra" sortBy="#{oc.id}" filterBy="#{oc.id}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{oc.id}" />							
 					</p:column>
-					<p:column headerText="Data da autorização" sortBy="#{oc.dataAutorizacao}" filterBy="#{oc.dataAutorizacao}" filterMatchMode="contains">
+					<p:column headerText="Data da autorização" sortBy="#{oc.dataAutorizacao}" filterBy="#{oc.dataAutorizacao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{oc.dataAutorizacao}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Data da emissão" sortBy="#{oc.dataEmissao}" filterBy="#{oc.dataEmissao}" filterMatchMode="contains">
+					<p:column headerText="Data da emissão" sortBy="#{oc.dataEmissao}" filterBy="#{oc.dataEmissao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{oc.dataEmissao}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-					<p:column headerText="Autorizador" sortBy="#{oc.autorizador.nomeCompleto}" filterBy="#{oc.autorizador.nomeCompleto}" filterMatchMode="contains">
+					<p:column headerText="Autorizador" sortBy="#{oc.autorizador.nomeCompleto}" filterBy="#{oc.autorizador.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{oc.autorizador.nomeCompleto}" />							
 					</p:column>
-					<p:column headerText="Contratado" sortBy="#{oc.contratado.nome}" filterBy="#{oc.contratado.nome}" filterMatchMode="contains">
+					<p:column headerText="Contratado" sortBy="#{oc.contratado.nome}" filterBy="#{oc.contratado.nome}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{oc.contratado.nome}" />							
 					</p:column>				
 										
@@ -69,10 +57,9 @@
 								<f:setPropertyActionListener target="#{ordemDeCompraBean.ordemDeCompra}" value="#{oc}" />
 							</p:commandButton>
 							
-							<p:commandButton value="Imprimir" icon="ui-icon-print"
-								onclick="openPdf(#{oc.id}); return false"
-								style="margin-left: 3px;"
-								ajax="false" />
+							<p:commandLink action="#{ordemDeCompraBean.imprimir(oc)}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank">
+								<h:graphicImage value="/resources/img/btn-print.png" />
+							</p:commandLink>
 							
 							<p:commandButton value="Cancelar" icon="ui-icon-cancel" 
 								update=":ordemCompraCancelamentoModal:ordemCompraCancelamentoForm"

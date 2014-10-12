@@ -7,11 +7,11 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
 	<p:dialog header="Cadastro de Aplicação" id="aplicacaoDialogId" 
-		widgetVar="aplicacaoDialog" closable="false" modal="true" width="400" height="auto" styleClass="ui-dialog-top">
+		widgetVar="aplicacaoDialog" closable="false" modal="true" width="700" height="auto" styleClass="ui-dialog-top">
 		
 		<h:form id="aplicacaoDialogForm">
 		
-			<div class="row">
+			<div class="row form-row">
 				<div class="col-md-3">
 					Aplicação: <span class="required">*</span>
 				</div>
@@ -22,7 +22,20 @@
 					<h:message for="descricao" styleClass="msg-error" />
 				</div>
 			</div>
-		
+			
+			<div class="row form-row">
+				<div class="col-md-3">
+					Aprovador do inventário: <span class="required">*</span>
+				</div>
+				<div class="col-md-9">
+					<h:selectOneMenu id="responsavel" value="#{aplicacaoBean.aplicacao.responsavel}" converter="objectConverter" required="true" label="Aprovador do inventário" styleClass="input-sm">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{aplicacaoBean.responsaveis}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
+					</h:selectOneMenu>
+					<h:message for="responsavel" styleClass="msg-error" />
+				</div>
+			</div>
+			
 			<div class="buttons">
 								
 				<p:commandButton action="#{aplicacaoBean.createAplicacao}" value="Salvar"
@@ -30,7 +43,7 @@
 					oncomplete="oncompleteAplicacao(xhr, status, args)"
 					rendered="#{not aplicacaoBean.managed}" />
 					
-				<p:commandButton action="#{aplicacaoBean.updateAplicacao}" value="Alterar"
+				<p:commandButton action="#{aplicacaoBean.updateAplicacao}" value="Salvar"
 					update=":aplicacaoDialogForm :aplicacaoForm"
 					oncomplete="oncompleteAplicacao(xhr, status, args)"
 					rendered="#{aplicacaoBean.managed}" />		

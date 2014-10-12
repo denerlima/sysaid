@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,6 +20,8 @@ import model.facade.UsuarioFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.context.RequestContext;
+
+import util.FaceletRenderer;
 
 @Named
 @ViewScoped
@@ -247,6 +250,13 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 
 	public boolean isManaged() {
 		return ordemDeCompra != null && ordemDeCompra.getId() != null;
+	}
+	
+	public String imprimir(OrdemDeCompra oc) {
+		setOrdemDeCompra(oc);
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/ordemDeCompra/ordemDeCompraPDF.xhtml");
+		return null;
 	}
 	
 }

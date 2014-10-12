@@ -210,7 +210,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		try {
 			for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
 				if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
-					displayErrorMessageToUser("A quantidade solicitada n‹o pode ser maior que a quantidade entregue");
+					displayErrorMessageToUser("A quantidade entregue não pode ser maior que a solicitada");
 					return null;
 				}
 			}

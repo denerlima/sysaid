@@ -24,7 +24,7 @@
 				<p:dataTable var="_marca" value="#{marcaBean.allMarcas}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{_marca.descricao}" sortOrder="ASCENDING"> 
-					<p:column headerText="Marca" sortBy="#{_marca.descricao}" filterBy="#{_marca.descricao}" filterMatchMode="contains">
+					<p:column headerText="Marca" sortBy="#{_marca.descricao}" filterBy="#{_marca.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{_marca.descricao}" />							
 					</p:column>
 					<p:column headerText="Ações" style="width:200px">											
