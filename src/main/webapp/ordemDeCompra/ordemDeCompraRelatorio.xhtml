@@ -10,9 +10,9 @@
 	<ui:define name="body">
 
 		<h:form id="ordemCompraForm" prependId="false">
-			<title>Relatório de Ordem de Compra</title>
+			<title>Relatório de Solicitação de Compra</title>
 			<center>
-				<h2>Relatório de Ordem de Compra</h2>
+				<h2>Relatório de Solicitação de Compra</h2>
 			</center>
 			<p:spacer height="10" />
 						
@@ -77,7 +77,7 @@
 						currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista.">
 
-						<p:column headerText="Nº de Ordem de Compra">
+						<p:column headerText="Nº de Solicitação de Compra">
 							<h:outputText value="#{_ocm.ordemDeCompra.id}" />
 						</p:column>
 						<p:column headerText="Data Autorização">

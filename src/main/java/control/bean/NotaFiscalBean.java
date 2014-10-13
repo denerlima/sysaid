@@ -86,6 +86,12 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	
 	public String createNotaFiscal() {
 		try {
+			for(NotaFiscalMaterial nfm : notaFiscal.getMateriais()) {
+				if(nfm.getQuantidade().longValue() >= nfm.getOrdemDeCompraMaterial().getQuantidadeAutorizada().longValue()) {
+					displayErrorMessageToUser("A quantidade da NF não pode ser maior que a autorizada.");
+					return null;
+				}
+			}
 			getNotaFiscalFacade().create(notaFiscal);
 			displayInfoMessageToUser("Criado com Sucesso");
 			return "/notaFiscal/notaFiscalList.xhtml?faces-redirect=true";
@@ -98,6 +104,12 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	
 	public String updateNotaFiscal() {
 		try {
+			for(NotaFiscalMaterial nfm : notaFiscal.getMateriais()) {
+				if(nfm.getQuantidade().longValue() >= nfm.getOrdemDeCompraMaterial().getQuantidadeAutorizada().longValue()) {
+					displayErrorMessageToUser("A quantidade da NF não pode ser maior que a autorizada.");
+					return null;
+				}
+			}
 			getNotaFiscalFacade().updateNota(notaFiscal);
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			return "/notaFiscal/notaFiscalList.xhtml?faces-redirect=true";
@@ -146,14 +158,25 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		for (OrdemDeCompra oc : ordensDeCompras) {
 			for (OrdemDeCompraMaterial ocm : oc.getMateriais()) {
 				if(ocm.isSelecionado()) {
-					NotaFiscalMaterial nfm = new NotaFiscalMaterial();
-					nfm.setNotaFiscal(notaFiscal);
-					nfm.setOrdemDeCompraMaterial(ocm);
-					notaFiscal.getMateriais().add(nfm);
+					if(!isMaterialExistente(ocm)) {
+						NotaFiscalMaterial nfm = new NotaFiscalMaterial();
+						nfm.setNotaFiscal(notaFiscal);
+						nfm.setOrdemDeCompraMaterial(ocm);
+						notaFiscal.getMateriais().add(nfm);
+					}
 				}
 			}
 		}
 		RequestContext.getCurrentInstance().addCallbackParam("success", true);
+	}
+	
+	public boolean isMaterialExistente(OrdemDeCompraMaterial ocm) {
+		for(NotaFiscalMaterial nfm : notaFiscal.getMateriais()) {
+			if(nfm.getOrdemDeCompraMaterial().getId().intValue() == ocm.getId().intValue()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void removerMaterial(NotaFiscalMaterial nfm) {

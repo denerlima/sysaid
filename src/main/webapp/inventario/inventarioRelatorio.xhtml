@@ -18,6 +18,24 @@
 
 				<div class="row form-row">
 					<div class="col-md-2">
+						<h:outputText value="Nº de inventário" />
+					</div>
+					<div class="col-md-4">
+						<h:inputText value="#{inventarioBean.inventario.id}" />
+					</div>
+					<div class="col-md-2">
+						<h:outputText value="Inventariante:" />
+					</div>
+					<div class="col-md-4">
+						<h:selectOneMenu converter="objectConverter" id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}" styleClass="input-sm" style="max-width: 90%;">
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
+						</h:selectOneMenu>
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
 						<h:outputText value="Material:" />
 					</div>
 					<div class="col-md-4">
@@ -53,32 +71,25 @@
 					</div>
 				</div>
 
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Nº de inventário" />
-					</div>
-					<div class="col-md-4">
-						<h:inputText value="#{inventarioBean.inventario.id}" />
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Inventariante:" />
-					</div>
-					<div class="col-md-4">
-						<h:selectOneMenu converter="objectConverter" id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}" styleClass="input-sm" style="max-width: 90%;">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
-						</h:selectOneMenu>
-					</div>
-				</div>
+				
 				
 				<div class="row form-row">
 					<div class="col-md-2">
 						<h:outputText value="Aprovador:" />
 					</div>
 					<div class="col-md-4">
-						<h:selectOneMenu converter="objectConverter" id="cbAprovador" immediate="true" value="#{inventarioBean.inventario.aprovador}" styleClass="input-sm" style="max-width: 90%;">
+						<h:selectOneMenu id="cbAprovador" value="#{inventarioBean.inventario.aprovador}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-md-2">
+						<h:outputText value="Aplicação:" />
+					</div>
+					<div class="col-md-4">
+						<h:selectOneMenu id="cbAplicacao" value="#{inventarioBean.material.aplicacao}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
+							<f:selectItem itemValue="" itemLabel="Selecione" />
+							<f:selectItems value="#{inventarioBean.aplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />
 						</h:selectOneMenu>
 					</div>
 				</div>
@@ -115,11 +126,24 @@
 						<p:column headerText="Tipo de Material">
 							<h:outputText value="#{_invm.material.tipoMaterial.descricao}" />
 						</p:column>
+						<p:column headerText="Aplicação">
+							<h:outputText value="#{_invm.material.aplicacao.descricao}" />
+						</p:column>
 						<p:column headerText="Unidade de medida Entrada">
 							<h:outputText value="#{_invm.material.unidadeMedida.unidadeEntrada.descricao}" />
 						</p:column>
 						<p:column headerText="Quantidade Inventariada"  styleClass="coluna-direita">
 							<h:outputText value="#{_invm.quantidadeInventariada}" />
+						</p:column>
+						
+						<p:column headerText="Estoque Atual" styleClass="coluna-direita">
+							<h:outputText value="#{_invm.quantidadeEstoque}" />
+						</p:column>
+						<p:column headerText="Diferença" styleClass="coluna-direita">
+							<h:outputText value="#{_invm.diferenca}" />
+						</p:column>
+						<p:column headerText="Status">
+							<h:outputText value="#{_invm.statusLabel}" />
 						</p:column>
 											
 					</p:dataTable>

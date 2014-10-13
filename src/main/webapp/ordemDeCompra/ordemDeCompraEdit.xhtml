@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui" template="/template.xhtml"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 	
-	<ui:param name="pageTitle" value="Cadastro de Ordem de Compra" />
+	<ui:param name="pageTitle" value="Cadastro de Solicitação de Compra" />
 	
 	<f:metadata>
 		<f:viewParam name="id" value="#{_id}" converter="javax.faces.Long" />
@@ -18,17 +18,17 @@
 	<ui:define name="body">
 	
 		<h:form id="ordemDeCompraForm">
-			<center><h2>Cadastro de Ordem de Compra</h2></center>
+			<center><h2>Cadastro de Solicitação de Compra</h2></center>
 			<br />					
 		    <p:tabView  id="tabView">
 		        <p:tab title="Dados Gerais">
 		        	
 		        	<div class="row form-row">
 						<div class="col-md-2">
-							<h:outputText value="Nº de Ordem de Compra:" />
+							<h:outputText value="Nº de Solicitação de Compra:" />
 						</div>
 						<div class="col-md-10">
-							<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.id}" label="Número de Ordem de Compra" />	
+							<h:outputText value="#{ordemDeCompraBean.ordemDeCompra.id}" label="Número de Solicitação de Compra" />	
 						</div>
 					</div>
 					
@@ -97,7 +97,7 @@
 			 		</p:outputPanel>
 		        	
 		        	<br />			
-					<h4>Materiais do Ordem De Compra</h4>
+					<h4>Materiais do Solicitação de Compra</h4>
 					<p:dataTable id="tabelaMaterial" var="_mat" value="#{ordemDeCompraBean.ordemDeCompra.materiais}" emptyMessage="Não existem itens nesta lista." rowIndexVar="_idx">
 						<p:column headerText="Material">
 							<h:outputText value="#{_mat.material.materialLabel}" />							

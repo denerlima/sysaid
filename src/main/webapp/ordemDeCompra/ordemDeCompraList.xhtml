@@ -10,23 +10,23 @@
 	template="/template.xhtml">
 	
 	<ui:define name="head">
-		<title>Lista de Ordem de Compra</title>	
+		<title>Lista de Solicitação de Compra</title>	
 	</ui:define>
 	
 	<ui:define name="body">
 
 		<h:form id="ordemDeCompraForm" prependId="false">		
 		
-		<center><h2>Lista de Ordem de Compra</h2></center>
+		<center><h2>Lista de Solicitação de Compra</h2></center>
 		<p:spacer height="10" />
-			<p:commandButton value="Nova Ordem de Compra" icon="ui-icon-plus" action="#{ordemDeCompraBean.novo}" ajax="false" />	
+			<p:commandButton value="Nova Solicitação de Compra" icon="ui-icon-plus" action="#{ordemDeCompraBean.novo}" ajax="false" />	
 			<center>
 			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
 			<p:spacer width="100" height="30" />
 				<p:dataTable var="oc" value="#{ordemDeCompraBean.allOrdensDeCompra}" emptyMessage="Não existem itens nesta lista."
 					rows="10" paginator="true" paginatorPosition="bottom"
 					sortBy="#{oc.id}" sortOrder="ASCENDING">
-					<p:column headerText="Nº da Ordem de Compra" sortBy="#{oc.id}" filterBy="#{oc.id}" filterFunction="#{filterBean.filterContains}">
+					<p:column headerText="Nº da Solicitação de Compra" sortBy="#{oc.id}" filterBy="#{oc.id}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{oc.id}" />							
 					</p:column>
 					<p:column headerText="Data da autorização" sortBy="#{oc.dataAutorizacao}" filterBy="#{oc.dataAutorizacao}" filterFunction="#{filterBean.filterContains}">

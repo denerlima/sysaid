@@ -147,14 +147,14 @@
 		                	update=":materialEditModal:materialEditDialogForm"
 		                	oncomplete="$('#materialEditModal').modal('show')" 
 		                	process="@this" 
-		                	rendered="#{invMat.statusNull}"
+		                	rendered="#{!invMat.aprovado and inventarioBean.isUsuarioResponsavelPelaAplicacao(invMat)}"
 		                	style="margin-right: 4px;" />
 		                
 		                <p:commandButton value="Excluir" 
 		                	action="#{inventarioBean.removerMaterial(invMat)}"
 		                	update=":inventarioEditForm:tabView:tabelaMaterial" 
 		                	process="@this" 
-		                	rendered="#{invMat.statusNull}"
+		                	rendered="#{!invMat.aprovado and inventarioBean.isUsuarioResponsavelPelaAplicacao(invMat)}"
 		                	style="margin-right: 4px;" />
 		                	
 		                <p:commandButton value="Visualizar" 

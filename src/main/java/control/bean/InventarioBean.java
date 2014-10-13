@@ -10,10 +10,12 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.Aplicacao;
 import model.entity.Inventario;
 import model.entity.InventarioMaterial;
 import model.entity.Material;
 import model.entity.Usuario;
+import model.facade.AplicacaoFacade;
 import model.facade.InventarioFacade;
 import model.facade.MaterialFacade;
 import model.facade.UsuarioFacade;
@@ -43,6 +45,9 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	@Inject
 	private MaterialFacade materialFacade;
+	
+	@Inject
+	private AplicacaoFacade aplicacaoFacade;
 	
 	private Material material;
 	private List<Material> materiais;
@@ -262,6 +267,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		invMat.setMaterial(mat);
 		invMat.setQuantidadeInventariada(mat.getEstoque());
 		invMat.setQuantidadeEstoque(mat.getEstoque());
+		invMat.setInventariante(getUsuarioLogadoCookie());
 		inventario.getMateriais().add(invMat);
 	}
 	
@@ -284,6 +290,9 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		return usuarioFacade.listAll();
 	}
 	
+	public List<Aplicacao> getAplicacoes(){
+		return aplicacaoFacade.listAll();
+	}
 
 	public void setInventario(Inventario inventario) {
 		this.inventario = inventario;
@@ -414,6 +423,19 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	public void setCheckTodos(boolean checkAll) {
 		this.checkTodos = checkAll;
+	}
+	
+	public boolean isUsuarioResponsavelPelaAplicacao(InventarioMaterial im) {
+		if(isInventariante()) {
+			return true;
+		}
+		Usuario responsavel = im.getMaterial().getAplicacao().getResponsavel();
+		if(responsavel != null && getUsuarioLogadoCookie() != null) {
+			if(responsavel.getUserName().equals(getUsuarioLogadoCookie().getUserName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

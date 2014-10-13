@@ -47,6 +47,10 @@ public class InventarioMaterial implements Serializable {
 	@Column(name="quantidade_inventariada")
 	private BigDecimal quantidadeInventariada = new BigDecimal(0);
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_name_inventariante", referencedColumnName="user_name")
+	private Usuario inventariante;
+	
 	@Column(name="justificativa_inventariante", length=1000)
 	private String justificativaInventariante;
 	
@@ -147,6 +151,14 @@ public class InventarioMaterial implements Serializable {
 		this.status = status;
 	}
 	
+	public Usuario getInventariante() {
+		return inventariante;
+	}
+
+	public void setInventariante(Usuario inventariante) {
+		this.inventariante = inventariante;
+	}
+
 	public boolean isSelecionado() {
 		return selecionado;
 	}

@@ -121,7 +121,7 @@
 			<p:tab id="tabMaterial" title="Material">
 				<br />
 				
-				<p:commandButton value="Buscar Ordem de Compra" icon="ui-icon-search"
+				<p:commandButton value="Buscar Solicitação de Compra" icon="ui-icon-search"
 					process="@this"
 					action="#{notaFiscalBean.iniciarBuscaOrdensCompra}"
 					update=":ordemCompraModal:ordemCompraListDialogForm" 
@@ -131,7 +131,7 @@
 					<br />	
 					<p:dataTable id="tabelaMaterial" var="_nfm" value="#{notaFiscalBean.notaFiscal.materiais}" emptyMessage="Não existem itens nesta lista."
 						rowIndexVar="_idx">					
-						<p:column headerText="Nº da OC">
+						<p:column headerText="Nº da S.C">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" />
 						</p:column>
 						<p:column headerText="Material">
@@ -234,10 +234,10 @@
 		
 	</h:form>
 
-  	<cp:bootstrapModal id="ordemCompraModal" title="Consultar Ordem de Compra" modalId="ordemCompraModal">      
+  	<cp:bootstrapModal id="ordemCompraModal" title="Consultar Solicitação de Compra" modalId="ordemCompraModal">      
 		<h:form id="ordemCompraListDialogForm">
 		
-			Nº da OC: <h:inputText value="#{notaFiscalBean.ordemDeCompra.id}" />
+			Nº da S.C: <h:inputText value="#{notaFiscalBean.ordemDeCompra.id}" />
 		
 			<p:commandButton value="Buscar" 
 				action="#{notaFiscalBean.buscarOrdensCompras}"
@@ -253,7 +253,7 @@
 						
 						<div class="row">
 							<div class="col-md-4">
-								<b>Nº OC: </b>
+								<b>Nº S.C: </b>
 								<h:outputText id="numOc" value="#{oc.id}" />
 							</div>
 							<div class="col-md-4">

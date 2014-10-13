@@ -53,6 +53,9 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 			if (inv.getAprovador() != null) {
 				sql.append(" AND invm.usuario.userName = :aprovador");
 			}
+			if (mat.getAplicacao() != null) {
+				sql.append(" AND invm.material.aplicacao.id = :idAplicacao");
+			}
 			
 			sql.append(" ORDER BY inv.id");
 
@@ -73,6 +76,9 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 			if (inv.getAprovador() != null) {
 				query.setParameter("aprovador", inv.getAprovador().getUserName());
 			}	
+			if (mat.getAplicacao() != null) {
+				query.setParameter("idAplicacao", mat.getAplicacao().getId());
+			}
 			
 			lista = query.getResultList(); 
 		
