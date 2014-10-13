@@ -107,14 +107,16 @@ public class AbstractBean {
 						return user;
 					}
 				}
+				if (cookie.getName().trim().equalsIgnoreCase("sysaidcookie")) {
+					user = usuarioFacade.find(cookie.getValue());					
+					return user;
+				}
 			}
-
 		} catch (Exception x) {
 			x.printStackTrace();
 		}
 		return null;
 	}
-	
 	
 	public  String getDecodedUsuarioCookie() {
 		try {
