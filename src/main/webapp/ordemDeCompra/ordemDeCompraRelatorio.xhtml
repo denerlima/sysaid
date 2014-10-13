@@ -100,12 +100,12 @@
 						<p:column headerText="Quantidade Autorizada	" sortBy="#{_ocm.quantidadeAutorizada}" filterBy="#{_ocm.quantidadeAutorizada}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.quantidadeAutorizada}" />
 						</p:column>
-						<p:column headerText="Quantidade Recebida" sortBy="#{_ocm.material.estoqueInformado}" filterBy="#{_ocm.material.estoqueInformado}" filterFunction="#{filterBean.filterContains}">
+					<!--<p:column headerText="Quantidade Recebida" sortBy="#{_ocm.material.estoqueInformado}" filterBy="#{_ocm.material.estoqueInformado}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.material.estoqueInformado}" />
 						</p:column>  
-						<p:column headerText="Total">
+						<p:column headerText="Quantidade Pendente">
 							<h:outputText value="#{_ocm.quantidadeAutorizada * 3}" />
-						</p:column>				
+						</p:column>	 -->			
 												
 					</p:dataTable>
 				</p:outputPanel>
