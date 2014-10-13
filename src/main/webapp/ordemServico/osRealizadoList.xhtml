@@ -19,7 +19,7 @@
 
 	<ui:define name="body">
 
-		<center><h2>Lista de Realizados da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
+		<center><h2>Custo Total da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
 		
 		<h:form id="osMaterialForm"> 		
 			<p:spacer height="10" />
@@ -50,22 +50,22 @@
 				                <p:column headerText="Utilizada" />
 				            </p:row>
 				        </p:columnGroup>
-						<p:column>
+						<p:column styleClass="#{_mat.styleClass}">
 							<h:outputText value="#{_mat.material.materialLabel}" />
 						</p:column>
-						<p:column>
+						<p:column styleClass="#{_mat.styleClass}">
 							<h:outputText value="#{_mat.unidadeMedidaSaida.unidade.descricao}" />
 						</p:column>
-						<p:column styleClass="coluna-direita">
+						<p:column styleClass="coluna-direita #{_mat.styleClass}">
 							<h:outputText value="#{_mat.quantidadeRetirada}" />
 						</p:column>
-						<p:column styleClass="coluna-direita">
+						<p:column styleClass="coluna-direita #{_mat.styleClass}">
 							<h:outputText value="#{_mat.quantidadeUtilizada}" />
 						</p:column>
-						<p:column styleClass="coluna-direita">
+						<p:column styleClass="coluna-direita #{_mat.styleClass}">
 							<h:outputText value="#{_mat.precoUnitario}" converter="bigDecimalConverter" />
 						</p:column>
-						<p:column styleClass="coluna-direita">
+						<p:column styleClass="coluna-direita #{_mat.styleClass}">
 							<h:outputText value="#{_mat.precoTotal}" converter="bigDecimalConverter" />
 						</p:column>
 						

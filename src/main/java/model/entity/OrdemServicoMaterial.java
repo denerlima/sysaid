@@ -214,4 +214,18 @@ public class OrdemServicoMaterial implements Serializable {
 		return getPrecoUnitario().multiply(getQuantidadeUtilizada());
 	}
 	
+	public BigDecimal getEstoqueConvertido() {
+		if(getUnidadeMedidaSaida().getFatorConversao().doubleValue() == 0) {
+			return getMaterial().getEstoque();
+		}
+		return getMaterial().getEstoque().multiply(getUnidadeMedidaSaida().getFatorConversao());
+	}
+	
+	public String getStyleClass() {
+		if(getPrecoTotal().doubleValue() == 0) {
+			return "coluna-vermelha";
+		}
+		return "";
+	}
+	
 }

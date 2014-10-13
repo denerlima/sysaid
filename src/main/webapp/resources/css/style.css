@@ -51,3 +51,7 @@
 .ui-datatable tbody td.coluna-direita {
 	text-align: right;
 }
+
+.ui-datatable tbody td.coluna-vermelha {
+	background-color: red;
+}

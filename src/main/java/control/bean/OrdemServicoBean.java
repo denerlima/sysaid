@@ -25,6 +25,7 @@ import model.facade.OrdemServicoFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 
+import util.DataUtil;
 import util.FaceletRenderer;
 
 @Named
@@ -208,12 +209,14 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 
 	public String updateMateriais() {
 		try {
+			/*
 			for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
 				if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
 					displayErrorMessageToUser("A quantidade entregue não pode ser maior que a solicitada");
 					return null;
 				}
 			}
+			*/
 			getOrdemServicoFacade().updateMateriais(ordemServico, ordemServicoMateriais);
 			displayInfoMessageToUser("Operação realizada com sucesso");
 			return redirectMaterialList();
@@ -357,7 +360,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		osMat.setMaterial(materialFacade.find(material.getId()));
 		for(UnidadeMedidaSaida ums : material.getUnidadeMedida().getSaidas()) {
 			if(ums.getUnidade().getId().intValue() == material.getUnidadeMedida().getUnidadeEntrada().getId().intValue()) {
-				//osMat.setUnidadeMedidaSaida(ums);
+				osMat.setUnidadeMedidaSaida(ums);
 				break;
 			}
 		}
@@ -422,11 +425,12 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	}
 	
 	public void calcularPendencia(OrdemServicoMaterial osm) {
-		if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
-			displayErrorMessageToUser("A quantidade solicitada n‹o pode ser maior que a quantidade entregue");
-			return;
-		}
-		osm.setQuantidadePendente(osm.getQuantidadeSolicitada().subtract(osm.getQuantidadeEntregue()));
+		BigDecimal qtdeEntregue = osm.getQuantidadeEntregue().divide(osm.getUnidadeMedidaSaida().getFatorConversao());
+		//if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
+		//	displayErrorMessageToUser("A quantidade solicitada n‹o pode ser maior que a quantidade entregue");
+		//	return;
+		//}
+		osm.setQuantidadePendente(osm.getQuantidadeSolicitada().subtract(qtdeEntregue));
 	}
 	
 	public void calcularBaixaDePendencia(OrdemServicoMaterialHistorico osmh) {
@@ -495,6 +499,10 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		nf.setMinimumFractionDigits(2);
 		nf.setMaximumFractionDigits(2);
 		return nf.format(Double.valueOf(custo.toString()));
+	}
+	
+	public String getDataHora() throws Exception {
+		return DataUtil.converterDateParaStringDataHora(new Date());
 	}
 	
 }
