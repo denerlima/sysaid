@@ -77,35 +77,35 @@
 						currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista.">
 
-						<p:column headerText="Nº de Solicitação de Compra">
+						<p:column headerText="Nº de Solicitação de Compra" sortBy="#{_ocm.ordemDeCompra.id}" filterBy="#{_ocm.ordemDeCompra.id}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.ordemDeCompra.id}" />
 						</p:column>
-						<p:column headerText="Data Autorização">
+						<p:column headerText="Data Autorização" sortBy="#{_ocm.ordemDeCompra.dataAutorizacao}" filterBy="#{_ocm.ordemDeCompra.dataAutorizacao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.ordemDeCompra.dataAutorizacao}">
 								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="Autorizador">
+						<p:column headerText="Autorizador" sortBy="#{_ocm.ordemDeCompra.autorizador.nomeCompleto}" filterBy="#{_ocm.ordemDeCompra.autorizador.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.ordemDeCompra.autorizador.nomeCompleto}" />
 						</p:column>
-						<p:column headerText="Material">
+						<p:column headerText="Material" sortBy="#{_ocm.material.material}" filterBy="#{_ocm.material.material}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.material.material}" />
 						</p:column>
-						<p:column headerText="Tipo de Material">
+						<p:column headerText="Tipo de Material"  sortBy="#{_ocm.material.tipoMaterial.descricao}" filterBy="#{_ocm.material.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.material.tipoMaterial.descricao}" />
 						</p:column>
-						<p:column headerText="Unidade de medida Entrada">
+						<p:column headerText="Unidade de medida Entrada"  sortBy="#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}" />
 						</p:column>
-						<p:column headerText="Quantidade Autorizada	">
+						<p:column headerText="Quantidade Autorizada	" sortBy="#{_ocm.quantidadeAutorizada}" filterBy="#{_ocm.quantidadeAutorizada}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.quantidadeAutorizada}" />
 						</p:column>
-				<!--	<p:column headerText="Preço Unitário">
-							<h:outputText value="#{_ocm.valorUnitario}" />
+						<p:column headerText="Quantidade Recebida" sortBy="#{_ocm.material.estoqueInformado}" filterBy="#{_ocm.material.estoqueInformado}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{_ocm.material.estoqueInformado}" />
 						</p:column>  
 						<p:column headerText="Total">
 							<h:outputText value="#{_ocm.quantidadeAutorizada * 3}" />
-						</p:column>	 -->				
+						</p:column>				
 												
 					</p:dataTable>
 				</p:outputPanel>
