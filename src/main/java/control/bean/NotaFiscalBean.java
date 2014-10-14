@@ -87,7 +87,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	public String createNotaFiscal() {
 		try {
 			for(NotaFiscalMaterial nfm : notaFiscal.getMateriais()) {
-				if(nfm.getQuantidade().longValue() >= nfm.getOrdemDeCompraMaterial().getQuantidadeAutorizada().longValue()) {
+				if(nfm.getQuantidade().longValue() > nfm.getOrdemDeCompraMaterial().getQuantidadeAutorizada().longValue()) {
 					displayErrorMessageToUser("A quantidade da NF não pode ser maior que a autorizada.");
 					return null;
 				}

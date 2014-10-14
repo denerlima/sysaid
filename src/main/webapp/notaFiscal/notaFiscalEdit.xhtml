@@ -131,7 +131,7 @@
 					<br />	
 					<p:dataTable id="tabelaMaterial" var="_nfm" value="#{notaFiscalBean.notaFiscal.materiais}" emptyMessage="Não existem itens nesta lista."
 						rowIndexVar="_idx">					
-						<p:column headerText="Nº da S.C">
+						<p:column headerText="Nº da Solicitação de Compra">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" />
 						</p:column>
 						<p:column headerText="Material">
@@ -237,7 +237,7 @@
   	<cp:bootstrapModal id="ordemCompraModal" title="Consultar Solicitação de Compra" modalId="ordemCompraModal">      
 		<h:form id="ordemCompraListDialogForm">
 		
-			Nº da S.C: <h:inputText value="#{notaFiscalBean.ordemDeCompra.id}" />
+			Nº da Solicitação de Compra: <h:inputText value="#{notaFiscalBean.ordemDeCompra.id}" />
 		
 			<p:commandButton value="Buscar" 
 				action="#{notaFiscalBean.buscarOrdensCompras}"
@@ -253,7 +253,7 @@
 						
 						<div class="row">
 							<div class="col-md-4">
-								<b>Nº S.C: </b>
+								<b>Nº Solicitação de Compra: </b>
 								<h:outputText id="numOc" value="#{oc.id}" />
 							</div>
 							<div class="col-md-4">

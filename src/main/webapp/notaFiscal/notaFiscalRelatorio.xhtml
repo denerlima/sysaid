@@ -24,7 +24,7 @@
 						<h:inputText id="nrNotaFiscal" value="#{notaFiscalBean.notaFiscal.nrNotaFiscal}" style="width: 90%;" />					
 					</div>
 					<div class="col-md-2">
-						<h:outputText value="Nº da S.C:" />
+						<h:outputText value="Nº da Solicitação de Compra:" />
 					</div>
 					<div class="col-md-4">
 						<h:inputText id="nrOC" size="30" value="#{notaFiscalBean.ordemDeCompra.id}" />					
@@ -152,7 +152,7 @@
 						<p:column headerText="Fornecedor">
 							<h:outputText value="#{_nfm.notaFiscal.fornecedor.nome}" />
 						</p:column>
-						<p:column headerText="Nº S.C">
+						<p:column headerText="Nº Solicitação de Compra">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" />
 						</p:column>
 						<p:column headerText="Material">

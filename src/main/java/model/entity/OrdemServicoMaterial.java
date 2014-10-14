@@ -218,7 +218,7 @@ public class OrdemServicoMaterial implements Serializable {
 		if(getUnidadeMedidaSaida().getFatorConversao().doubleValue() == 0) {
 			return getMaterial().getEstoque();
 		}
-		return getMaterial().getEstoque().multiply(getUnidadeMedidaSaida().getFatorConversao());
+		return getMaterial().getEstoque().divide(getUnidadeMedidaSaida().getFatorConversao());
 	}
 	
 	public String getStyleClass() {

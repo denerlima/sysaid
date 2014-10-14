@@ -209,14 +209,13 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 
 	public String updateMateriais() {
 		try {
-			/*
+			
 			for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
 				if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
 					displayErrorMessageToUser("A quantidade entregue não pode ser maior que a solicitada");
 					return null;
 				}
-			}
-			*/
+			}			
 			getOrdemServicoFacade().updateMateriais(ordemServico, ordemServicoMateriais);
 			displayInfoMessageToUser("Operação realizada com sucesso");
 			return redirectMaterialList();
@@ -425,7 +424,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	}
 	
 	public void calcularPendencia(OrdemServicoMaterial osm) {
-		BigDecimal qtdeEntregue = osm.getQuantidadeEntregue().divide(osm.getUnidadeMedidaSaida().getFatorConversao());
+		BigDecimal qtdeEntregue = osm.getQuantidadeEntregue().multiply(osm.getUnidadeMedidaSaida().getFatorConversao());
 		//if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
 		//	displayErrorMessageToUser("A quantidade solicitada n‹o pode ser maior que a quantidade entregue");
 		//	return;
