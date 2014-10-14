@@ -117,8 +117,11 @@
 						<p:column headerText="Nº do Inventário">
 							<h:outputText value="#{_invm.inventario.id}" />
 						</p:column>						
-						<p:column headerText="Atendente">
+						<p:column headerText="Inventariante">
 							<h:outputText value="#{_invm.inventario.atendente.nomeCompleto}" />
+						</p:column>
+						<p:column headerText="Aprovador">
+							<h:outputText value="#{_invm.inventario.aprovador.nomeCompleto}" />
 						</p:column>
 						<p:column headerText="Material">
 							<h:outputText value="#{_invm.material.materialLabel}" />

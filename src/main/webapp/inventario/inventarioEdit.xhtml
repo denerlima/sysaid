@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				
-				<div class="row form-row">
+		   <!-- <div class="row form-row">
 					<div class="col-md-2">
 						Inventariante: <span class="required">*</span>
 					</div>
@@ -58,7 +58,7 @@
 						</h:selectOneMenu>	
 						<h:message for="atendente" styleClass="msg-error" />
 					</div>
-				</div>
+				</div>  -->
 				
 				<div class="row form-row form-group">
 					<div class="col-md-2">
@@ -128,15 +128,21 @@
 					<p:column headerText="Aplicação" sortBy="#{invMat.material.aplicacao.descricao}" filterBy="#{invMat.material.aplicacao.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{invMat.material.aplicacao.descricao}" />							
 					</p:column>
-					<p:column headerText="Estoque Atual">
+					<p:column headerText="Estoque Atual" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
-					<p:column headerText="Estoque Inventariado">
+					<p:column headerText="Estoque Inventariado" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Diferença">
+					<p:column headerText="Diferença" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.diferenca}" converter="bigDecimalSimplesConverter" />
+					</p:column>					
+					<p:column headerText="Inventariante"   sortBy="#{invMat.inventario.atendente.nomeCompleto}" filterBy="#{invMat.inventario.atendente.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{invMat.inventario.atendente.nomeCompleto}" />
 					</p:column>
+					<p:column headerText="Aprovador"   sortBy="#{invMat.inventario.aprovador.nomeCompleto}" filterBy="#{invMat.inventario.aprovador.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{invMat.inventario.aprovador.nomeCompleto}" />
+					</p:column>					
 					<p:column headerText="Status" rendered="#{inventarioBean.managed}">
 						<h:outputText value="#{invMat.statusLabel}" />
 					</p:column>
