@@ -100,21 +100,25 @@ public class AbstractBean {
 			Usuario user = new Usuario();
 			
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().trim().equalsIgnoreCase("communityUserName")) {					
+				if (cookie.getName().trim().equalsIgnoreCase("communityUserName")) {	
 					if(cookie.getValue().length() > 6) {
-						String decoded = new String(Base64.decodeBase64(cookie.getValue().substring(6)));					
+						String decoded = new String(Base64.decodeBase64(cookie.getValue().substring(6)));
+						System.out.println("Encontrou o cookie communityUserName. Valor: " + cookie.getValue() + " Valor Real: " + decoded);
 						user = usuarioFacade.find(decoded);					
 						return user;
 					}
 				}
 				if (cookie.getName().trim().equalsIgnoreCase("sysaidcookie")) {
+					System.out.println("Encontrou o cookie sysaidcookie. Valor: " + cookie.getValue());
 					user = usuarioFacade.find(cookie.getValue());					
 					return user;
 				}
 			}
 		} catch (Exception x) {
+			System.out.println("Erro ao caputurar o usuário pelo cookie. Erro: " + x.getMessage());
 			x.printStackTrace();
 		}
+		System.out.println("Não encontrou os cookie communityUserName ou sysaidcookie");
 		return null;
 	}
 	
