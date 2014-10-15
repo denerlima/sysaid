@@ -71,6 +71,32 @@
 
 		<center><h2>Custo Total da Ordem de Serviço - #{ordemServicoBean.ordemServico.id}</h2></center>
 		
+			<table style="width: 90%">
+				<tr>
+					<td><b>Solicitante:</b>&nbsp;<h:outputText value="#{ordemServicoBean.ordemServico.solicitante}" /></td>
+					<td><b>Ramal:</b>&nbsp;<h:outputText value="#{ordemServicoBean.ordemServico.ramal}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><b>Área Solicitante:</b>&nbsp;<h:outputText value="#{ordemServicoBean.ordemServico.areaSolicitante}" /></td>
+				</tr>
+				<tr>
+					<td>
+						<b>Data de Abertura:</b>&nbsp;
+						<h:outputText value="#{ordemServicoBean.ordemServico.dataAbertura}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
+					</td>
+					<td>
+						<b>Data de Fechamento:</b>&nbsp;
+						<h:outputText value="#{ordemServicoBean.ordemServico.dataFechamento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"><b>Endereço de Atendimento:</b>&nbsp;<h:outputText value="#{ordemServicoBean.ordemServico.enderecoAtendimento}" /></td>
+				</tr>
+			</table>
 			
 			<p:spacer height="10" />
 			

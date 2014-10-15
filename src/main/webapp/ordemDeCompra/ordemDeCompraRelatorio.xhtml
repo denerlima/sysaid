@@ -97,15 +97,15 @@
 						<p:column headerText="Unidade de medida Entrada"  sortBy="#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}" />
 						</p:column>
-						<p:column headerText="Quantidade Autorizada	" sortBy="#{_ocm.quantidadeAutorizada}" filterBy="#{_ocm.quantidadeAutorizada}" filterFunction="#{filterBean.filterContains}">
+						<p:column headerText="Quantidade Autorizada	" sortBy="#{_ocm.quantidadeAutorizada}" filterBy="#{_ocm.quantidadeAutorizada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}">
 							<h:outputText value="#{_ocm.quantidadeAutorizada}" />
 						</p:column>
-					<!--<p:column headerText="Quantidade Recebida" sortBy="#{_ocm.material.estoqueInformado}" filterBy="#{_ocm.material.estoqueInformado}" filterFunction="#{filterBean.filterContains}">
-							<h:outputText value="#{_ocm.material.estoqueInformado}" />
+						<p:column headerText="Quantidade Recebida" sortBy="#{_ocm.quantidadeRecebida}" filterBy="#{_ocm.quantidadeRecebida}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}">
+							<h:outputText value="#{_ocm.quantidadeRecebida}" converter="bigDecimalSimplesConverter" />
 						</p:column>  
-						<p:column headerText="Quantidade Pendente">
-							<h:outputText value="#{_ocm.quantidadeAutorizada * 3}" />
-						</p:column>	 -->			
+						<p:column headerText="Quantidade Pendente" sortBy="#{_ocm.quantidadePendente}" filterBy="#{_ocm.quantidadePendente}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}">
+							<h:outputText value="#{_ocm.quantidadePendente}" converter="bigDecimalSimplesConverter" />
+						</p:column>
 												
 					</p:dataTable>
 				</p:outputPanel>

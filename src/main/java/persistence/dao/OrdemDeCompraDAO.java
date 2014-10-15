@@ -1,5 +1,6 @@
 package persistence.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +91,14 @@ public class OrdemDeCompraDAO extends GenericDAO<OrdemDeCompra> {
 			}
 
 			lista = query.getResultList(); 
+			
+			for(OrdemDeCompraMaterial ocm : lista) {
+				Query query2 = getEntityManager().createQuery("Select sum(nfm.quantidade) FROM NotaFiscalMaterial nfm where nfm.ordemDeCompraMaterial.id = :id");
+				query2.setParameter("id", ocm.getId());
+				BigDecimal qtde = (BigDecimal) query2.getSingleResult();
+				ocm.setQuantidadeRecebida(qtde);
+				ocm.setQuantidadePendente(ocm.getQuantidadeAutorizada().subtract(qtde));
+			}
 		
 		} catch (Exception e) {
 			e.printStackTrace();		

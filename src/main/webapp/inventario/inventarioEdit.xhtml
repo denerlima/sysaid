@@ -46,7 +46,8 @@
 					</div>
 				</div>
 				
-		   <!-- <div class="row form-row">
+				<!--
+		    	<div class="row form-row">
 					<div class="col-md-2">
 						Inventariante: <span class="required">*</span>
 					</div>
@@ -58,7 +59,8 @@
 						</h:selectOneMenu>	
 						<h:message for="atendente" styleClass="msg-error" />
 					</div>
-				</div>  -->
+				</div>  
+				-->
 				
 				<div class="row form-row form-group">
 					<div class="col-md-2">
@@ -128,22 +130,22 @@
 					<p:column headerText="Aplicação" sortBy="#{invMat.material.aplicacao.descricao}" filterBy="#{invMat.material.aplicacao.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{invMat.material.aplicacao.descricao}" />							
 					</p:column>
-					<p:column headerText="Estoque Atual" styleClass="coluna-direita">
+					<p:column headerText="Estoque Atual" sortBy="#{invMat.quantidadeEstoque}" filterBy="#{invMat.quantidadeEstoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
-					<p:column headerText="Estoque Inventariado" styleClass="coluna-direita">
+					<p:column headerText="Estoque Inventariado" sortBy="#{invMat.quantidadeInventariada}" filterBy="#{invMat.quantidadeInventariada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Diferença" styleClass="coluna-direita">
+					<p:column headerText="Diferença" sortBy="#{invMat.diferenca}" filterBy="#{invMat.diferenca}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.diferenca}" converter="bigDecimalSimplesConverter" />
 					</p:column>					
-					<p:column headerText="Inventariante"   sortBy="#{invMat.inventario.atendente.nomeCompleto}" filterBy="#{invMat.inventario.atendente.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{invMat.inventario.atendente.nomeCompleto}" />
+					<p:column headerText="Inventariante" sortBy="#{invMat.inventariante.nomeCompleto}" filterBy="#{invMat.inventariante.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{invMat.inventariante.nomeCompleto}" />
 					</p:column>
-					<p:column headerText="Aprovador"   sortBy="#{invMat.inventario.aprovador.nomeCompleto}" filterBy="#{invMat.inventario.aprovador.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{invMat.inventario.aprovador.nomeCompleto}" />
+					<p:column headerText="Aprovador" sortBy="#{invMat.aprovador.nomeCompleto}" filterBy="#{invMat.aprovador.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{invMat.aprovador.nomeCompleto}" />
 					</p:column>					
-					<p:column headerText="Status" rendered="#{inventarioBean.managed}">
+					<p:column headerText="Status" sortBy="#{invMat.statusLabel}" filterBy="#{invMat.statusLabel}" filterFunction="#{filterBean.filterContains}" rendered="#{inventarioBean.managed}">
 						<h:outputText value="#{invMat.statusLabel}" />
 					</p:column>
 					<p:column headerText="Ações" style="width: 240px;">
@@ -287,7 +289,7 @@
 						Aprovador:
 					</div>
 					<div class="col-md-10">
-						<h:selectOneMenu id="usuario" value="#{inventarioBean.inventarioMaterial.usuario}" converter="objectConverter" required="true" label="Usuário Logado" styleClass="input-sm"
+						<h:selectOneMenu id="usuario" value="#{inventarioBean.inventarioMaterial.aprovador}" converter="objectConverter" required="true" label="Usuário Logado" styleClass="input-sm"
 							disabled="#{inventarioBean.aprovadorDisabled}">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			

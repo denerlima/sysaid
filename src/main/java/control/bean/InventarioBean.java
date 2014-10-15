@@ -214,7 +214,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		for (InventarioMaterial im : inventario.getMateriais()) {
 			sb.append(im.getMaterial().getMaterialLabel());
 			sb.append(";");
-			sb.append(im.getMaterial().getGrupo().getDescricaoLabel());
+			sb.append(im.getMaterial().getGrupo() != null ? im.getMaterial().getGrupo().getDescricaoLabel() : "");
 			sb.append(";");
 			sb.append(im.getMaterial().getUnidadeMedida().getUnidadeEntrada().getDescricao());
 			sb.append(";");
@@ -253,7 +253,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		}
 		for(InventarioMaterial invMat : inventario.getMateriais()) {
 			if(invMat.getMaterial().getId().intValue() == material.getId().intValue()) {
-				displayErrorMessageToUser("n‹o é permitido adicionar material repetido");
+				displayErrorMessageToUser("Não é permitido adicionar material repetido");
 				return;
 			}
 		}
@@ -356,7 +356,9 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	public void editarMaterial(InventarioMaterial im) {
 		setInventarioMaterial(im);
 		if(isAprovador()) {
-			im.setUsuario(usuarioFacade.find(usuario));
+			im.setAprovador(usuarioFacade.find(usuario));
+		} else {
+			im.setInventariante(usuarioFacade.find(usuario));
 		}
 	}
 	
@@ -370,7 +372,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public void aprovarMaterial() {
 		if(inventarioMaterial.getQuantidadeInventariada().longValue() < 0) {
-			displayErrorMessageToUser("A quantidade aprovada n‹o pode ser menor que zero.");
+			displayErrorMessageToUser("A quantidade aprovada n‹ão pode ser menor que zero.");
 			return;
 		}
 		inventarioMaterial.setStatus(InventarioMaterial.STATUS_APROVADO);

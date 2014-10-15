@@ -77,7 +77,7 @@ public class MaterialFacade extends GenericFacade<Material> implements Serializa
 		BigDecimal novaQuantidade = quantidade;
 		if(material.getUnidadeMedida().getUnidadeEntrada()
 					.getId().intValue() != unidadeMedidaSaida.getUnidade().getId().intValue()) {
-			novaQuantidade = quantidade.divide(unidadeMedidaSaida.getFatorConversao());
+			novaQuantidade = quantidade.multiply(unidadeMedidaSaida.getFatorConversao());
 		}
 		material.setEstoque(material.getEstoque().subtract(novaQuantidade));
 		//materialDAO.commit();

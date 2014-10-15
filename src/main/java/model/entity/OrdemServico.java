@@ -1,6 +1,8 @@
 package model.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "MF_ORDEMSERVICO")
@@ -32,6 +35,20 @@ public class OrdemServico extends GenericModelo implements Serializable{
 	
 	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Set<OrdemServicoMaoDeObra> maosDeObras = new HashSet<OrdemServicoMaoDeObra>();
+	
+	@Transient
+	private String solicitante;
+	@Transient
+	private BigDecimal ramal;
+	@Transient
+	private String areaSolicitante;
+	@Transient
+	private Date dataAbertura;
+	@Transient
+	private Date dataFechamento;
+	@Transient
+	private String enderecoAtendimento;
+	
 	
 	/*
 	 * Getters and Setters
@@ -76,5 +93,53 @@ public class OrdemServico extends GenericModelo implements Serializable{
 	public void setMaosDeObras(Set<OrdemServicoMaoDeObra> maosDeObras) {
 		this.maosDeObras = maosDeObras;
 	}
-		
+
+	public String getSolicitante() {
+		return solicitante;
+	}
+
+	public void setSolicitante(String solicitante) {
+		this.solicitante = solicitante;
+	}
+
+	public BigDecimal getRamal() {
+		return ramal;
+	}
+
+	public void setRamal(BigDecimal ramal) {
+		this.ramal = ramal;
+	}
+
+	public String getAreaSolicitante() {
+		return areaSolicitante;
+	}
+
+	public void setAreaSolicitante(String areaSolicitante) {
+		this.areaSolicitante = areaSolicitante;
+	}
+
+	public Date getDataAbertura() {
+		return dataAbertura;
+	}
+
+	public void setDataAbertura(Date dataAbertura) {
+		this.dataAbertura = dataAbertura;
+	}
+
+	public Date getDataFechamento() {
+		return dataFechamento;
+	}
+
+	public void setDataFechamento(Date dataFechamento) {
+		this.dataFechamento = dataFechamento;
+	}
+
+	public String getEnderecoAtendimento() {
+		return enderecoAtendimento;
+	}
+
+	public void setEnderecoAtendimento(String enderecoAtendimento) {
+		this.enderecoAtendimento = enderecoAtendimento;
+	}
+	
 }

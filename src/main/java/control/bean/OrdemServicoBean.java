@@ -211,7 +211,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		try {
 			for(OrdemServicoMaterial osm : ordemServico.getMateriais()) {
 				if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
-					displayErrorMessageToUser("A quantidade entregue não pode ser maior que a solicitada");
+					displayErrorMessageToUser("A quantidade entregue não pode ser maior que a solicitada.");
 					return null;
 				}
 			}			
@@ -281,6 +281,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	}
 	
 	public String imprimirRealizado() {
+		ordemServicoFacade.carregarDadosOrdemServico(getOrdemServico());
 		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
 		renderer.renderViewPDF("/ordemServico/osRealizadoPDF.xhtml");
 		return null;
@@ -423,12 +424,11 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 	}
 	
 	public void calcularPendencia(OrdemServicoMaterial osm) {
-		BigDecimal qtdeEntregue = osm.getQuantidadeEntregue().multiply(osm.getUnidadeMedidaSaida().getFatorConversao());
-		//if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
-		//	displayErrorMessageToUser("A quantidade solicitada n‹o pode ser maior que a quantidade entregue");
-		//	return;
-		//}
-		osm.setQuantidadePendente(osm.getQuantidadeSolicitada().subtract(qtdeEntregue));
+		if(osm.getQuantidadeEntregue().longValue() > osm.getQuantidadeSolicitada().longValue()) {
+			displayErrorMessageToUser("A quantidade entregue não pode ser maior que a solicitada.");
+			return;
+		}
+		osm.setQuantidadePendente(osm.getQuantidadeSolicitada().subtract(osm.getQuantidadeEntregue()));
 	}
 	
 	public void calcularBaixaDePendencia(OrdemServicoMaterialHistorico osmh) {

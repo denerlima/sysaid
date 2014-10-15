@@ -117,4 +117,8 @@ public class OrdemServicoFacade extends GenericFacade<OrdemServico> implements S
 		}
 	}
 
+	public void carregarDadosOrdemServico(OrdemServico os) {
+		ordemServicoDAO.carregarDadosOrdemServico(os);
+	}
+	
 }

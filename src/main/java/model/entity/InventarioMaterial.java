@@ -58,8 +58,8 @@ public class InventarioMaterial implements Serializable {
 	private String justificativa;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_name_usuario", referencedColumnName="user_name")
-	private Usuario usuario;
+	@JoinColumn(name="user_name_aprovador", referencedColumnName="user_name")
+	private Usuario aprovador;
 	
 	@Column
 	private Integer status;
@@ -135,12 +135,12 @@ public class InventarioMaterial implements Serializable {
 		this.justificativaInventariante = justificativaInventariante;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Usuario getAprovador() {
+		return aprovador;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setAprovador(Usuario usuario) {
+		this.aprovador = usuario;
 	}
 
 	public Integer getStatus() {

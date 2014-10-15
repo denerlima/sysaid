@@ -65,5 +65,52 @@ public class OrdemServicoDAO extends GenericDAO<OrdemServico> {
 		}
 		return total;
 	}
-
+	
+	public void carregarDadosOrdemServico(OrdemServico os) {
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT "
+					+ "		S.ID AS ID_ORDEM_SERVICO, "
+	 				+ " 	CONCAT (U.FIRST_NAME , CONCAT(' ',U.LAST_NAME)) as NOME_SOLICITANTE, "
+	 				+ "		s.sr_cust_txtramal AS RAMAL, " 
+	 				+ "		TAB25.SIG_UNID_PR AS AREA_SOLICITANTE,"
+	 				+ " 	s.insert_time AS DATA_ABERTURA,  "
+	 				+ "		s.close_time AS DATA_FECHAMENTO, "
+	 				+ "     CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO "
+	 				+ "	 FROM "
+	 				+ "		  service_req S "
+					+ "		INNER JOIN CUST_VALUES CV "
+					+ "		    ON S.LOCATION  = CV.VALUE_KEY "
+					+ "		      AND CV.list_name = 'location' "
+					+ "		INNER JOIN sysaid_user U "
+					+ "		    ON S.SUBMIT_USER = U.USER_NAME "
+					+ "		INNER JOIN viw0001pes_sysaid VPES "
+					+ "		  ON U.LOGIN_USER_UPPER = VPES.NOM_LOGIN "
+					+ "		INNER JOIN MF_TAB0025 TAB25 "
+					+ "		  ON VPES.COD_LOTACAO = TAB25.COD_UNID_PR "
+					+ "		WHERE S.ID = " + os.getId());
+			Query query = getEntityManager().createNativeQuery(sql.toString());
+			Object[] obj = (Object[]) query.getSingleResult();
+			
+			os.setSolicitante((String) obj[1]);
+			os.setRamal((BigDecimal) obj[2]);
+			os.setAreaSolicitante((String) obj[3]);
+			os.setDataAbertura((Date) obj[4]);
+			os.setDataFechamento((Date) obj[5]);
+			os.setEnderecoAtendimento((String) obj[6]);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			/*
+			os.setSolicitante("José");
+			os.setRamal("123");
+			os.setAreaSolicitante("Dilog");
+			os.setDataAbertura(new Date());
+			os.setDataFechamento(new Date());
+			os.setEnderecoAtendimento("SCS");
+			*/
+		}
+	}
+	
+	
 }

@@ -10,7 +10,7 @@
 	template="/template.xhtml">
 	
 	<ui:define name="head">
-		<title>Lista de Ordem de Serviço</title>	
+		<title>Lista de Ordem de Serviço</title>
 	</ui:define>
 	
 	<ui:define name="body">
@@ -20,7 +20,7 @@
 		<h:form id="ordemServicoEditForm" prependId="false">
 			Id ordem de Serviço:
 			<h:inputText id="idOS" value="#{ordemServicoBean.ordemServico.id}" required="true" label="Id ordem de Serviço" />
-			<p:commandButton value="Add Nota Fiscal" icon="ui-icon-plus" 
+			<p:commandButton value="Add Ordem de Serviço" icon="ui-icon-plus" 
 				action="#{ordemServicoBean.createOrdemServico}"
 				update=":ordemServicoEditForm :ordemServicoForm" style="margin-left: 2px;" />
 			<h:message for="idOS" styleClass="msg-error" style="display: block;" />				

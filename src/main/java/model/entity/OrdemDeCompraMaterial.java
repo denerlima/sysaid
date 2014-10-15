@@ -43,6 +43,13 @@ public class OrdemDeCompraMaterial implements Serializable {
 	@Transient
 	private boolean selecionado;
 	
+	@Transient
+	private BigDecimal quantidadeRecebida;
+	
+	@Transient
+	private BigDecimal quantidadePendente;
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -89,6 +96,22 @@ public class OrdemDeCompraMaterial implements Serializable {
 
 	public void setSelecionado(boolean selecionado) {
 		this.selecionado = selecionado;
+	}
+
+	public BigDecimal getQuantidadeRecebida() {
+		return quantidadeRecebida;
+	}
+
+	public void setQuantidadeRecebida(BigDecimal quantidadeRecebida) {
+		this.quantidadeRecebida = quantidadeRecebida;
+	}
+
+	public BigDecimal getQuantidadePendente() {
+		return quantidadePendente;
+	}
+
+	public void setQuantidadePendente(BigDecimal quantidadePendente) {
+		this.quantidadePendente = quantidadePendente;
 	}
 	
 }
