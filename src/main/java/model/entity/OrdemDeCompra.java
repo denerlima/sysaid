@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @SequenceGenerator(name = "ordemDeCompraSequence", sequenceName = "MF_ORDEMDECOMPRA_ID_SEQ", allocationSize = 1)
@@ -53,7 +54,9 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordemDeCompra", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OrdemDeCompraMaterial> materiais = new ArrayList<OrdemDeCompraMaterial>();
 	
-
+	@Transient
+	private boolean checkTodos;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -116,6 +119,14 @@ public class OrdemDeCompra extends GenericModelo implements Serializable{
 
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
+	}
+
+	public boolean isCheckTodos() {
+		return checkTodos;
+	}
+
+	public void setCheckTodos(boolean checkTodos) {
+		this.checkTodos = checkTodos;
 	}
 
 	@Override

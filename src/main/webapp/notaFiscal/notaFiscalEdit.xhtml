@@ -285,7 +285,12 @@
 					<div class="panel-body">
  
 						<p:dataTable value="#{oc.materiais}" var="_ocm">
-							<p:column headerText="Selecione">
+							<p:column style="width: 35px;">
+								<f:facet name="header">
+									<h:selectBooleanCheckbox value="#{oc.checkTodos}">
+										<p:ajax event="change" listener="#{notaFiscalBean.marcarOuDesmarcarTodos(oc)}" process="@this" update=":ordemCompraModal:ordemCompraListDialogForm" />
+									</h:selectBooleanCheckbox>	
+								</f:facet>
 								<h:selectBooleanCheckbox value="#{_ocm.selecionado}" />
 							</p:column>
 							<p:column headerText="Material">
@@ -297,7 +302,7 @@
 							<p:column headerText="Unidade">
 								#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}
 							</p:column>
-							<p:column headerText="Qtde Autorizada">
+							<p:column headerText="Qtde Autorizada" styleClass="coluna-direita">
 								#{_ocm.quantidadeAutorizada}
 							</p:column>
 						</p:dataTable>

@@ -141,4 +141,9 @@ public class AbstractBean {
 		return null;
 	}
 	
+	public void verificarUsuarioLogado() {
+		if(getUsuarioLogadoCookie() == null) {
+			throw new RuntimeException("É necessário está logado.");
+		}
+	}
 }

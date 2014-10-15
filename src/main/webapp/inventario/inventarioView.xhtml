@@ -44,6 +44,7 @@
 					</div>
 				</div>
 				
+				<!--  
 				<div class="row form-row">
 					<div class="col-md-2">
 						<h:outputText value="Inventariante:" />
@@ -52,6 +53,7 @@
 						<h:outputText id="atendente" value="#{inventarioBean.inventario.atendente.nomeCompleto}" />
 					</div>
 				</div>
+				-->
 				
 				<div class="row form-row form-group">
 					<div class="col-md-2">
@@ -75,8 +77,11 @@
 					<p:column headerText="Unidade de Medida Entrada">
 						<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column headerText="Estoque Atual" styleClass="coluna-direita">
-						<h:outputText value="#{invMat.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />							
+					<p:column headerText="Grupo">
+						<h:outputText value="#{invMat.material.grupo.descricao}" />							
+					</p:column>
+					<p:column headerText="Aplicação">
+						<h:outputText value="#{invMat.material.aplicacao.descricao}" />							
 					</p:column>
 					<p:column headerText="Estoque Inventariado" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />							
@@ -84,11 +89,14 @@
 					<p:column headerText="Diferença" styleClass="coluna-direita">
 						<h:outputText value="#{invMat.diferenca}" converter="bigDecimalSimplesConverter" />
 					</p:column>
+					<p:column headerText="Inventariante">
+						<h:outputText value="#{invMat.inventariante.nomeCompleto}" />
+					</p:column>
+					<p:column headerText="Aprovador">
+						<h:outputText value="#{invMat.usuario.nomeCompleto}" />
+					</p:column>
 					<p:column headerText="Status">
 						<h:outputText value="#{invMat.statusLabel}" />
-					</p:column>
-					<p:column headerText="Usuário">
-						<h:outputText value="#{invMat.usuario.nomeCompleto}" />
 					</p:column>
 					<p:column headerText="Ações">
 		                

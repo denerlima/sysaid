@@ -79,15 +79,14 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		if(inventario != null) {
 			return;
 		}
+		verificarUsuarioLogado();
 		tipoUsuario = tipo;
 		if(id == null || id == 0) {
 			inventario = new Inventario();
 			inventario.setMateriais(new ArrayList<InventarioMaterial>());
 			usuario = getDecodedUsuarioCookie();
-			if (usuario != null) {				
-				if(isInventariante()) {
-					getInventario().setAtendente(usuarioFacade.find(usuario));
-				}
+			if(isInventariante()) {
+				getInventario().setAtendente(usuarioFacade.find(usuario));
 			}
 		} else {
 			inventario = getInventarioFacade().find(id);
@@ -104,6 +103,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	}
 	
 	public void initList(String tipo) {
+		verificarUsuarioLogado();
 		tipoUsuario = tipo;
 	}
 	
@@ -355,7 +355,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	public void editarMaterial(InventarioMaterial im) {
 		setInventarioMaterial(im);
-		if(usuario != null && usuario.trim().length() > 0 && isAprovador()) {
+		if(isAprovador()) {
 			im.setUsuario(usuarioFacade.find(usuario));
 		}
 	}

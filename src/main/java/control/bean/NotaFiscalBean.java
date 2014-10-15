@@ -345,4 +345,10 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		this.notasFiscaisMateriais = notasFiscaisMateriais;
 	}
 	
+	public void marcarOuDesmarcarTodos(OrdemDeCompra oc) {
+		for(OrdemDeCompraMaterial ocm : oc.getMateriais()) {
+			ocm.setSelecionado(oc.isCheckTodos());
+		}
+	}
+	
 }
