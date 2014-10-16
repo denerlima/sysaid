@@ -69,26 +69,32 @@ public class OrdemServicoDAO extends GenericDAO<OrdemServico> {
 	public void carregarDadosOrdemServico(OrdemServico os) {
 		try {
 			StringBuffer sql = new StringBuffer();
-			sql.append("SELECT "
-					+ "		S.ID AS ID_ORDEM_SERVICO, "
-	 				+ " 	CONCAT (U.FIRST_NAME , CONCAT(' ',U.LAST_NAME)) as NOME_SOLICITANTE, "
-	 				+ "		s.sr_cust_txtramal AS RAMAL, " 
-	 				+ "		TAB25.SIG_UNID_PR AS AREA_SOLICITANTE,"
-	 				+ " 	s.insert_time AS DATA_ABERTURA,  "
-	 				+ "		s.close_time AS DATA_FECHAMENTO, "
-	 				+ "     CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO "
-	 				+ "	 FROM "
-	 				+ "		  service_req S "
-					+ "		INNER JOIN CUST_VALUES CV "
-					+ "		    ON S.LOCATION  = CV.VALUE_KEY "
-					+ "		      AND CV.list_name = 'location' "
-					+ "		INNER JOIN sysaid_user U "
-					+ "		    ON S.SUBMIT_USER = U.USER_NAME "
-					+ "		INNER JOIN viw0001pes_sysaid VPES "
-					+ "		  ON U.LOGIN_USER_UPPER = VPES.NOM_LOGIN "
-					+ "		INNER JOIN MF_TAB0025 TAB25 "
-					+ "		  ON VPES.COD_LOTACAO = TAB25.COD_UNID_PR "
-					+ "		WHERE S.ID = " + os.getId());
+			sql.append(
+					"SELECT " +
+					"	 S.ID AS ID_ORDEM_SERVICO, " +
+				    "    U.CALCULATED_USER_NAME as NOME_SOLICITANTE, " +
+				    "    s.sr_cust_txtramal AS RAMAL, " +
+				    "    TAB25.SIG_UNID_PR AS AREA_SOLICITANTE, " +
+				    "    s.insert_time AS DATA_ABERTURA, " +
+				    "    s.close_time AS DATA_FECHAMENTO, " +
+				    "    CONCAT(CV.VALUE_CAPTION, CONCAT(' ', S.SR_CUST_TXTCOMPLEMENTO))  AS ENDERECO_ATENDIMENTO " +   
+				    " FROM " +
+				    "    service_req S " +   
+				    " INNER JOIN " +
+				    "    CUST_VALUES CV " +       
+				    "        ON S.LOCATION  = CV.VALUE_KEY " +         
+				    "        AND CV.list_name = 'location'  " +
+				    " INNER JOIN " +
+				    "    sysaid_user U " +       
+				    "        ON S.REQUEST_USER = U.USER_NAME " +   
+				    " INNER JOIN " +
+				    "    viw0001pes_sysaid VPES " +     
+				    "        ON U.LOGIN_USER_UPPER = VPES.NOM_LOGIN " +   
+				    " INNER JOIN " +
+				    "    MF_TAB0025 TAB25 " +     
+				    "        ON VPES.COD_LOTACAO_INF = TAB25.COD_UNID_PR " +   
+				    " WHERE S.ID = " + os.getId());
+
 			Query query = getEntityManager().createNativeQuery(sql.toString());
 			Object[] obj = (Object[]) query.getSingleResult();
 			

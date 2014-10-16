@@ -25,6 +25,9 @@ public class Usuario extends GenericModelo implements Serializable {
 	@Column(name = "LAST_NAME")
 	private String sobrenome;
 
+	@Column(name = "CALCULATED_USER_NAME")
+	private String userNameCalculado;
+	
 	@OneToMany(mappedBy="atendente")
 	private List<Inventario> inventarios;
 	
@@ -52,10 +55,15 @@ public class Usuario extends GenericModelo implements Serializable {
 		this.sobrenome = sobrenome;
 	}
 
-	public String getNomeCompleto() {
-		return (nome + " " + sobrenome);
-	}
 	
+	public String getUserNameCalculado() {
+		return userNameCalculado;
+	}
+
+	public void setUserNameCalculado(String userNameCalculado) {
+		this.userNameCalculado = userNameCalculado;
+	}
+
 	public List<Inventario> getInventarios() {
 		return inventarios;
 	}
@@ -68,6 +76,9 @@ public class Usuario extends GenericModelo implements Serializable {
 	 * Regras
 	 */
 	
+	public String getNomeCompleto() {
+		return (nome + " " + sobrenome);
+	}
 	
 	@Override
 	public int hashCode() {

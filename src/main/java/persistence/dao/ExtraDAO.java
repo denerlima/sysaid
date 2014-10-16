@@ -131,32 +131,40 @@ public class ExtraDAO implements Serializable {
 		ArrayList<CustoPorEnderecoVO> lista = new ArrayList<CustoPorEnderecoVO>();
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-	 		"SELECT "+
-	 		"	EH.AGRUPADOR AS AGRUPADOR, "+
-	 		"	CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, "+
-	 		"	OM.ID_ORDEM_SERVICO AS OS, "+
-	 		"	SR.SR_CUST_NUMBERMAINOSI AS OS_PAI, "+
-	 		"	TO_CHAR(SR.insert_time, 'DD/MM/YYYY') AS DATA, "+
-	 		"	SU.CALCULATED_USER_NAME, "+
-	 		"	SR.SR_CUST_TXTCOMPLEMENTO AS COMP_END, "+
-	 		"	SUM((OM.PRECO_UNITARIO * OM.QUANTIDADE_UTILIZADA)) AS MATERIAL, "+
-	 		"	SUM(OMO.TOTAL) AS MAO_OBRA, "+
-	 		"	SUM(((OM.PRECO_UNITARIO * OM.QUANTIDADE_UTILIZADA) + OMO.TOTAL)) AS TOTAL "+
-	 		"FROM mf_ordemservico_mf_material OM "+
-		 	"	INNER JOIN mf_ordemservico O "+
-		 	"	  ON om.id_ordem_servico = O.ID "+
-		 	"	INNER JOIN mf_ordemservico_mf_maoobra OMO "+
-		 	"	  ON om.id_ordem_servico = OMO.id_ordem_servico "+
-		 	"	INNER JOIN SERVICE_REQ SR "+
-		 	"	  ON om.id_ordem_servico = SR.ID "+
-		 	"	INNER JOIN SYSAID_USER SU "+
-		 	"	  ON SR.REQUEST_USER = SU.USER_NAME "+
-		 	"	INNER JOIN CUST_VALUES CV "+
-		 	"	  ON SR.LOCATION  = CV.VALUE_KEY "+
-		 	"	  AND CV.LIST_NAME = 'location' "+
-		 	"	INNER JOIN mf_endereco_hierarquia EH "+
-		 	"	  ON EH.VALUE_KEY  = CV.VALUE_KEY " +
-		 	"WHERE O.ATIVO = 1 "
+			"SELECT " +
+			"	EH.AGRUPADOR, " +
+			"	CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, " +
+			"	OM.ID_ORDEM_SERVICO AS OS, " +
+			"	SR.SR_CUST_NUMBERMAINOSI AS OS_PAI, " +
+			"	TO_CHAR(SR.insert_time, 'DD/MM/YYYY') AS DATA, " +
+			"	SU.CALCULATED_USER_NAME, " +
+			"	SR.SR_CUST_TXTCOMPLEMENTO, " +
+			"	OM.MATERIAL, " +
+			"	OMO.MAO_OBRA, " +
+			"	OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL " +
+			"	from mf_ordemservico O " +
+			"	INNER JOIN ( " +
+			"	      select id_ordem_servico, " +
+			"	        SUM((PRECO_UNITARIO * QUANTIDADE_UTILIZADA)) AS MATERIAL " +
+			"	      from mf_ordemservico_mf_material " +
+			"	      group by id_ordem_servico) OM " +
+			"	  ON om.id_ordem_servico = O.ID " +
+			"	INNER JOIN ( " +
+			"	      select id_ordem_servico, " +
+			"	      SUM(TOTAL) AS MAO_OBRA " +
+			"	      from mf_ordemservico_mf_maoobra " +
+			"	      group by id_ordem_servico ) OMO " +
+			"	  ON O.ID = OMO.id_ordem_servico " +
+			"	INNER JOIN SERVICE_REQ SR " +
+			"	  ON om.id_ordem_servico = SR.ID " +
+			"	INNER JOIN SYSAID_USER SU " +
+			"	  ON SR.REQUEST_USER = SU.USER_NAME " +
+			"	INNER JOIN CUST_VALUES CV " +
+			"	  ON SR.LOCATION  = CV.VALUE_KEY " +
+			"	  AND CV.LIST_NAME = 'location' " +
+			"	INNER JOIN mf_endereco_hierarquia EH " +
+			"	  ON EH.VALUE_KEY  = CV.VALUE_KEY " +
+			" WHERE O.ATIVO = 1 "
 	 	);	 	
 		if (filterVO.getEmissaoInicio() != null) {
 			sql.append(" AND SR.insert_time >= to_date('"+ DataUtil.formataData(filterVO.getEmissaoInicio())+ "','dd/MM/yy')");
@@ -181,8 +189,6 @@ public class ExtraDAO implements Serializable {
  		} else {
  			sql.append(" AND SR.SR_CUST_NUMBERMAINOSI = 0 ");
  		}
-		//sql.append("GROUP BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO , SR.SR_CUST_NUMBERMAINOSI, SR.insert_time ");
-		sql.append(" GROUP BY EH.AGRUPADOR, CV.VALUE_CAPTION, OM.ID_ORDEM_SERVICO, SR.SR_CUST_NUMBERMAINOSI, SR.INSERT_TIME, SU.CALCULATED_USER_NAME, SR.SR_CUST_TXTCOMPLEMENTO ");
 		sql.append(" ORDER BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO ");
  		
  		Query query = em.createNativeQuery(sql.toString());

@@ -41,19 +41,19 @@
                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
 					emptyMessage="Não existem itens nesta lista.">
 
-					<p:column headerText="Material">
+					<p:column headerText="Material" sortBy="#{mat.material}" filterBy="#{mat.material}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mat.material}" />							
 					</p:column>
-					<p:column headerText="Tipo Material">
+					<p:column headerText="Tipo Material" sortBy="#{mat.tipoMaterial.descricao}" filterBy="#{mat.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
 					</p:column>
-					<p:column headerText="Descrição">
+					<p:column headerText="Descrição" sortBy="#{mat.descricao}" filterBy="#{mat.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mat.descricao}" />							
 					</p:column>
-					<p:column headerText="Unidade de Medida Entrada">
+					<p:column headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column headerText="Estoque">
+					<p:column headerText="Estoque" sortBy="#{mat.estoque}" filterBy="#{mat.estoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}">
 						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
 				</p:dataTable>

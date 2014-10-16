@@ -109,42 +109,42 @@
 						currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista.">
 
-						<p:column headerText="Data">
+						<p:column headerText="Data" sortBy="#{_invm.inventario.dataInventario}" filterBy="#{_invm.inventario.dataInventario}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_invm.inventario.dataInventario}">
 								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 							</h:outputText>
 						</p:column>											
-						<p:column headerText="Nº do Inventário">
+						<p:column headerText="Nº do Inventário" sortBy="#{_invm.inventario.id}" filterBy="#{_invm.inventario.id}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_invm.inventario.id}" />
 						</p:column>						
-						<p:column headerText="Inventariante">
+						<p:column headerText="Inventariante" sortBy="#{_invm.inventariante.nomeCompleto}" filterBy="#{_invm.inventariante.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_invm.inventariante.nomeCompleto}" />
 						</p:column>
-						<p:column headerText="Aprovador">
+						<p:column headerText="Aprovador" sortBy="#{_invm.aprovador.nomeCompleto}" filterBy="#{_invm.aprovador.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_invm.aprovador.nomeCompleto}" />
 						</p:column>
-						<p:column headerText="Material">
+						<p:column headerText="Material" sortBy="#{_invm.material.materialLabel}" filterBy="#{_invm.material.materialLabel}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_invm.material.materialLabel}" />
 						</p:column>
-						<p:column headerText="Tipo de Material">
+						<p:column headerText="Tipo de Material" sortBy="#{_invm.material.tipoMaterial.descricao}" filterBy="#{_invm.material.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_invm.material.tipoMaterial.descricao}" />
 						</p:column>
-						<p:column headerText="Aplicação">
+						<p:column headerText="Aplicação" sortBy="#{_invm.material.aplicacao.descricao}" filterBy="#{_invm.material.aplicacao.descricao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_invm.material.aplicacao.descricao}" />
 						</p:column>
-						<p:column headerText="Unidade de medida Entrada">
+						<p:column headerText="Unidade de medida Entrada" sortBy="#{_invm.material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{_invm.material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_invm.material.unidadeMedida.unidadeEntrada.descricao}" />
 						</p:column>
-						<p:column headerText="Quantidade Inventariada"  styleClass="coluna-direita">
-							<h:outputText value="#{_invm.quantidadeInventariada}" />
+						<p:column headerText="Quantidade Inventariada" sortBy="#{_invm.quantidadeInventariada}" filterBy="#{_invm.quantidadeInventariada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+							<h:outputText value="#{_invm.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />
 						</p:column>
-						<p:column headerText="Estoque Atual" styleClass="coluna-direita">
+						<p:column headerText="Estoque Atual" sortBy="#{_invm.quantidadeEstoque}" filterBy="#{_invm.quantidadeEstoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 							<h:outputText value="#{_invm.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />
 						</p:column>
-						<p:column headerText="Diferença" styleClass="coluna-direita">
+						<p:column headerText="Diferença" sortBy="#{_invm.diferenca}" filterBy="#{_invm.diferenca}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 							<h:outputText value="#{_invm.diferenca}" converter="bigDecimalSimplesConverter" />
 						</p:column>
-						<p:column headerText="Status">
+						<p:column headerText="Status" sortBy="#{_invm.statusLabel}" filterBy="#{_invm.statusLabel}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_invm.statusLabel}" />
 						</p:column>
 											

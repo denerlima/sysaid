@@ -56,28 +56,28 @@
 					emptyMessage="Não existem itens nesta lista."
 					sortBy="#{mat.material}" sortOrder="ASCENDING">
 
-					<p:column headerText="Material" sortBy="#{mat.material}">
+					<p:column headerText="Material" sortBy="#{mat.material}" filterBy="#{_nfm.notaFiscal.nrNotaFiscal}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mat.material}" />							
 					</p:column>
-					<p:column headerText="Tipo Material" sortBy="#{mat.tipoMaterial.descricao}">
+					<p:column headerText="Tipo Material" sortBy="#{mat.tipoMaterial.descricao}" filterBy="#{mat.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
 					</p:column>
-					<p:column headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}">
+					<p:column headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column headerText="Estoque" sortBy="#{mat.estoque}" styleClass="coluna-direita">
+					<p:column headerText="Estoque" sortBy="#{mat.estoque}" filterBy="#{mat.estoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
-					<p:column headerText="Estoque Minimo Calculado" sortBy="#{mat.estoqueCalculado}" styleClass="coluna-direita">
+					<p:column headerText="Estoque Minimo Calculado" sortBy="#{mat.estoqueCalculado}" filterBy="#{mat.estoqueCalculado}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Estoque Minimo Informado" sortBy="#{mat.estoqueInformado}" styleClass="coluna-direita">
+					<p:column headerText="Estoque Minimo Informado" sortBy="#{mat.estoqueInformado}" filterBy="#{mat.estoqueInformado}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Quantidade Solicitada" sortBy="#{mat.qtdSolicitada}" styleClass="coluna-direita">
+					<p:column headerText="Quantidade Solicitada" sortBy="#{mat.qtdSolicitada}" filterBy="#{mat.qtdSolicitada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.qtdSolicitada}" converter="bigDecimalSimplesConverter" />
 					</p:column>
-					<p:column headerText="Sugestão de Compra" sortBy="#{mat.sugestaoCompra}" styleClass="coluna-direita">
+					<p:column headerText="Sugestão de Compra" sortBy="#{mat.sugestaoCompra}" filterBy="#{mat.sugestaoCompra}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.sugestaoCompra}" converter="bigDecimalSimplesConverter" />						
 					</p:column>
 					

@@ -136,44 +136,44 @@
 						currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista.">
 
-						<p:column headerText="Nº do NF">
+						<p:column headerText="Nº do NF" sortBy="#{_nfm.notaFiscal.nrNotaFiscal}" filterBy="#{_nfm.notaFiscal.nrNotaFiscal}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_nfm.notaFiscal.nrNotaFiscal}" />
 						</p:column>	
-						<p:column headerText="Data de Emissão">
+						<p:column headerText="Data de Emissão" sortBy="#{_nfm.notaFiscal.dataEmissao}" filterBy="#{_nfm.notaFiscal.dataEmissao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_nfm.notaFiscal.dataEmissao}">
 								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 							</h:outputText>
 						</p:column>		
-						<p:column headerText="Data de Entrega">
+						<p:column headerText="Data de Entrega" sortBy="#{_nfm.notaFiscal.dataEntrega}" filterBy="#{_nfm.notaFiscal.dataEntrega}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_nfm.notaFiscal.dataEntrega}">
 								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 							</h:outputText>
 						</p:column>
-						<p:column headerText="Fornecedor">
+						<p:column headerText="Fornecedor" sortBy="#{_nfm.notaFiscal.fornecedor.nome}" filterBy="#{_nfm.notaFiscal.fornecedor.nome}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_nfm.notaFiscal.fornecedor.nome}" />
 						</p:column>
-						<p:column headerText="Nº Solicitação de Compra">
+						<p:column headerText="Nº Solicitação de Compra" sortBy="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" filterBy="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.ordemDeCompra.id}" />
 						</p:column>
-						<p:column headerText="Material">
+						<p:column headerText="Material" sortBy="#{_nfm.ordemDeCompraMaterial.material.materialLabel}" filterBy="#{_nfm.ordemDeCompraMaterial.material.materialLabel}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.materialLabel}" />
 						</p:column>								
-						<p:column headerText="Tipo de Material">
+						<p:column headerText="Tipo de Material" sortBy="#{_nfm.ordemDeCompraMaterial.material.tipoMaterial.descricao}" filterBy="#{_nfm.ordemDeCompraMaterial.material.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.tipoMaterial.descricao}" />
 						</p:column>
-						<p:column headerText="Unidade de medida Entrada">
+						<p:column headerText="Unidade de medida Entrada" sortBy="#{_nfm.ordemDeCompraMaterial.material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{_nfm.ordemDeCompraMaterial.material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.material.unidadeMedida.unidadeEntrada.descricao}" />
 						</p:column>
-						<p:column headerText="Quantidade Autorizada" styleClass="coluna-direita">
+						<p:column headerText="Quantidade Autorizada"  sortBy="#{_nfm.ordemDeCompraMaterial.quantidadeAutorizada}" filterBy="#{_nfm.ordemDeCompraMaterial.quantidadeAutorizada}" filterFunction="#{filterBean.filterContainsBigDecimal}" styleClass="coluna-direita">
 							<h:outputText value="#{_nfm.ordemDeCompraMaterial.quantidadeAutorizada}" />
 						</p:column>				
-						<p:column headerText="Quantidade NF" styleClass="coluna-direita">
+						<p:column headerText="Quantidade NF" sortBy="#{_nfm.quantidade}" filterBy="#{_nfm.quantidade}" filterFunction="#{filterBean.filterContainsBigDecimal}" styleClass="coluna-direita">
 							<h:outputText value="#{_nfm.quantidade}" />
 						</p:column>
-						<p:column headerText="Preço Unitário" styleClass="coluna-direita">
+						<p:column headerText="Preço Unitário" sortBy="#{_nfm.precoUnitario}" filterBy="#{_nfm.precoUnitario}" filterFunction="#{filterBean.filterContainsBigDecimal}" styleClass="coluna-direita">
 							<h:outputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter" />
 						</p:column>
-						<p:column headerText="Total" styleClass="coluna-direita">
+						<p:column headerText="Total" sortBy="#{_nfm.total}" filterBy="#{_nfm.total}" filterFunction="#{filterBean.filterContainsBigDecimal}" styleClass="coluna-direita">
 							<h:outputText value="#{_nfm.total}" converter="bigDecimalConverter" />
 						</p:column>											
 					</p:dataTable>

@@ -122,36 +122,36 @@
 						emptyMessage="Não existem itens nesta lista."
 						style="width: 99%;">
 					
-					<p:column headerText="Agrupador">
+					<p:column headerText="Agrupador" sortBy="#{_item.agrupador}" filterBy="#{_item.agrupador}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{_item.agrupador}" />
 					</p:column>
-					<p:column headerText="Endereço">
+					<p:column headerText="Endereço" sortBy="#{_item.endereco}" filterBy="#{_item.endereco}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{_item.endereco}" />
 					</p:column>
-					<p:column headerText="OS Principal">
+					<p:column headerText="OS Principal" sortBy="#{_item.ordemServico}" filterBy="#{_item.ordemServico}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{_item.ordemServico}" />
 					</p:column>
-					<p:column headerText="Sub-OS">
+					<p:column headerText="Sub-OS" sortBy="#{_item.subOs}" filterBy="#{_item.subOs}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{_item.subOs}" />
 					</p:column>
-					<p:column headerText="Data">
+					<p:column headerText="Data" sortBy="#{_item.data}" filterBy="#{_item.data}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{_item.data}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Demandante">
+					<p:column headerText="Demandante" sortBy="#{_item.demandante}" filterBy="#{_item.demandante}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{_item.demandante}" />
 					</p:column>
-					<p:column headerText="Complemento do Endereço">
+					<p:column headerText="Complemento do Endereço" sortBy="#{_item.complementoEndereco}" filterBy="#{_item.complementoEndereco}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{_item.complementoEndereco}" />
 					</p:column>
-					<p:column headerText="Custo de Material" styleClass="coluna-direita">
+					<p:column headerText="Custo de Material" sortBy="#{_item.custoMaterial}" filterBy="#{_item.custoMaterial}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{_item.custoMaterial}" converter="bigDecimalConverter" />
 					</p:column>
-					<p:column headerText="Custo de Mão de Obra" styleClass="coluna-direita">
+					<p:column headerText="Custo de Mão de Obra" sortBy="#{_item.custoMaoDeObra}" filterBy="#{_item.custoMaoDeObra}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{_item.custoMaoDeObra}" converter="bigDecimalConverter" />
 					</p:column>
-					<p:column headerText="Custo Total" styleClass="coluna-direita">
+					<p:column headerText="Custo Total" sortBy="#{_item.custoTotal}" filterBy="#{_item.custoTotal}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{_item.custoTotal}" converter="bigDecimalConverter" />
 					</p:column>
 					<p:columnGroup type="footer" rendered="#{not empty relatorioExtraBean.custosPorEnderecos}">

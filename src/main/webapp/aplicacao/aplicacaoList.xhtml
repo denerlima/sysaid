@@ -27,7 +27,7 @@
 						<h:outputText value="#{app.descricao}" />							
 					</p:column>
 					<p:column headerText="Aprovador do inventário" sortBy="#{app.responsavel.nomeCompleto}" filterBy="#{app.responsavel.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{app.responsavel.nomeCompleto}" />							
+						<h:outputText value="#{app.responsavel.userNameCalculado}" />							
 					</p:column>
 					<p:column headerText="Ações" style="width:200px">											
 						<p:commandButton value="Editar" icon="ui-icon-pencil"

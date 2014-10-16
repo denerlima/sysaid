@@ -30,7 +30,7 @@
 				<div class="col-md-9">
 					<h:selectOneMenu id="responsavel" value="#{aplicacaoBean.aplicacao.responsavel}" converter="objectConverter" required="true" label="Aprovador do inventário" styleClass="input-sm">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItems value="#{aplicacaoBean.responsaveis}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
+						<f:selectItems value="#{aplicacaoBean.responsaveis}" var="user" itemLabel="#{user.userNameCalculado}" itemValue="#{user}" />			
 					</h:selectOneMenu>
 					<h:message for="responsavel" styleClass="msg-error" />
 				</div>
