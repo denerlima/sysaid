@@ -101,7 +101,7 @@
 				</div>		
 
 			<center>
-				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
+				<p:outputPanel id="resultado" layout="block" style="width:99%; overflow:auto">
 					<p:spacer width="100" height="30" />
 					<p:dataTable id="dtResultado" var="_invm"
 						value="#{inventarioBean.inventariosMateriais}" rows="10" paginator="true"
@@ -118,10 +118,10 @@
 							<h:outputText value="#{_invm.inventario.id}" />
 						</p:column>						
 						<p:column headerText="Inventariante">
-							<h:outputText value="#{_invm.inventario.atendente.nomeCompleto}" />
+							<h:outputText value="#{_invm.inventariante.nomeCompleto}" />
 						</p:column>
 						<p:column headerText="Aprovador">
-							<h:outputText value="#{_invm.inventario.aprovador.nomeCompleto}" />
+							<h:outputText value="#{_invm.aprovador.nomeCompleto}" />
 						</p:column>
 						<p:column headerText="Material">
 							<h:outputText value="#{_invm.material.materialLabel}" />
@@ -138,12 +138,11 @@
 						<p:column headerText="Quantidade Inventariada"  styleClass="coluna-direita">
 							<h:outputText value="#{_invm.quantidadeInventariada}" />
 						</p:column>
-						
 						<p:column headerText="Estoque Atual" styleClass="coluna-direita">
-							<h:outputText value="#{_invm.quantidadeEstoque}" />
+							<h:outputText value="#{_invm.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />
 						</p:column>
 						<p:column headerText="Diferença" styleClass="coluna-direita">
-							<h:outputText value="#{_invm.diferenca}" />
+							<h:outputText value="#{_invm.diferenca}" converter="bigDecimalSimplesConverter" />
 						</p:column>
 						<p:column headerText="Status">
 							<h:outputText value="#{_invm.statusLabel}" />

@@ -92,14 +92,13 @@ public class ExtraDAO implements Serializable {
 	public List<ItemVO> consultarNiveis(Integer nivel, String valorNivel) {
 		ArrayList<ItemVO> lista = new ArrayList<ItemVO>();
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT COD_ESTRUTURAL, NOM_UNID_PR_ABREV FROM MF_TAB0025_NIVEL"+nivel);
+		sql.append("SELECT DISTINCT COD_ESTRUTURAL, NOM_UNID_PR_ABREV FROM MF_TAB0025_NIVEL"+nivel);
 		sql.append(" WHERE cod_estrutural like '"+substituirNivel(nivel, valorNivel)+"'");
- 		sql.append(" ORDER BY COD_ESTRUTURAL");
+ 		sql.append(" ORDER BY NOM_UNID_PR_ABREV ASC");
 		Query query = em.createNativeQuery(sql.toString());
 		List<Object[]> retorno = query.getResultList();
 		for(Object[] obj : retorno) {
-			//lista.add(new ItemVO((String) obj[0], (String) obj[1]));
-			lista.add(new ItemVO((String) obj[0], (String) obj[0] + " - "+ (String) obj[1]));
+			lista.add(new ItemVO((String) obj[0], (String) obj[1]));
 		}
 		return lista;
 	}

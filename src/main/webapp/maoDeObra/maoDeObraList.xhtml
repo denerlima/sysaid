@@ -29,10 +29,10 @@
 					<p:column headerText="Mão de Obra" sortBy="#{mao.descricao}" filterBy="#{mao.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mao.descricao}" />							
 					</p:column>
-					<p:column headerText="Valor por Dia" sortBy="#{mao.valordia}">
+					<p:column headerText="Valor por Dia" sortBy="#{mao.valordia}" styleClass="coluna-direita">
 						<h:outputText value="#{mao.valordia}" converter="bigDecimalConverter" />							
 					</p:column>
-					<p:column headerText="Valor por Hora" sortBy="#{mao.valorhora}">
+					<p:column headerText="Valor por Hora" sortBy="#{mao.valorhora}" styleClass="coluna-direita">
 						<h:outputText value="#{mao.valorhora}" converter="bigDecimalConverter" />
 					</p:column>
 					<p:column headerText="Ações" style="width:200px">											

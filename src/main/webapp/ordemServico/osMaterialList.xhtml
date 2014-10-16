@@ -89,7 +89,7 @@
 							<h:outputText value="#{_mat.quantidadeDevolvida}" />
 						</p:column>
 						<p:column styleClass="coluna-direita">
-							<h:outputText value="#{_mat.estoqueConvertido}" />
+							<h:outputText value="#{_mat.estoqueConvertido}" converter="bigDecimalSimplesConverter" />
 						</p:column>
 						<p:column exportable="false">
 							<p:commandButton value="Movimentação" icon="ui-icon-search"

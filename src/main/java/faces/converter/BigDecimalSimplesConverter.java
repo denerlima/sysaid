@@ -30,7 +30,10 @@ public class BigDecimalSimplesConverter implements javax.faces.convert.Converter
 		if(value == null) {
 			return "";
 		}
-		return ((BigDecimal) value).toString().replace(".", ",");
+		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
+		nf.setMinimumFractionDigits(0);
+		nf.setMaximumFractionDigits(2);
+		return nf.format(Double.valueOf(value.toString()));
 	}
 	
 }

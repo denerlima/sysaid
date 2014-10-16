@@ -2,6 +2,7 @@ package model.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -214,11 +215,11 @@ public class OrdemServicoMaterial implements Serializable {
 		return getPrecoUnitario().multiply(getQuantidadeUtilizada());
 	}
 	
-	public BigDecimal getEstoqueConvertido() {
+	public BigDecimal getEstoqueConvertido() throws ParseException {
 		if(getUnidadeMedidaSaida().getFatorConversao().doubleValue() == 0) {
 			return getMaterial().getEstoque();
 		}
-		return new BigDecimal(getMaterial().getEstoque().divide(getUnidadeMedidaSaida().getFatorConversao()).doubleValue());
+		return getMaterial().getEstoque().divide(getUnidadeMedidaSaida().getFatorConversao());
 	}
 	
 	public String getStyleClass() {

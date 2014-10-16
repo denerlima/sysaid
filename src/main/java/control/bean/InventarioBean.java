@@ -411,14 +411,6 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		return this.tipoUsuario.equals("i");
 	}
 
-	public boolean isInventarianteDisabled() {
-		return usuario != null && usuario.trim().length() > 0 || isAprovador();
-	}
-
-	public boolean isAprovadorDisabled() {
-		return usuario != null && usuario.trim().length() > 0 && isAprovador();
-	}
-
 	public boolean isCheckTodos() {
 		return checkTodos;
 	}

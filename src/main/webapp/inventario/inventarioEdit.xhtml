@@ -52,8 +52,7 @@
 						Inventariante: <span class="required">*</span>
 					</div>
 					<div class="col-md-10">
-						<h:selectOneMenu id="atendente" value="#{inventarioBean.inventario.atendente}" converter="objectConverter" required="true" label="Inventariante" styleClass="input-sm"
-							disabled="#{inventarioBean.inventarianteDisabled}">
+						<h:selectOneMenu id="atendente" value="#{inventarioBean.inventario.atendente}" converter="objectConverter" required="true" label="Inventariante" styleClass="input-sm">
 							<f:selectItem itemValue="" itemLabel="Selecione" />
 							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
 						</h:selectOneMenu>	
@@ -237,7 +236,7 @@
 					Estoque Inventariado: <span class="required">*</span>
 				</div>
 				<div class="col-md-10">
-					<h:inputText id="qtdeEstoqueInventariado" value="#{inventarioBean.inventarioMaterial.quantidadeInventariada}" converter="bigDecimalSimplesConverter" required="true" label="Estoque Inventariado" styleClass="qtdeEstoqueInventariado">
+					<h:inputText id="qtdeEstoqueInventariado" value="#{inventarioBean.inventarioMaterial.quantidadeInventariada}" converter="bigDecimalSimplesConverter" required="true" label="Estoque Inventariado" styleClass="qtdeEstoqueInventariado" disabled="#{inventarioBean.aprovador}">
 						<p:ajax event="change" process="@this" update=":materialEditModal:materialEditDialogForm:qtdeDiferenca" />
 					</h:inputText>
 					<h:message for="qtdeEstoqueInventariado" styleClass="msg-error" />
@@ -268,7 +267,7 @@
 						<h:message for="justificavaInventariante" styleClass="msg-error" />
 					</ui:fragment>
 					<ui:fragment rendered="#{inventarioBean.aprovador}">
-						<h:outputText value="#{inventarioBean.inventarioMaterial.justificativa}" />
+						<h:outputText value="#{inventarioBean.inventarioMaterial.justificativaInventariante}" />
 					</ui:fragment>
 				</div>
 			</div>
@@ -289,12 +288,7 @@
 						Aprovador:
 					</div>
 					<div class="col-md-10">
-						<h:selectOneMenu id="usuario" value="#{inventarioBean.inventarioMaterial.aprovador}" converter="objectConverter" required="true" label="Usuário Logado" styleClass="input-sm"
-							disabled="#{inventarioBean.aprovadorDisabled}">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
-						</h:selectOneMenu>	
-						<h:message for="usuario" styleClass="msg-error" />
+						<h:outputText value="#{inventarioBean.inventarioMaterial.aprovador.nomeCompleto}" />
 					</div>
 				</div>
 			</ui:fragment>

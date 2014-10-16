@@ -171,10 +171,10 @@
 							<h:outputText value="#{_nfm.quantidade}" />
 						</p:column>
 						<p:column headerText="Preço Unitário" styleClass="coluna-direita">
-							<h:outputText value="#{_nfm.precoUnitario}" />
+							<h:outputText value="#{_nfm.precoUnitario}" converter="bigDecimalConverter" />
 						</p:column>
 						<p:column headerText="Total" styleClass="coluna-direita">
-							<h:outputText value="#{_nfm.total}" />
+							<h:outputText value="#{_nfm.total}" converter="bigDecimalConverter" />
 						</p:column>											
 					</p:dataTable>
 				</p:outputPanel>
