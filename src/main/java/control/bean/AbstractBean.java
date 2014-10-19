@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -146,4 +147,5 @@ public class AbstractBean {
 			throw new RuntimeException("É necessário está logado.");
 		}
 	}
+	
 }

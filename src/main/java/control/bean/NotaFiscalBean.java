@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -21,6 +22,8 @@ import model.facade.OrdemDeCompraFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.context.RequestContext;
+
+import util.FaceletRenderer;
 
 @Named
 @ViewScoped
@@ -349,6 +352,12 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		for(OrdemDeCompraMaterial ocm : oc.getMateriais()) {
 			ocm.setSelecionado(oc.isCheckTodos());
 		}
+	}
+	
+	public String imprimirRelatorioPDF() {
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/notaFiscal/notaFiscalRelatorioPDF.xhtml");
+		return null;
 	}
 	
 }

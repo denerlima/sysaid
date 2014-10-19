@@ -14,122 +14,125 @@
 			<center>
 				<h2>Relatório de Nota Fiscal</h2>
 			</center>
-			<p:spacer height="10" />
 			
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Nº da Nota Fiscal:" />
-					</div>
-					<div class="col-md-4">
-						<h:inputText id="nrNotaFiscal" value="#{notaFiscalBean.notaFiscal.nrNotaFiscal}" style="width: 90%;" />					
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Nº da Solicitação de Compra:" />
-					</div>
-					<div class="col-md-4">
-						<h:inputText id="nrOC" size="30" value="#{notaFiscalBean.ordemDeCompra.id}" />					
-					</div>
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nº da Nota Fiscal:" />
 				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Material:" />
-					</div>
-					<div class="col-md-4">
-						<h:inputText id="material" value="#{notaFiscalBean.material.material}" style="width: 90%;" />
-					</div>
-					<div class="col-md-2">Tipo Material:</div>
-					<div class="col-md-4">
-						<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{notaFiscalBean.material.tipoMaterial}" required="false" label="Tipo Material">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
-						</h:selectOneMenu>
-						<h:message for="tipoMaterial" styleClass="msg-error" />
-					</div>
+				<div class="col-md-4">
+					<h:inputText id="nrNotaFiscal" value="#{notaFiscalBean.notaFiscal.nrNotaFiscal}" style="width: 90%;" />					
 				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Fornecedor:" />	
-					</div>
-					<div class="col-md-4">
-						<h:selectOneMenu converter="objectConverter" id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" label="Fornecedor">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{notaFiscalBean.allFornecedores}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
-						</h:selectOneMenu>
+				<div class="col-md-2">
+					<h:outputText value="Nº da Solicitação de Compra:" />
+				</div>
+				<div class="col-md-4">
+					<h:inputText id="nrOC" size="30" value="#{notaFiscalBean.ordemDeCompra.id}" />					
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Material:" />
+				</div>
+				<div class="col-md-4">
+					<h:inputText id="material" value="#{notaFiscalBean.material.material}" style="width: 90%;" />
+				</div>
+				<div class="col-md-2">Tipo Material:</div>
+				<div class="col-md-4">
+					<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{notaFiscalBean.material.tipoMaterial}" required="false" label="Tipo Material">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+					</h:selectOneMenu>
+					<h:message for="tipoMaterial" styleClass="msg-error" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Fornecedor:" />	
+				</div>
+				<div class="col-md-4">
+					<h:selectOneMenu converter="objectConverter" id="fornecedor" value="#{notaFiscalBean.notaFiscal.fornecedor}" label="Fornecedor">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{notaFiscalBean.allFornecedores}" var="forn" itemLabel="#{forn.nome}"   itemValue="#{forn}" />			
+					</h:selectOneMenu>
 
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Aplicação:" />	
-					</div>
-					<div class="col-md-4">
-						<h:selectOneMenu converter="objectConverter" id="aplicacao" value="#{notaFiscalBean.material.aplicacao}" label="Aplicação" styleClass="input-sm">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{materialBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
-						</h:selectOneMenu>
-					</div>					
 				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Data Emissão:" />
-					</div>
-					<div class="col-md-4">
-						<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
-							value="#{notaFiscalBean.dtEmissaoInicial}" size="10" navigator="true" />
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Até:" />
-					</div>
-					<div class="col-md-4">
-						<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
-							value="#{notaFiscalBean.dtEmissaoFinal}" size="10" navigator="true" />
-					</div>
+				<div class="col-md-2">
+					<h:outputText value="Aplicação:" />	
 				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Data Entrega:" />
-					</div>
-					<div class="col-md-4">
-						<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
-							value="#{notaFiscalBean.dtEntregaInicial}" size="10" navigator="true" />
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Até:" />
-					</div>
-					<div class="col-md-4">
-						<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
-							value="#{notaFiscalBean.dtEntregaFinal}" size="10" navigator="true" />
-					</div>
-				</div>				
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Percentual de desconto:" />	
-					</div>
-					<div class="col-md-4">
-						<h:inputText id="total" value="#{notaFiscalBean.notaFiscal.acrescimos}" converter="bigDecimalConverter"  />
-					</div>
-				
-					<div class="col-md-2">
-						<h:outputText value="Total Geral da Nota:" />	
-					</div>
-					<div class="col-md-4">
-						<h:inputText id="totalGeral" value="#{notaFiscalBean.notaFiscal.totalGeralNota}" converter="bigDecimalConverter" />						
-					</div>
+				<div class="col-md-4">
+					<h:selectOneMenu converter="objectConverter" id="aplicacao" value="#{notaFiscalBean.material.aplicacao}" label="Aplicação" styleClass="input-sm">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{materialBean.allAplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />					
+					</h:selectOneMenu>
+				</div>					
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Data Emissão:" />
 				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-12" style="text-align: center;">
-						<p:commandButton value="Pesquisar" icon="ui-icon-search"
-								action="#{notaFiscalBean.pesquisarNotaFiscalbyFilters}" update=":notaFiscalForm" style="margin-left: 5px;" />
-					</div>
+				<div class="col-md-4">
+					<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
+						value="#{notaFiscalBean.dtEmissaoInicial}" size="10" navigator="true" />
 				</div>
+				<div class="col-md-2">
+					<h:outputText value="Até:" />
+				</div>
+				<div class="col-md-4">
+					<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
+						value="#{notaFiscalBean.dtEmissaoFinal}" size="10" navigator="true" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Data Entrega:" />
+				</div>
+				<div class="col-md-4">
+					<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
+						value="#{notaFiscalBean.dtEntregaInicial}" size="10" navigator="true" />
+				</div>
+				<div class="col-md-2">
+					<h:outputText value="Até:" />
+				</div>
+				<div class="col-md-4">
+					<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
+						value="#{notaFiscalBean.dtEntregaFinal}" size="10" navigator="true" />
+				</div>
+			</div>				
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Percentual de desconto:" />	
+				</div>
+				<div class="col-md-4">
+					<h:inputText id="total" value="#{notaFiscalBean.notaFiscal.acrescimos}" converter="bigDecimalConverter"  />
+				</div>
+			
+				<div class="col-md-2">
+					<h:outputText value="Total Geral da Nota:" />	
+				</div>
+				<div class="col-md-4">
+					<h:inputText id="totalGeral" value="#{notaFiscalBean.notaFiscal.totalGeralNota}" converter="bigDecimalConverter" />						
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-12" style="text-align: center;">
+					<p:commandButton value="Pesquisar" icon="ui-icon-search"
+							action="#{notaFiscalBean.pesquisarNotaFiscalbyFilters}" update=":notaFiscalForm" style="margin-left: 5px;" />
+							
+					<p:commandLink action="#{notaFiscalBean.imprimirRelatorioPDF}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank">
+						<h:graphicImage value="/resources/img/btn-print.png" />
+					</p:commandLink>		
+							
+				</div>
+			</div>
 				
 			<center>
-				<p:outputPanel id="resultado" layout="block" style="width:95%; overflow:auto">
-					<p:spacer width="100" height="30" />
+				<p:outputPanel id="resultado" layout="block" style="width:99%; margin-top: 25px;">
 					<p:dataTable id="dtResultado" var="_nfm"
 						value="#{notaFiscalBean.notasFiscaisMateriais}" rows="10" paginator="true"
 						paginatorAlwaysVisible="false" paginatorPosition="bottom"
@@ -184,11 +187,6 @@
 					<h:commandLink>
 						<p:graphicImage name="/img/excel.png" width="24" />
 						<p:dataExporter type="xls" target="dtResultado" fileName="relatorioNotaFiscal" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/img/pdf.png" width="24" />
-						<p:dataExporter type="pdf" target="dtResultado" fileName="relatorioNotaFiscal" />
 					</h:commandLink>
 				</p:outputPanel>
 

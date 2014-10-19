@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
+	
+	<h:head>
+		<title>SysAid</title>
+		<ui:include src="/resources/css/stylePDF.xhtml" />		
+	</h:head>
+	<body>
+	
+		<center>
+			<h2>Relatório de Inventário</h2>
+		</center>
+		
+		<table style="width: 100%;">
+			<tr>
+				<td style="width: 50%;">
+					<h:outputText value="Nº de inventário: " styleClass="label-bold" />
+					<h:outputText value="#{inventarioBean.inventario.id}" />
+				</td>
+				<td style="width: 50%;">
+					<h:outputText value="Inventariante: " styleClass="label-bold" />
+					<h:outputText value="#{inventarioBean.inventario.atendente.nomeCompleto}" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Material: " styleClass="label-bold" />
+					<h:outputText value="#{inventarioBean.material.material}" />
+				</td>
+				<td>
+					<h:outputText value="Tipo Material: " styleClass="label-bold" />
+					<h:outputText value="#{inventarioBean.material.tipoMaterial.descricao}" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<h:outputText value="Data Inicial: " styleClass="label-bold"/>
+					<h:outputText value="#{inventarioBean.dataInicialInventario}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+					<h:outputText value=" à " styleClass="label-bold" /> 
+					<h:outputText value="#{inventarioBean.dataFinalInventario}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Aprovador: " styleClass="label-bold" />
+					<h:outputText value="#{inventarioBean.inventario.aprovador.nomeCompleto}" />
+				</td>
+				<td>
+					<h:outputText value="Aplicação: " styleClass="label-bold" />
+					<h:outputText value="#{inventarioBean.material.aplicacao.descricao}" />
+				</td>
+			</tr>
+		</table>
+		
+		<center>
+			<p:outputPanel id="resultado" layout="block" style="width:99%; overflow:auto">
+				<p:spacer width="100" height="30" />
+				<p:dataTable id="dtResultado" var="_invm"
+					value="#{inventarioBean.inventariosMateriais}"
+					emptyMessage="Não existem itens nesta lista.">
+
+					<p:column headerText="Data" sortBy="#{_invm.inventario.dataInventario}" filterBy="#{_invm.inventario.dataInventario}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_invm.inventario.dataInventario}">
+							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+						</h:outputText>
+					</p:column>											
+					<p:column headerText="Nº do Inventário" sortBy="#{_invm.inventario.id}" filterBy="#{_invm.inventario.id}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_invm.inventario.id}" />
+					</p:column>						
+					<p:column headerText="Inventariante" sortBy="#{_invm.inventariante.nomeCompleto}" filterBy="#{_invm.inventariante.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_invm.inventariante.nomeCompleto}" />
+					</p:column>
+					<p:column headerText="Aprovador" sortBy="#{_invm.aprovador.nomeCompleto}" filterBy="#{_invm.aprovador.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_invm.aprovador.nomeCompleto}" />
+					</p:column>
+					<p:column headerText="Material" sortBy="#{_invm.material.materialLabel}" filterBy="#{_invm.material.materialLabel}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_invm.material.materialLabel}" />
+					</p:column>
+					<p:column headerText="Tipo de Material" sortBy="#{_invm.material.tipoMaterial.descricao}" filterBy="#{_invm.material.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_invm.material.tipoMaterial.descricao}" />
+					</p:column>
+					<p:column headerText="Aplicação" sortBy="#{_invm.material.aplicacao.descricao}" filterBy="#{_invm.material.aplicacao.descricao}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_invm.material.aplicacao.descricao}" />
+					</p:column>
+					<p:column headerText="Unidade de medida Entrada" sortBy="#{_invm.material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{_invm.material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_invm.material.unidadeMedida.unidadeEntrada.descricao}" />
+					</p:column>
+					<p:column headerText="Quantidade Inventariada" sortBy="#{_invm.quantidadeInventariada}" filterBy="#{_invm.quantidadeInventariada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+						<h:outputText value="#{_invm.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />
+					</p:column>
+					<p:column headerText="Estoque Atual" sortBy="#{_invm.quantidadeEstoque}" filterBy="#{_invm.quantidadeEstoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+						<h:outputText value="#{_invm.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />
+					</p:column>
+					<p:column headerText="Diferença" sortBy="#{_invm.diferenca}" filterBy="#{_invm.diferenca}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+						<h:outputText value="#{_invm.diferenca}" converter="bigDecimalSimplesConverter" />
+					</p:column>
+					<p:column headerText="Status" sortBy="#{_invm.statusLabel}" filterBy="#{_invm.statusLabel}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_invm.statusLabel}" />
+					</p:column>
+										
+				</p:dataTable>
+			</p:outputPanel>
+
+		</center>
+
+		<br />
+		Data de Impressão: 
+		<h:outputText value="#{homeBean.dataAtual}">
+			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="both" timeZone="America/Sao_Paulo" /> 
+		</h:outputText>
+
+	</body>
+</html>

@@ -28,6 +28,10 @@
 					<h:inputText id="material" size="50" value="#{materialBean.material.material}" />
 					<p:commandButton value="Pesquisar" icon="ui-icon-search"
 								action="#{materialBean.pesquisarListaMateriaisbyNome}" update=":estoqueForm" style="margin-left: 5px;" />
+								
+					<p:commandLink action="#{materialBean.imprimirEstoquePDF}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank">
+						<h:graphicImage value="/resources/img/btn-print.png" />
+					</p:commandLink>
 				</div>			
 			</div>
 		
@@ -53,7 +57,7 @@
 					<p:column headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
 					</p:column>
-					<p:column headerText="Estoque" sortBy="#{mat.estoque}" filterBy="#{mat.estoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}">
+					<p:column headerText="Estoque" sortBy="#{mat.estoque}" filterBy="#{mat.estoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
 					</p:column>
 				</p:dataTable>
@@ -65,11 +69,6 @@
 		         	<p:graphicImage name="/img/excel.png" width="24"/>
 		            <p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />
 		         </h:commandLink>
-		 
-		         <h:commandLink>
-		  	       <p:graphicImage name="/img/pdf.png" width="24"/>
-		           <p:dataExporter type="pdf" target="dtResultado" fileName="relatorioEstoque"/>
-		   	     </h:commandLink>
 	   	 	</p:outputPanel>
 
 			</center>

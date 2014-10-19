@@ -50,7 +50,7 @@ public class NotaFiscalDAO extends GenericDAO<NotaFiscal> {
 				sql.append(" AND nfm.ordemDeCompraMaterial.ordemDeCompra.id = :nrOC");
 			}
 			if (mat.getMaterial() != null) {
-				sql.append(" AND nfm.ordemDeCompraMaterial.material.material LIKE :mMat");
+				sql.append(" AND UPPER(nfm.ordemDeCompraMaterial.material.material) LIKE UPPER(:mMat)");
 			}
 			if (mat.getTipoMaterial() != null) {
 				sql.append(" AND nfm.ordemDeCompraMaterial.material.tipoMaterial.id = :idTipoMat");

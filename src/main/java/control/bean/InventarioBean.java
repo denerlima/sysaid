@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -22,6 +23,8 @@ import model.facade.UsuarioFacade;
 
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.context.RequestContext;
+
+import util.FaceletRenderer;
 
 @Named
 @ViewScoped
@@ -56,8 +59,9 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	@PostConstruct 
 	public void init() { 
-		System.out.println("Bean Instanciado!"); 
+		//System.out.println("Bean Instanciado!"); 
 	}
+	
 	
 	public String novo() {
 		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&tipo=i";
@@ -430,6 +434,12 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			}
 		}
 		return false;
+	}
+
+	public String imprimirRelatorioPDF() {
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/inventario/inventarioRelatorioPDF.xhtml");
+		return null;
 	}
 	
 }
