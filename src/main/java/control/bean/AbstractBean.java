@@ -28,14 +28,19 @@ public class AbstractBean {
 		super();
 	}
 
-	protected void displayErrorMessageToUser(String message) {
-		JSFMessageUtil messageUtil = new JSFMessageUtil();
-		messageUtil.sendErrorMessageToUser(message);
-	}
-	
 	protected void displayInfoMessageToUser(String message) {
 		JSFMessageUtil messageUtil = new JSFMessageUtil();
 		messageUtil.sendInfoMessageToUser(message);
+	}
+	
+	protected void displayWarnMessageToUser(String message) {
+		JSFMessageUtil messageUtil = new JSFMessageUtil();
+		messageUtil.sendWarnMessageToUser(message);
+	}
+	
+	protected void displayErrorMessageToUser(String message) {
+		JSFMessageUtil messageUtil = new JSFMessageUtil();
+		messageUtil.sendErrorMessageToUser(message);
 	}
 	
 	protected RequestContext getRequestContext(){
@@ -146,4 +151,5 @@ public class AbstractBean {
 			throw new RuntimeException("É necessário está logado.");
 		}
 	}
+	
 }

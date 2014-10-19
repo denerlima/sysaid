@@ -43,7 +43,9 @@ public class RelatorioExtraBean extends AbstractBean implements Serializable {
 	private List<ItemVO> niveis7;
 	private List<ItemVO> niveis8;
 	private List<CustoPorEnderecoVO> custosPorEnderecos = new ArrayList<CustoPorEnderecoVO>();
+	private List<CustoPorEnderecoVO> custosPorEnderecosFiltered = new ArrayList<CustoPorEnderecoVO>();
 	private List<CustoPorUnidadeVO> custosPorUnidades = new ArrayList<CustoPorUnidadeVO>();
+	private List<CustoPorUnidadeVO> custosPorUnidadesFiltered = new ArrayList<CustoPorUnidadeVO>();
 	
 	private CustoPorEnderecoFilterVO custoPorEnderecoFilter;
 	private CustoPorUnidadeFilterVO custoPorUnidadeFilter;
@@ -75,6 +77,7 @@ public class RelatorioExtraBean extends AbstractBean implements Serializable {
 	public void consultarCustoPorEndereco() {
 		try {
 			custosPorEnderecos = extraFacade.consultarCustoPorEndereco(custoPorEnderecoFilter);
+			custosPorEnderecosFiltered = custosPorEnderecos;
 		} catch (Exception e) {
 			e.printStackTrace();
 			displayErrorMessageToUser("Erro: " + e.getMessage());
@@ -85,6 +88,7 @@ public class RelatorioExtraBean extends AbstractBean implements Serializable {
 	public void consultarCustoPorUnidade() {
 		try {
 			custosPorUnidades = extraFacade.consultarCustoPorUnidade(custoPorUnidadeFilter);
+			custosPorUnidadesFiltered = custosPorUnidades;
 		} catch (Exception e) {
 			e.printStackTrace();
 			displayErrorMessageToUser("Erro: " + e.getMessage());
@@ -159,6 +163,14 @@ public class RelatorioExtraBean extends AbstractBean implements Serializable {
 	public void setCustosPorEnderecos(List<CustoPorEnderecoVO> custosPorEnderecos) {
 		this.custosPorEnderecos = custosPorEnderecos;
 	}
+	
+	public List<CustoPorEnderecoVO> getCustosPorEnderecosFiltered() {
+		return custosPorEnderecosFiltered;
+	}
+
+	public void setCustosPorEnderecosFiltered(List<CustoPorEnderecoVO> custosPorEnderecosFiltered) {
+		this.custosPorEnderecosFiltered = custosPorEnderecosFiltered;
+	}
 
 	public List<CustoPorUnidadeVO> getCustosPorUnidades() {
 		return custosPorUnidades;
@@ -168,6 +180,14 @@ public class RelatorioExtraBean extends AbstractBean implements Serializable {
 		this.custosPorUnidades = custosPorUnidades;
 	}
 
+	public List<CustoPorUnidadeVO> getCustosPorUnidadesFiltered() {
+		return custosPorUnidadesFiltered;
+	}
+
+	public void setCustosPorUnidadesFiltered(List<CustoPorUnidadeVO> custosPorUnidadesFiltered) {
+		this.custosPorUnidadesFiltered = custosPorUnidadesFiltered;
+	}
+	
 	public CustoPorUnidadeFilterVO getCustoPorUnidadeFilter() {
 		return custoPorUnidadeFilter;
 	}

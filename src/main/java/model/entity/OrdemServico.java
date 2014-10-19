@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -31,6 +32,7 @@ public class OrdemServico extends GenericModelo implements Serializable{
 	private String justificativa;
 	
 	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL)
+	@OrderBy("data desc")
 	private Set<OrdemServicoMaterial> materiais = new HashSet<OrdemServicoMaterial>();
 	
 	@OneToMany(mappedBy="ordemServico", cascade=CascadeType.ALL, orphanRemoval=true)

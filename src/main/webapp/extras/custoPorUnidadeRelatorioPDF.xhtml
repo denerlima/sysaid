@@ -1,111 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
 	
-	
-	
-	<html>
 	<h:head>
 		<title>SysAid</title>
-		
-		<style type="text/css">
-	 
-		 	body {
-		 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-				font-size: 10px;
-				line-height: 1.428571429;
-				color: #333;
-				background-color: #fff;
-		 	}
-		 
-			.ui-datatable table {
-	            border-collapse: collapse;
-	            width: 100%;
-	            table-layout: fixed;
-	        }
-	
-	        .ui-datatable .ui-datatable-header, .ui-datatable .ui-datatable-footer {
-	            text-align: center;
-	            padding: 4px 10px;
-	        }
-	
-	        .ui-datatable .ui-datatable-header {
-	            border-bottom: 0px none;
-	        }
-	
-	        .ui-datatable .ui-datatable-footer {
-	            border-top: 0px none;
-	        }
-	
-	        .ui-datatable thead th, .ui-datatable tfoot td {
-	            text-align: center;
-	        }
-	
-	        .ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
-	            padding: 4px 10px;
-	            overflow: hidden;
-	            border-width: 1px;
-	            border-style: solid;
-	        }
-
-			.ui-datatable thead th, .ui-datatable tfoot td {
-				background: #f9f9fc;
-			}
-				
-			.ui-datatable tbody td {
-				text-align: left;
-			}
-
-			.ui-datatable tbody td.coluna-direita {
-				text-align: right;
-			}
-
-		</style>
-		
+		<ui:include src="/resources/css/stylePDF.xhtml" />		
 	</h:head>
 	<body>
 	
 		<center>
 			<h2>Relatório de Custo por Unidade</h2>
 		</center>
-	
-		
 			
-			<table>
-				<tr>
-					<td>
-						<h:outputText value="Data Emissão:" />
-					</td>
-					<td colspan="3">
-						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoInicio}">
-							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-						</h:outputText>
-						à
-						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoFim}">
-							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-						</h:outputText>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4">
-						<h:outputText value="Imprimir os dados das Ordens de Serviços: " />
-						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.imprimirOrdemServico ? 'Sim' : 'Não'}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h:outputText value="Demandante:" />
-					</td>
-					<td colspan="3">
-						<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.demandante.label}" />
-					</td>
-				</tr>
+		<table>
+			<tr>
+				<td>
+					<h:outputText value="Data Emissão:" />
+				</td>
+				<td colspan="3">
+					<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoInicio}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+					à
+					<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.emissaoFim}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<h:outputText value="Imprimir os dados das Ordens de Serviços: " />
+					<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.imprimirOrdemServico ? 'Sim' : 'Não'}" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Demandante:" />
+				</td>
+				<td colspan="3">
+					<h:outputText value="#{relatorioExtraBean.custoPorUnidadeFilter.demandante.label}" />
+				</td>
+			</tr>
+			<ui:fragment rendered="#{relatorioExtraBean.custoPorUnidadeFilter.nivel1 != null}">
 				<tr>
 					<td>
 						<h:outputText value="Nível 1" />
@@ -114,6 +56,8 @@
 						<h:outputText id="nivel1" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel1.label}" />
 					</td>
 				</tr>
+			</ui:fragment>
+			<ui:fragment rendered="#{relatorioExtraBean.custoPorUnidadeFilter.nivel2 != null}">
 				<tr>
 					<td>
 						<h:outputText value="Nível 2" />
@@ -122,6 +66,8 @@
 						<h:outputText id="nivel2" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel2.label}" />
 					</td>
 				</tr>
+			</ui:fragment>
+			<ui:fragment rendered="#{relatorioExtraBean.custoPorUnidadeFilter.nivel3 != null}">
 				<tr>
 					<td>
 						<h:outputText value="Nível 3" />
@@ -130,6 +76,8 @@
 						<h:outputText id="nivel3" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel3.label}" />
 					</td>
 				</tr>
+			</ui:fragment>
+			<ui:fragment rendered="#{relatorioExtraBean.custoPorUnidadeFilter.nivel4 != null}">
 				<tr>
 					<td>
 						<h:outputText value="Nível 4" />
@@ -138,6 +86,8 @@
 						<h:outputText id="nivel4" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel4.label}" />
 					</td>
 				</tr>
+			</ui:fragment>
+			<ui:fragment rendered="#{relatorioExtraBean.custoPorUnidadeFilter.nivel5 != null}">
 				<tr>
 					<td>
 						<h:outputText value="Nível 5" />
@@ -146,6 +96,8 @@
 						<h:outputText id="nivel5" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel5.label}" />
 					</td>
 				</tr>
+			</ui:fragment>
+			<ui:fragment rendered="#{relatorioExtraBean.custoPorUnidadeFilter.nivel6 != null}">
 				<tr>
 					<td>
 						<h:outputText value="Nível 6" />
@@ -154,6 +106,8 @@
 						<h:outputText id="nivel6" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel6.label}" />
 					</td>
 				</tr>
+			</ui:fragment>
+			<ui:fragment rendered="#{relatorioExtraBean.custoPorUnidadeFilter.nivel7 != null}">
 				<tr>
 					<td>
 						<h:outputText value="Nível 7" />
@@ -162,6 +116,8 @@
 						<h:outputText id="nivel7" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel7.label}" />
 					</td>
 				</tr>
+			</ui:fragment>
+			<ui:fragment rendered="#{relatorioExtraBean.custoPorUnidadeFilter.nivel8 != null}">
 				<tr>
 					<td>
 						<h:outputText value="Nível 8" />
@@ -170,60 +126,62 @@
 						<h:outputText id="nivel8" value="#{relatorioExtraBean.custoPorUnidadeFilter.nivel8.label}" />
 					</td>
 				</tr>
-			</table>
-			
-			<p:outputPanel id="resultado" layout="block" style="text-align: center;">
-				<center>
-				<p:dataTable id="dtResultado" var="_item"
-						value="#{relatorioExtraBean.custosPorUnidades}" 
-						emptyMessage="Não existem itens nesta lista."
-						style="width: 99%;">
-					
-					<p:column headerText="Sigla">
-						<h:outputText value="#{_item.sigla}" />
-					</p:column>
-					<p:column headerText="Nome da Unidade">
-						<h:outputText value="#{_item.nomeUnidade}" />
-					</p:column>
-					<p:column headerText="Valor de Material" style="text-align: right;">
-						<h:outputText value="#{_item.custoMaterial}" converter="bigDecimalConverter" />
-					</p:column>
-					<p:column headerText="Valor de Mão de Obra" style="text-align: right;">
-						<h:outputText value="#{_item.custoMaoDeObra}" converter="bigDecimalConverter" />
-					</p:column>
-					<p:column headerText="Custo Total" style="text-align: right;">
-						<h:outputText value="#{_item.custoTotal}" converter="bigDecimalConverter" />
-					</p:column>
-					<p:column headerText="OS Principal">
-						<h:outputText value="#{_item.osPrincipal}" />
-					</p:column>
-					<p:column headerText="Sub OS">
-						<h:outputText value="#{_item.ordemServico}" />
-					</p:column>
-					<p:column headerText="Data">
-						<h:outputText value="#{_item.data}">
-							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-						</h:outputText>
-					</p:column>
-					<p:column headerText="Demandante">
-						<h:outputText value="#{_item.demandante}" />
-					</p:column>
-					<p:columnGroup type="footer" rendered="#{not empty relatorioExtraBean.custosPorUnidades}">
-			            <p:row>
-			                <p:column colspan="2" style="text-align: right;" footerText="Custo Total:" />
-			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaterialCustoPorUnidade}" />
-			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaoDeObraCustoPorUnidade}" />
-			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalCustoPorUnidade}" />
-			                <p:column colspan="4" footerText="" />
-			            </p:row>
-			        </p:columnGroup>
-				</p:dataTable>
-				</center>
-			</p:outputPanel>
+			</ui:fragment>
+		</table>
 		
+		<center>
+			<p:dataTable id="dtResultado" var="_item"
+					value="#{relatorioExtraBean.custosPorUnidadesFiltered}" 
+					emptyMessage="Não existem itens nesta lista."
+					style="width: 99%;">
+				
+				<p:column headerText="Sigla">
+					<h:outputText value="#{_item.sigla}" />
+				</p:column>
+				<p:column headerText="Nome da Unidade">
+					<h:outputText value="#{_item.nomeUnidade}" />
+				</p:column>
+				<p:column headerText="Valor de Material" style="text-align: right;">
+					<h:outputText value="#{_item.custoMaterial}" converter="bigDecimalConverter" />
+				</p:column>
+				<p:column headerText="Valor de Mão de Obra" style="text-align: right;">
+					<h:outputText value="#{_item.custoMaoDeObra}" converter="bigDecimalConverter" />
+				</p:column>
+				<p:column headerText="Custo Total" style="text-align: right;">
+					<h:outputText value="#{_item.custoTotal}" converter="bigDecimalConverter" />
+				</p:column>
+				<p:column headerText="OS Principal">
+					<h:outputText value="#{_item.osPrincipal}" />
+				</p:column>
+				<p:column headerText="Sub OS">
+					<h:outputText value="#{_item.subOs}" />
+				</p:column>
+				<p:column headerText="Data">
+					<h:outputText value="#{_item.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Demandante">
+					<h:outputText value="#{_item.demandante}" />
+				</p:column>
+				<p:columnGroup type="footer" rendered="#{not empty relatorioExtraBean.custosPorUnidades}">
+		            <p:row>
+		                <p:column colspan="2" style="text-align: right;" footerText="Custo Total:" />
+		                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaterialCustoPorUnidade}" />
+		                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaoDeObraCustoPorUnidade}" />
+		                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalCustoPorUnidade}" />
+		                <p:column colspan="4" footerText="" />
+		            </p:row>
+		        </p:columnGroup>
+			</p:dataTable>
+		</center>
 		
-	
+		<br />
+		Data de Impressão: 
+		<h:outputText value="#{homeBean.dataAtual}">
+			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="both" timeZone="America/Sao_Paulo" /> 
+		</h:outputText>
+		
 	</body>
-	</html>
-	
-</ui:composition>
+
+</html>

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -23,6 +24,8 @@ import model.facade.UsuarioFacade;
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.context.RequestContext;
 
+import util.FaceletRenderer;
+
 @Named
 @ViewScoped
 public class InventarioBean extends AbstractBean implements Serializable {
@@ -32,6 +35,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	private Inventario inventario;	
 	private List<Inventario> inventarios;
 	private List<InventarioMaterial> inventariosMateriais;
+	private List<InventarioMaterial> inventariosMateriaisFiltered;
 	private InventarioMaterial inventarioMaterial;
 	private String tipoUsuario;
 	private String usuario;
@@ -56,8 +60,9 @@ public class InventarioBean extends AbstractBean implements Serializable {
 
 	@PostConstruct 
 	public void init() { 
-		System.out.println("Bean Instanciado!"); 
+		//System.out.println("Bean Instanciado!"); 
 	}
+	
 	
 	public String novo() {
 		return "/inventario/inventarioEdit.xhtml?faces-redirect=true&tipo=i";
@@ -190,7 +195,8 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	
 	public List<InventarioMaterial> pesquisarInventarioByFilter() {
 		try {			
-			inventariosMateriais = getInventarioFacade().listMateriaisInventarios(inventario , material , dataInicialInventario , dataFinalInventario);			
+			inventariosMateriais = getInventarioFacade().listMateriaisInventarios(inventario , material , dataInicialInventario , dataFinalInventario);
+			inventariosMateriaisFiltered = inventariosMateriais;
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhum Inventário. ERRO");
 			e.printStackTrace();
@@ -340,6 +346,14 @@ public class InventarioBean extends AbstractBean implements Serializable {
 	public void setInventariosMateriais(List<InventarioMaterial> inventariosMateriais) {
 		this.inventariosMateriais = inventariosMateriais;
 	}
+	
+	public List<InventarioMaterial> getInventariosMateriaisFiltered() {
+		return inventariosMateriaisFiltered;
+	}
+
+	public void setInventariosMateriaisFiltered(List<InventarioMaterial> inventariosMateriaisFiltered) {
+		this.inventariosMateriaisFiltered = inventariosMateriaisFiltered;
+	}
 
 	public boolean isManaged() {
 		return inventario != null && inventario.getId() != null;
@@ -430,6 +444,12 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			}
 		}
 		return false;
+	}
+
+	public String imprimirRelatorioPDF() {
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/inventario/inventarioRelatorioPDF.xhtml");
+		return null;
 	}
 	
 }

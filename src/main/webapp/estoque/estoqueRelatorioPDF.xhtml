@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
+	
+	<h:head>
+		<title>SysAid</title>
+		<ui:include src="/resources/css/stylePDF.xhtml" />
+	</h:head>
+	<body>	
+			
+		<center><h2>Relatório de Estoque</h2></center>
+		
+		<p:spacer height="10" />
+	
+		<div>
+			<h:outputText value="Material: " styleClass="label-bold" />
+			<h:outputText value="#{materialBean.material.material}" />
+		</div>
+		
+		<center>
+			<p:outputPanel id="resultado" layout="block" style="width:99%;">
+				<br />
+				<p:dataTable id="dtResultado" var="mat" value="#{materialBean.materiaisFiltered}"
+					emptyMessage="Não existem itens nesta lista.">
+
+					<p:column headerText="Material">
+						<h:outputText value="#{mat.material}" />							
+					</p:column>
+					<p:column headerText="Tipo Material">
+						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
+					</p:column>
+					<p:column headerText="Descrição">
+						<h:outputText value="#{mat.descricao}" />							
+					</p:column>
+					<p:column headerText="Unidade de Medida Entrada">
+						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
+					</p:column>
+					<p:column headerText="Estoque" styleClass="coluna-direita">
+						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+		</center>
+			
+		<br />
+		Data de Impressão: 
+		<h:outputText value="#{homeBean.dataAtual}">
+			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="both" timeZone="America/Sao_Paulo" /> 
+		</h:outputText>
+			
+	</body>
+</html>

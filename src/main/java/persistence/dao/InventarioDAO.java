@@ -32,6 +32,9 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 		try {
 			StringBuffer sql = new StringBuffer();
 			sql.append("Select invm FROM InventarioMaterial invm left join invm.inventario inv WHERE inv.ativo = 1");
+			if (inv.getId() != null) {
+				sql.append(" AND inv.id = :id");
+			}
 			if (dtInicial != null) {
 				sql.append(" AND inv.dataInventario >= to_date('"+ DataUtil.formataData(dtInicial)+ "','dd/MM/yy')");
 			} 
@@ -45,13 +48,10 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 				sql.append(" AND invm.material.tipoMaterial.id = :idTipoMat");
 			}
 			if (inv.getAtendente() != null) {
-				sql.append(" AND inv.atendente.userName = :atendente");
-			}
-			if (inv.getId() != null) {
-				sql.append(" AND inv.id = :id");
+				sql.append(" AND invm.inventariante.userName = :inventariante");
 			}
 			if (inv.getAprovador() != null) {
-				sql.append(" AND invm.usuario.userName = :aprovador");
+				sql.append(" AND invm.aprovador.userName = :aprovador");
 			}
 			if (mat.getAplicacao() != null) {
 				sql.append(" AND invm.material.aplicacao.id = :idAplicacao");
@@ -61,6 +61,9 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 
 			Query query = getEntityManager().createQuery(sql.toString());
 
+			if (inv.getId() != null) {
+				query.setParameter("id", inv.getId());
+			}
 			if (mat.getMaterial() != null) {
 				query.setParameter("idMat", mat.getId());
 			}
@@ -68,10 +71,7 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 				query.setParameter("idTipoMat", mat.getTipoMaterial().getId());
 			}
 			if (inv.getAtendente() != null) {
-				query.setParameter("atendente", inv.getAtendente().getUserName());
-			}
-			if (inv.getId() != null) {
-				query.setParameter("id", inv.getId());
+				query.setParameter("inventariante", inv.getAtendente().getUserName());
 			}
 			if (inv.getAprovador() != null) {
 				query.setParameter("aprovador", inv.getAprovador().getUserName());
@@ -79,7 +79,6 @@ public class InventarioDAO extends GenericDAO<Inventario> {
 			if (mat.getAplicacao() != null) {
 				query.setParameter("idAplicacao", mat.getAplicacao().getId());
 			}
-			
 			lista = query.getResultList(); 
 		
 		} catch (Exception e) {

@@ -1,71 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
 	
-<html>
 	<h:head>
 		<title>SysAid</title>
-		
-		<style type="text/css">
-	 
-		 	body {
-		 		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-				font-size: 10px;
-				line-height: 1.428571429;
-				color: #333;
-				background-color: #fff;
-		 	}
-		 
-			.ui-datatable table {
-	            border-collapse: collapse;
-	            width: 100%;
-	            table-layout: fixed;
-	        }
-	
-	        .ui-datatable .ui-datatable-header, .ui-datatable .ui-datatable-footer {
-	            text-align: center;
-	            padding: 4px 10px;
-	        }
-	
-	        .ui-datatable .ui-datatable-header {
-	            border-bottom: 0px none;
-	        }
-	
-	        .ui-datatable .ui-datatable-footer {
-	            border-top: 0px none;
-	        }
-	
-	        .ui-datatable thead th, .ui-datatable tfoot td {
-	            text-align: center;
-	        }
-	
-	        .ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
-	            padding: 4px 10px;
-	            overflow: hidden;
-	            border-width: 1px;
-	            border-style: solid;
-	        }
-
-			.ui-datatable thead th, .ui-datatable tfoot td {
-				background: #f9f9fc;
-			}
-				
-			.ui-datatable tbody td {
-				text-align: left;
-			}
-			
-			.ui-datatable tbody td.coluna-direita {
-				text-align: right;
-			}
-
-		</style>
-		
+		<ui:include src="/resources/css/stylePDF.xhtml" />		
 	</h:head>
 	<body>
 	
@@ -73,126 +18,126 @@
 			<h2>Relatório de Custo por Endereço</h2>
 		</center>
 			
-			<table>
-				
-				<tr>
-					<td>
-						<h:outputText value="Nível de Detalhe:" />
-					</td>
-					<td>
-						<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.nivelDetalheLabel}" />
-					</td>
-					<td>
-						<h:outputText value="Incluir SUB-OS:" style="margin-left: 30px;" />
-					</td>
-					<td>
-						<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.incluirSubOS ? 'Sim' : 'Não'}" />
-					</td>
-				</tr>
-				
-				<tr>
-					<td>
-						<h:outputText value="OS's emitidas entre:" />
-					</td>
-					<td colspan="3">
-						<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.emissaoInicio}">
-							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-						</h:outputText>
-						à
-						<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.emissaoFim}">
-							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-						</h:outputText>
-					</td>
-				</tr>
-				
-				<tr>
-					<td>
-						<h:outputText value="Demandante:" />
-					</td>
-					<td colspan="3">
-						<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.demandante.label}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h:outputText value="Agrupador:" />
-					</td>
-					<td colspan="3">
-						<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.agrupador.label}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h:outputText value="Endereço:" />
-					</td>
-					<td colspan="3">
-						<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.endereco.label}" />
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h:outputText value="Complemento Endereço:" />
-					</td>
-					<td colspan="3">
-						<h:outputText id="nivel3" value="#{relatorioExtraBean.custoPorEnderecoFilter.complementoEndereco}" />
-					</td>
-				</tr>
-			</table>
+		<table>
 			
-			<p:outputPanel id="resultado" layout="block" style="text-align: center;">
-				<center>
-				<p:dataTable id="dtResultado" var="_item"
-						value="#{relatorioExtraBean.custosPorEnderecos}" 
-						emptyMessage="Não existem itens nesta lista."
-						style="width: 99%;">
-					
-					<p:column headerText="Agrupador">
-						<h:outputText value="#{_item.agrupador}" />
-					</p:column>
-					<p:column headerText="Endereço">
-						<h:outputText value="#{_item.endereco}" />
-					</p:column>
-					<p:column headerText="Ordem de Serviço">
-						<h:outputText value="#{_item.ordemServico}" />
-					</p:column>
-					<p:column headerText="Sub-OS">
-						<h:outputText value="#{_item.subOs}" />
-					</p:column>
-					<p:column headerText="Data">
-						<h:outputText value="#{_item.data}">
-							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
-						</h:outputText>
-					</p:column>
-					<p:column headerText="Demandante">
-						<h:outputText value="#{_item.demandante}" />
-					</p:column>
-					<p:column headerText="Complemento do Endereço">
-						<h:outputText value="#{_item.complementoEndereco}" />
-					</p:column>
-					<p:column headerText="Custo de Material" styleClass="coluna-direita">
-						<h:outputText value="#{_item.custoMaterial}" converter="bigDecimalConverter" />
-					</p:column>
-					<p:column headerText="Custo de Mão de Obra" styleClass="coluna-direita">
-						<h:outputText value="#{_item.custoMaoDeObra}" converter="bigDecimalConverter" />
-					</p:column>
-					<p:column headerText="Custo Total" styleClass="coluna-direita">
-						<h:outputText value="#{_item.custoTotal}" converter="bigDecimalConverter" />
-					</p:column>
-					<p:columnGroup type="footer" rendered="#{not empty relatorioExtraBean.custosPorEnderecos}">
-			            <p:row>
-			                <p:column colspan="7" style="text-align: right;" footerText="Custo Total:" />
-			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaterialCustoPorEndereco}" />
-			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaoDeObraCustoPorEndereco}" />
-			                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalCustoPorEndereco}" />
-			            </p:row>
-			        </p:columnGroup>
-				</p:dataTable>
-				</center>
-			</p:outputPanel>
+			<tr>
+				<td>
+					<h:outputText value="Nível de Detalhe:" />
+				</td>
+				<td>
+					<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.nivelDetalheLabel}" />
+				</td>
+				<td>
+					<h:outputText value="Incluir SUB-OS:" style="margin-left: 30px;" />
+				</td>
+				<td>
+					<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.incluirSubOS ? 'Sim' : 'Não'}" />
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<h:outputText value="OS's emitidas entre:" />
+				</td>
+				<td colspan="3">
+					<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.emissaoInicio}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+					à
+					<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.emissaoFim}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<h:outputText value="Demandante:" />
+				</td>
+				<td colspan="3">
+					<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.demandante.label}" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Agrupador de Endereço:" />
+				</td>
+				<td colspan="3">
+					<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.agrupador.label}" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Endereço:" />
+				</td>
+				<td colspan="3">
+					<h:outputText value="#{relatorioExtraBean.custoPorEnderecoFilter.endereco.label}" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h:outputText value="Complemento Endereço:" />
+				</td>
+				<td colspan="3">
+					<h:outputText id="nivel3" value="#{relatorioExtraBean.custoPorEnderecoFilter.complementoEndereco}" />
+				</td>
+			</tr>
+		</table>
 		
+		<center>
+			<p:dataTable id="dtResultado" var="_item"
+					value="#{relatorioExtraBean.custosPorEnderecosFiltered}" 
+					emptyMessage="Não existem itens nesta lista."
+					style="width: 99%;">
+				
+				<p:column headerText="Agrupador de Endereço">
+					<h:outputText value="#{_item.agrupador}" />
+				</p:column>
+				<p:column headerText="Endereço">
+					<h:outputText value="#{_item.endereco}" />
+				</p:column>
+				<p:column headerText="Ordem de Serviço">
+					<h:outputText value="#{_item.ordemServico}" />
+				</p:column>
+				<p:column headerText="Sub-OS">
+					<h:outputText value="#{_item.subOs}" />
+				</p:column>
+				<p:column headerText="Data">
+					<h:outputText value="#{_item.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Demandante">
+					<h:outputText value="#{_item.demandante}" />
+				</p:column>
+				<p:column headerText="Complemento do Endereço">
+					<h:outputText value="#{_item.complementoEndereco}" />
+				</p:column>
+				<p:column headerText="Custo de Material" styleClass="coluna-direita">
+					<h:outputText value="#{_item.custoMaterial}" converter="bigDecimalConverter" />
+				</p:column>
+				<p:column headerText="Custo de Mão de Obra" styleClass="coluna-direita">
+					<h:outputText value="#{_item.custoMaoDeObra}" converter="bigDecimalConverter" />
+				</p:column>
+				<p:column headerText="Custo Total" styleClass="coluna-direita">
+					<h:outputText value="#{_item.custoTotal}" converter="bigDecimalConverter" />
+				</p:column>
+				<p:columnGroup type="footer" rendered="#{not empty relatorioExtraBean.custosPorEnderecos}">
+		            <p:row>
+		                <p:column colspan="7" style="text-align: right;" footerText="Custo Total:" />
+		                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaterialCustoPorEndereco}" />
+		                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalMaoDeObraCustoPorEndereco}" />
+		                <p:column style="text-align: right;" footerText="#{relatorioExtraBean.totalCustoPorEndereco}" />
+		            </p:row>
+		        </p:columnGroup>
+			</p:dataTable>
+		</center>
 		
+		<br />
+		Data de Impressão: 
+		<h:outputText value="#{homeBean.dataAtual}">
+			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="both" timeZone="America/Sao_Paulo" /> 
+		</h:outputText>
 	
 	</body>
 </html>
-	
-</ui:composition>

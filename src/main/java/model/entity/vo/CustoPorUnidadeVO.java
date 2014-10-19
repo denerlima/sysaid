@@ -15,7 +15,7 @@ public class CustoPorUnidadeVO implements Serializable  {
 	private BigDecimal custoMaoDeObra;
 	private BigDecimal custoTotal;
 	private BigDecimal osPrincipal;
-	private BigDecimal ordemServico;
+	private BigDecimal subOs;
 	private Date data;
 	private String demandante;
 	
@@ -67,14 +67,14 @@ public class CustoPorUnidadeVO implements Serializable  {
 		this.osPrincipal = osPrincipal;
 	}
 	
-	public BigDecimal getOrdemServico() {
-		return ordemServico;
+	public BigDecimal getSubOs() {
+		return subOs;
 	}
-	
-	public void setOrdemServico(BigDecimal ordemServico) {
-		this.ordemServico = ordemServico;
+
+	public void setSubOs(BigDecimal subOs) {
+		this.subOs = subOs;
 	}
-	
+
 	public Date getData() {
 		return data;
 	}

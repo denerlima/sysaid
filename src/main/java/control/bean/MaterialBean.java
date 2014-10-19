@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -26,6 +27,7 @@ import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
 import util.Component;
+import util.FaceletRenderer;
 import util.HibernateUtil;
 
 @Named
@@ -36,6 +38,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 
 	private Material material;	
 	private List<Material> materiais;
+	private List<Material> materiaisFiltered;
 	
 	@Inject
 	private MaterialFacade materialFacade;
@@ -61,6 +64,10 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		return material;
 	}
 	
+	public void setMaterial(Material material) {
+		this.material = material;
+	}
+	
 	public List<Material> getMateriais() {
 		if (materiais == null) {
 			materiais = new ArrayList<Material>();
@@ -68,9 +75,13 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		return materiais;
 	}
 
-	public void setMaterial(Material material) {
-		this.material = material;
-	}	
+	public List<Material> getMateriaisFiltered() {
+		return materiaisFiltered;
+	}
+
+	public void setMateriaisFiltered(List<Material> materiaisFiltered) {
+		this.materiaisFiltered = materiaisFiltered;
+	}
 
 	public String novo() {
 		return "/material/materialEdit.xhtml?faces-redirect=true";
@@ -123,7 +134,8 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	
 	public List<Material> pesquisarListaMateriaisbyNome() {
 		try {			
-			materiais = getMaterialFacade().pesquisarListaMateriaisbyNomeMaterial(material.getMaterial());			
+			materiais = getMaterialFacade().pesquisarListaMateriaisbyNomeMaterial(material.getMaterial());
+			materiaisFiltered = materiais;
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhum material. ERRO");
 			e.printStackTrace();
@@ -142,9 +154,9 @@ public class MaterialBean extends AbstractBean implements Serializable {
 						result.add(material);						
 					}					
 				}
-				materiais = result;					
+				materiais = result;	
 			}
-					
+			materiaisFiltered = materiais;
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhum material. ERRO");
 			e.printStackTrace();
@@ -152,6 +164,17 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		return materiais;
 	}
 
+	public String imprimirEstoquePDF() {
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/estoque/estoqueRelatorioPDF.xhtml");
+		return null;
+	}
+	
+	public String imprimirSugestaoCompraPDF() {
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/estoque/sugestaoCompraRelatorioPDF.xhtml");
+		return null;
+	}
 	
 	public void deleteMaterial() {
 		try {

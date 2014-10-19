@@ -107,14 +107,14 @@ public class OrdemServicoDAO extends GenericDAO<OrdemServico> {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			/*
+			
 			os.setSolicitante("José");
-			os.setRamal("123");
+			os.setRamal(new BigDecimal(1234));
 			os.setAreaSolicitante("Dilog");
 			os.setDataAbertura(new Date());
 			os.setDataFechamento(new Date());
 			os.setEnderecoAtendimento("SCS");
-			*/
+			
 		}
 	}
 	

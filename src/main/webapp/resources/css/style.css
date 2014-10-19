@@ -55,3 +55,7 @@
 .ui-datatable tbody td.coluna-vermelha {
 	background-color: red;
 }
+
+.ui-datatable .ui-column-filter {
+	width: 99%;
+}

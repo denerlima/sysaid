@@ -31,11 +31,11 @@
 				<div class="col-md-4">
 					<h:selectOneMenu id="nivelDetalhe" value="#{relatorioExtraBean.custoPorEnderecoFilter.nivelDetalhe}" styleClass="input-sm" style="max-width: 90%;">
 						<f:selectItem itemValue="" itemLabel="Selecione" />
-						<f:selectItem itemValue="1" itemLabel="Consolidado por Agrupador" />
+						<f:selectItem itemValue="1" itemLabel="Consolidado por Agrupador de Endereço" />
 						<f:selectItem itemValue="2" itemLabel="Consolidado por Endereço" />
 						<f:selectItem itemValue="3" itemLabel="Consolidado por Complemento de endereço" />
 						<f:selectItem itemValue="4" itemLabel="Consolidado por Demandante" />
-						<f:selectItem itemValue="5" itemLabel="Consolidado por Ordem de Serviço" />
+						<f:selectItem itemValue="5" itemLabel="Lista de OS" />
 					</h:selectOneMenu>
 				</div>
 				<div class="col-md-2">
@@ -73,7 +73,7 @@
 			
 			<div class="row form-row">
 				<div class="col-md-2">
-					<h:outputText value="Agrupador:" />
+					<h:outputText value="Agrupador de Endereço:" />
 				</div>
 				<div class="col-md-10">
 					<h:selectOneMenu id="agrupador" value="#{relatorioExtraBean.custoPorEnderecoFilter.agrupador}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
@@ -108,7 +108,7 @@
 				<div class="col-md-12" style="text-align: center;">
 					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioExtraBean.consultarCustoPorEndereco}" update=":custoPorEnderecoForm" />
 					
-					<p:commandLink action="#{relatorioExtraBean.imprimirCustoPorEndereco}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank">
+					<p:commandLink action="#{relatorioExtraBean.imprimirCustoPorEndereco}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank" immediate="true">
 						<h:graphicImage value="/resources/img/btn-print.png" />
 					</p:commandLink>
 					
@@ -118,11 +118,12 @@
 			<p:outputPanel id="resultado" layout="block" style="text-align: center;">
 				<center>
 				<p:dataTable id="dtResultado" var="_item"
-						value="#{relatorioExtraBean.custosPorEnderecos}" 
+						value="#{relatorioExtraBean.custosPorEnderecos}"
+						filteredValue="#{relatorioExtraBean.custosPorEnderecosFiltered}" 
 						emptyMessage="Não existem itens nesta lista."
 						style="width: 99%;">
 					
-					<p:column headerText="Agrupador" sortBy="#{_item.agrupador}" filterBy="#{_item.agrupador}" filterFunction="#{filterBean.filterContains}">
+					<p:column headerText="Agrupador de Endereço" sortBy="#{_item.agrupador}" filterBy="#{_item.agrupador}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{_item.agrupador}" />
 					</p:column>
 					<p:column headerText="Endereço" sortBy="#{_item.endereco}" filterBy="#{_item.endereco}" filterFunction="#{filterBean.filterContains}">

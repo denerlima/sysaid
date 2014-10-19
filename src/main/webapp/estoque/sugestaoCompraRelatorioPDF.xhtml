@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
+	
+	<h:head>
+		<title>SysAid</title>
+		<ui:include src="/resources/css/stylePDF.xhtml" />
+	</h:head>
+	<body>		
+			
+		<center><h2>Relatório de Sugestão de Compra</h2></center>			
+		
+		<table style="width: 99%">
+			<tr>
+				<td style="width: 50%">
+					<h:outputText value="Material: " styleClass="label-bold" />
+					<h:outputText value="#{materialBean.material.material}" />
+				</td>
+				<td style="width: 50%">
+					<h:outputText value="Tipo Material: " styleClass="label-bold" />
+					<h:outputText value="#{materialBean.material.tipoMaterial}" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<h:outputText value="Filtrar somente sugestão de compra maior que zero: " styleClass="label-bold" />
+					<h:outputText value="#{materialBean.isValoresPositivos ? 'Sim' : 'Não'}" />
+				</td>
+			</tr>
+		</table>
+			
+		<center>
+			<p:outputPanel id="resultado" layout="block" style="width:99%;">
+				<br />
+				<p:dataTable id="dtResultado" var="mat" value="#{materialBean.materiaisFiltered}"
+					emptyMessage="Não existem itens nesta lista.">
+
+					<p:column headerText="Material">
+						<h:outputText value="#{mat.material}" />							
+					</p:column>
+					<p:column headerText="Tipo Material">
+						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
+					</p:column>
+					<p:column headerText="Unidade de Medida Entrada">
+						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
+					</p:column>
+					<p:column headerText="Estoque" styleClass="coluna-direita">
+						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
+					</p:column>
+					<p:column headerText="Estoque Minimo Calculado" styleClass="coluna-direita">
+						<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />
+					</p:column>
+					<p:column headerText="Estoque Minimo Informado" styleClass="coluna-direita">
+						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />
+					</p:column>
+					<p:column headerText="Quantidade Solicitada" styleClass="coluna-direita">
+						<h:outputText value="#{mat.qtdSolicitada}" converter="bigDecimalSimplesConverter" />
+					</p:column>
+					<p:column headerText="Sugestão de Compra" styleClass="coluna-direita">
+						<h:outputText value="#{mat.sugestaoCompra}" converter="bigDecimalSimplesConverter" />						
+					</p:column>
+					
+				</p:dataTable>
+			</p:outputPanel>
+			
+		</center>
+		
+		<br />
+		Data de Impressão: 
+		<h:outputText value="#{homeBean.dataAtual}">
+			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="both" timeZone="America/Sao_Paulo" />
+		</h:outputText>
+		
+	</body>
+</html>

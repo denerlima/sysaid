@@ -44,8 +44,8 @@ public class HomeBean extends AbstractBean implements Serializable {
 		displayErrorMessageToUser("Cookie Removido com sucesso!");
 	}
 	
-	public String getDataAtual() {
-		return new Date().toString();
+	public Date getDataAtual() {
+		return new Date();
 	}
 	
 	public List<Usuario> getUsuarios() {

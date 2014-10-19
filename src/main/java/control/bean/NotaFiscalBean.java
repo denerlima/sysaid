@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -22,6 +23,8 @@ import model.facade.OrdemDeCompraFacade;
 import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.context.RequestContext;
 
+import util.FaceletRenderer;
+
 @Named
 @ViewScoped
 public class NotaFiscalBean extends AbstractBean implements Serializable {
@@ -31,6 +34,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	private NotaFiscal notaFiscal;	
 	private List<NotaFiscal> notasFiscais;
 	private List<NotaFiscalMaterial> notasFiscaisMateriais;
+	private List<NotaFiscalMaterial> notasFiscaisMateriaisFiltered;
 	
 	@Inject
 	private NotaFiscalFacade notaFiscalFacade;
@@ -239,7 +243,8 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 	public List<NotaFiscalMaterial> pesquisarNotaFiscalbyFilters() {
 		try {			
 			notasFiscaisMateriais = getNotaFiscalFacade().pesquisarNotaFiscalbyFilters(notaFiscal,
-					ordemDeCompra, material, dtEmissaoInicial , dtEmissaoFinal , dtEntregaInicial , dtEntregaFinal);			
+					ordemDeCompra, material, dtEmissaoInicial , dtEmissaoFinal , dtEntregaInicial , dtEntregaFinal);
+			notasFiscaisMateriaisFiltered = notasFiscaisMateriais;
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhuma Ordem de Compra. ERRO");
 			e.printStackTrace();
@@ -340,15 +345,29 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 		return notasFiscaisMateriais;
 	}
 
-	public void setNotasFiscaisMateriais(
-			List<NotaFiscalMaterial> notasFiscaisMateriais) {
+	public void setNotasFiscaisMateriais(List<NotaFiscalMaterial> notasFiscaisMateriais) {
 		this.notasFiscaisMateriais = notasFiscaisMateriais;
 	}
 	
+	public List<NotaFiscalMaterial> getNotasFiscaisMateriaisFiltered() {
+		return notasFiscaisMateriaisFiltered;
+	}
+
+	public void setNotasFiscaisMateriaisFiltered(
+			List<NotaFiscalMaterial> notasFiscaisMateriaisFiltered) {
+		this.notasFiscaisMateriaisFiltered = notasFiscaisMateriaisFiltered;
+	}
+
 	public void marcarOuDesmarcarTodos(OrdemDeCompra oc) {
 		for(OrdemDeCompraMaterial ocm : oc.getMateriais()) {
 			ocm.setSelecionado(oc.isCheckTodos());
 		}
+	}
+	
+	public String imprimirRelatorioPDF() {
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/notaFiscal/notaFiscalRelatorioPDF.xhtml");
+		return null;
 	}
 	
 }

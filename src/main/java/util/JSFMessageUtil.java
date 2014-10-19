@@ -10,8 +10,13 @@ public class JSFMessageUtil {
 		addMessageToJsfContext(facesMessage);
 	}
 
-	public void sendErrorMessageToUser(String message) {
+	public void sendWarnMessageToUser(String message) {
 		FacesMessage facesMessage = createMessage(FacesMessage.SEVERITY_WARN, message);
+		addMessageToJsfContext(facesMessage);
+	}
+	
+	public void sendErrorMessageToUser(String message) {
+		FacesMessage facesMessage = createMessage(FacesMessage.SEVERITY_ERROR, message);
 		addMessageToJsfContext(facesMessage);
 	}
 

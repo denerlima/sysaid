@@ -13,14 +13,14 @@
 		<h:form id="sugestaoCompraForm" prependId="false">		
 			<title>Relatório de Sugestão de Compra</title>
 			<center><h2>Relatório de Sugestão de Compra</h2></center>			
-			<p:spacer height="10" />		
+			<br />
 			
 			<div class="row form-row">
 				<div class="col-md-1">
 					<h:outputText value="Material:" />
 				</div>
 				<div class="col-md-4">
-						<h:inputText id="material" value="#{materialBean.material.material}" style="width: 70%;" />
+					<h:inputText id="material" value="#{materialBean.material.material}" style="width: 70%;" />
 				</div>
 				<div class="col-md-2">Tipo Material:</div>
 				<div class="col-md-2">
@@ -31,7 +31,7 @@
 					<h:message for="tipoMaterial" styleClass="msg-error" />
 				</div>				
 				<div class="col-md-2">
-					<h:outputText value="Filtrar somente quantidades maiores que zero" />
+					<h:outputText value="Filtrar somente sugestão de compra maior que zero:" />
 				</div>
 				<div class="col-md-1">
 				 	<p:selectBooleanCheckbox value="#{materialBean.isValoresPositivos}" />						
@@ -43,60 +43,58 @@
 				<div class="col-md-12" style="text-align: center;">
 					<p:commandButton value="Pesquisar" icon="ui-icon-search"
 								action="#{materialBean.pesquisarMaterialByFilter}" update=":sugestaoCompraForm" style="margin-left: 5px;" />
+								
+					<p:commandLink action="#{materialBean.imprimirSugestaoCompraPDF}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank" immediate="true">
+						<h:graphicImage value="/resources/img/btn-print.png" />
+					</p:commandLink>
 				</div>
 			</div>
 			
 			<center>
-			<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
-			<p:spacer width="100" height="30" />
-				<p:dataTable id="dtResultado" var="mat" value="#{materialBean.materiais}" rows="10"
-                    paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" 
-                    currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
-                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "					
-					emptyMessage="Não existem itens nesta lista."
-					sortBy="#{mat.material}" sortOrder="ASCENDING">
-
-					<p:column headerText="Material" sortBy="#{mat.material}" filterBy="#{_nfm.notaFiscal.nrNotaFiscal}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{mat.material}" />							
-					</p:column>
-					<p:column headerText="Tipo Material" sortBy="#{mat.tipoMaterial.descricao}" filterBy="#{mat.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{mat.tipoMaterial.descricao}" />	
-					</p:column>
-					<p:column headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
-					</p:column>
-					<p:column headerText="Estoque" sortBy="#{mat.estoque}" filterBy="#{mat.estoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
-						<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
-					</p:column>
-					<p:column headerText="Estoque Minimo Calculado" sortBy="#{mat.estoqueCalculado}" filterBy="#{mat.estoqueCalculado}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
-						<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />
-					</p:column>
-					<p:column headerText="Estoque Minimo Informado" sortBy="#{mat.estoqueInformado}" filterBy="#{mat.estoqueInformado}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
-						<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />
-					</p:column>
-					<p:column headerText="Quantidade Solicitada" sortBy="#{mat.qtdSolicitada}" filterBy="#{mat.qtdSolicitada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
-						<h:outputText value="#{mat.qtdSolicitada}" converter="bigDecimalSimplesConverter" />
-					</p:column>
-					<p:column headerText="Sugestão de Compra" sortBy="#{mat.sugestaoCompra}" filterBy="#{mat.sugestaoCompra}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
-						<h:outputText value="#{mat.sugestaoCompra}" converter="bigDecimalSimplesConverter" />						
-					</p:column>
-					
-				</p:dataTable>
-			</p:outputPanel>
+				<p:outputPanel id="resultado" layout="block" style="width:99%; margin-top: 25px;">
+					<p:dataTable id="dtResultado" var="mat" value="#{materialBean.materiais}"
+						filteredValue="#{materialBean.materiaisFiltered}" 
+						rows="10" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" 
+	                    currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
+	                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "					
+						emptyMessage="Não existem itens nesta lista."
+						sortBy="#{mat.material}" sortOrder="ASCENDING">
+	
+						<p:column headerText="Material" sortBy="#{mat.material}" filterBy="#{_nfm.notaFiscal.nrNotaFiscal}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{mat.material}" />							
+						</p:column>
+						<p:column headerText="Tipo Material" sortBy="#{mat.tipoMaterial.descricao}" filterBy="#{mat.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{mat.tipoMaterial.descricao}" />	
+						</p:column>
+						<p:column headerText="Unidade de Medida Entrada" sortBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{mat.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{mat.unidadeMedida.unidadeEntrada.descricao}" />							
+						</p:column>
+						<p:column headerText="Estoque" sortBy="#{mat.estoque}" filterBy="#{mat.estoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+							<h:outputText value="#{mat.estoque}" converter="bigDecimalSimplesConverter" />							
+						</p:column>
+						<p:column headerText="Estoque Minimo Calculado" sortBy="#{mat.estoqueCalculado}" filterBy="#{mat.estoqueCalculado}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+							<h:outputText value="#{mat.estoqueCalculado}" converter="bigDecimalSimplesConverter" />
+						</p:column>
+						<p:column headerText="Estoque Minimo Informado" sortBy="#{mat.estoqueInformado}" filterBy="#{mat.estoqueInformado}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+							<h:outputText value="#{mat.estoqueInformado}" converter="bigDecimalSimplesConverter" />
+						</p:column>
+						<p:column headerText="Quantidade Solicitada" sortBy="#{mat.qtdSolicitada}" filterBy="#{mat.qtdSolicitada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+							<h:outputText value="#{mat.qtdSolicitada}" converter="bigDecimalSimplesConverter" />
+						</p:column>
+						<p:column headerText="Sugestão de Compra" sortBy="#{mat.sugestaoCompra}" filterBy="#{mat.sugestaoCompra}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+							<h:outputText value="#{mat.sugestaoCompra}" converter="bigDecimalSimplesConverter" />						
+						</p:column>
+						
+					</p:dataTable>
+				</p:outputPanel>
 			
-			<p:outputPanel id="export" layout="block" rendered="#{not empty materialBean.materiais}">
-			 		Exportar Relatório : 
-
-			     <h:commandLink>
-		         	<p:graphicImage name="/img/excel.png" width="24"/>
-		            <p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />
-		         </h:commandLink>
-		 
-		         <h:commandLink>
-		  	       <p:graphicImage name="/img/pdf.png" width="24"/>
-		           <p:dataExporter type="pdf" target="dtResultado" fileName="relatorioEstoque"/>
-		   	     </h:commandLink>
-	   	 	</p:outputPanel>
+				<p:outputPanel id="export" layout="block" rendered="#{not empty materialBean.materiais}">
+					Exportar Relatório : 
+				     <h:commandLink>
+			         	<p:graphicImage name="/img/excel.png" width="24"/>
+			            <p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />
+			         </h:commandLink>
+		   	 	</p:outputPanel>
 
 			</center>
 			

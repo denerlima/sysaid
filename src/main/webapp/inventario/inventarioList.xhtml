@@ -30,14 +30,11 @@
 					<p:column headerText="Nº de Inventário" sortBy="#{inv.id}" filterBy="#{inv.id}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{inv.id}" />							
 					</p:column>
-					<p:column headerText="Data de inventário" sortBy="#{inv.dataInventario}" filterBy="#{inv.dataInventario}" filterFunction="#{filterBean.filterContains}">
+					<p:column headerText="Data de inventário" sortBy="#{inv.dataInventario}" filterBy="#{inv.dataInventario}" filterFunction="#{filterBean.filterContainsDate}">
 						<h:outputText value="#{inv.dataInventario}">
 							<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 						</h:outputText>							
 					</p:column>
-			<!--    <p:column headerText="Inventariante" sortBy="#{inv.atendente.nomeCompleto}" filterBy="#{inv.atendente.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{inv.atendente.nomeCompleto}" />							
-					</p:column>   -->
 					<p:column headerText="Justificativa" filterBy="#{inv.justificativa}" filterFunction="#{filterBean.filterContains}">
 						<h:outputText value="#{inv.justificativa}" />							
 					</p:column>

@@ -14,102 +14,105 @@
 			<center>
 				<h2>Relatório de Inventário</h2>
 			</center>
-			<p:spacer height="10" />
+			<br />
 
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Nº de inventário" />
-					</div>
-					<div class="col-md-4">
-						<h:inputText value="#{inventarioBean.inventario.id}" />
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Inventariante:" />
-					</div>
-					<div class="col-md-4">
-						<h:selectOneMenu converter="objectConverter" id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}" styleClass="input-sm" style="max-width: 90%;">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
-						</h:selectOneMenu>
-					</div>
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Nº de inventário" />
 				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Material:" />
-					</div>
-					<div class="col-md-4">
-						<p:autoComplete id="materialAutocomplete" minQueryLength="3"
-							maxResults="10" value="#{inventarioBean.material}" converter="objectConverter"
-							label="Material" var="mat" itemLabel="#{mat.material}" itemValue="#{mat}"
-							completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
-					</div>
-					<div class="col-md-2">Tipo Material:</div>
-					<div class="col-md-4">
-						<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{inventarioBean.material.tipoMaterial}" required="false" label="Tipo Material">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
-						</h:selectOneMenu>
-						<h:message for="tipoMaterial" styleClass="msg-error" />
-					</div>
+				<div class="col-md-4">
+					<h:inputText value="#{inventarioBean.inventario.id}" />
 				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Data Inicial:" />
-					</div>
-					<div class="col-md-4">
-						<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
-							value="#{inventarioBean.dataInicialInventario}" size="10" navigator="true" />
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Data Final:" />
-					</div>
-					<div class="col-md-4">
-						<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
-							value="#{inventarioBean.dataFinalInventario}" size="10" navigator="true" />
-					</div>
+				<div class="col-md-2">
+					<h:outputText value="Inventariante:" />
 				</div>
+				<div class="col-md-4">
+					<h:selectOneMenu converter="objectConverter" id="cbAtendente" immediate="true" value="#{inventarioBean.inventario.atendente}" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Material:" />
+				</div>
+				<div class="col-md-4">
+					<p:autoComplete id="materialAutocomplete" minQueryLength="3"
+						maxResults="10" value="#{inventarioBean.material}" converter="objectConverter"
+						label="Material" var="mat" itemLabel="#{mat.material}" itemValue="#{mat}"
+						completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
+				</div>
+				<div class="col-md-2">Tipo Material:</div>
+				<div class="col-md-4">
+					<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{inventarioBean.material.tipoMaterial}" required="false" label="Tipo Material">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+					</h:selectOneMenu>
+					<h:message for="tipoMaterial" styleClass="msg-error" />
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Data Inicial:" />
+				</div>
+				<div class="col-md-4">
+					<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
+						value="#{inventarioBean.dataInicialInventario}" size="10" navigator="true" />
+				</div>
+				<div class="col-md-2">
+					<h:outputText value="Data Final:" />
+				</div>
+				<div class="col-md-4">
+					<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
+						value="#{inventarioBean.dataFinalInventario}" size="10" navigator="true" />
+				</div>
+			</div>
 
-				
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Aprovador:" />
-					</div>
-					<div class="col-md-4">
-						<h:selectOneMenu id="cbAprovador" value="#{inventarioBean.inventario.aprovador}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
-						</h:selectOneMenu>
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Aplicação:" />
-					</div>
-					<div class="col-md-4">
-						<h:selectOneMenu id="cbAplicacao" value="#{inventarioBean.material.aplicacao}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{inventarioBean.aplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />
-						</h:selectOneMenu>
-					</div>
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Aprovador:" />
 				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-12" style="text-align: center;">
-						<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{inventarioBean.pesquisarInventarioByFilter}" update=":inventarioForm" />
-					</div>
-				</div>		
+				<div class="col-md-4">
+					<h:selectOneMenu id="cbAprovador" value="#{inventarioBean.inventario.aprovador}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
+					</h:selectOneMenu>
+				</div>
+				<div class="col-md-2">
+					<h:outputText value="Aplicação:" />
+				</div>
+				<div class="col-md-4">
+					<h:selectOneMenu id="cbAplicacao" value="#{inventarioBean.material.aplicacao}" converter="objectConverter" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{inventarioBean.aplicacoes}" var="app" itemLabel="#{app.descricao}" itemValue="#{app}" />
+					</h:selectOneMenu>
+				</div>
+			</div>
+			
+			<div class="row form-row">
+				<div class="col-md-12" style="text-align: center;">
+					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{inventarioBean.pesquisarInventarioByFilter}" update=":inventarioForm" />
+					
+					<p:commandLink action="#{inventarioBean.imprimirRelatorioPDF}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank" immediate="true">
+						<h:graphicImage value="/resources/img/btn-print.png" />
+					</p:commandLink>
+				</div>
+			</div>		
 
 			<center>
-				<p:outputPanel id="resultado" layout="block" style="width:99%; overflow:auto">
-					<p:spacer width="100" height="30" />
+				<p:outputPanel id="resultado" layout="block" style="width:99%; margin-top: 25px;">
 					<p:dataTable id="dtResultado" var="_invm"
-						value="#{inventarioBean.inventariosMateriais}" rows="10" paginator="true"
+						value="#{inventarioBean.inventariosMateriais}"
+						filteredValue="#{inventarioBean.inventariosMateriaisFiltered}" 
+						rows="10" paginator="true"
 						paginatorAlwaysVisible="false" paginatorPosition="bottom"
 						currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}" emptyMessage="Não existem itens nesta lista.">
 
-						<p:column headerText="Data" sortBy="#{_invm.inventario.dataInventario}" filterBy="#{_invm.inventario.dataInventario}" filterFunction="#{filterBean.filterContains}">
+						<p:column headerText="Data" sortBy="#{_invm.inventario.dataInventario}" filterBy="#{_invm.inventario.dataInventario}" filterFunction="#{filterBean.filterContainsDate}">
 							<h:outputText value="#{_invm.inventario.dataInventario}">
 								<f:convertDateTime pattern="dd/MM/yyyy" type="both" />
 							</h:outputText>
@@ -156,11 +159,6 @@
 					<h:commandLink>
 						<p:graphicImage name="/img/excel.png" width="24" />
 						<p:dataExporter type="xls" target="dtResultado" fileName="relatorioInventario" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/img/pdf.png" width="24" />
-						<p:dataExporter type="pdf" target="dtResultado" fileName="relatorioInventario" />
 					</h:commandLink>
 				</p:outputPanel>
 

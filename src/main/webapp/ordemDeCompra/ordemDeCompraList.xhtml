@@ -57,7 +57,7 @@
 								<f:setPropertyActionListener target="#{ordemDeCompraBean.ordemDeCompra}" value="#{oc}" />
 							</p:commandButton>
 							
-							<p:commandLink action="#{ordemDeCompraBean.imprimir(oc)}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank">
+							<p:commandLink action="#{ordemDeCompraBean.imprimir(oc)}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank" immediate="true">
 								<h:graphicImage value="/resources/img/btn-print.png" />
 							</p:commandLink>
 							

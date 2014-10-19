@@ -184,11 +184,10 @@ public class ExtraDAO implements Serializable {
 		if (filterVO.getComplementoEndereco() != null && filterVO.getComplementoEndereco().trim().length() > 0) {
 			sql.append(" AND SR.SR_CUST_TXTCOMPLEMENTO LIKE '%"+filterVO.getComplementoEndereco()+"%'");
 		}
-		if (filterVO.isIncluirSubOS()) {
- 			sql.append(" AND SR.SR_CUST_NUMBERMAINOSI != 0 ");
- 		} else {
+		if (!filterVO.isIncluirSubOS()) {
  			sql.append(" AND SR.SR_CUST_NUMBERMAINOSI = 0 ");
  		}
+		//sql.append(" GROUP BY EH.AGRUPADOR, CV.VALUE_CAPTION, OM.ID_ORDEM_SERVICO, SR.SR_CUST_NUMBERMAINOSI, SR.INSERT_TIME, SU.CALCULATED_USER_NAME, SR.SR_CUST_TXTCOMPLEMENTO ");
 		sql.append(" ORDER BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO ");
  		
  		Query query = em.createNativeQuery(sql.toString());
@@ -286,7 +285,7 @@ public class ExtraDAO implements Serializable {
 			custoPorUnidade.setCustoTotal((BigDecimal) obj[5]);
 			if(filterVO.isImprimirOrdemServico()) {
 				custoPorUnidade.setOsPrincipal((BigDecimal) obj[6]);
-				custoPorUnidade.setOrdemServico((BigDecimal) obj[7]);
+				custoPorUnidade.setSubOs((BigDecimal) obj[7]);
 				custoPorUnidade.setData((Date) obj[8]);
 				custoPorUnidade.setDemandante((String) obj[9]);
 			}

@@ -85,7 +85,7 @@ public class CustoPorEnderecoFilterVO implements Serializable {
 			return "";
 		}
 		else if(nivelDetalhe.intValue() == 1) { 
-			return "Consolidado por Agrupador";
+			return "Consolidado por Agrupador de Endereço";
 		}
 		else if(nivelDetalhe.intValue() == 2) { 
 			return "Consolidado por Endereço";
@@ -97,7 +97,7 @@ public class CustoPorEnderecoFilterVO implements Serializable {
 			return "Consolidado por Demandante";
 		}
 		else if(nivelDetalhe.intValue() == 5) {
-			return "Consolidado por Ordem de Serviço";
+			return "Lista de OS";
 		}
 		return "";
 	}

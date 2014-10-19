@@ -31,6 +31,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	private OrdemDeCompra ordemDeCompra;	
 	private List<OrdemDeCompra> ordensDeCompra;
 	private List<OrdemDeCompraMaterial> ordensDeComprasMateriais;
+	private List<OrdemDeCompraMaterial> ordensDeComprasMateriaisFiltered;
 	
 	@Inject
 	private OrdemDeCompraFacade ordemDeCompraFacade;
@@ -54,10 +55,6 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	
 	public String edit(Integer id) {
 		return "/ordemDeCompra/ordemDeCompraEdit.xhtml?faces-redirect=true&id="+id;
-	}
-	
-	public String print(Integer id) {
-		return "/ordemDeCompra/ordemDeCompraPDF.xhtml?faces-redirect=true&id="+id;
 	}
 	
 	public void initLoad(Integer id) {
@@ -182,7 +179,8 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	
 	public List<OrdemDeCompraMaterial> pesquisarOrdemCompraByFilter() {
 		try {			
-			ordensDeComprasMateriais = getOrdemDeCompraFacade().listMateriaisOrdensCompras(ordemDeCompra , material);			
+			ordensDeComprasMateriais = getOrdemDeCompraFacade().listMateriaisOrdensCompras(ordemDeCompra , material);	
+			ordensDeComprasMateriaisFiltered = ordensDeComprasMateriais;
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel achar nennhuma Ordem de Compra. ERRO");
 			e.printStackTrace();
@@ -248,6 +246,14 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		this.ordensDeComprasMateriais = ordensDeComprasMateriais;
 	}
 
+	public List<OrdemDeCompraMaterial> getOrdensDeComprasMateriaisFiltered() {
+		return ordensDeComprasMateriaisFiltered;
+	}
+
+	public void setOrdensDeComprasMateriaisFiltered(List<OrdemDeCompraMaterial> ordensDeComprasMateriaisFiltered) {
+		this.ordensDeComprasMateriaisFiltered = ordensDeComprasMateriaisFiltered;
+	}
+
 	public boolean isManaged() {
 		return ordemDeCompra != null && ordemDeCompra.getId() != null;
 	}
@@ -256,6 +262,12 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		setOrdemDeCompra(oc);
 		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
 		renderer.renderViewPDF("/ordemDeCompra/ordemDeCompraPDF.xhtml");
+		return null;
+	}
+	
+	public String imprimirRelatorioPDF() {
+		FaceletRenderer renderer = new FaceletRenderer(FacesContext.getCurrentInstance());
+		renderer.renderViewPDF("/ordemDeCompra/ordemDeCompraRelatorioPDF.xhtml");
 		return null;
 	}
 	

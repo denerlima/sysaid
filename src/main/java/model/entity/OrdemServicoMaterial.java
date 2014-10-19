@@ -53,7 +53,7 @@ public class OrdemServicoMaterial implements Serializable {
 	private UnidadeMedidaSaida unidadeMedidaSaida;
 	
 	@Column(name="quantidade_solicitada", nullable = false)
-	private BigDecimal quantidadeSolicitada = new BigDecimal(0);
+	private BigDecimal quantidadeSolicitada;
 	
 	@Column(name="quantidade_entregue", nullable = false)
 	private BigDecimal quantidadeEntregue = new BigDecimal(0);
@@ -212,7 +212,7 @@ public class OrdemServicoMaterial implements Serializable {
 	}
 	
 	public BigDecimal getPrecoTotal() {
-		return getPrecoUnitario().multiply(getQuantidadeUtilizada());
+		return getPrecoUnitarioConvertido().multiply(getQuantidadeUtilizada());
 	}
 	
 	public BigDecimal getEstoqueConvertido() throws ParseException {
@@ -220,6 +220,13 @@ public class OrdemServicoMaterial implements Serializable {
 			return getMaterial().getEstoque();
 		}
 		return getMaterial().getEstoque().divide(getUnidadeMedidaSaida().getFatorConversao());
+	}
+	
+	public BigDecimal getPrecoUnitarioConvertido() {
+		if(getUnidadeMedidaSaida().getFatorConversao().doubleValue() == 0) {
+			return getPrecoUnitario();
+		}
+		return getPrecoUnitario().multiply(getUnidadeMedidaSaida().getFatorConversao());
 	}
 	
 	public String getStyleClass() {

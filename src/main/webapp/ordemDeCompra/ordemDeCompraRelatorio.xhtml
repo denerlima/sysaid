@@ -14,63 +14,69 @@
 			<center>
 				<h2>Relatório de Solicitação de Compra</h2>
 			</center>
-			<p:spacer height="10" />
+			<br />
 						
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Data Emissão:" />
-					</div>
-					<div class="col-md-4">
-						<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
-							value="#{ordemDeCompraBean.ordemDeCompra.dataEmissao}" size="10" navigator="true" />
-					</div>
-					<div class="col-md-2">
-						<h:outputText value="Até:" />
-					</div>
-					<div class="col-md-4">
-						<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
-							value="#{ordemDeCompraBean.ordemDeCompra.dataAutorizacao}" size="10" navigator="true" />
-					</div>
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Data Emissão:" />
 				</div>
+				<div class="col-md-4">
+					<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
+						value="#{ordemDeCompraBean.ordemDeCompra.dataEmissao}" size="10" navigator="true" />
+				</div>
+				<div class="col-md-2">
+					<h:outputText value="Até:" />
+				</div>
+				<div class="col-md-4">
+					<p:calendar pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true"
+						value="#{ordemDeCompraBean.ordemDeCompra.dataAutorizacao}" size="10" navigator="true" />
+				</div>
+			</div>
 
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Material:" />
-					</div>
-					<div class="col-md-4">
-						<p:autoComplete id="materialAutocomplete" minQueryLength="3"
-							maxResults="10" value="#{ordemDeCompraBean.material}" converter="objectConverter"
-							label="Material" var="mat" itemLabel="#{mat.material}" itemValue="#{mat}"
-							completeMethod="#{ordemDeCompraBean.completeMaterial}" dropdown="true" />
-					</div>
-					<div class="col-md-2">Tipo Material:</div>
-					<div class="col-md-4">
-						<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{ordemDeCompraBean.material.tipoMaterial}" required="false" label="Tipo Material" styleClass="input-sm" style="max-width: 90%;">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
-						</h:selectOneMenu>
-						<h:message for="tipoMaterial" styleClass="msg-error" />
-					</div>
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Material:" />
 				</div>
+				<div class="col-md-4">
+					<p:autoComplete id="materialAutocomplete" minQueryLength="3"
+						maxResults="10" value="#{ordemDeCompraBean.material}" converter="objectConverter"
+						label="Material" var="mat" itemLabel="#{mat.material}" itemValue="#{mat}"
+						completeMethod="#{ordemDeCompraBean.completeMaterial}" dropdown="true" />
+				</div>
+				<div class="col-md-2">Tipo Material:</div>
+				<div class="col-md-4">
+					<h:selectOneMenu converter="objectConverter" id="tipoMaterial" value="#{ordemDeCompraBean.material.tipoMaterial}" required="false" label="Tipo Material" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{materialBean.allTiposMateriais}" var="tipo" itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
+					</h:selectOneMenu>
+					<h:message for="tipoMaterial" styleClass="msg-error" />
+				</div>
+			</div>
 
-				<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Autorizador:" />
-					</div>
-					<div class="col-md-4">
-						<h:selectOneMenu converter="objectConverter" id="cbAutorizador" immediate="true" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}" styleClass="input-sm" style="max-width: 90%;">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{ordemDeCompraBean.autorizadores}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
-						</h:selectOneMenu>
-					</div>
-					<div class="col-md-6">
-						<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{ordemDeCompraBean.pesquisarOrdemCompraByFilter}" update=":ordemCompraForm" />
-					</div>
+			<div class="row form-row">
+				<div class="col-md-2">
+					<h:outputText value="Autorizador:" />
 				</div>
+				<div class="col-md-4">
+					<h:selectOneMenu converter="objectConverter" id="cbAutorizador" immediate="true" value="#{ordemDeCompraBean.ordemDeCompra.autorizador}" styleClass="input-sm" style="max-width: 90%;">
+						<f:selectItem itemValue="" itemLabel="Selecione" />
+						<f:selectItems value="#{ordemDeCompraBean.autorizadores}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />
+					</h:selectOneMenu>
+				</div>
+				<div class="col-md-6">
+					<p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{ordemDeCompraBean.pesquisarOrdemCompraByFilter}" update=":ordemCompraForm" />
+					
+					<p:commandLink action="#{ordemDeCompraBean.imprimirRelatorioPDF}" ajax="false" process="@this" style="margin-left: 5px;" target="_blank" immediate="true">
+						<h:graphicImage value="/resources/img/btn-print.png" />
+					</p:commandLink>
+					
+				</div>
+			</div>
 			
 			<center>
-				<p:outputPanel id="resultado" layout="block" style="width:90%; overflow:auto">
-					<p:spacer width="100" height="30" />
+				<p:outputPanel id="resultado" layout="block" style="width:99%;">
+					<br />
+					<br />
 					<p:dataTable id="dtResultado" var="_ocm"
 						value="#{ordemDeCompraBean.ordensDeComprasMateriais}" rows="10" paginator="true"
 						paginatorAlwaysVisible="false" paginatorPosition="bottom"
@@ -97,13 +103,13 @@
 						<p:column headerText="Unidade de medida Entrada"  sortBy="#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
 							<h:outputText value="#{_ocm.material.unidadeMedida.unidadeEntrada.descricao}" />
 						</p:column>
-						<p:column headerText="Quantidade Autorizada	" sortBy="#{_ocm.quantidadeAutorizada}" filterBy="#{_ocm.quantidadeAutorizada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}">
+						<p:column headerText="Quantidade Autorizada	" sortBy="#{_ocm.quantidadeAutorizada}" filterBy="#{_ocm.quantidadeAutorizada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 							<h:outputText value="#{_ocm.quantidadeAutorizada}" />
 						</p:column>
-						<p:column headerText="Quantidade Recebida" sortBy="#{_ocm.quantidadeRecebida}" filterBy="#{_ocm.quantidadeRecebida}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}">
+						<p:column headerText="Quantidade Recebida" sortBy="#{_ocm.quantidadeRecebida}" filterBy="#{_ocm.quantidadeRecebida}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 							<h:outputText value="#{_ocm.quantidadeRecebida}" converter="bigDecimalSimplesConverter" />
 						</p:column>  
-						<p:column headerText="Quantidade Pendente" sortBy="#{_ocm.quantidadePendente}" filterBy="#{_ocm.quantidadePendente}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}">
+						<p:column headerText="Quantidade Pendente" sortBy="#{_ocm.quantidadePendente}" filterBy="#{_ocm.quantidadePendente}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
 							<h:outputText value="#{_ocm.quantidadePendente}" converter="bigDecimalSimplesConverter" />
 						</p:column>
 												
@@ -115,11 +121,6 @@
 					<h:commandLink>
 						<p:graphicImage name="/img/excel.png" width="24" />
 						<p:dataExporter type="xls" target="dtResultado" fileName="relatorioEstoque" />
-					</h:commandLink>
-
-					<h:commandLink>
-						<p:graphicImage name="/img/pdf.png" width="24" />
-						<p:dataExporter type="pdf" target="dtResultado" fileName="relatorioEstoque" />
 					</h:commandLink>
 				</p:outputPanel>
 

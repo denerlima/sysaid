@@ -18,18 +18,5 @@
 			  driverClassName="oracle.jdbc.driver.OracleDriver" 
 			  url="jdbc:oracle:thin:@adriano-vm:1521:XE" />
 			  
+
 			  
-			  
-# Inventário
-
-- Add coluna diferença na listagem. (Zerada) - OK
-- Retirar o input de estoque inventariado da listagem. Será somente leitura. - OK
-- Adicionar o botão Editar na listagem. OK
-- Dentro da popup de edição incluir o campo justificativa do inventariante. - OK
-- Retirar o Aprovar/Rejeitar da popup na inclusão. - OK
-- Ao aprovar decrementar a diferença no estoque do material. - OK
-- Somente excluir material que não tenha sido aprovado/rejeitado. - OK
-- Para concluir todos os materias que tenham diferença devem ser aprovados/reprovados. - OK
-
-
-- Adicionar ordenação onde existir tabela.
