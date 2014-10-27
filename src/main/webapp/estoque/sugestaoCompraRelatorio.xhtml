@@ -52,9 +52,10 @@
 			
 			<center>
 				<p:outputPanel id="resultado" layout="block" style="width:99%; margin-top: 25px;">
+
 					<p:dataTable id="dtResultado" var="mat" value="#{materialBean.materiais}"
 						filteredValue="#{materialBean.materiaisFiltered}" 
-						rows="10" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" 
+						rows="10" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
 	                    currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
 	                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "					
 						emptyMessage="Não existem itens nesta lista."

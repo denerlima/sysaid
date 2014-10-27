@@ -26,6 +26,8 @@ import org.primefaces.context.RequestContext;
 
 import util.FaceletRenderer;
 
+import util.FaceletRenderer;
+
 @Named
 @ViewScoped
 public class InventarioBean extends AbstractBean implements Serializable {
