@@ -56,6 +56,11 @@
 	background-color: red;
 }
 
+.ui-datatable tfoot td {
+	font-weight: bold;
+	font-size: 13px;
+}
+
 .ui-datatable .ui-column-filter {
 	width: 99%;
 }
