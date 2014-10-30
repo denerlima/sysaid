@@ -131,17 +131,28 @@ public class ExtraDAO implements Serializable {
 		ArrayList<CustoPorEnderecoVO> lista = new ArrayList<CustoPorEnderecoVO>();
 		StringBuffer sql = new StringBuffer();
 		sql.append(
-			"SELECT " +
-			"	EH.AGRUPADOR, " +
-			"	CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, " +
-			"	OM.ID_ORDEM_SERVICO AS OS, " +
-			"	SR.SR_CUST_NUMBERMAINOSI AS OS_PAI, " +
-			"	TO_CHAR(SR.insert_time, 'DD/MM/YYYY') AS DATA, " +
-			"	SU.CALCULATED_USER_NAME, " +
-			"	SR.SR_CUST_TXTCOMPLEMENTO, " +
-			"	OM.MATERIAL, " +
-			"	OMO.MAO_OBRA, " +
-			"	OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL " +
+			"SELECT DADOS.AGRUPADOR, "+
+			"       DADOS.ENDERECO_ATENDIMENTO, "+
+			"       DADOS.OS, "+
+			"       DADOS.OS_PAI, "+
+			"       DADOS.DATA, "+
+			"       DADOS.USERNAME, "+
+			"       DADOS.COMPLEMENTO, "+
+			"       SUM(DADOS.TOTAL_MAT), "+
+			"       SUM(DADOS.TOTAL_MAO), "+
+			"       SUM(DADOS.TOTAL) "+
+			"  FROM ( "+
+			" SELECT " +
+			"		EH.AGRUPADOR AS AGRUPADOR, " +
+		    "       CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, " +
+		    "       OM.ID_ORDEM_SERVICO AS OS, " +
+		    "       SR.SR_CUST_NUMBERMAINOSI AS OS_PAI, " +
+		    "       TO_CHAR(SR.insert_time, 'DD/MM/YYYY') AS DATA, " +
+		    "       SU.CALCULATED_USER_NAME AS USERNAME, " +
+		    "       SR.SR_CUST_TXTCOMPLEMENTO AS COMPLEMENTO, " +
+		    "       OM.MATERIAL AS TOTAL_MAT, " +
+		    "       OMO.MAO_OBRA AS TOTAL_MAO, " +
+		    "       OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL " +  
 			"	from mf_ordemservico O " +
 			"	INNER JOIN ( " +
 			"	      select id_ordem_servico, " +
@@ -190,6 +201,16 @@ public class ExtraDAO implements Serializable {
 		//sql.append(" GROUP BY EH.AGRUPADOR, CV.VALUE_CAPTION, OM.ID_ORDEM_SERVICO, SR.SR_CUST_NUMBERMAINOSI, SR.INSERT_TIME, SU.CALCULATED_USER_NAME, SR.SR_CUST_TXTCOMPLEMENTO ");
 		sql.append(" ORDER BY SR.SR_CUST_TXTCOMPLEMENTO, SU.CALCULATED_USER_NAME, EH.AGRUPADOR, CV.VALUE_CAPTION ,  OM.ID_ORDEM_SERVICO ");
  		
+		sql.append(
+			") DADOS " +
+			" GROUP BY DADOS.AGRUPADOR, " +
+			"          DADOS.ENDERECO_ATENDIMENTO, " +
+			"          DADOS.OS, " +
+			"          DADOS.OS_PAI, " +
+			"          DADOS.DATA, " +
+			"          DADOS.USERNAME, " +
+			"          DADOS.COMPLEMENTO ");
+		
  		Query query = em.createNativeQuery(sql.toString());
 		List<Object[]> retorno = query.getResultList();
 		for(Object[] obj : retorno) {
