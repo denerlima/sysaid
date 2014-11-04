@@ -57,6 +57,7 @@ public class ExtraFacade implements Serializable {
 	
 	public List<CustoPorEnderecoVO> consultarCustoPorEndereco(CustoPorEnderecoFilterVO filterVO) {
 		List<CustoPorEnderecoVO> lista = getExtraDAO().consultarCustoPorEndereco(filterVO);
+		/*
 		if(filterVO.getNivelDetalhe() == null) {
 			return lista;
 		}
@@ -94,6 +95,7 @@ public class ExtraFacade implements Serializable {
 				ce.setData(null);
 			}
 		}
+		*/
 		return lista; 
 	}
 	

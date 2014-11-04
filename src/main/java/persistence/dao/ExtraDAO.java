@@ -142,17 +142,88 @@ public class ExtraDAO implements Serializable {
 			"       SUM(DADOS.TOTAL_MAO), "+
 			"       SUM(DADOS.TOTAL) "+
 			"  FROM ( "+
-			" SELECT " +
-			"		EH.AGRUPADOR AS AGRUPADOR, " +
-		    "       CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, " +
-		    "       OM.ID_ORDEM_SERVICO AS OS, " +
-		    "       SR.SR_CUST_NUMBERMAINOSI AS OS_PAI, " +
-		    "       TO_CHAR(SR.insert_time, 'DD/MM/YYYY') AS DATA, " +
-		    "       SU.CALCULATED_USER_NAME AS USERNAME, " +
-		    "       SR.SR_CUST_TXTCOMPLEMENTO AS COMPLEMENTO, " +
-		    "       OM.MATERIAL AS TOTAL_MAT, " +
-		    "       OMO.MAO_OBRA AS TOTAL_MAO, " +
-		    "       OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL " +  
+			" SELECT ");
+			
+			if(filterVO.getNivelDetalhe() == null) {
+				sql.append(
+						"		EH.AGRUPADOR AS AGRUPADOR, " +
+					    "       CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, " +
+					    "       OM.ID_ORDEM_SERVICO AS OS, " +
+					    "       SR.SR_CUST_NUMBERMAINOSI AS OS_PAI, " +
+					    "       TO_CHAR(SR.insert_time, 'DD/MM/YYYY') AS DATA, " +
+					    "       SU.CALCULATED_USER_NAME AS USERNAME, " +
+					    "       SR.SR_CUST_TXTCOMPLEMENTO AS COMPLEMENTO, " +
+					    "       OM.MATERIAL AS TOTAL_MAT, " +
+					    "       OMO.MAO_OBRA AS TOTAL_MAO, " +
+					    "       OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL ");
+			}
+			else if(filterVO.getNivelDetalhe().intValue() == 1) {
+				sql.append(
+						"		EH.AGRUPADOR AS AGRUPADOR, " +
+					    "       '' AS ENDERECO_ATENDIMENTO, " +
+					    "       '' AS OS, " +
+					    "       '' AS OS_PAI, " +
+					    "       '' AS DATA, " +
+					    "       '' AS USERNAME, " +
+					    "       '' AS COMPLEMENTO, " +
+					    "       OM.MATERIAL AS TOTAL_MAT, " +
+					    "       OMO.MAO_OBRA AS TOTAL_MAO, " +
+					    "       OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL ");
+			}
+			else if(filterVO.getNivelDetalhe().intValue() == 2) {
+				sql.append(
+						"		EH.AGRUPADOR AS AGRUPADOR, " +
+					    "       CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, " +
+					    "       '' AS OS, " +
+					    "       '' AS OS_PAI, " +
+					    "       '' AS DATA, " +
+					    "       '' AS USERNAME, " +
+					    "       '' AS COMPLEMENTO, " +
+					    "       OM.MATERIAL AS TOTAL_MAT, " +
+					    "       OMO.MAO_OBRA AS TOTAL_MAO, " +
+					    "       OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL ");
+			}
+			else if(filterVO.getNivelDetalhe().intValue() == 3) {
+				sql.append(
+						"		EH.AGRUPADOR AS AGRUPADOR, " +
+					    "       CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, " +
+					    "       '' AS OS, " +
+					    "       '' AS OS_PAI, " +
+					    "       '' AS DATA, " +
+					    "       '' AS USERNAME, " +
+					    "       SR.SR_CUST_TXTCOMPLEMENTO AS COMPLEMENTO, " +
+					    "       OM.MATERIAL AS TOTAL_MAT, " +
+					    "       OMO.MAO_OBRA AS TOTAL_MAO, " +
+					    "       OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL ");
+			}
+			else if(filterVO.getNivelDetalhe().intValue() == 4) {
+				sql.append(
+						"		EH.AGRUPADOR AS AGRUPADOR, " +
+					    "       CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, " +
+					    "       '' AS OS, " +
+					    "       '' AS OS_PAI, " +
+					    "       '' AS DATA, " +
+					    "       SU.CALCULATED_USER_NAME AS USERNAME, " +
+					    "       SR.SR_CUST_TXTCOMPLEMENTO AS COMPLEMENTO, " +
+					    "       OM.MATERIAL AS TOTAL_MAT, " +
+					    "       OMO.MAO_OBRA AS TOTAL_MAO, " +
+					    "       OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL ");
+			}
+			else if(filterVO.getNivelDetalhe().intValue() == 5) {
+				sql.append(
+						"		EH.AGRUPADOR AS AGRUPADOR, " +
+					    "       CV.VALUE_CAPTION AS ENDERECO_ATENDIMENTO, " +
+					    "       OM.ID_ORDEM_SERVICO AS OS, " +
+					    "       SR.SR_CUST_NUMBERMAINOSI AS OS_PAI, " +
+					    "       TO_CHAR(SR.insert_time, 'DD/MM/YYYY') AS DATA, " +
+					    "       SU.CALCULATED_USER_NAME AS USERNAME, " +
+					    "       SR.SR_CUST_TXTCOMPLEMENTO AS COMPLEMENTO, " +
+					    "       OM.MATERIAL AS TOTAL_MAT, " +
+					    "       OMO.MAO_OBRA AS TOTAL_MAO, " +
+					    "       OM.MATERIAL + OMO.MAO_OBRA  AS TOTAL ");
+			}
+			
+			sql.append( 
 			"	from mf_ordemservico O " +
 			"	INNER JOIN ( " +
 			"	      select id_ordem_servico, " +
