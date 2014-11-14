@@ -53,6 +53,7 @@ public class RelatorioExtraBean extends AbstractBean implements Serializable {
 	public void initCustoPorEndereco() {
 		if(custoPorEnderecoFilter == null) {
 			custoPorEnderecoFilter = new CustoPorEnderecoFilterVO();
+			custoPorEnderecoFilter.setIncluirSubOS(true);
 			demandantes = extraFacade.consultarDemandantes();
 			agrupadores = extraFacade.consultarAgrupadores();
 			enderecos = extraFacade.consultarEnderecos();
@@ -62,6 +63,7 @@ public class RelatorioExtraBean extends AbstractBean implements Serializable {
 	public void initCustoPorUnidade() {
 		if(custoPorUnidadeFilter == null) {
 			custoPorUnidadeFilter = new CustoPorUnidadeFilterVO();
+			custoPorUnidadeFilter.setImprimirOrdemServico(true);
 			demandantes = extraFacade.consultarDemandantesCustoPorUnidade();
 			niveis1 = extraFacade.consultarNiveis(1, "00.00.00.00.00.00.00.00");
 			niveis2 = new ArrayList<ItemVO>();

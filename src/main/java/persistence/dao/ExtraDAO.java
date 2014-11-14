@@ -94,6 +94,9 @@ public class ExtraDAO implements Serializable {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT DISTINCT COD_ESTRUTURAL, NOM_UNID_PR_ABREV FROM MF_TAB0025_NIVEL"+nivel);
 		sql.append(" WHERE cod_estrutural like '"+substituirNivel(nivel, valorNivel)+"'");
+		if(nivel > 1) {
+			sql.append("   AND cod_estrutural != '"+valorNivel+"'");
+		}
  		sql.append(" ORDER BY NOM_UNID_PR_ABREV ASC");
 		Query query = em.createNativeQuery(sql.toString());
 		List<Object[]> retorno = query.getResultList();

@@ -17,8 +17,8 @@ public class BigDecimalSimplesConverter implements javax.faces.convert.Converter
 	public Object getAsObject(final FacesContext context, final UIComponent component, final String value) {
 		try {
 			final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
-			nf.setMinimumFractionDigits(0);
-			nf.setMaximumFractionDigits(2);
+			//nf.setMinimumFractionDigits(0);
+			//nf.setMaximumFractionDigits(2);
 			return new BigDecimal(nf.parse(value).toString());
 		} catch (final Exception e) {
 			// return 0.0D;
@@ -31,8 +31,8 @@ public class BigDecimalSimplesConverter implements javax.faces.convert.Converter
 			return "";
 		}
 		final NumberFormat nf = NumberFormat.getInstance(new Locale("pt", "BR"));
-		nf.setMinimumFractionDigits(0);
-		nf.setMaximumFractionDigits(2);
+		//nf.setMinimumFractionDigits(0);
+		//nf.setMaximumFractionDigits(2);
 		return nf.format(Double.valueOf(value.toString()));
 	}
 	
