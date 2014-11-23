@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
 
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -21,6 +20,8 @@ import org.primefaces.context.RequestContext;
 import util.JSFMessageUtil;
 
 public class AbstractBean {
+	
+	private Usuario user;
 	
 	@Inject
 	private UsuarioFacade usuarioFacade;
@@ -99,12 +100,13 @@ public class AbstractBean {
 
 	public  Usuario getUsuarioLogadoCookie() {
 		try {
+			if(user != null) {
+				return user;
+			}
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();	
-
 			Cookie[] cookies = request.getCookies();
-			Usuario user = new Usuario();
-			
+			user = null;
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().trim().equalsIgnoreCase("communityUserName")) {	
 					if(cookie.getValue().length() > 6) {
@@ -120,30 +122,11 @@ public class AbstractBean {
 					return user;
 				}
 			}
-		} catch (Exception x) {
-			System.out.println("Erro ao caputurar o usuário pelo cookie. Erro: " + x.getMessage());
-			x.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Erro ao caputurar o usuário pelo cookie. Erro: " + e.getMessage());
+			e.printStackTrace();
 		}
 		System.out.println("Não encontrou os cookie communityUserName ou sysaidcookie");
-		return null;
-	}
-	
-	public  String getDecodedUsuarioCookie() {
-		try {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-			Cookie[] cookies = request.getCookies();
-			
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().trim().equalsIgnoreCase("communityUserName")) {								
-					String decoded = new String(Base64.decodeBase64(cookie.getValue().substring(6)));					
-					return decoded;					
-				}
-			}
-
-		} catch (Exception x) {
-			x.printStackTrace();
-		}
 		return null;
 	}
 	

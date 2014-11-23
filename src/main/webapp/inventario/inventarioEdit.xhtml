@@ -78,7 +78,7 @@
 		        <br />
 		        <p:outputPanel id="addMaterialPanel">
 		        	
-					<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
+					<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="100" queryDelay="2000"
 						value="#{inventarioBean.material}" label="Material" 
 						var="invMat" itemLabel="#{invMat.material}" converter="objectConverter" itemValue="#{invMat}" 
 						completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
@@ -106,9 +106,10 @@
 				  	
 		 		</p:outputPanel>
 	        				
-				<h2>Materiais do Inventario</h2>
+				<h2>Materiais do Inventário</h2>
 				<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existem itens nesta lista." 
-					sortBy="#{invMat.material.material}" sortOrder="ASCENDING">
+					sortBy="#{invMat.material.material}" sortOrder="ASCENDING"
+					rows="100" paginator="true" paginatorPosition="bottom">
 					<p:column style="width: 35px;">
 						<f:facet name="header">
 							<h:selectBooleanCheckbox value="#{inventarioBean.checkTodos}">

@@ -22,6 +22,7 @@ import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.context.RequestContext;
 
 import util.FaceletRenderer;
+import util.HibernateUtil;
 
 @Named
 @ViewScoped
@@ -47,6 +48,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	
 	private Material material;
 	private List<Material> materiais;
+	private List<Usuario> usuarios;
 	private List<Fornecedor> contratados;
 
 	public String novo() {
@@ -81,12 +83,15 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 	}
 	
 	public List<Usuario> getAutorizadores(){
-		return usuarioFacade.listAll();
+		if (usuarios == null) {
+			usuarios = HibernateUtil.unproxy(usuarioFacade.listAll());
+		}
+		return usuarios;
 	}
 	
 	public List<Fornecedor> getAllContratados(){
 		if(contratados == null) {
-			contratados = fornecedorFacade.listAll();
+			contratados = HibernateUtil.unproxy(fornecedorFacade.listAll());
 		}
 		return contratados;
 	}

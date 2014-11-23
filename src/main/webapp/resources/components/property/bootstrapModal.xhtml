@@ -12,16 +12,24 @@
         <cc:attribute name="modalId" required="true" />
         <cc:attribute name="title" required="true" />
         <cc:attribute name="options" required="false" default="" />
+        <cc:attribute name="classModal" required="false" default="modal-lg" />
+        <cc:attribute name="dataKeyboard" required="false" default="true" />
+        <cc:attribute name="dataBackdrop" required="false" default="true" />
+        <cc:attribute name="enableBtnClose" required="false" default="true" />
     </cc:interface>
 
 	<cc:implementation>
 		
 		<!-- Modal -->
-		<div class="modal fade" id="#{cc.attrs.modalId}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  		<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="#{cc.attrs.modalId}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" 
+			data-keyboard="#{cc.attrs.dataKeyboard}"
+			data-backdrop="#{cc.attrs.dataBackdrop}">
+	  		<div class="modal-dialog #{cc.attrs.classModal}">
 	    		<div class="modal-content">
 					<div class="modal-header">
-			        	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<ui:fragment rendered="#{cc.attrs.enableBtnClose}">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						</ui:fragment>
 			        	<h4 class="modal-title" id="myModalLabel">#{cc.attrs.title}</h4>
 			      	</div>
 			      	<div class="modal-body">

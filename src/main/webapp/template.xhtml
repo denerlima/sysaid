@@ -6,7 +6,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:o="http://omnifaces.org/ui"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
 	
 <h:head>
 
@@ -132,15 +133,15 @@
 	
 	<ui:insert name="body" />
 	
-	<p:ajaxStatus onstart="PF('dialogAguarde').show()" oncomplete="PF('dialogAguarde').hide();" onerror="showError()" />  
+	<p:ajaxStatus onstart="$('#aguardeModal').modal('show');" oncomplete="$('#aguardeModal').modal('hide');" onerror="showError()" />  
 
-	<p:dialog header="Aguarde..." widgetVar="dialogAguarde" modal="true" resizable="false" closable="false" >
+	<cp:bootstrapModal id="aguardeModal" title="Aguarde" modalId="aguardeModal" classModal="modal-sm" dataKeyboard="false" dataBackdrop="false" enableBtnClose="false">
 		<center>
 			<p style="padding: 12px;">
 				<h:graphicImage value="/resources/img/ajax-loader.gif" style="vertical-align: middle;" />
 			</p>
 		</center>	
-	</p:dialog>
+	</cp:bootstrapModal>
 	
 	<br />
 	

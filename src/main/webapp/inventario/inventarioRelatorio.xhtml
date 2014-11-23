@@ -39,8 +39,8 @@
 					<h:outputText value="Material:" />
 				</div>
 				<div class="col-md-4">
-					<p:autoComplete id="materialAutocomplete" minQueryLength="3"
-						maxResults="10" value="#{inventarioBean.material}" converter="objectConverter"
+					<p:autoComplete id="materialAutocomplete" minQueryLength="3" maxResults="100" queryDelay="2000" 
+						value="#{inventarioBean.material}" converter="objectConverter"
 						label="Material" var="mat" itemLabel="#{mat.material}" itemValue="#{mat}"
 						completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 				</div>

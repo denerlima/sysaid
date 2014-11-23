@@ -26,7 +26,7 @@
 			
 			<p:outputPanel id="addMaterialPanel">
 		        	
-				<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="10" 
+				<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="100" queryDelay="2000"
 					value="#{ordemServicoBean.material}" converter="objectConverter" label="Material" 
 					var="invMat" itemLabel="#{invMat.material}" itemValue="#{invMat}" 
 					completeMethod="#{ordemServicoBean.completeMaterial}" dropdown="true" />

@@ -26,8 +26,6 @@ import org.primefaces.context.RequestContext;
 
 import util.FaceletRenderer;
 
-import util.FaceletRenderer;
-
 @Named
 @ViewScoped
 public class InventarioBean extends AbstractBean implements Serializable {
@@ -91,13 +89,13 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		if(id == null || id == 0) {
 			inventario = new Inventario();
 			inventario.setMateriais(new ArrayList<InventarioMaterial>());
-			usuario = getDecodedUsuarioCookie();
+			usuario = getUsuarioLogadoCookie().getUserName();
 			if(isInventariante()) {
 				getInventario().setAtendente(usuarioFacade.find(usuario));
 			}
 		} else {
 			inventario = getInventarioFacade().find(id);
-			usuario = getDecodedUsuarioCookie();
+			usuario = getUsuarioLogadoCookie().getUserName();
 		}
 	}
 	
