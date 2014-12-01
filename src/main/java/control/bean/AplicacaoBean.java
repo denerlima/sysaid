@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Aplicacao;
+import model.entity.Log;
 import model.entity.Usuario;
 import model.facade.AplicacaoFacade;
 import model.facade.UsuarioFacade;
@@ -53,6 +54,7 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadAplicacoes();
 			resetAplicacao();
+			appendLog(Log.ACAO_CREATE, aplicacao.getId(), Aplicacao.class.getName(), aplicacao.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
@@ -70,6 +72,7 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadAplicacoes();
 			resetAplicacao();
+			appendLog(Log.ACAO_UPDATE, aplicacao.getId(), Aplicacao.class.getName(), aplicacao.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
@@ -83,6 +86,7 @@ public class AplicacaoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadAplicacoes();
 			resetAplicacao();
+			appendLog(Log.ACAO_DELETE, aplicacao.getId(), Aplicacao.class.getName(), aplicacao.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

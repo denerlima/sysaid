@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.Log;
 import model.entity.TipoMaterial;
 import model.facade.TipoMaterialFacade;
 
@@ -47,6 +48,7 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadTiposMaterial();
 			resetTipoMaterial();
+			appendLog(Log.ACAO_CREATE, tipoMaterial.getId(), TipoMaterial.class.getName(), tipoMaterial.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
@@ -64,6 +66,7 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Alterado com  Sucesso");
 			loadTiposMaterial();
 			resetTipoMaterial();
+			appendLog(Log.ACAO_UPDATE, tipoMaterial.getId(), TipoMaterial.class.getName(), tipoMaterial.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
@@ -77,6 +80,7 @@ public class TipoMaterialBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadTiposMaterial();
 			resetTipoMaterial();
+			appendLog(Log.ACAO_DELETE, tipoMaterial.getId(), TipoMaterial.class.getName(), tipoMaterial.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Fornecedor;
+import model.entity.Log;
 import model.entity.Material;
 import model.entity.NotaFiscal;
 import model.entity.NotaFiscalMaterial;
@@ -98,6 +99,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			}
 			getNotaFiscalFacade().create(notaFiscal);
 			displayInfoMessageToUser("Criado com Sucesso");
+			appendLog(Log.ACAO_CREATE, notaFiscal.getId(), NotaFiscal.class.getName(), notaFiscal.toJson());
 			return "/notaFiscal/notaFiscalList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
@@ -116,6 +118,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			}
 			getNotaFiscalFacade().updateNota(notaFiscal);
 			displayInfoMessageToUser("Alterado com  Sucesso");
+			appendLog(Log.ACAO_UPDATE, notaFiscal.getId(), NotaFiscal.class.getName(), notaFiscal.toJson());
 			return "/notaFiscal/notaFiscalList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
@@ -130,6 +133,7 @@ public class NotaFiscalBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadNotasFiscais();
 			resetNotaFiscal();
+			appendLog(Log.ACAO_DELETE, notaFiscal.getId(), NotaFiscal.class.getName(), notaFiscal.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

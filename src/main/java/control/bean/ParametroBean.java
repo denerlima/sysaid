@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.Log;
 import model.entity.Parametro;
 import model.facade.ParametroFacade;
 
@@ -43,6 +44,7 @@ public class ParametroBean extends AbstractBean implements Serializable {
 			getParametroFacade().create(parametro);
 			displayInfoMessageToUser("Criado com Sucesso");
 			resetParametro();
+			appendLog(Log.ACAO_CREATE, parametro.getId(), Parametro.class.getName(), parametro.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
@@ -58,6 +60,7 @@ public class ParametroBean extends AbstractBean implements Serializable {
 		try {
 			getParametroFacade().update(parametro);
 			displayInfoMessageToUser("Alterado com  Sucesso");
+			appendLog(Log.ACAO_UPDATE, parametro.getId(), Parametro.class.getName(), parametro.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
@@ -70,6 +73,7 @@ public class ParametroBean extends AbstractBean implements Serializable {
 			getParametroFacade().delete(parametro);
 			displayInfoMessageToUser("Excluído com Sucesso");
 			resetParametro();
+			appendLog(Log.ACAO_DELETE, parametro.getId(), Parametro.class.getName(), parametro.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

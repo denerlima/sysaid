@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.Log;
 import model.entity.Marca;
 import model.facade.MarcaFacade;
 
@@ -45,6 +46,7 @@ public class MarcaBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Criado com Sucesso");
 			loadMarcas();
 			resetMarca();
+			appendLog(Log.ACAO_CREATE, marca.getId(), Marca.class.getName(), marca.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();

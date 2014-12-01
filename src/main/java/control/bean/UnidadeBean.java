@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.Log;
 import model.entity.Unidade;
 import model.facade.UnidadeFacade;
 
@@ -51,6 +52,7 @@ public class UnidadeBean extends AbstractBean implements Serializable {
 			//loadUnidades();
 			resetUnidade();
 			RequestContext.getCurrentInstance().addCallbackParam("success", true);
+			appendLog(Log.ACAO_CREATE, unidade.getId(), Unidade.class.getName(), unidade.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
@@ -65,6 +67,7 @@ public class UnidadeBean extends AbstractBean implements Serializable {
 			resetUnidade();
 			unidadeMedidaBean.setUnidades(null);
 			RequestContext.getCurrentInstance().addCallbackParam("success", true);
+			appendLog(Log.ACAO_UPDATE, unidade.getId(), Unidade.class.getName(), unidade.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
@@ -78,6 +81,7 @@ public class UnidadeBean extends AbstractBean implements Serializable {
 			loadUnidades();
 			resetUnidade();
 			unidadeMedidaBean.setUnidades(null);
+			appendLog(Log.ACAO_DELETE, unidade.getId(), Unidade.class.getName(), unidade.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

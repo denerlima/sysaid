@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Fornecedor;
+import model.entity.Log;
 import model.entity.Material;
 import model.entity.OrdemDeCompra;
 import model.entity.OrdemDeCompraMaterial;
@@ -104,6 +105,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		try {
 			getOrdemDeCompraFacade().create(ordemDeCompra);			
 			displayInfoMessageToUser("Criado com Sucesso. Número da Ordem de Compra: "+ordemDeCompra.getId());
+			appendLog(Log.ACAO_CREATE, ordemDeCompra.getId(), OrdemDeCompra.class.getName(), ordemDeCompra.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
@@ -116,6 +118,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 		try {
 			getOrdemDeCompraFacade().update(ordemDeCompra);			
 			displayInfoMessageToUser("Alterado com  Sucesso");
+			appendLog(Log.ACAO_UPDATE, ordemDeCompra.getId(), OrdemDeCompra.class.getName(), ordemDeCompra.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
@@ -133,6 +136,7 @@ public class OrdemDeCompraBean extends AbstractBean implements Serializable {
 			getOrdemDeCompraFacade().delete(ordemDeCompra);			
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensDeCompra();
+			appendLog(Log.ACAO_DELETE, ordemDeCompra.getId(), OrdemDeCompra.class.getName(), ordemDeCompra.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

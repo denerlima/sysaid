@@ -14,6 +14,7 @@ import javax.inject.Named;
 import model.entity.Aplicacao;
 import model.entity.Inventario;
 import model.entity.InventarioMaterial;
+import model.entity.Log;
 import model.entity.Material;
 import model.entity.Usuario;
 import model.facade.AplicacaoFacade;
@@ -120,6 +121,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			}
 			getInventarioFacade().create(inventario);
 			displayInfoMessageToUser("Criado com Sucesso");
+			appendLog(Log.ACAO_CREATE, inventario.getId(), Inventario.class.getName(), inventario.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
@@ -144,6 +146,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 		try {
 			getInventarioFacade().update(inventario);
 			displayInfoMessageToUser("Alterado com  Sucesso");
+			appendLog(Log.ACAO_UPDATE, inventario.getId(), Inventario.class.getName(), inventario.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
@@ -179,6 +182,7 @@ public class InventarioBean extends AbstractBean implements Serializable {
 			getInventarioFacade().delete(inventario);
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadInventarios();
+			appendLog(Log.ACAO_DELETE, inventario.getId(), Inventario.class.getName(), inventario.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import model.entity.Aplicacao;
 import model.entity.Grupo;
+import model.entity.Log;
 import model.entity.Marca;
 import model.entity.Material;
 import model.entity.TipoMaterial;
@@ -113,6 +114,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		try {			
 			getMaterialFacade().create(material);
 			displayInfoMessageToUser("Criado com Sucesso");
+			appendLog(Log.ACAO_CREATE, material.getId(), Material.class.getName(), material.toJson());
 			return "/material/materialList.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
@@ -125,6 +127,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 		try {
 			getMaterialFacade().update(material);
 			displayInfoMessageToUser("Alterado com  Sucesso");
+			appendLog(Log.ACAO_UPDATE, material.getId(), Material.class.getName(), material.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
@@ -182,6 +185,7 @@ public class MaterialBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Exclu’do com Sucesso");
 			loadMateriais();
 			resetMaterial();
+			appendLog(Log.ACAO_DELETE, material.getId(), Material.class.getName(), material.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

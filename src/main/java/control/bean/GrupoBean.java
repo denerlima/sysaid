@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import model.entity.Grupo;
+import model.entity.Log;
 import model.facade.GrupoFacade;
 
 import org.omnifaces.cdi.ViewScoped;
@@ -50,6 +51,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 			loadGrupos();
 			resetGrupo();
 			root = null;
+			appendLog(Log.ACAO_CREATE, grupo.getId(), Grupo.class.getName(), grupo.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
@@ -68,6 +70,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 			loadGrupos();
 			resetGrupo();
 			root = null;
+			appendLog(Log.ACAO_UPDATE, grupo.getId(), Grupo.class.getName(), grupo.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
@@ -82,6 +85,7 @@ public class GrupoBean extends AbstractBean implements Serializable {
 			loadGrupos();
 			resetGrupo();
 			root = null;
+			appendLog(Log.ACAO_DELETE, grupo.getId(), Grupo.class.getName(), grupo.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

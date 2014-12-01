@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.Log;
 import model.entity.MaoDeObra;
 import model.entity.Material;
 import model.entity.OrdemServico;
@@ -190,6 +191,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadOrdensServicos();
 			resetOrdemServico();
+			appendLog(Log.ACAO_DELETE, ordemServico.getId(), OrdemServico.class.getName(), ordemServico.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
@@ -201,6 +203,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			getOrdemServico().getMaosDeObras().remove(getOrdemServicoMaoDeObra());
 			getOrdemServicoFacade().update(ordemServico);
 			displayInfoMessageToUser("Excluído com Sucesso");
+			appendLog(Log.ACAO_UPDATE, ordemServico.getId(), OrdemServico.class.getName(), ordemServico.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();
@@ -221,6 +224,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			}			
 			getOrdemServicoFacade().updateMateriais(ordemServico, ordemServicoMateriais);
 			displayInfoMessageToUser("Operação realizada com sucesso");
+			appendLog(Log.ACAO_UPDATE, ordemServico.getId(), OrdemServico.class.getName(), ordemServico.toJson());
 			return redirectMaterialList();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
@@ -233,6 +237,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		try {
 			getOrdemServicoFacade().update(ordemServico);
 			displayInfoMessageToUser("Operação realizada com sucesso");
+			appendLog(Log.ACAO_UPDATE, ordemServico.getId(), OrdemServico.class.getName(), ordemServico.toJson());
 			return redirectMaoDeObraList();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
@@ -252,6 +257,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 			}
 			getOrdemServicoFacade().updatePendencias(ordemServico, pendencias);
 			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
+			appendLog(Log.ACAO_UPDATE, ordemServico.getId(), OrdemServico.class.getName(), ordemServico.toJson());
 			return redirectMaterialList();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel baixar pendências. ERRO");
@@ -264,6 +270,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		try {
 			getOrdemServicoFacade().updateDevolucoes(ordemServico, devolucoes);
 			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
+			appendLog(Log.ACAO_UPDATE, ordemServico.getId(), OrdemServico.class.getName(), ordemServico.toJson());
 			return redirectMaterialList();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel baixar pendências. ERRO");
@@ -276,6 +283,7 @@ public class OrdemServicoBean extends AbstractBean implements Serializable {
 		try {
 			getOrdemServicoFacade().updateRealizados(ordemServico);
 			displayInfoMessageToUser("Baixa de Pendências realizada com sucesso");
+			appendLog(Log.ACAO_UPDATE, ordemServico.getId(), OrdemServico.class.getName(), ordemServico.toJson());
 			return redirectRealizadoList();
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel baixar pendências. ERRO");

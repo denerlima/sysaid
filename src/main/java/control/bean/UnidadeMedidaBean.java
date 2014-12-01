@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import model.entity.Log;
 import model.entity.Unidade;
 import model.entity.UnidadeMedida;
 import model.entity.UnidadeMedidaSaida;
@@ -64,6 +65,7 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 			loadUnidadesMedida();
 			resetUnidadeMedida();
 			RequestContext.getCurrentInstance().addCallbackParam("success", true);
+			appendLog(Log.ACAO_CREATE, unidadeMedida.getId(), UnidadeMedida.class.getName(), unidadeMedida.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel criar. ERRO");
 			e.printStackTrace();
@@ -94,6 +96,7 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 			loadUnidadesMedida();
 			resetUnidadeMedida();
 			RequestContext.getCurrentInstance().addCallbackParam("success", true);
+			appendLog(Log.ACAO_UPDATE, unidadeMedida.getId(), UnidadeMedida.class.getName(), unidadeMedida.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel alterar. ERRO");
 			e.printStackTrace();
@@ -106,6 +109,7 @@ public class UnidadeMedidaBean extends AbstractBean implements Serializable {
 			displayInfoMessageToUser("Excluído com Sucesso");
 			loadUnidadesMedida();
 			resetUnidadeMedida();
+			appendLog(Log.ACAO_DELETE, unidadeMedida.getId(), UnidadeMedida.class.getName(), unidadeMedida.toJson());
 		} catch (Exception e) {
 			displayErrorMessageToUser("Ops, nã‹o foi possí’vel excluir. ERRO");
 			e.printStackTrace();

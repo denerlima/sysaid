@@ -35,13 +35,13 @@ public class HomeBean extends AbstractBean implements Serializable {
 
 	public void loginUser() {
 		gravarCookie(usuario.getUserName());
-		displayErrorMessageToUser("Cookie gravado com sucesso!");
+		displayInfoMessageToUser("Cookie gravado com sucesso!");
 	}
 	
 	public void logoutUser() {
 		removerCookie();
 		usuario = null;
-		displayErrorMessageToUser("Cookie Removido com sucesso!");
+		displayInfoMessageToUser("Cookie Removido com sucesso!");
 	}
 	
 	public Date getDataAtual() {

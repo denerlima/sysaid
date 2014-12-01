@@ -11,7 +11,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.entity.Log;
 import model.entity.Usuario;
+import model.facade.LogFacade;
 import model.facade.UsuarioFacade;
 
 import org.apache.commons.codec.binary.Base64;
@@ -26,6 +28,9 @@ public class AbstractBean {
 	@Inject
 	private UsuarioFacade usuarioFacade;
 
+	@Inject
+	private LogFacade logFacade;
+	
 	public AbstractBean() {
 		super();
 	}
@@ -133,6 +138,15 @@ public class AbstractBean {
 	public void verificarUsuarioLogado() {
 		if(getUsuarioLogadoCookie() == null) {
 			throw new RuntimeException("É necessário está logado.");
+		}
+	}
+	
+	public void appendLog(String acao, Integer identificador, String entidade, String descricao) {
+		Log l = new Log(getUsuarioLogadoCookie().getUserName(), acao, identificador, entidade, descricao);
+		try {
+			logFacade.create(l);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

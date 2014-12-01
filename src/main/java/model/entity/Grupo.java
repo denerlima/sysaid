@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.json.JSONObject;
+
 @Entity
 @SequenceGenerator(name = "grupoSequence", sequenceName = "MF_GRUPO_ID_SEQ", allocationSize = 1)
 @Table(name = "MF_GRUPO")
@@ -40,7 +42,7 @@ public class Grupo extends GenericModelo implements Serializable{
 	private int ativo = 1;
 	
 	@OneToMany(mappedBy="grupo")
-	private List<Material> grupo;
+	private List<Material> materiais;
 
 	public Integer getId() {
 		return id;
@@ -58,12 +60,12 @@ public class Grupo extends GenericModelo implements Serializable{
 		this.descricao = descricao;
 	}
 		
-	public List<Material> getGrupo() {
-		return grupo;
+	public List<Material> getMateriais() {
+		return materiais;
 	}
 
-	public void setGrupo(List<Material> grupo) {
-		this.grupo = grupo;
+	public void setMateriais(List<Material> grupo) {
+		this.materiais = grupo;
 	}
 	
 	public int getAtivo() {
@@ -117,6 +119,17 @@ public class Grupo extends GenericModelo implements Serializable{
 			return getDescricao() + " - " + getGrupoPai();
 		}
 		return getDescricao();
+	}
+	
+	@Override
+	public String toJson() {
+		JSONObject j = new JSONObject();
+		j.put("id", getId());
+		j.put("descricao", getDescricao());
+		if(getGrupoPai() != null) {
+			j.put("grupoPai", getGrupoPai().getId());
+		}
+		return "";
 	}
 	
 }
