@@ -142,8 +142,8 @@ public class AbstractBean {
 	}
 	
 	public void appendLog(String acao, Integer identificador, String entidade, String descricao) {
-		Log l = new Log(getUsuarioLogadoCookie().getUserName(), acao, identificador, entidade, descricao);
 		try {
+			Log l = new Log(getUsuarioLogadoCookie().getUserName(), acao, identificador, entidade, descricao);
 			logFacade.create(l);
 		} catch (Exception e) {
 			e.printStackTrace();
