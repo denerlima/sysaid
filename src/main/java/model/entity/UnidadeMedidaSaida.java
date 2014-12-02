@@ -94,4 +94,12 @@ public class UnidadeMedidaSaida extends GenericModelo implements Serializable{
 		this.unidadeMedida = unidadeMedida;
 	}
 	
+	public BigDecimal getQuantidadeConvertida(BigDecimal quantidade) {
+		return quantidade.multiply(getFatorConversao());
+	}
+	
+	public BigDecimal getQuantidadeDesconvertida(BigDecimal quantidade) {
+		return quantidade.divide(getFatorConversao());
+	}
+	
 }
