@@ -95,6 +95,9 @@ public class Material extends GenericModelo implements Serializable{
 	@Transient
 	private BigDecimal sugestaoCompra;
 	
+	@Transient
+	private boolean selecionado;
+	
 	/*
 	 * Getters and Setters
 	 */
@@ -241,6 +244,14 @@ public class Material extends GenericModelo implements Serializable{
 
 	public void setPrecoUnitario(BigDecimal valorUnitario) {
 		this.precoUnitario = valorUnitario;
+	}
+
+	public boolean isSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(boolean selecionado) {
+		this.selecionado = selecionado;
 	}
 
 	/**

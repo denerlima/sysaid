@@ -50,9 +50,11 @@ public class MaterialBean extends AbstractBean implements Serializable {
 	private List<TipoMaterial> tiposMateriais;
 	private List<UnidadeMedida> unidadesMedidas;
 	private Boolean isValoresPositivos = true;
+	private boolean checkTodos;
 	
 	private TreeNode root;
 	private TreeNode selectedNode;
+	private String fromSearch;
 	
 	public MaterialFacade getMaterialFacade() {
 		return materialFacade;
@@ -304,4 +306,64 @@ public class MaterialBean extends AbstractBean implements Serializable {
         }
     }
 
+    public boolean isCheckTodos() {
+		return checkTodos;
+	}
+
+	public void setCheckTodos(boolean checkTodos) {
+		this.checkTodos = checkTodos;
+	}
+
+	public void iniciarBuscaMaterial(String from) {
+    	material = new Material();
+    	checkTodos = false;
+    	materiais = new ArrayList<Material>();
+    	materiaisFiltered = new ArrayList<Material>();
+    	fromSearch = from;
+    }
+    
+    public void buscarMaterias() {
+    	materiais = getMaterialFacade().pesquisarListaMateriaisbyNomeMaterial(material.getMaterial());
+		materiaisFiltered = materiais;
+		for(Material m : materiais) {
+			m.setSelecionado(false);
+		}
+    }
+
+    public void marcarOuDesmarcarTodos() {
+    	for(Material m : getMateriais()) {
+			m.setSelecionado(isCheckTodos());
+		}
+    }
+    
+    public void adicionarMateriais() {
+    	if(fromSearch.equals("osMaterialEdit")) {
+    		OrdemServicoBean osb = (OrdemServicoBean) Component.getInstance(OrdemServicoBean.class);
+    		for(Material m : getMateriais()) {
+    			if(m.isSelecionado()) {
+    				osb.setMaterial(m);
+    				osb.addMaterial();
+    			}
+    		}
+    	}
+    	else if (fromSearch.equals("ordemDeCompraEdit")) {
+    		OrdemDeCompraBean ocb = (OrdemDeCompraBean) Component.getInstance(OrdemDeCompraBean.class);
+    		for(Material m : getMateriais()) {
+    			if(m.isSelecionado()) {
+    				ocb.setMaterial(m);
+    				ocb.addMaterial();
+    			}
+    		}
+    	}
+    	else if (fromSearch.equals("inventarioEdit")) {
+    		InventarioBean ib = (InventarioBean) Component.getInstance(InventarioBean.class);
+    		for(Material m : getMateriais()) {
+    			if(m.isSelecionado()) {
+    				ib.setMaterial(m);
+    				ib.addMaterial();
+    			}
+    		}
+    	}
+    }
+    
 }

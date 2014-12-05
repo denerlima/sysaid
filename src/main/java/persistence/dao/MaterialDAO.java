@@ -2,9 +2,7 @@ package persistence.dao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Named;
 import javax.persistence.Query;
@@ -20,12 +18,6 @@ public class MaterialDAO extends GenericDAO<Material> {
 		super(Material.class);
 	}
 	
-    public Material findMaterialByMaterial(String material){
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("material", "%"+ material +"%"); 
-        return super.findOneResult(Material.FIND_BY_NOME_MATERIAL, parameters);
-    }
-    
 	@SuppressWarnings("unchecked")
 	 public List<Material> findListMaterialByMaterial(String material){
         Query query = getEntityManager().createQuery("From Material mat WHERE ativo = 1 and UPPER(mat.material) like UPPER(:material) order by mat.id ASC");

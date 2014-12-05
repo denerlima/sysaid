@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:cp="http://java.sun.com/jsf/composite/components/property">
+
+	<cp:bootstrapModal id="materialListModal" title="Consultar Material" modalId="materialListModal">      
+		<h:form id="materialListModalForm">
+		
+			Material: <h:inputText value="#{materialBean.material.material}" />
+		
+			<p:commandButton value="Buscar" 
+				action="#{materialBean.buscarMaterias}"
+				update=":materialListModal:materialListModalForm"
+				style="margin-left: 2px;" />
+		
+			<hr />
+		
+ 			<p:outputPanel id="resultado">
+				<p:dataTable var="_material" value="#{materialBean.materiais}" 
+					filteredValue="#{materialBean.materiaisFiltered}"
+					rows="10" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" 
+                    currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+					emptyMessage="Não existem itens nesta lista.">
+					
+					<p:column style="width: 35px;">
+						<f:facet name="header">
+							<h:selectBooleanCheckbox value="#{materialBean.checkTodos}">
+								<p:ajax event="change" listener="#{materialBean.marcarOuDesmarcarTodos}" process="@this" update=":materialListModal:materialListModalForm" />
+							</h:selectBooleanCheckbox>	
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{_material.selecionado}" />
+					</p:column>
+					<p:column headerText="Material" sortBy="#{_material.material}" filterBy="#{_material.material}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_material.material}" />							
+					</p:column>
+					<p:column headerText="Tipo Material" sortBy="#{_material.tipoMaterial.descricao}" filterBy="#{_material.tipoMaterial.descricao}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_material.tipoMaterial.descricao}" />	
+					</p:column>
+					<p:column headerText="Descrição" sortBy="#{_material.descricao}" filterBy="#{_material.descricao}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_material.descricao}" />							
+					</p:column>
+					<p:column headerText="Unidade de Medida Entrada" sortBy="#{_material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{_material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
+						<h:outputText value="#{_material.unidadeMedida.unidadeEntrada.descricao}" />							
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+			
+			
+			<div class="buttons">
+			
+				<p:commandButton value="OK" 
+					action="#{materialBean.adicionarMateriais}" 
+					update="#{areaToRender}"
+					oncomplete="$('#materialListModal').modal('hide');" />
+					
+				<p:commandButton value="Cancelar" 
+					action="#{materialBean.adicionarMateriais}" 
+					update="#{areaToRender}"
+					oncomplete="$('#materialListModal').modal('hide');" />	
+			
+			</div>
+				
+		</h:form>
+
+	</cp:bootstrapModal>
+
+</ui:composition>	

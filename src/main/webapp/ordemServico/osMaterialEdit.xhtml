@@ -35,6 +35,12 @@
 		        	update=":osMaterialEditForm" 
 		        	process="@this :osMaterialEditForm:materialAutocomplete" style="margin-left: 35px;" />
 			  	
+			  	<p:commandButton value="&nbsp;" icon="ui-icon-search"
+					process="@this"
+					action="#{materialBean.iniciarBuscaMaterial('osMaterialEdit')}"
+					update=":materialListModal:materialListModalForm" 
+					oncomplete="$('#materialListModal').modal('show')" style="margin-left: 5px;" />
+			  	
 	 		</p:outputPanel>
 			
 			<center>
@@ -125,6 +131,10 @@
 			</div>		
 						
 		</h:form>
+		
+		<ui:include src="/material/materialListPopup.xhtml">
+			<ui:param name="areaToRender" value=":osMaterialEditForm" />
+		</ui:include>
 		
 	</ui:define>
 </ui:composition>

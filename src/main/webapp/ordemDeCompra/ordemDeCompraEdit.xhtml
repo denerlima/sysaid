@@ -94,6 +94,12 @@
 				        	update=":ordemDeCompraForm:tabView:tabelaMaterial :ordemDeCompraForm:tabView:addMaterialPanel" 
 				        	process="@this :ordemDeCompraForm:tabView:materialAutocomplete" style="margin-left: 35px;" />
 					  	
+					  	<p:commandButton value="&nbsp;" icon="ui-icon-search"
+							process="@this"
+							action="#{materialBean.iniciarBuscaMaterial('ordemDeCompraEdit')}"
+							update=":materialListModal:materialListModalForm" 
+							oncomplete="$('#materialListModal').modal('show')" style="margin-left: 5px;" />
+					  	
 			 		</p:outputPanel>
 		        	
 		        	<br />			
@@ -136,6 +142,10 @@
 	     	<p:commandButton value="Cancelar" action="ordemDeCompraList.xhtml?faces-redirect=true" process="@this" />
 	     			
 		</h:form>
+		
+		<ui:include src="/material/materialListPopup.xhtml">
+			<ui:param name="areaToRender" value=":ordemDeCompraForm:tabView:tabelaMaterial" />
+		</ui:include>
 
 	</ui:define>
 </ui:composition>

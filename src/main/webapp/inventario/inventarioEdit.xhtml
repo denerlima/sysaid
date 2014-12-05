@@ -20,325 +20,335 @@
 	
 	<ui:define name="body">
 	
-	<h:form id="inventarioEditForm">
-		<center><h2>Cadastro de Inventário</h2></center>
-		<br />					
-	    <p:tabView  id="tabView">
-	        <p:tab title="Dados Gerais">
-	        	
-	        	<div class="row form-row">
-					<div class="col-md-2">
-						<h:outputText value="Nº de Inventário:" />
-					</div>
-					<div class="col-md-10">
-						<h:outputText value="#{inventarioBean.inventario.id}"  label="Número de Inventário" />	
-					</div>
-				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						Data de Inventário: <span class="required">*</span>
-					</div>
-					<div class="col-md-10">
-						<p:calendar id="dataInventario" pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true" value="#{inventarioBean.inventario.dataInventario}" size="10" navigator="true"
-							required="true" label="Data de Inventário"  />
-						<h:message for="dataInventario" styleClass="msg-error" />		
-					</div>
-				</div>
-				
-				<!--
-		    	<div class="row form-row">
-					<div class="col-md-2">
-						Inventariante: <span class="required">*</span>
-					</div>
-					<div class="col-md-10">
-						<h:selectOneMenu id="atendente" value="#{inventarioBean.inventario.atendente}" converter="objectConverter" required="true" label="Inventariante" styleClass="input-sm">
-							<f:selectItem itemValue="" itemLabel="Selecione" />
-							<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
-						</h:selectOneMenu>	
-						<h:message for="atendente" styleClass="msg-error" />
-					</div>
-				</div>  
-				-->
-				
-				<div class="row form-row form-group">
-					<div class="col-md-2">
-						Justificativa: <span class="required">*</span>
-					</div>
-					<div class="col-md-10">
-						<h:inputTextarea id="justificativa" value="#{inventarioBean.inventario.justificativa}" rows="3" cols="70" required="true" label="Justificativa" />
-						<h:message for="justificativa" styleClass="msg-error" />	
-					</div>
-				</div>
-	        
-	        </p:tab>
-	        
-	        <p:tab title="Material" >
-		        
-		        <br />
-		        <p:outputPanel id="addMaterialPanel">
+		<h:form id="inventarioEditForm">
+			<center><h2>Cadastro de Inventário</h2></center>
+			<br />					
+		    <p:tabView  id="tabView">
+		        <p:tab title="Dados Gerais">
 		        	
-					<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="100" queryDelay="2000"
-						value="#{inventarioBean.material}" label="Material" 
-						var="invMat" itemLabel="#{invMat.material}" converter="objectConverter" itemValue="#{invMat}" 
-						completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
-				
-			        <p:commandButton value="Adicionar Material" icon="ui-icon-plus" action="#{inventarioBean.addMaterial}" 
-			        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
-			        	process="@this :inventarioEditForm:tabView:materialAutocomplete" style="margin-left: 35px;" />
-			        	
-			       	<p:commandButton value="Adicionar Todos Materiais" icon="ui-icon-plus" action="#{inventarioBean.addTodosMateriais}" 
-			        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
-			        	process="@this" style="margin-left: 5px;" />
-			        
-			        <p:commandButton value="Imprimir Checklist" icon="ui-icon-print" action="#{inventarioBean.imprimirChecklist}" 
-			        	process="@this :inventarioEditForm:tabView:tabelaMaterial" style="margin-left: 5px;" ajax="false" />
-			        	
-			        <p:commandButton value="Concluir" icon="ui-icon-disk"
-			     		action="#{inventarioBean.concluirInventario}" 
-			     		update=":materialEditModal:materialEditDialogForm"
-			     		rendered="#{inventarioBean.managed and inventarioBean.aprovador}"
-			     		style="margin-left: 5px;" />
-			        	
-			      	<p:commandButton value="Excluir Selecionados" icon="ui-icon-circle-close" action="#{inventarioBean.removerSelecionados}" 
-			        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
-			        	process="@this :inventarioEditForm:tabView:tabelaMaterial" style="margin-left: 5px;" />  	 	
-				  	
-		 		</p:outputPanel>
-	        				
-				<h2>Materiais do Inventário</h2>
-				<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existem itens nesta lista." 
-					sortBy="#{invMat.material.material}" sortOrder="ASCENDING"
-					rows="100" paginator="true" paginatorPosition="bottom">
-					<p:column style="width: 35px;">
-						<f:facet name="header">
-							<h:selectBooleanCheckbox value="#{inventarioBean.checkTodos}">
-								<p:ajax event="change" listener="#{inventarioBean.marcarOuDesmarcarTodos}" process="@this" update=":inventarioEditForm:tabView:tabelaMaterial" />
-							</h:selectBooleanCheckbox>	
-						</f:facet>
-						<h:selectBooleanCheckbox value="#{invMat.selecionado}" />
-					</p:column>
-					<p:column headerText="Material" sortBy="#{invMat.material.materialLabel}" filterBy="#{invMat.material.materialLabel}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{invMat.material.materialLabel}" />							
-					</p:column>
-					<p:column headerText="Unidade de Medida Entrada" sortBy="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							
-					</p:column>
-					<p:column headerText="Grupo" sortBy="#{invMat.material.grupo.descricaoLabel}" filterBy="#{invMat.material.grupo.descricaoLabel}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{invMat.material.grupo.descricaoLabel}" />							
-					</p:column>
-					<p:column headerText="Aplicação" sortBy="#{invMat.material.aplicacao.descricao}" filterBy="#{invMat.material.aplicacao.descricao}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{invMat.material.aplicacao.descricao}" />							
-					</p:column>
-					<p:column headerText="Estoque Atual" sortBy="#{invMat.quantidadeEstoque}" filterBy="#{invMat.quantidadeEstoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
-						<h:outputText value="#{invMat.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />							
-					</p:column>
-					<p:column headerText="Estoque Inventariado" sortBy="#{invMat.quantidadeInventariada}" filterBy="#{invMat.quantidadeInventariada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
-						<h:outputText value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />
-					</p:column>
-					<p:column headerText="Diferença" sortBy="#{invMat.diferenca}" filterBy="#{invMat.diferenca}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
-						<h:outputText value="#{invMat.diferenca}" converter="bigDecimalSimplesConverter" />
-					</p:column>					
-					<p:column headerText="Inventariante" sortBy="#{invMat.inventariante.nomeCompleto}" filterBy="#{invMat.inventariante.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{invMat.inventariante.nomeCompleto}" />
-					</p:column>
-					<p:column headerText="Aprovador" sortBy="#{invMat.aprovador.nomeCompleto}" filterBy="#{invMat.aprovador.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
-						<h:outputText value="#{invMat.aprovador.nomeCompleto}" />
-					</p:column>					
-					<p:column headerText="Status" sortBy="#{invMat.statusLabel}" filterBy="#{invMat.statusLabel}" filterFunction="#{filterBean.filterContains}" rendered="#{inventarioBean.managed}">
-						<h:outputText value="#{invMat.statusLabel}" />
-					</p:column>
-					<p:column headerText="Ações" style="width: 240px;">
-		                
-		                <p:commandButton value="Editar" 
-		                	action="#{inventarioBean.editarMaterial(invMat)}"
-		                	update=":materialEditModal:materialEditDialogForm"
-		                	oncomplete="$('#materialEditModal').modal('show')" 
-		                	process="@this" 
-		                	rendered="#{!invMat.aprovado and inventarioBean.isUsuarioResponsavelPelaAplicacao(invMat)}"
-		                	style="margin-right: 4px;" />
-		                
-		                <p:commandButton value="Excluir" 
-		                	action="#{inventarioBean.removerMaterial(invMat)}"
-		                	update=":inventarioEditForm:tabView:tabelaMaterial" 
-		                	process="@this" 
-		                	rendered="#{!invMat.aprovado and inventarioBean.isUsuarioResponsavelPelaAplicacao(invMat)}"
-		                	style="margin-right: 4px;" />
-		                	
-		                <p:commandButton value="Visualizar" 
-		                	action="#{inventarioBean.visualizarMaterial(invMat)}"
-		                	update=":materialViewModal:materialViewDialogForm"
-		                	oncomplete="$('#materialViewModal').modal('show')" 
-		                	process="@this" />	
-		                	
-					</p:column>
-				</p:dataTable>
-	        </p:tab>
-     	</p:tabView>
-     	
-     	<p:commandButton value="Salvar"
-     		action="#{inventarioBean.createInventario}" 
-     		update=":materialEditModal:materialEditDialogForm"
-     		rendered="#{not inventarioBean.managed}" />
-     	
-     	<p:commandButton value="Salvar"
-     		action="#{inventarioBean.updateInventario}" 
-     		update=":inventarioEditForm"
-     		rendered="#{inventarioBean.managed}" />
-
-     	<p:commandButton action="#{inventarioBean.redirectList}" value="Cancelar" process="@this" />
-     			
-	</h:form>
-	
-	<cp:bootstrapModal id="materialEditModal" title="Aprovar/Rejeitar Material" modalId="materialEditModal">      
-		
-		<p:messages autoUpdate="true" globalOnly="true" />
-		
-		<h:form id="materialEditDialogForm">
-			
-			<div class="row form-row">
-				<div class="col-md-2">
-					Material:
-				</div>
-				<div class="col-md-10">
-					<h:outputText value="#{inventarioBean.inventarioMaterial.material.materialLabel}" />
-				</div>
-			</div>
-			
-			<div class="row form-row">
-				<div class="col-md-2">
-					Unidade Medida Entrada:
-				</div>
-				<div class="col-md-10">
-					<h:outputText value="#{inventarioBean.inventarioMaterial.material.unidadeMedida.unidadeEntrada.descricao}" />
-				</div>
-			</div>
-			
-			<div class="row form-row">
-				<div class="col-md-2">
-					Grupo:
-				</div>
-				<div class="col-md-10">
-					<h:outputText value="#{inventarioBean.inventarioMaterial.material.grupo.descricaoLabel}" />
-				</div>
-			</div>
-			
-			<div class="row form-row">
-				<div class="col-md-2">
-					Estoque:
-				</div>
-				<div class="col-md-10">
-					<h:outputText value="#{inventarioBean.inventarioMaterial.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />
-				</div>
-			</div>
-			
-			<div class="row form-row">
-				<div class="col-md-2">
-					Estoque Inventariado: <span class="required">*</span>
-				</div>
-				<div class="col-md-10">
-					<h:inputText id="qtdeEstoqueInventariado" value="#{inventarioBean.inventarioMaterial.quantidadeInventariada}" converter="bigDecimalSimplesConverter" required="true" label="Estoque Inventariado" styleClass="qtdeEstoqueInventariado" disabled="#{inventarioBean.aprovador}">
-						<p:ajax event="change" process="@this" update=":materialEditModal:materialEditDialogForm:qtdeDiferenca" />
-					</h:inputText>
-					<h:message for="qtdeEstoqueInventariado" styleClass="msg-error" />
-					<script type="text/javascript">
-						$(function(){
-							$('.qtdeEstoqueInventariado').forceFloat();
-						});
-					</script>
-				</div>
-			</div>
-			
-			<div class="row form-row">
-				<div class="col-md-2">
-					Diferença:
-				</div>
-				<div class="col-md-10">
-					<h:outputText id="qtdeDiferenca" value="#{inventarioBean.inventarioMaterial.diferenca}" converter="bigDecimalSimplesConverter" />
-				</div>
-			</div>
-			
-			<div class="row form-row">
-				<div class="col-md-2">
-					Justificativa do Inventariante: <span class="required">*</span>
-				</div>
-				<div class="col-md-10">
-					<ui:fragment rendered="#{inventarioBean.inventariante}">
-						<h:inputTextarea id="justificavaInventariante" value="#{inventarioBean.inventarioMaterial.justificativaInventariante}" rows="2" cols="70" required="true" label="Justificativa do Inventariante" />
-						<h:message for="justificavaInventariante" styleClass="msg-error" />
-					</ui:fragment>
-					<ui:fragment rendered="#{inventarioBean.aprovador}">
-						<h:outputText value="#{inventarioBean.inventarioMaterial.justificativaInventariante}" />
-					</ui:fragment>
-				</div>
-			</div>
-			
-			<ui:fragment rendered="#{inventarioBean.aprovador}">
-				<div class="row form-row">
-					<div class="col-md-2">
-						Justificativa do Aprovador: <span class="required">*</span>
+		        	<div class="row form-row">
+						<div class="col-md-2">
+							<h:outputText value="Nº de Inventário:" />
+						</div>
+						<div class="col-md-10">
+							<h:outputText value="#{inventarioBean.inventario.id}"  label="Número de Inventário" />	
+						</div>
 					</div>
-					<div class="col-md-10">
-						<h:inputTextarea id="justificavaAprovador" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Aprovador" />
-						<h:message for="justificavaAprovador" styleClass="msg-error" />
-					</div>
-				</div>
-				
-				<div class="row form-row">
-					<div class="col-md-2">
-						Aprovador:
-					</div>
-					<div class="col-md-10">
-						<h:outputText value="#{inventarioBean.inventarioMaterial.aprovador.nomeCompleto}" />
-					</div>
-				</div>
-			</ui:fragment>
-				
-			<div class="buttons">
-				
-				<p:commandButton value="OK"
-					action="#{inventarioBean.okMaterial}"
-					update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
-					oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
-					rendered="#{inventarioBean.inventariante}"
-					/>		
-								
-				<p:commandButton value="Aprovar"
-					action="#{inventarioBean.aprovarMaterial}"
-					update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
-					oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
-					rendered="#{inventarioBean.aprovador}"
-					/>
 					
-				<p:commandButton value="Rejeitar"
-					action="#{inventarioBean.rejeitarMaterial}"
-					update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
-					oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
-					rendered="#{inventarioBean.aprovador}"
-					/>		
+					<div class="row form-row">
+						<div class="col-md-2">
+							Data de Inventário: <span class="required">*</span>
+						</div>
+						<div class="col-md-10">
+							<p:calendar id="dataInventario" pattern="dd/MM/yyyy" locale="pt_BR" showButtonPanel="true" value="#{inventarioBean.inventario.dataInventario}" size="10" navigator="true"
+								required="true" label="Data de Inventário"  />
+							<h:message for="dataInventario" styleClass="msg-error" />		
+						</div>
+					</div>
+					
+					<!--
+			    	<div class="row form-row">
+						<div class="col-md-2">
+							Inventariante: <span class="required">*</span>
+						</div>
+						<div class="col-md-10">
+							<h:selectOneMenu id="atendente" value="#{inventarioBean.inventario.atendente}" converter="objectConverter" required="true" label="Inventariante" styleClass="input-sm">
+								<f:selectItem itemValue="" itemLabel="Selecione" />
+								<f:selectItems value="#{inventarioBean.atendentes}" var="user" itemLabel="#{user.nomeCompleto}" itemValue="#{user}" />			
+							</h:selectOneMenu>	
+							<h:message for="atendente" styleClass="msg-error" />
+						</div>
+					</div>  
+					-->
+					
+					<div class="row form-row form-group">
+						<div class="col-md-2">
+							Justificativa: <span class="required">*</span>
+						</div>
+						<div class="col-md-10">
+							<h:inputTextarea id="justificativa" value="#{inventarioBean.inventario.justificativa}" rows="3" cols="70" required="true" label="Justificativa" />
+							<h:message for="justificativa" styleClass="msg-error" />	
+						</div>
+					</div>
+		        
+		        </p:tab>
+		        
+		        <p:tab title="Material" >
+			        
+			        <br />
+			        <p:outputPanel id="addMaterialPanel">
+			        	
+						<p:autoComplete id="materialAutocomplete" forceSelection="true" minQueryLength="3" maxResults="100" queryDelay="2000"
+							value="#{inventarioBean.material}" label="Material" 
+							var="invMat" itemLabel="#{invMat.material}" converter="objectConverter" itemValue="#{invMat}" 
+							completeMethod="#{inventarioBean.completeMaterial}" dropdown="true" />
 				
-			</div>		
-				
+				        <p:commandButton value="Adicionar Material" icon="ui-icon-plus" action="#{inventarioBean.addMaterial}" 
+				        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
+				        	process="@this :inventarioEditForm:tabView:materialAutocomplete" style="margin-left: 35px;" />
+				        
+				        <p:commandButton value="&nbsp;" icon="ui-icon-search"
+								process="@this"
+								action="#{materialBean.iniciarBuscaMaterial('inventarioEdit')}"
+								update=":materialListModal:materialListModalForm" 
+								oncomplete="$('#materialListModal').modal('show')" style="margin-left: 5px;" />
+				        	
+				       	<p:commandButton value="Adicionar Todos Materiais" icon="ui-icon-plus" action="#{inventarioBean.addTodosMateriais}" 
+				        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
+				        	process="@this" style="margin-left: 5px;" />
+				        
+				        <p:commandButton value="Imprimir Checklist" icon="ui-icon-print" action="#{inventarioBean.imprimirChecklist}" 
+				        	process="@this :inventarioEditForm:tabView:tabelaMaterial" style="margin-left: 5px;" ajax="false" />
+				        	
+				        <p:commandButton value="Concluir" icon="ui-icon-disk"
+				     		action="#{inventarioBean.concluirInventario}" 
+				     		update=":materialEditModal:materialEditDialogForm"
+				     		rendered="#{inventarioBean.managed and inventarioBean.aprovador}"
+				     		style="margin-left: 5px;" />
+				        	
+				      	<p:commandButton value="Excluir Selecionados" icon="ui-icon-circle-close" action="#{inventarioBean.removerSelecionados}" 
+				        	update=":inventarioEditForm:tabView:tabelaMaterial :inventarioEditForm:tabView:addMaterialPanel" 
+				        	process="@this :inventarioEditForm:tabView:tabelaMaterial" style="margin-left: 5px;" />  	 	
+					  	
+			 		</p:outputPanel>
+		        				
+					<h2>Materiais do Inventário</h2>
+					<p:dataTable id="tabelaMaterial" var="invMat" value="#{inventarioBean.inventario.materiais}" emptyMessage="Não existem itens nesta lista." 
+						sortBy="#{invMat.material.material}" sortOrder="ASCENDING"
+						rows="100" paginator="true" paginatorPosition="bottom">
+						<p:column style="width: 35px;">
+							<f:facet name="header">
+								<h:selectBooleanCheckbox value="#{inventarioBean.checkTodos}">
+									<p:ajax event="change" listener="#{inventarioBean.marcarOuDesmarcarTodos}" process="@this" update=":inventarioEditForm:tabView:tabelaMaterial" />
+								</h:selectBooleanCheckbox>	
+							</f:facet>
+							<h:selectBooleanCheckbox value="#{invMat.selecionado}" />
+						</p:column>
+						<p:column headerText="Material" sortBy="#{invMat.material.materialLabel}" filterBy="#{invMat.material.materialLabel}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{invMat.material.materialLabel}" />							
+						</p:column>
+						<p:column headerText="Unidade de Medida Entrada" sortBy="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" filterBy="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{invMat.material.unidadeMedida.unidadeEntrada.descricao}" />							
+						</p:column>
+						<p:column headerText="Grupo" sortBy="#{invMat.material.grupo.descricaoLabel}" filterBy="#{invMat.material.grupo.descricaoLabel}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{invMat.material.grupo.descricaoLabel}" />							
+						</p:column>
+						<p:column headerText="Aplicação" sortBy="#{invMat.material.aplicacao.descricao}" filterBy="#{invMat.material.aplicacao.descricao}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{invMat.material.aplicacao.descricao}" />							
+						</p:column>
+						<p:column headerText="Estoque Atual" sortBy="#{invMat.quantidadeEstoque}" filterBy="#{invMat.quantidadeEstoque}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+							<h:outputText value="#{invMat.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />							
+						</p:column>
+						<p:column headerText="Estoque Inventariado" sortBy="#{invMat.quantidadeInventariada}" filterBy="#{invMat.quantidadeInventariada}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+							<h:outputText value="#{invMat.quantidadeInventariada}" converter="bigDecimalSimplesConverter" />
+						</p:column>
+						<p:column headerText="Diferença" sortBy="#{invMat.diferenca}" filterBy="#{invMat.diferenca}" filterFunction="#{filterBean.filterContainsBigDecimalSimples}" styleClass="coluna-direita">
+							<h:outputText value="#{invMat.diferenca}" converter="bigDecimalSimplesConverter" />
+						</p:column>					
+						<p:column headerText="Inventariante" sortBy="#{invMat.inventariante.nomeCompleto}" filterBy="#{invMat.inventariante.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{invMat.inventariante.nomeCompleto}" />
+						</p:column>
+						<p:column headerText="Aprovador" sortBy="#{invMat.aprovador.nomeCompleto}" filterBy="#{invMat.aprovador.nomeCompleto}" filterFunction="#{filterBean.filterContains}">
+							<h:outputText value="#{invMat.aprovador.nomeCompleto}" />
+						</p:column>					
+						<p:column headerText="Status" sortBy="#{invMat.statusLabel}" filterBy="#{invMat.statusLabel}" filterFunction="#{filterBean.filterContains}" rendered="#{inventarioBean.managed}">
+							<h:outputText value="#{invMat.statusLabel}" />
+						</p:column>
+						<p:column headerText="Ações" style="width: 240px;">
+			                
+			                <p:commandButton value="Editar" 
+			                	action="#{inventarioBean.editarMaterial(invMat)}"
+			                	update=":materialEditModal:materialEditDialogForm"
+			                	oncomplete="$('#materialEditModal').modal('show')" 
+			                	process="@this" 
+			                	rendered="#{!invMat.aprovado and inventarioBean.isUsuarioResponsavelPelaAplicacao(invMat)}"
+			                	style="margin-right: 4px;" />
+			                
+			                <p:commandButton value="Excluir" 
+			                	action="#{inventarioBean.removerMaterial(invMat)}"
+			                	update=":inventarioEditForm:tabView:tabelaMaterial" 
+			                	process="@this" 
+			                	rendered="#{!invMat.aprovado and inventarioBean.isUsuarioResponsavelPelaAplicacao(invMat)}"
+			                	style="margin-right: 4px;" />
+			                	
+			                <p:commandButton value="Visualizar" 
+			                	action="#{inventarioBean.visualizarMaterial(invMat)}"
+			                	update=":materialViewModal:materialViewDialogForm"
+			                	oncomplete="$('#materialViewModal').modal('show')" 
+			                	process="@this" />	
+			                	
+						</p:column>
+					</p:dataTable>
+		        </p:tab>
+	     	</p:tabView>
+	     	
+	     	<p:commandButton value="Salvar"
+	     		action="#{inventarioBean.createInventario}" 
+	     		update=":materialEditModal:materialEditDialogForm"
+	     		rendered="#{not inventarioBean.managed}" />
+	     	
+	     	<p:commandButton value="Salvar"
+	     		action="#{inventarioBean.updateInventario}" 
+	     		update=":inventarioEditForm"
+	     		rendered="#{inventarioBean.managed}" />
+	
+	     	<p:commandButton action="#{inventarioBean.redirectList}" value="Cancelar" process="@this" />
+	     			
 		</h:form>
-	</cp:bootstrapModal>
+		
+		<cp:bootstrapModal id="materialEditModal" title="Aprovar/Rejeitar Material" modalId="materialEditModal">      
+			
+			<p:messages autoUpdate="true" globalOnly="true" />
+			
+			<h:form id="materialEditDialogForm">
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Material:
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{inventarioBean.inventarioMaterial.material.materialLabel}" />
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Unidade Medida Entrada:
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{inventarioBean.inventarioMaterial.material.unidadeMedida.unidadeEntrada.descricao}" />
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Grupo:
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{inventarioBean.inventarioMaterial.material.grupo.descricaoLabel}" />
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Estoque:
+					</div>
+					<div class="col-md-10">
+						<h:outputText value="#{inventarioBean.inventarioMaterial.quantidadeEstoque}" converter="bigDecimalSimplesConverter" />
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Estoque Inventariado: <span class="required">*</span>
+					</div>
+					<div class="col-md-10">
+						<h:inputText id="qtdeEstoqueInventariado" value="#{inventarioBean.inventarioMaterial.quantidadeInventariada}" converter="bigDecimalSimplesConverter" required="true" label="Estoque Inventariado" styleClass="qtdeEstoqueInventariado" disabled="#{inventarioBean.aprovador}">
+							<p:ajax event="change" process="@this" update=":materialEditModal:materialEditDialogForm:qtdeDiferenca" />
+						</h:inputText>
+						<h:message for="qtdeEstoqueInventariado" styleClass="msg-error" />
+						<script type="text/javascript">
+							$(function(){
+								$('.qtdeEstoqueInventariado').forceFloat();
+							});
+						</script>
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Diferença:
+					</div>
+					<div class="col-md-10">
+						<h:outputText id="qtdeDiferenca" value="#{inventarioBean.inventarioMaterial.diferenca}" converter="bigDecimalSimplesConverter" />
+					</div>
+				</div>
+				
+				<div class="row form-row">
+					<div class="col-md-2">
+						Justificativa do Inventariante: <span class="required">*</span>
+					</div>
+					<div class="col-md-10">
+						<ui:fragment rendered="#{inventarioBean.inventariante}">
+							<h:inputTextarea id="justificavaInventariante" value="#{inventarioBean.inventarioMaterial.justificativaInventariante}" rows="2" cols="70" required="true" label="Justificativa do Inventariante" />
+							<h:message for="justificavaInventariante" styleClass="msg-error" />
+						</ui:fragment>
+						<ui:fragment rendered="#{inventarioBean.aprovador}">
+							<h:outputText value="#{inventarioBean.inventarioMaterial.justificativaInventariante}" />
+						</ui:fragment>
+					</div>
+				</div>
+				
+				<ui:fragment rendered="#{inventarioBean.aprovador}">
+					<div class="row form-row">
+						<div class="col-md-2">
+							Justificativa do Aprovador: <span class="required">*</span>
+						</div>
+						<div class="col-md-10">
+							<h:inputTextarea id="justificavaAprovador" value="#{inventarioBean.inventarioMaterial.justificativa}" rows="2" cols="70" required="true" label="Justificativa do Aprovador" />
+							<h:message for="justificavaAprovador" styleClass="msg-error" />
+						</div>
+					</div>
+					
+					<div class="row form-row">
+						<div class="col-md-2">
+							Aprovador:
+						</div>
+						<div class="col-md-10">
+							<h:outputText value="#{inventarioBean.inventarioMaterial.aprovador.nomeCompleto}" />
+						</div>
+					</div>
+				</ui:fragment>
+					
+				<div class="buttons">
+					
+					<p:commandButton value="OK"
+						action="#{inventarioBean.okMaterial}"
+						update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
+						oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
+						rendered="#{inventarioBean.inventariante}"
+						/>		
+									
+					<p:commandButton value="Aprovar"
+						action="#{inventarioBean.aprovarMaterial}"
+						update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
+						oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
+						rendered="#{inventarioBean.aprovador}"
+						/>
+						
+					<p:commandButton value="Rejeitar"
+						action="#{inventarioBean.rejeitarMaterial}"
+						update=":materialEditModal:materialEditDialogForm :inventarioEditForm:tabView:tabelaMaterial"
+						oncomplete="oncompleteBtnRejeitar(xhr, status, args)"
+						rendered="#{inventarioBean.aprovador}"
+						/>		
+					
+				</div>		
+					
+			</h:form>
+		</cp:bootstrapModal>
+		
+		
+		<script type="text/javascript">
+		   function oncompleteBtnAprovar(xhr, status, args) {
+		      if (args.success) {
+		    	  $('#materialEditModal').modal('hide');
+		      }
+		   }
 	
-	
-	<script type="text/javascript">
-	   function oncompleteBtnAprovar(xhr, status, args) {
-	      if (args.success) {
-	    	  $('#materialEditModal').modal('hide');
-	      }
-	   }
-
-	   function oncompleteBtnRejeitar(xhr, status, args) {
-	      if (args.success) {
-	    	  $('#materialEditModal').modal('hide');
-	      }
-	   }
-	   
-	</script>
-	
-	<ui:include src="/inventario/inventarioMaterialView.xhtml" />	
+		   function oncompleteBtnRejeitar(xhr, status, args) {
+		      if (args.success) {
+		    	  $('#materialEditModal').modal('hide');
+		      }
+		   }
+		   
+		</script>
+		
+		<ui:include src="/inventario/inventarioMaterialView.xhtml" />	
+		
+		<ui:include src="/material/materialListPopup.xhtml">
+			<ui:param name="areaToRender" value=":inventarioEditForm:tabView:tabelaMaterial" />
+		</ui:include>
 	
 	</ui:define>
 </ui:composition>
